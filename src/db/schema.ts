@@ -37,6 +37,14 @@ export const onboardingStatusEnum = pgEnum("onboarding_status", [
   "completed",
 ]);
 
+export const resourceTypeEnum = pgEnum("resource_type", [
+  "course",
+  "book",
+  "tutorial",
+  "documentation",
+  "practice",
+]);
+
 // ─────────────────────────────────────────────────
 // better-auth required tables
 // (must match better-auth's expected column names exactly)
@@ -756,5 +764,49 @@ export const jobTitleAliases = pgTable(
   (t) => [
     uniqueIndex("job_title_aliases_alias_idx").on(t.alias),
     index("job_title_aliases_job_title_id_idx").on(t.jobTitleId),
+  ],
+);
+
+// ─────────────────────────────────────────────────
+// Learning Resources & Affiliate Tracking
+// ─────────────────────────────────────────────────
+
+export const learningResources = pgTable(
+  "learning_resources",
+  {
+    id: text("id").primaryKey(), // nanoid
+    skill: text("skill").notNull(), // normalized skill name, e.g., 'react'
+    type: resourceTypeEnum("type").notNull(),
+    name: text("name").notNull(),
+    url: text("url").notNull(),
+    isAffiliate: boolean("is_affiliate").notNull().default(false),
+    isFree: boolean("is_free").notNull().default(false),
+    estimatedTime: text("estimated_time"),
+    clickCount: integer("click_count").notNull().default(0),
+    isActive: boolean("is_active").notNull().default(true),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  },
+  (t) => [
+    index("learning_resources_skill_idx").on(t.skill),
+    index("learning_resources_is_active_idx").on(t.isActive),
+  ],
+);
+
+export const resourceClicks = pgTable(
+  "resource_clicks",
+  {
+    id: text("id").primaryKey(), // nanoid
+    resourceId: text("resource_id")
+      .notNull()
+      .references(() => learningResources.id, { onDelete: "cascade" }),
+    userId: text("user_id").references(() => user.id, { onDelete: "set null" }), // null if anonymous
+    ipAddress: text("ip_address"),
+    userAgent: text("user_agent"),
+    clickedAt: timestamp("clicked_at").notNull().defaultNow(),
+  },
+  (t) => [
+    index("resource_clicks_resource_id_idx").on(t.resourceId),
+    index("resource_clicks_clicked_at_idx").on(t.clickedAt),
   ],
 );

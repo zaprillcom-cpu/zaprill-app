@@ -298,12 +298,16 @@ RESOURCE URL GUIDELINES:
           );
 
           // Post-process roadmap resources for reliability
-          roadmap = (parsed.data.roadmap as RoadmapItem[]).map((item) => ({
-            ...item,
-            resources: item.resources.map((res) =>
-              enhanceRoadmapResource(res, item.skill),
-            ),
-          }));
+          roadmap = await Promise.all(
+            (parsed.data.roadmap as RoadmapItem[]).map(async (item) => ({
+              ...item,
+              resources: await Promise.all(
+                item.resources.map((res) =>
+                  enhanceRoadmapResource(res, item.skill),
+                ),
+              ),
+            })),
+          );
         } else {
           console.warn(
             "Analysis response schema validation failed:",

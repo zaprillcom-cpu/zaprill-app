@@ -8,6 +8,22 @@ import { AuthConfigTab } from "./auth-config-tab";
 import { CompanyTab } from "./company-tab";
 import { CouponsTab } from "./coupons-tab";
 import { PlansTab } from "./plans-tab";
+import { ResourcesTab } from "./resources-tab";
+
+export type LearningResource = {
+  id: string;
+  skill: string;
+  type: string;
+  name: string;
+  url: string;
+  isAffiliate: boolean;
+  isFree: boolean;
+  estimatedTime: string | null;
+  clickCount: number;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+};
 
 export type Plan = {
   id: string;
@@ -48,6 +64,7 @@ export type Coupon = {
 export function SettingsContent() {
   const [plans, setPlans] = useState<Plan[]>([]);
   const [coupons, setCoupons] = useState<Coupon[]>([]);
+  const [resources, setResources] = useState<LearningResource[]>([]);
   const [companySettings, setCompanySettings] =
     useState<CompanySettings | null>(null);
   const [loading, setLoading] = useState(true);
@@ -56,6 +73,8 @@ export function SettingsContent() {
     setLoading(true);
     try {
       const res = await fetch("/api/admin/settings");
+      const resResources = await fetch("/api/admin/resources");
+
       if (!res.ok) {
         const errorText = await res.text();
         try {
@@ -65,10 +84,16 @@ export function SettingsContent() {
           throw new Error(errorText || `Error ${res.status}`);
         }
       }
+
       const json = await res.json();
       setPlans(json.plans ?? []);
       setCoupons(json.coupons ?? []);
       setCompanySettings(json.companySettings ?? null);
+
+      if (resResources.ok) {
+        const jsonResources = await resResources.json();
+        setResources(jsonResources.resources ?? []);
+      }
     } catch (e: any) {
       console.error("[FETCH_DATA]", e);
       toast.error(e.message || "Failed to load settings");
@@ -83,7 +108,10 @@ export function SettingsContent() {
 
   const mutate = useCallback(
     async (action: string, data: Record<string, any>) => {
-      const res = await fetch("/api/admin/settings", {
+      const endpoint = action.includes("resource")
+        ? "/api/admin/resources"
+        : "/api/admin/settings";
+      const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ _action: action, ...data }),
@@ -106,9 +134,10 @@ export function SettingsContent() {
 
   return (
     <Tabs defaultValue="plans" className="w-full">
-      <TabsList className="mb-6 grid w-full max-w-lg grid-cols-4">
+      <TabsList className="mb-6 grid w-full max-w-2xl grid-cols-5">
         <TabsTrigger value="plans">Plans</TabsTrigger>
         <TabsTrigger value="coupons">Coupons</TabsTrigger>
+        <TabsTrigger value="resources">Resources</TabsTrigger>
         <TabsTrigger value="company">Company</TabsTrigger>
         <TabsTrigger value="auth">Auth Config</TabsTrigger>
       </TabsList>
@@ -125,6 +154,15 @@ export function SettingsContent() {
       <TabsContent value="coupons">
         <CouponsTab
           coupons={coupons}
+          loading={loading}
+          onMutate={mutate}
+          onRefresh={fetchData}
+        />
+      </TabsContent>
+
+      <TabsContent value="resources">
+        <ResourcesTab
+          resources={resources}
           loading={loading}
           onMutate={mutate}
           onRefresh={fetchData}
