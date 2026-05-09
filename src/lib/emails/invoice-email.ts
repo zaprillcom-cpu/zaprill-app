@@ -7,6 +7,9 @@
  * discount line item (hidden when 0), company details (conditionally shown).
  */
 
+import { renderToBuffer } from "@react-pdf/renderer";
+import { createElement } from "react";
+import { InvoicePdf } from "@/components/pdf/InvoicePdf";
 import type { CompanySettings } from "@/lib/app-settings";
 import { formatCurrency } from "@/lib/billing-utils";
 import type { Invoice } from "@/types/billing";
@@ -126,8 +129,8 @@ export async function sendInvoiceReceiptEmail(
               <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                   <td>
-                    <span style="font-size:24px;font-weight:800;color:#ffffff;letter-spacing:-0.5px;">⚡ Zaprill</span>
-                    <p style="margin:4px 0 0;font-size:13px;color:#a0a0b8;">Payment Confirmed</p>
+                    <img src="${process.env.NEXT_PUBLIC_APP_URL}/logo.png" alt="Zaprill" style="display:block;height:32px;width:auto;margin-bottom:8px;" />
+                    <p style="margin:0;font-size:13px;color:#a0a0b8;">Payment Confirmed</p>
                   </td>
                   <td align="right">
                     <span style="display:inline-block;background:rgba(255,255,255,0.12);color:#fff;font-size:12px;font-weight:600;padding:6px 14px;border-radius:20px;letter-spacing:0.5px;">✓ PAID</span>
@@ -315,22 +318,32 @@ export async function sendInvoiceReceiptEmail(
     `Plan: ${planName} (${billingCycle})`,
     `Date Paid: ${paidOn}`,
     ``,
-    `Subtotal: ${formatCurrency(subtotal, inv.currency)}`,
-    ...(hasDiscount
-      ? [`Discount: −${formatCurrency(discount, inv.currency)}`]
-      : []),
-    ...(hasGst
-      ? [`GST (${gstPct}%): +${formatCurrency(tax, inv.currency)}`]
-      : []),
     `Total Paid: ${formatCurrency(total, inv.currency)}`,
-    ``,
-    ...(paymentMethod ? [`Payment Method: ${methodLabel(paymentMethod)}`] : []),
-    ...(transactionId ? [`Transaction Ref: ${transactionId}`] : []),
     ``,
     `View your billing page: https://app.zaprill.com/billing`,
     ``,
     `© ${new Date().getFullYear()} Zaprill`,
   ].join("\n");
 
-  await sendMail(email, `Payment Confirmed — ${invoiceNum}`, text, html);
+  // Generate PDF buffer to attach
+  const pdfBuffer = await renderToBuffer(
+    createElement(InvoicePdf, {
+      invoice: inv,
+      planName,
+      billingCycle,
+      customerName: name,
+      customerEmail: email,
+      paymentMethod: methodLabel(paymentMethod),
+      transactionId,
+      company,
+      logoUrl: process.env.NEXT_PUBLIC_APP_URL + "/logo.png",
+    }) as any,
+  );
+
+  await sendMail(email, `Payment Confirmed — ${invoiceNum}`, text, html, [
+    {
+      filename: `${invoiceNum}.pdf`,
+      content: pdfBuffer,
+    },
+  ]);
 }
