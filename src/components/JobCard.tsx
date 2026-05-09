@@ -187,14 +187,14 @@ export default function JobCard({ job, rank }: JobCardProps) {
                 size={52}
                 strokeWidth={5}
               />
-              <div className="text-right flex flex-col items-end lg:items-start shrink-0">
+              {/* <div className="text-right flex flex-col items-end lg:items-start shrink-0">
                 <span className="text-[10px] font-black text-muted-foreground uppercase tracking-tighter">
                   Match Score
                 </span>
                 <span className="text-lg font-black text-foreground leading-none">
                   {job.matchPercentage}%
                 </span>
-              </div>
+              </div> */}
             </div>
 
             <a
