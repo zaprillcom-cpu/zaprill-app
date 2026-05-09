@@ -293,6 +293,63 @@ export function CouponsTab({ coupons, loading, onMutate, onRefresh }: Props) {
         </Card>
       )}
 
+      {/* Preview Section */}
+      <div className="mt-12 pt-8 border-t border-border">
+        <h3 className="text-lg font-semibold mb-6">User Preview (Checkout)</h3>
+        <div className="rounded-xl border bg-muted/10 p-6 max-w-md">
+          <Card>
+            <CardHeader>
+              <CardTitle>Discount Code</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                <div className="flex space-x-2">
+                  <div className="relative flex-1">
+                    <Tag className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      placeholder="Enter coupon code"
+                      className="pl-9"
+                      disabled
+                    />
+                  </div>
+                  <Button variant="secondary" disabled>
+                    Apply
+                  </Button>
+                </div>
+                {coupons.filter((c) => c.isPublic && c.status === "active")
+                  .length > 0 && (
+                  <div className="pt-3 mt-4 border-t border-border/50">
+                    <p className="text-sm text-muted-foreground mb-2">
+                      Available Coupons:
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {coupons
+                        .filter((c) => c.isPublic && c.status === "active")
+                        .map((coupon) => (
+                          <div
+                            key={coupon.id}
+                            className="flex items-center px-3 py-1.5 text-xs font-medium rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200"
+                          >
+                            <Tag className="w-3 h-3 mr-1" />
+                            {coupon.code}
+                            <span className="ml-1 opacity-75">
+                              (
+                              {coupon.type === "flat"
+                                ? "₹" + parseFloat(coupon.value)
+                                : parseFloat(coupon.value) + "%"}{" "}
+                              off)
+                            </span>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
       {/* Create / Edit Dialog */}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-lg">

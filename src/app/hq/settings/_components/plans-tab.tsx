@@ -3,6 +3,7 @@
 import { IndianRupee, Loader2, Pencil, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import PricingPlans from "@/components/PricingPlans";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -262,6 +263,14 @@ export function PlansTab({ plans, loading, onMutate, onRefresh }: Props) {
           ))}
         </div>
       )}
+
+      {/* Preview Section */}
+      <div className="mt-12 pt-8 border-t border-border">
+        <h3 className="text-lg font-semibold mb-6">User Preview</h3>
+        <div className="rounded-xl border bg-muted/10 overflow-x-auto">
+          <PricingPlans plans={plans as any} />
+        </div>
+      </div>
 
       {/* Create / Edit Dialog */}
       <Dialog open={open} onOpenChange={setOpen}>
