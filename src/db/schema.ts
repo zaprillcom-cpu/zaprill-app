@@ -206,6 +206,32 @@ export const savedJob = pgTable("saved_job", {
   savedAt: timestamp("saved_at").notNull().defaultNow(),
 });
 
+/**
+ * Jobs that a user explicitly clicked 'Apply' on.
+ */
+export const jobVisit = pgTable(
+  "job_visit",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    analysisId: text("analysis_id").references(() => resumeAnalysis.id, {
+      onDelete: "set null",
+    }),
+    jobId: text("job_id").notNull(), // external job listing id
+    title: text("title").notNull(),
+    company: text("company").notNull(),
+    location: text("location"),
+    url: text("url").notNull(),
+    matchPercentage: integer("match_percentage"),
+    visitedAt: timestamp("visited_at").notNull().defaultNow(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  },
+  (t) => [index("job_visit_user_id_idx").on(t.userId)],
+);
+
 // ─────────────────────────────────────────────────
 // Billing Enums
 // ─────────────────────────────────────────────────

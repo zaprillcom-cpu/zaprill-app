@@ -10,7 +10,9 @@ import {
   ExternalLink,
   FileText,
   Search,
+  TrendingUp,
   Video,
+  Zap,
 } from "lucide-react";
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -22,6 +24,7 @@ import type { RoadmapItem } from "@/types";
 
 interface LearningRoadmapProps {
   roadmap: RoadmapItem[];
+  advice?: string;
 }
 
 const PRIORITY_STYLES = {
@@ -200,8 +203,11 @@ function RoadmapCard({ item, index }: { item: RoadmapItem; index: number }) {
   );
 }
 
-export default function LearningRoadmap({ roadmap }: LearningRoadmapProps) {
-  if (!roadmap.length) return null;
+export default function LearningRoadmap({
+  roadmap,
+  advice,
+}: LearningRoadmapProps) {
+  if (!roadmap.length && !advice) return null;
 
   const sorted = [...roadmap].sort((a, b) => {
     const order = { high: 0, medium: 1, low: 2 };
@@ -209,10 +215,26 @@ export default function LearningRoadmap({ roadmap }: LearningRoadmapProps) {
   });
 
   return (
-    <div className="flex flex-col gap-3">
-      {sorted.map((item, idx) => (
-        <RoadmapCard key={item.skill} item={item} index={idx} />
-      ))}
+    <div className="flex flex-col gap-6">
+      {advice && (
+        <div className="p-5 bg-primary/5 rounded-xl border border-primary/10">
+          <div className="flex items-center gap-2 mb-2">
+            <TrendingUp className="h-4 w-4 text-primary" />
+            <span className="text-[10px] font-black uppercase tracking-widest text-primary">
+              Strategic Guidance
+            </span>
+          </div>
+          <p className="text-sm font-medium text-foreground leading-relaxed">
+            {advice}
+          </p>
+        </div>
+      )}
+
+      <div className="flex flex-col gap-3">
+        {sorted.map((item, idx) => (
+          <RoadmapCard key={item.skill} item={item} index={idx} />
+        ))}
+      </div>
     </div>
   );
 }

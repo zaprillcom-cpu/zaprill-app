@@ -1,6 +1,8 @@
 "use client";
 
 import {
+  Bookmark,
+  BookmarkCheck,
   Building2,
   Clock,
   DollarSign,
@@ -8,9 +10,9 @@ import {
   MapPin,
   Wifi,
 } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { trackJobApplied, trackJobCardImpression } from "@/lib/analytics";
 import type { JobMatch } from "@/types";
@@ -20,6 +22,7 @@ import SkillBadge from "./SkillBadge";
 interface JobCardProps {
   job: JobMatch;
   rank: number;
+  analysisId?: string;
 }
 
 function timeAgo(dateStr?: string): string {
@@ -33,13 +36,51 @@ function timeAgo(dateStr?: string): string {
   return `${Math.floor(days / 30)} months ago`;
 }
 
-export default function JobCard({ job, rank }: JobCardProps) {
+export default function JobCard({ job, rank, analysisId }: JobCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const impressionFired = useRef(false);
+
+  const [isSavedState, setIsSavedState] = useState(false);
 
   const postedText = timeAgo(job.postedAt);
   const showMatched = job.matchedSkills.slice(0, 5);
   const showMissing = job.missingSkills.slice(0, 4);
+
+  const handleToggleSave = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const previousState = isSavedState;
+
+    // High-priority synchronous update for instant UI feedback
+    setIsSavedState(!previousState);
+
+    const method = previousState ? "DELETE" : "POST";
+
+    try {
+      const res = await fetch("/api/save-job", {
+        method,
+        body: JSON.stringify({
+          jobId: job.id,
+          title: job.title,
+          company: job.company,
+          location: job.location,
+          url: job.url,
+          matchPercentage: job.matchPercentage,
+          analysisId,
+          jobRaw: job,
+        }),
+      });
+
+      if (!res.ok) {
+        // Revert on failure
+        setIsSavedState(previousState);
+      }
+    } catch (err) {
+      console.error("Failed to toggle save:", err);
+      setIsSavedState(previousState);
+    }
+  };
 
   // ── Impression tracking via Intersection Observer ──────────────────────────
   useEffect(() => {
@@ -197,29 +238,65 @@ export default function JobCard({ job, rank }: JobCardProps) {
               </div> */}
             </div>
 
-            <a
-              href={job.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={
-                buttonVariants({ variant: "default", size: "lg" }) +
-                " font-bold px-8 shadow-sm hover:shadow-md transition-all active:scale-95"
-              }
-              id={`apply-btn-${job.id}`}
-              onClick={() =>
-                trackJobApplied({
-                  job_id: job.id,
-                  job_title: job.title,
-                  company_name: job.company,
-                  match_score: job.matchPercentage,
-                  is_remote: Boolean(job.isRemote),
-                  job_rank: rank,
-                })
-              }
-            >
-              Apply
-              <ExternalLink className="ml-2 h-4 w-4" />
-            </a>
+            <div className="flex items-center gap-3">
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={handleToggleSave}
+                className={`w-12 h-12 p-0 rounded-xl transition-all active:scale-95 border-border/60 ${
+                  isSavedState
+                    ? "bg-primary/5 text-primary border-primary/20 hover:bg-primary/10 hover:text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+                title={isSavedState ? "Remove bookmark" : "Save job"}
+              >
+                {isSavedState ? (
+                  <BookmarkCheck className="h-5 w-5 fill-current" />
+                ) : (
+                  <Bookmark className="h-5 w-5" />
+                )}
+              </Button>
+
+              <a
+                href={job.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={
+                  buttonVariants({ variant: "default", size: "lg" }) +
+                  " font-black px-8 shadow-sm hover:shadow-md transition-all active:scale-95 h-12 rounded-xl flex items-center"
+                }
+                id={`apply-btn-${job.id}`}
+                onClick={() => {
+                  trackJobApplied({
+                    job_id: job.id,
+                    job_title: job.title,
+                    company_name: job.company,
+                    match_score: job.matchPercentage,
+                    is_remote: Boolean(job.isRemote),
+                    job_rank: rank,
+                  });
+
+                  // Track the visit in our database
+                  fetch("/api/track-visit", {
+                    method: "POST",
+                    body: JSON.stringify({
+                      jobId: job.id,
+                      title: job.title,
+                      company: job.company,
+                      location: job.location,
+                      url: job.url,
+                      matchPercentage: job.matchPercentage,
+                      analysisId,
+                    }),
+                  }).catch((err) =>
+                    console.error("Failed to track job visit:", err),
+                  );
+                }}
+              >
+                Apply
+                <ExternalLink className="ml-2 h-4 w-4" />
+              </a>
+            </div>
           </div>
         </div>
       </CardContent>

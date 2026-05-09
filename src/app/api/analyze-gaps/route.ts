@@ -144,6 +144,7 @@ export async function POST(request: Request) {
     let advice = "";
     let filteredGaps = skillGaps;
     let usedCache = false;
+    let cachedAnalysisId: string | null = null;
 
     try {
       if (session?.user) {
@@ -175,6 +176,7 @@ export async function POST(request: Request) {
           roadmap = match.roadmap as RoadmapItem[];
           advice = match.advice;
           usedCache = true;
+          cachedAnalysisId = match.id;
 
           // Still need to filter the current skillGaps based on the cached relevant gaps
           const relevantSkillMap = new Set(
@@ -325,6 +327,8 @@ RESOURCE URL GUIDELINES:
       roadmap,
       advice,
       isPro,
+      usedCache,
+      analysisId: usedCache ? cachedAnalysisId : null,
     });
   } catch (error) {
     console.error("Gap analysis error:", error);

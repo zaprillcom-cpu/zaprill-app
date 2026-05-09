@@ -306,6 +306,8 @@ function AnalyzePageContent() {
           roadmap: rm,
           advice: aiAdvice,
           isPro: isUserPro,
+          usedCache,
+          analysisId: cachedId,
         } = await gapRes.json();
         setIsPro(!!isUserPro);
 
@@ -319,6 +321,9 @@ function AnalyzePageContent() {
         setSkillGaps(gaps);
         setRoadmap(rm);
         setAdvice(aiAdvice || "");
+        if (usedCache && cachedId) {
+          setAnalysisId(cachedId);
+        }
         setStep("done");
 
         const topMatch = matchedJobs.length
@@ -1519,7 +1524,12 @@ function AnalyzePageContent() {
                     !isPro && job.matchPercentage >= 50 ? (
                       <LockedJobCard key={job.id} job={job} rank={idx} />
                     ) : (
-                      <JobCard key={job.id} job={job} rank={idx} />
+                      <JobCard
+                        key={job.id}
+                        job={job}
+                        rank={idx}
+                        analysisId={analysisId || undefined}
+                      />
                     ),
                   )}
                 </div>

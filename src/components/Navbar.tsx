@@ -183,7 +183,17 @@ export default function Navbar({
                   size="sm"
                   className="font-bold text-xs hidden sm:inline-flex"
                 >
-                  History
+                  Insights
+                </Button>
+              </Link>
+
+              <Link href="/jobs">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="font-bold text-xs hidden sm:inline-flex"
+                >
+                  My Jobs
                 </Button>
               </Link>
 
@@ -227,7 +237,13 @@ export default function Navbar({
                     onClick={() => router.push("/history")}
                     className="font-semibold cursor-pointer"
                   >
-                    History
+                    Insights
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => router.push("/jobs")}
+                    className="font-semibold cursor-pointer"
+                  >
+                    My Jobs
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() =>
