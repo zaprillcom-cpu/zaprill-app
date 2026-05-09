@@ -8,8 +8,10 @@
 
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
+import { getCompanySettings } from "@/lib/app-settings";
 import { auth } from "@/lib/auth";
 import { fetchOrderPayments } from "@/lib/cashfree";
+import { sendInvoiceReceiptEmail } from "@/lib/emails/invoice-email";
 import {
   getCouponUsageByInvoice,
   redeemCoupon,
@@ -118,6 +120,50 @@ export async function GET(request: Request) {
 
         const couponUsageRow = await getCouponUsageByInvoice(inv.id);
         if (couponUsageRow) await redeemCoupon(couponUsageRow.id);
+
+        // Send receipt email (fire-and-forget)
+        void (async () => {
+          try {
+            const { eq } = await import("drizzle-orm");
+            const db = (await import("@/db")).default;
+            const { user, plan } = await import("@/db/schema");
+            const meta = inv.metadata as Record<string, string>;
+            const planId = meta?.planId;
+            const [userRow] = await db
+              .select({ email: user.email, name: user.name })
+              .from(user)
+              .where(eq(user.id, inv.userId))
+              .limit(1);
+            let planName = "Subscription";
+            let billingCycle = meta?.billingCycle ?? "monthly";
+            if (planId) {
+              const [planRow] = await db
+                .select({ name: plan.name, billingCycle: plan.billingCycle })
+                .from(plan)
+                .where(eq(plan.id, planId))
+                .limit(1);
+              if (planRow) {
+                planName = planRow.name;
+                billingCycle = billingCycle || planRow.billingCycle;
+              }
+            }
+            const company = await getCompanySettings();
+            if (userRow?.email) {
+              await sendInvoiceReceiptEmail({
+                email: userRow.email,
+                name: userRow.name ?? "Customer",
+                invoice: { ...inv, status: "paid", paidAt: new Date() },
+                planName,
+                billingCycle,
+                paymentMethod: successfulPayment.paymentMethod,
+                transactionId: successfulPayment.bankReference || undefined,
+                company,
+              });
+            }
+          } catch (e) {
+            console.error("[payment-status] receipt email failed:", e);
+          }
+        })();
       }
 
       return NextResponse.json({

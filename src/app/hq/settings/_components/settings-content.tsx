@@ -3,7 +3,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import type { CompanySettings } from "@/lib/app-settings";
 import { AuthConfigTab } from "./auth-config-tab";
+import { CompanyTab } from "./company-tab";
 import { CouponsTab } from "./coupons-tab";
 import { PlansTab } from "./plans-tab";
 
@@ -46,6 +48,8 @@ export type Coupon = {
 export function SettingsContent() {
   const [plans, setPlans] = useState<Plan[]>([]);
   const [coupons, setCoupons] = useState<Coupon[]>([]);
+  const [companySettings, setCompanySettings] =
+    useState<CompanySettings | null>(null);
   const [loading, setLoading] = useState(true);
 
   const fetchData = useCallback(async () => {
@@ -64,6 +68,7 @@ export function SettingsContent() {
       const json = await res.json();
       setPlans(json.plans ?? []);
       setCoupons(json.coupons ?? []);
+      setCompanySettings(json.companySettings ?? null);
     } catch (e: any) {
       console.error("[FETCH_DATA]", e);
       toast.error(e.message || "Failed to load settings");
@@ -101,9 +106,10 @@ export function SettingsContent() {
 
   return (
     <Tabs defaultValue="plans" className="w-full">
-      <TabsList className="mb-6 grid w-full max-w-md grid-cols-3">
+      <TabsList className="mb-6 grid w-full max-w-lg grid-cols-4">
         <TabsTrigger value="plans">Plans</TabsTrigger>
         <TabsTrigger value="coupons">Coupons</TabsTrigger>
+        <TabsTrigger value="company">Company</TabsTrigger>
         <TabsTrigger value="auth">Auth Config</TabsTrigger>
       </TabsList>
 
@@ -122,6 +128,17 @@ export function SettingsContent() {
           loading={loading}
           onMutate={mutate}
           onRefresh={fetchData}
+        />
+      </TabsContent>
+
+      <TabsContent value="company">
+        <CompanyTab
+          initialSettings={companySettings!}
+          onMutate={async (action, data) => {
+            const res = await mutate(action, data);
+            setCompanySettings(res.companySettings);
+            return res;
+          }}
         />
       </TabsContent>
 

@@ -633,6 +633,17 @@ export const aiUsageLog = pgTable(
 // Email Hub
 // ─────────────────────────────────────────────────
 
+/**
+ * Admin-configurable key-value settings.
+ * Used for company details (name, GSTIN, address, CIN) shown on invoices.
+ * Keys are stable strings; values are freeform text.
+ */
+export const appSettings = pgTable("app_settings", {
+  key: text("key").primaryKey(), // e.g. 'company_name', 'company_gstin'
+  value: text("value").notNull().default(""),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
 export const receivedEmail = pgTable(
   "received_email",
   {

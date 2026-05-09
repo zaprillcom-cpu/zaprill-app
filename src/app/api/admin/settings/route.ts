@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import db from "@/db";
 import { coupons, plan } from "@/db/schema";
+import { getCompanySettings, saveCompanySettings } from "@/lib/app-settings";
 import { auth } from "@/lib/auth";
 
 async function requireAdmin() {
@@ -21,12 +22,13 @@ export async function GET() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const [plans, couponsData] = await Promise.all([
+    const [plans, couponsData, companySettings] = await Promise.all([
       db.select().from(plan).orderBy(plan.sortOrder),
       db.select().from(coupons).orderBy(coupons.createdAt),
+      getCompanySettings(),
     ]);
 
-    return NextResponse.json({ plans, coupons: couponsData });
+    return NextResponse.json({ plans, coupons: couponsData, companySettings });
   } catch (error: any) {
     console.error("[SETTINGS_GET]", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -137,6 +139,18 @@ export async function POST(request: Request) {
         .set({ status: "disabled", updatedAt: new Date() })
         .where(eq(coupons.id, data.id));
       return NextResponse.json({ success: true });
+    }
+
+    if (_action === "update_company_settings") {
+      await saveCompanySettings({
+        company_name: data.company_name,
+        company_gstin: data.company_gstin,
+        company_address: data.company_address,
+        company_cin: data.company_cin,
+        company_email: data.company_email,
+      });
+      const updated = await getCompanySettings();
+      return NextResponse.json({ companySettings: updated });
     }
 
     return NextResponse.json({ error: "Unknown action" }, { status: 400 });

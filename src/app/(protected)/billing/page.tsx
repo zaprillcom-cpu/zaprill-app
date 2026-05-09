@@ -9,18 +9,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import db from "@/db";
 import { invoice, plan, subscription } from "@/db/schema";
 import { auth } from "@/lib/auth";
 import { formatCurrency } from "@/lib/billing-utils";
+import { BillingInvoiceTable } from "./_components/billing-invoice-table";
 import CancelSubscriptionButton from "./cancel-button";
 
 export const metadata = {
@@ -168,57 +161,12 @@ export default async function BillingPage() {
       <Card>
         <CardHeader>
           <CardTitle>Invoice History</CardTitle>
-          <CardDescription>Recent payments and billing events.</CardDescription>
+          <CardDescription>
+            Click any invoice to view details and download a PDF receipt.
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          {invoices.length === 0 ? (
-            <p className="text-sm text-muted-foreground text-center py-6">
-              No invoices found.
-            </p>
-          ) : (
-            <div className="rounded-md border overflow-hidden">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Date</TableHead>
-                    <TableHead>Amount</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Reason</TableHead>
-                    <TableHead className="text-right">Order ID</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {invoices.map((inv) => (
-                    <TableRow key={inv.id}>
-                      <TableCell className="font-medium">
-                        {new Date(inv.createdAt).toLocaleDateString()}
-                      </TableCell>
-                      <TableCell>{formatCurrency(inv.totalAmount)}</TableCell>
-                      <TableCell>
-                        <Badge
-                          variant={
-                            inv.status === "paid"
-                              ? "default"
-                              : inv.status === "failed" || inv.status === "void"
-                                ? "destructive"
-                                : "secondary"
-                          }
-                        >
-                          {inv.status}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="capitalize text-muted-foreground text-sm">
-                        {inv.billingReason.replace("_", " ")}
-                      </TableCell>
-                      <TableCell className="text-right font-mono text-xs text-muted-foreground">
-                        {inv.id}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          )}
+          <BillingInvoiceTable invoices={invoices as any} />
         </CardContent>
       </Card>
     </div>

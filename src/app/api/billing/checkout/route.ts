@@ -9,6 +9,7 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import db from "@/db";
 import { coupons, couponUsage, invoice, payment, plan } from "@/db/schema";
+import { getCompanySettings } from "@/lib/app-settings";
 import { auth } from "@/lib/auth";
 import {
   BillingError,
@@ -16,6 +17,7 @@ import {
   generateId,
 } from "@/lib/billing-utils";
 import { createCashfreeOrder } from "@/lib/cashfree";
+import { sendInvoiceReceiptEmail } from "@/lib/emails/invoice-email";
 import {
   redeemCoupon,
   reserveCoupon,
@@ -123,10 +125,16 @@ export async function POST(request: Request) {
       // Store planId + billingCycle in metadata for webhook handler
     });
 
-    // Update invoice metadata with plan info for webhook
+    // Update invoice metadata with plan info for webhook + billing page display
     await db
       .update((await import("@/db/schema")).invoice)
-      .set({ metadata: { planId, billingCycle: selectedPlan.billingCycle } })
+      .set({
+        metadata: {
+          planId,
+          planName: selectedPlan.name,
+          billingCycle: selectedPlan.billingCycle,
+        },
+      })
       .where(eq((await import("@/db/schema")).invoice.id, inv.id));
 
     // ── Reserve coupon (now that invoice exists) ────────────────────────
@@ -181,6 +189,28 @@ export async function POST(request: Request) {
         couponId,
         discountAmount,
       });
+
+      // 5. Send receipt email (fire-and-forget)
+      void (async () => {
+        try {
+          const company = await getCompanySettings();
+          const paidInv = {
+            ...inv,
+            status: "paid" as const,
+            paidAt: new Date(),
+          };
+          await sendInvoiceReceiptEmail({
+            email: user.email ?? "",
+            name: user.name ?? "Customer",
+            invoice: paidInv,
+            planName: selectedPlan.name,
+            billingCycle: selectedPlan.billingCycle,
+            company,
+          });
+        } catch (e) {
+          console.error("[checkout] free receipt email failed:", e);
+        }
+      })();
 
       return NextResponse.json({
         success: true,

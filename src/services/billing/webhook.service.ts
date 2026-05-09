@@ -8,6 +8,8 @@
  * 4. Returns 200 even on internal errors (log + prevent Cashfree retries)
  */
 
+import { getCompanySettings } from "@/lib/app-settings";
+import { sendInvoiceReceiptEmail } from "@/lib/emails/invoice-email";
 import type { CashfreeWebhookEvent } from "@/types/billing";
 import { getCouponUsageByInvoice, redeemCoupon } from "./coupon.service";
 import {
@@ -138,6 +140,62 @@ export async function handleWebhookEvent(
     if (couponUsageRow) {
       await redeemCoupon(couponUsageRow.id);
     }
+
+    // e) Send invoice receipt email (fire-and-forget)
+    void (async () => {
+      try {
+        const { eq } = await import("drizzle-orm");
+        const db = (await import("@/db")).default;
+        const { user, plan } = await import("@/db/schema");
+
+        const meta = inv.metadata as Record<string, string>;
+        const planId = meta?.planId;
+
+        const [userRow] = await db
+          .select({ email: user.email, name: user.name })
+          .from(user)
+          .where(eq(user.id, inv.userId))
+          .limit(1);
+
+        let planName = "Subscription";
+        let billingCycle = meta?.billingCycle ?? "monthly";
+        if (planId) {
+          const [planRow] = await db
+            .select({ name: plan.name, billingCycle: plan.billingCycle })
+            .from(plan)
+            .where(eq(plan.id, planId))
+            .limit(1);
+          if (planRow) {
+            planName = planRow.name;
+            billingCycle = billingCycle || planRow.billingCycle;
+          }
+        }
+
+        const company = await getCompanySettings();
+        const method = cfPaymentData.payment_method
+          ? Object.keys(cfPaymentData.payment_method)[0]
+          : undefined;
+
+        if (userRow?.email) {
+          await sendInvoiceReceiptEmail({
+            email: userRow.email,
+            name: userRow.name ?? "Customer",
+            invoice: {
+              ...inv,
+              status: "paid",
+              paidAt: new Date(cfPaymentData.payment_completion_time),
+            },
+            planName,
+            billingCycle,
+            paymentMethod: method,
+            transactionId: cfPaymentData.bank_reference || undefined,
+            company,
+          });
+        }
+      } catch (emailErr) {
+        console.error("[webhook] Failed to send receipt email:", emailErr);
+      }
+    })();
 
     console.log(`[webhook] SUCCESS handled for invoice ${inv.id}`);
     return { handled: true, action: "payment_success" };
