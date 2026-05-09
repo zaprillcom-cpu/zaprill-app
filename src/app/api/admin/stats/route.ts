@@ -45,7 +45,18 @@ export async function GET(request: Request) {
       ORDER BY DATE(created_at)
     `);
 
-    // 3. Top AI Models
+    // 3. User Growth Stats
+    const growthStats = await db.execute(sql`
+      SELECT 
+        DATE(created_at) as date,
+        COUNT(*) as users
+      FROM "user"
+      WHERE created_at >= ${startDate}
+      GROUP BY DATE(created_at)
+      ORDER BY DATE(created_at)
+    `);
+
+    // 4. Top AI Models
     const modelStats = await db.execute(sql`
       SELECT 
         model,
@@ -60,6 +71,7 @@ export async function GET(request: Request) {
     return NextResponse.json({
       revenue: revenueStats.rows,
       ai: aiStats.rows,
+      growth: growthStats.rows,
       models: modelStats.rows,
     });
   } catch (error: any) {

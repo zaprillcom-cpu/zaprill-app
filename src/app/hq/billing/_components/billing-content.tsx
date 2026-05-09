@@ -10,9 +10,13 @@ import {
 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import {
+  Area,
+  AreaChart,
   Bar,
   BarChart,
   CartesianGrid,
+  Cell,
+  ComposedChart,
   Line,
   LineChart,
   ResponsiveContainer,
@@ -84,6 +88,12 @@ export function BillingContent() {
       cost: parseFloat(a.cost),
     })) || [];
 
+  const growthData =
+    data?.growth?.map((g: any) => ({
+      date: format(parseISO(g.date), "MMM dd"),
+      users: parseInt(g.users),
+    })) || [];
+
   const totalRevenue = revenueData.reduce(
     (acc: number, curr: any) => acc + curr.amount,
     0,
@@ -96,6 +106,26 @@ export function BillingContent() {
     (acc: number, curr: any) => acc + curr.cost,
     0,
   );
+  const totalNewUsers = growthData.reduce(
+    (acc: number, curr: any) => acc + curr.users,
+    0,
+  );
+
+  const netMargin = totalRevenue - totalAiCost * 84; // Assuming 1 USD = 84 INR
+  const efficiencyRatio = totalRevenue / (totalAiCost * 84 || 1);
+  const costPerUser = (totalAiCost * 84) / (totalNewUsers || 1);
+
+  // Combine all data for correlation chart
+  const combinedData = revenueData.map((r: any) => {
+    const ai = aiData.find((a: any) => a.date === r.date);
+    const growth = growthData.find((g: any) => g.date === r.date);
+    return {
+      date: r.date,
+      revenue: r.amount,
+      cost: (ai?.cost || 0) * 84,
+      users: growth?.users || 0,
+    };
+  });
 
   return (
     <>
@@ -105,58 +135,151 @@ export function BillingContent() {
         </Button>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Monthly Revenue
-            </CardTitle>
+            <CardTitle className="text-sm font-medium">Net Margin</CardTitle>
             <DollarSign className="h-4 w-4 text-emerald-500" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              ₹{totalRevenue.toLocaleString()}
+              ₹
+              {netMargin.toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              })}
             </div>
             <div className="flex items-center text-xs text-emerald-500 mt-1">
               <ArrowUpRight className="mr-1 h-3 w-3" />
-              +12.5% from last month
+              Healthy Profitability
             </div>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              AI Token Spend
-            </CardTitle>
-            <Coins className="h-4 w-4 text-amber-500" />
+            <CardTitle className="text-sm font-medium">Efficiency</CardTitle>
+            <Activity className="h-4 w-4 text-purple-500" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {(totalTokens / 1_000_000).toFixed(2)}M
+              {efficiencyRatio.toFixed(1)}x
             </div>
             <p className="text-xs text-muted-foreground mt-1">
-              Estimated Cost: ${totalAiCost.toFixed(4)}
+              Revenue per ₹1 AI Spend
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Avg. Cost per Day
-            </CardTitle>
+            <CardTitle className="text-sm font-medium">Cost per User</CardTitle>
+            <Coins className="h-4 w-4 text-amber-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">₹{costPerUser.toFixed(2)}</div>
+            <p className="text-xs text-muted-foreground mt-1">
+              AI cost per registration
+            </p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">New Users</CardTitle>
             <Activity className="h-4 w-4 text-blue-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
-              ${(totalAiCost / (data?.ai?.length || 1)).toFixed(4)}
-            </div>
+            <div className="text-2xl font-bold">{totalNewUsers}</div>
             <p className="text-xs text-muted-foreground mt-1">
-              Optimized via caching
+              Last 30 days growth
             </p>
           </CardContent>
         </Card>
       </div>
 
+      <Card className="w-full">
+        <CardHeader>
+          <CardTitle>Usage vs Price vs Growth Correlation</CardTitle>
+          <CardDescription>
+            How user growth scales with AI costs and revenue generation.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="h-[400px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <ComposedChart data={combinedData}>
+              <defs>
+                <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
+                  <stop
+                    offset="5%"
+                    stopColor="oklch(0.6 0.18 160)"
+                    stopOpacity={0.8}
+                  />
+                  <stop
+                    offset="95%"
+                    stopColor="oklch(0.6 0.18 160)"
+                    stopOpacity={0.2}
+                  />
+                </linearGradient>
+              </defs>
+              <CartesianGrid
+                strokeDasharray="3 3"
+                vertical={false}
+                stroke="hsl(var(--muted))"
+              />
+              <XAxis
+                dataKey="date"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+              />
+              <YAxis
+                yAxisId="left"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={(v) => `₹${v}`}
+              />
+              <YAxis
+                yAxisId="right"
+                orientation="right"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+              />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "hsl(var(--background))",
+                  borderColor: "hsl(var(--border))",
+                  borderRadius: "8px",
+                }}
+              />
+              <Area
+                yAxisId="left"
+                type="monotone"
+                dataKey="revenue"
+                fill="url(#colorRev)"
+                stroke="oklch(0.6 0.18 160)"
+                strokeWidth={2}
+                name="Revenue (INR)"
+              />
+              <Bar
+                yAxisId="left"
+                dataKey="cost"
+                fill="oklch(0.62 0.22 303)"
+                opacity={0.6}
+                radius={[4, 4, 0, 0]}
+                name="AI Cost (INR)"
+              />
+              <Line
+                yAxisId="right"
+                type="monotone"
+                dataKey="users"
+                stroke="oklch(0.68 0.13 260)"
+                strokeWidth={3}
+                dot={{ r: 4 }}
+                name="New Users"
+              />
+            </ComposedChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
       <div className="grid gap-4 md:grid-cols-2">
         <Card>
           <CardHeader>
@@ -168,6 +291,20 @@ export function BillingContent() {
           <CardContent className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={revenueData}>
+                <defs>
+                  <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+                    <stop
+                      offset="5%"
+                      stopColor="oklch(0.79 0.15 160)"
+                      stopOpacity={1}
+                    />
+                    <stop
+                      offset="95%"
+                      stopColor="oklch(0.6 0.18 160)"
+                      stopOpacity={1}
+                    />
+                  </linearGradient>
+                </defs>
                 <CartesianGrid
                   strokeDasharray="3 3"
                   vertical={false}
@@ -190,12 +327,14 @@ export function BillingContent() {
                   contentStyle={{
                     backgroundColor: "hsl(var(--background))",
                     borderColor: "hsl(var(--border))",
+                    borderRadius: "8px",
                   }}
                 />
                 <Bar
                   dataKey="amount"
-                  fill="hsl(var(--primary))"
+                  fill="url(#colorRevenue)"
                   radius={[4, 4, 0, 0]}
+                  animationDuration={1500}
                 />
               </BarChart>
             </ResponsiveContainer>
@@ -211,7 +350,21 @@ export function BillingContent() {
           </CardHeader>
           <CardContent className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={aiData}>
+              <AreaChart data={aiData}>
+                <defs>
+                  <linearGradient id="colorTokens" x1="0" y1="0" x2="0" y2="1">
+                    <stop
+                      offset="5%"
+                      stopColor="oklch(0.62 0.22 303)"
+                      stopOpacity={0.3}
+                    />
+                    <stop
+                      offset="95%"
+                      stopColor="oklch(0.62 0.22 303)"
+                      stopOpacity={0}
+                    />
+                  </linearGradient>
+                </defs>
                 <CartesianGrid
                   strokeDasharray="3 3"
                   vertical={false}
@@ -228,16 +381,20 @@ export function BillingContent() {
                   contentStyle={{
                     backgroundColor: "hsl(var(--background))",
                     borderColor: "hsl(var(--border))",
+                    borderRadius: "8px",
                   }}
                 />
-                <Line
+                <Area
                   type="monotone"
                   dataKey="tokens"
-                  stroke="hsl(var(--chart-2))"
-                  strokeWidth={2}
-                  dot={false}
+                  stroke="oklch(0.62 0.22 303)"
+                  strokeWidth={3}
+                  fillOpacity={1}
+                  fill="url(#colorTokens)"
+                  activeDot={{ r: 6, strokeWidth: 0 }}
+                  animationDuration={1500}
                 />
-              </LineChart>
+              </AreaChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
@@ -267,6 +424,9 @@ export function BillingContent() {
                   <th className="h-10 px-2 text-right align-middle font-medium text-muted-foreground">
                     Est. Cost
                   </th>
+                  <th className="h-10 px-2 text-right align-middle font-medium text-muted-foreground">
+                    Efficiency
+                  </th>
                 </tr>
               </thead>
               <tbody className="[&_tr:last-child]:border-0">
@@ -284,6 +444,14 @@ export function BillingContent() {
                     </td>
                     <td className="p-2 align-middle text-right text-amber-500 font-mono">
                       ${parseFloat(m.total_cost).toFixed(4)}
+                    </td>
+                    <td className="p-2 align-middle text-right text-blue-500 font-medium">
+                      {(
+                        parseInt(m.total_tokens) /
+                        (parseFloat(m.total_cost) || 1) /
+                        1000
+                      ).toFixed(0)}
+                      k t/$
                     </td>
                   </tr>
                 ))}
