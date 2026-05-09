@@ -1,6 +1,11 @@
 "use client";
 
-import type { ResumeData, ResumeMetadata } from "@/types/resume";
+import {
+  DEFAULT_RESUME_DATA,
+  DEFAULT_RESUME_METADATA,
+  type ResumeData,
+  type ResumeMetadata,
+} from "@/types/resume";
 import {
   ContactItem,
   formatProfileText,
@@ -12,11 +17,8 @@ import {
 } from "./SharedComponents";
 
 /**
- * ModernSplitTemplate — Bold header with sidebar layout.
- * Skills and education on the left, experience on the right.
- * Designed for consulting, strategy, and business roles.
- * ATS Score: 88%
- * Premium — Pro tier only.
+ * ModernSplitTemplate — Two-column layout with fixed sidebar
+ * ATS Score: 88 (clean structure, sidebar is parseable)
  */
 export default function ModernSplitTemplate({
   data,
@@ -25,212 +27,138 @@ export default function ModernSplitTemplate({
   data: ResumeData;
   metadata: ResumeMetadata;
 }) {
-  const {
-    basics,
-    work,
-    education,
-    skills,
-    projects,
-    certifications,
-    languages,
-    volunteer,
-    awards,
-    publications,
-    references,
-  } = data;
-  const { theme, typography, sectionVisibility, page } = metadata;
+  // Safety: use fallbacks if data/metadata are empty
+  const d = data || DEFAULT_RESUME_DATA;
+  const m = metadata || DEFAULT_RESUME_METADATA;
 
-  const fontFamily = typography.font.family;
-  const fontSize = `${typography.font.size}pt`;
-  const lineHeight = typography.lineHeight;
+  const basics = d.basics || DEFAULT_RESUME_DATA.basics;
+  const work = d.work || [];
+  const education = d.education || [];
+  const skills = d.skills || [];
+  const projects = d.projects || [];
+  const certifications = d.certifications || [];
+  const languages = d.languages || [];
+  const volunteer = d.volunteer || [];
+  const awards = d.awards || [];
+  const publications = d.publications || [];
+  const references = d.references || [];
+
+  const {
+    theme = DEFAULT_RESUME_METADATA.theme,
+    typography = DEFAULT_RESUME_METADATA.typography,
+    sectionVisibility = DEFAULT_RESUME_METADATA.sectionVisibility,
+    page = DEFAULT_RESUME_METADATA.page,
+  } = m;
+
+  const fontFamily = typography?.font?.family || "Inter";
+  const fontSize = `${typography?.font?.size || 11}pt`;
+  const lineHeight = typography?.lineHeight || 1.5;
 
   return (
     <div
       className="resume-page modern-split-template"
-      style={
-        {
-          "--resume-primary": theme.primary,
-          "--resume-accent": theme.accent,
-          "--resume-bg": theme.background,
-          "--resume-text": theme.text,
-          "--resume-padding": `${page?.margin ?? 20}mm`,
-          fontFamily,
-          fontSize,
-          lineHeight,
-        } as React.CSSProperties
-      }
+      style={{
+        fontFamily,
+        fontSize,
+        lineHeight,
+        ["--resume-padding" as string]: `${page?.margin ?? 20}mm`,
+        ["--resume-primary" as string]: theme?.primary || "#2563eb",
+        ["--resume-bg" as string]: theme?.background || "#ffffff",
+        ["--resume-text" as string]: theme?.text || "#1f2937",
+        ["--resume-accent" as string]: theme?.accent || "#eff6ff",
+      }}
     >
-      {/* Bold Split Header */}
-      <header className="modern-split-header">
-        <div className="modern-split-header-left">
-          <h1 className="modern-split-name">{basics.name || "Your Name"}</h1>
-          {basics.label && <p className="modern-split-label">{basics.label}</p>}
-        </div>
-        <div className="modern-split-header-right">
-          <ContactItem
-            icon={IconMail}
-            text={basics.email}
-            href={`mailto:${basics.email}`}
-          />
-          <ContactItem
-            icon={IconPhone}
-            text={basics.phone}
-            href={`tel:${basics.phone}`}
-          />
-          <ContactItem
-            icon={IconMapPin}
-            text={
-              basics.location.city
-                ? `${basics.location.city}${basics.location.region ? `, ${basics.location.region}` : ""}`
-                : ""
-            }
-          />
-          <ContactItem
-            icon={IconWorld}
-            text={formatProfileText(basics.url, basics.url)}
-            href={basics.url}
-          />
+      <div className="ms-container">
+        {/* Sidebar (left) */}
+        <aside className="ms-sidebar">
+          <header className="ms-header">
+            <h1 className="resume-name">{basics.name || "Your Name"}</h1>
+            <p className="resume-label">{basics.label}</p>
+          </header>
 
-          {(basics.profiles || []).map((p) => (
-            <ContactItem
-              key={p.network}
-              icon={getProfileIcon(p.network)}
-              text={formatProfileText(p.url, p.username || p.network)}
-              href={p.url}
-            />
-          ))}
-        </div>
-      </header>
-
-      {/* Two-column body */}
-      <div className="modern-split-body">
-        {/* Left sidebar */}
-        <aside className="modern-split-sidebar">
-          {/* Skills */}
-          {sectionVisibility.skills && skills?.length > 0 && (
-            <section className="resume-section">
-              <h2 className="modern-split-section-title">Expertise</h2>
-              {skills.map((group) => (
-                <div key={group.id} className="modern-split-skill-group">
-                  <h4 className="modern-split-skill-label">{group.name}</h4>
-                  <div className="modern-split-skill-list">
-                    {group.keywords.map((kw) => (
-                      <span key={kw} className="modern-split-skill-item">
-                        {kw}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
+          <div className="ms-sidebar-content">
+            {/* Contact */}
+            <section className="ms-sidebar-section">
+              <h3 className="ms-sidebar-title">Contact</h3>
+              <div className="ms-sidebar-list">
+                <ContactItem
+                  icon={IconMail}
+                  text={basics.email}
+                  href={`mailto:${basics.email}`}
+                />
+                <ContactItem
+                  icon={IconPhone}
+                  text={basics.phone}
+                  href={`tel:${basics.phone}`}
+                />
+                <ContactItem
+                  icon={IconMapPin}
+                  text={
+                    basics.location?.city
+                      ? `${basics.location.city}${basics.location.region ? `, ${basics.location.region}` : ""}`
+                      : ""
+                  }
+                />
+                <ContactItem
+                  icon={IconWorld}
+                  text={formatProfileText(basics.url, basics.url)}
+                  href={basics.url}
+                />
+                {(basics.profiles || []).map((p) => (
+                  <ContactItem
+                    key={p.network}
+                    icon={getProfileIcon(p.network)}
+                    text={formatProfileText(p.url, p.username || p.network)}
+                    href={p.url}
+                  />
+                ))}
+              </div>
             </section>
-          )}
 
-          {/* Education */}
-          {sectionVisibility.education && education?.length > 0 && (
-            <section className="resume-section">
-              <h2 className="modern-split-section-title">Education</h2>
-              {education.map((item) => (
-                <div key={item.id} className="modern-split-edu-item">
-                  <h3 className="resume-entry-title">
-                    {item.studyType} in {item.area}
-                  </h3>
-                  <p className="modern-split-institution">{item.institution}</p>
-                  {item.startDate && (
-                    <p className="modern-split-date">
-                      {item.startDate}
-                      {item.endDate ? ` – ${item.endDate}` : ""}
-                    </p>
-                  )}
+            {/* Skills */}
+            {sectionVisibility?.skills && (skills || []).length > 0 && (
+              <section className="ms-sidebar-section">
+                <h3 className="ms-sidebar-title">Skills</h3>
+                <div className="ms-skills-list">
+                  {(skills || []).map((group) => (
+                    <div key={group.id} className="ms-skill-group">
+                      <h4 className="ms-skill-name">{group.name}</h4>
+                      <div className="ms-skill-keywords">
+                        {(group.keywords || []).map((kw) => (
+                          <span key={kw} className="ms-skill-badge">
+                            {kw}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </section>
-          )}
+              </section>
+            )}
 
-          {/* Languages */}
-          {sectionVisibility.languages && languages?.length > 0 && (
-            <section className="resume-section">
-              <h2 className="modern-split-section-title">Languages</h2>
-              {languages.map((lang) => (
-                <div key={lang.id} className="modern-split-lang-item">
-                  <span className="font-medium">{lang.language}</span>
-                  {lang.fluency && (
-                    <span className="modern-split-fluency">{lang.fluency}</span>
-                  )}
+            {/* Languages */}
+            {sectionVisibility?.languages && (languages || []).length > 0 && (
+              <section className="ms-sidebar-section">
+                <h3 className="ms-sidebar-title">Languages</h3>
+                <div className="ms-sidebar-list">
+                  {(languages || []).map((item) => (
+                    <div key={item.id} className="ms-lang-item">
+                      <span className="ms-lang-name">{item.language}</span>
+                      <span className="ms-lang-level">{item.fluency}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </section>
-          )}
-
-          {/* Certifications */}
-          {sectionVisibility.certifications && certifications?.length > 0 && (
-            <section className="resume-section">
-              <h2 className="modern-split-section-title">Certifications</h2>
-              {certifications.map((item) => (
-                <div key={item.id} className="modern-split-cert-item">
-                  <h3 className="resume-entry-title">{item.name}</h3>
-                  <p className="modern-split-institution">
-                    {item.issuer}
-                    {item.date ? ` · ${item.date}` : ""}
-                  </p>
-                </div>
-              ))}
-            </section>
-          )}
-
-          {/* Awards */}
-          {sectionVisibility.awards && awards?.length > 0 && (
-            <section className="resume-section">
-              <h2 className="modern-split-section-title">Awards</h2>
-              {awards.map((item) => (
-                <div key={item.id} className="modern-split-cert-item">
-                  <h3 className="resume-entry-title">{item.title}</h3>
-                  <p className="modern-split-institution">
-                    {item.awarder}
-                    {item.date ? ` · ${item.date}` : ""}
-                  </p>
-                </div>
-              ))}
-            </section>
-          )}
-
-          {/* Publications */}
-          {sectionVisibility.publications && publications?.length > 0 && (
-            <section className="resume-section">
-              <h2 className="modern-split-section-title">Publications</h2>
-              {publications.map((item) => (
-                <div key={item.id} className="modern-split-cert-item">
-                  <h3 className="resume-entry-title">{item.name}</h3>
-                  <p className="modern-split-institution">
-                    {item.publisher}
-                    {item.releaseDate ? ` · ${item.releaseDate}` : ""}
-                  </p>
-                </div>
-              ))}
-            </section>
-          )}
-
-          {/* References */}
-          {sectionVisibility.references && references?.length > 0 && (
-            <section className="resume-section">
-              <h2 className="modern-split-section-title">References</h2>
-              {references.map((item) => (
-                <div key={item.id} className="modern-split-cert-item">
-                  <h3 className="resume-entry-title">{item.name}</h3>
-                  {item.reference && (
-                    <p className="modern-split-institution">{item.reference}</p>
-                  )}
-                </div>
-              ))}
-            </section>
-          )}
+              </section>
+            )}
+          </div>
         </aside>
 
-        {/* Right main content */}
-        <main className="modern-split-main">
+        {/* Main (right) */}
+        <main className="ms-main">
           {/* Summary */}
-          {sectionVisibility.summary && basics.summary && (
-            <section className="resume-section">
-              <h2 className="modern-split-section-title">Profile</h2>
+          {sectionVisibility?.summary && basics?.summary && (
+            <section className="ms-section">
+              <h2 className="ms-section-title">Summary</h2>
               <div
                 className="resume-text"
                 dangerouslySetInnerHTML={{ __html: basics.summary }}
@@ -238,61 +166,75 @@ export default function ModernSplitTemplate({
             </section>
           )}
 
-          {/* Work Experience */}
-          {sectionVisibility.work && work?.length > 0 && (
-            <section className="resume-section">
-              <h2 className="modern-split-section-title">Experience</h2>
-              {work.map((item) => (
-                <div key={item.id} className="resume-entry">
-                  <div className="resume-entry-header">
+          {/* Experience */}
+          {sectionVisibility?.work && (work || []).length > 0 && (
+            <section className="ms-section">
+              <h2 className="ms-section-title">Experience</h2>
+              {(work || []).map((item) => (
+                <div key={item.id} className="ms-entry">
+                  <div className="ms-entry-header">
                     <div>
-                      <h3 className="resume-entry-title">{item.position}</h3>
-                      <p className="modern-split-company">
-                        {item.company}
-                        {item.location ? ` · ${item.location}` : ""}
-                      </p>
+                      <h3 className="ms-entry-title">{item.position}</h3>
+                      <p className="ms-entry-org">{item.company}</p>
                     </div>
-                    {item.startDate && (
-                      <span className="modern-split-date">
-                        {item.startDate}
-                        {item.endDate ? ` – ${item.endDate}` : " – Present"}
-                      </span>
-                    )}
+                    <span className="ms-entry-date">
+                      {item.startDate} – {item.endDate || "Present"}
+                    </span>
                   </div>
-                  {item.highlights.length > 0 && (
-                    <ul className="resume-bullets">
-                      {item.highlights.map((h, i) => (
-                        <li key={`work-${item.id}-${i}`}>{h}</li>
+                  {item.highlights && (item.highlights || []).length > 0 && (
+                    <ul className="ms-bullets">
+                      {(item.highlights || []).map((h, i) => (
+                        <li key={`${item.id}-h-${i}`}>{h}</li>
                       ))}
                     </ul>
                   )}
+                </div>
+              ))}
+            </section>
+          )}
+
+          {/* Education */}
+          {sectionVisibility?.education && (education || []).length > 0 && (
+            <section className="ms-section">
+              <h2 className="ms-section-title">Education</h2>
+              {(education || []).map((item) => (
+                <div key={item.id} className="ms-entry">
+                  <div className="ms-entry-header">
+                    <div>
+                      <h3 className="ms-entry-title">{item.institution}</h3>
+                      <p className="ms-entry-org">
+                        {item.studyType}
+                        {item.area ? ` in ${item.area}` : ""}
+                      </p>
+                    </div>
+                    <span className="ms-entry-date">
+                      {item.startDate} – {item.endDate || "Present"}
+                    </span>
+                  </div>
                 </div>
               ))}
             </section>
           )}
 
           {/* Projects */}
-          {sectionVisibility.projects && projects?.length > 0 && (
-            <section className="resume-section">
-              <h2 className="modern-split-section-title">Key Projects</h2>
-              {projects.map((item) => (
-                <div key={item.id} className="resume-entry">
-                  <div className="resume-entry-header">
-                    <h3 className="resume-entry-title">{item.name}</h3>
-                    {item.startDate && (
-                      <span className="modern-split-date">
-                        {item.startDate}
-                        {item.endDate ? ` – ${item.endDate}` : ""}
-                      </span>
-                    )}
+          {sectionVisibility?.projects && (projects || []).length > 0 && (
+            <section className="ms-section">
+              <h2 className="ms-section-title">Projects</h2>
+              {(projects || []).map((item) => (
+                <div key={item.id} className="ms-entry">
+                  <div className="ms-entry-header">
+                    <h3 className="ms-entry-title">{item.name}</h3>
+                    <span className="ms-entry-date">
+                      {item.startDate} – {item.endDate || ""}
+                    </span>
                   </div>
                   {item.description && (
-                    <p className="resume-text">{item.description}</p>
+                    <p className="ms-text mb-2">{item.description}</p>
                   )}
-                  {item.highlights.length > 0 && (
-                    <ul className="resume-bullets">
-                      {item.highlights.map((h, i) => (
-                        <li key={`proj-${item.id}-${i}`}>{h}</li>
+                  {item.highlights && (item.highlights || []).length > 0 && (
+                    <ul className="ms-bullets">
+                      {(item.highlights || []).map((h, i) => (
+                        <li key={`${item.id}-h-${i}`}>{h}</li>
                       ))}
                     </ul>
                   )}
@@ -301,40 +243,23 @@ export default function ModernSplitTemplate({
             </section>
           )}
 
-          {/* Volunteer */}
-          {sectionVisibility.volunteer && volunteer?.length > 0 && (
-            <section className="resume-section">
-              <h2 className="modern-split-section-title">Volunteer</h2>
-              {volunteer.map((item) => (
-                <div key={item.id} className="resume-entry">
-                  <div className="resume-entry-header">
-                    <div>
-                      <h3 className="resume-entry-title">{item.position}</h3>
-                      <p className="modern-split-company">
-                        {item.organization}
-                      </p>
-                    </div>
-                    {item.startDate && (
-                      <span className="modern-split-date">
-                        {item.startDate}
-                        {item.endDate ? ` – ${item.endDate}` : " – Present"}
-                      </span>
-                    )}
+          {/* Certifications */}
+          {sectionVisibility?.certifications &&
+            (certifications || []).length > 0 && (
+              <section className="ms-section">
+                <h2 className="ms-section-title">Certifications</h2>
+                {(certifications || []).map((item) => (
+                  <div key={item.id} className="ms-entry-inline">
+                    <span className="font-bold">{item.name}</span>
+                    <span className="mx-2 text-muted-foreground">|</span>
+                    <span>{item.issuer}</span>
+                    <span className="ml-auto text-muted-foreground">
+                      {item.date}
+                    </span>
                   </div>
-                  {item.summary && (
-                    <p className="resume-text">{item.summary}</p>
-                  )}
-                  {item.highlights.length > 0 && (
-                    <ul className="resume-bullets">
-                      {item.highlights.map((h, i) => (
-                        <li key={`vol-${item.id}-${i}`}>{h}</li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              ))}
-            </section>
-          )}
+                ))}
+              </section>
+            )}
         </main>
       </div>
     </div>

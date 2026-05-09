@@ -1,6 +1,11 @@
 "use client";
 
-import type { ResumeData, ResumeMetadata } from "@/types/resume";
+import {
+  DEFAULT_RESUME_DATA,
+  DEFAULT_RESUME_METADATA,
+  type ResumeData,
+  type ResumeMetadata,
+} from "@/types/resume";
 import {
   ContactItem,
   formatProfileText,
@@ -22,24 +27,32 @@ export default function TechStackTemplate({
   data: ResumeData;
   metadata: ResumeMetadata;
 }) {
-  const {
-    basics,
-    work,
-    education,
-    skills,
-    projects,
-    certifications,
-    languages,
-    volunteer,
-    awards,
-    publications,
-    references,
-  } = data;
-  const { theme, typography, sectionVisibility, page } = metadata;
+  // Safety: use fallbacks if data/metadata are empty
+  const d = data || DEFAULT_RESUME_DATA;
+  const m = metadata || DEFAULT_RESUME_METADATA;
 
-  const fontFamily = typography.font.family;
-  const fontSize = `${typography.font.size}pt`;
-  const lineHeight = typography.lineHeight;
+  const basics = d.basics || DEFAULT_RESUME_DATA.basics;
+  const work = d.work || [];
+  const education = d.education || [];
+  const skills = d.skills || [];
+  const projects = d.projects || [];
+  const certifications = d.certifications || [];
+  const languages = d.languages || [];
+  const volunteer = d.volunteer || [];
+  const awards = d.awards || [];
+  const publications = d.publications || [];
+  const references = d.references || [];
+
+  const {
+    theme = DEFAULT_RESUME_METADATA.theme,
+    typography = DEFAULT_RESUME_METADATA.typography,
+    sectionVisibility = DEFAULT_RESUME_METADATA.sectionVisibility,
+    page = DEFAULT_RESUME_METADATA.page,
+  } = m;
+
+  const fontFamily = typography?.font?.family || "Inter";
+  const fontSize = `${typography?.font?.size || 11}pt`;
+  const lineHeight = typography?.lineHeight || 1.5;
 
   return (
     <div
@@ -49,10 +62,10 @@ export default function TechStackTemplate({
         fontSize,
         lineHeight,
         ["--resume-padding" as string]: `${page?.margin ?? 20}mm`,
-        ["--resume-primary" as string]: theme.primary,
-        ["--resume-bg" as string]: theme.background,
-        ["--resume-text" as string]: theme.text,
-        ["--resume-accent" as string]: theme.accent,
+        ["--resume-primary" as string]: theme?.primary || "#1a1a2e",
+        ["--resume-bg" as string]: theme?.background || "#ffffff",
+        ["--resume-text" as string]: theme?.text || "#333333",
+        ["--resume-accent" as string]: theme?.accent || "#4a6cf7",
       }}
     >
       {/* Header — full width */}
@@ -73,7 +86,7 @@ export default function TechStackTemplate({
           <ContactItem
             icon={IconMapPin}
             text={
-              basics.location.city
+              basics.location?.city
                 ? `${basics.location.city}${basics.location.region ? `, ${basics.location.region}` : ""}`
                 : ""
             }
@@ -100,7 +113,7 @@ export default function TechStackTemplate({
         {/* Main column (left) */}
         <div className="ts-main">
           {/* Summary */}
-          {sectionVisibility.summary && basics.summary && (
+          {sectionVisibility?.summary && basics?.summary && (
             <section className="resume-section">
               <h2 className="resume-section-title">Summary</h2>
               <div
@@ -111,10 +124,10 @@ export default function TechStackTemplate({
           )}
 
           {/* Experience */}
-          {sectionVisibility.work && work.length > 0 && (
+          {sectionVisibility?.work && (work || []).length > 0 && (
             <section className="resume-section">
               <h2 className="resume-section-title">Experience</h2>
-              {work.map((item) => (
+              {(work || []).map((item) => (
                 <div key={item.id} className="resume-entry">
                   <div className="resume-entry-header">
                     <div>
@@ -129,9 +142,9 @@ export default function TechStackTemplate({
                       {item.endDate ? ` – ${item.endDate}` : " – Present"}
                     </span>
                   </div>
-                  {item.highlights.length > 0 && (
+                  {item.highlights && (item.highlights || []).length > 0 && (
                     <ul className="resume-bullets">
-                      {item.highlights.map((h, i) => (
+                      {(item.highlights || []).map((h, i) => (
                         <li key={`${item.id}-h-${i}`}>{h}</li>
                       ))}
                     </ul>
@@ -142,31 +155,27 @@ export default function TechStackTemplate({
           )}
 
           {/* Projects */}
-          {sectionVisibility.projects && projects.length > 0 && (
+          {sectionVisibility?.projects && (projects || []).length > 0 && (
             <section className="resume-section">
               <h2 className="resume-section-title">Projects</h2>
-              {projects.map((item) => (
+              {(projects || []).map((item) => (
                 <div key={item.id} className="resume-entry">
                   <div className="resume-entry-header">
                     <h3 className="resume-entry-title">{item.name}</h3>
-                    {item.startDate && (
-                      <span className="resume-entry-date">
-                        {item.startDate}
-                        {item.endDate ? ` – ${item.endDate}` : ""}
-                      </span>
-                    )}
+                    <span className="resume-entry-date">
+                      {item.startDate}
+                      {item.endDate ? ` – ${item.endDate}` : ""}
+                    </span>
                   </div>
                   {item.description && (
                     <p className="resume-text">{item.description}</p>
                   )}
-                  {item.keywords.length > 0 && (
-                    <div className="ts-tech-tags">
-                      {item.keywords.map((kw) => (
-                        <span key={kw} className="ts-tag">
-                          {kw}
-                        </span>
+                  {item.highlights && (item.highlights || []).length > 0 && (
+                    <ul className="resume-bullets">
+                      {(item.highlights || []).map((h, i) => (
+                        <li key={`${item.id}-h-${i}`}>{h}</li>
                       ))}
-                    </div>
+                    </ul>
                   )}
                 </div>
               ))}
@@ -174,17 +183,17 @@ export default function TechStackTemplate({
           )}
 
           {/* Volunteer */}
-          {sectionVisibility.volunteer && volunteer.length > 0 && (
+          {sectionVisibility?.volunteer && (volunteer || []).length > 0 && (
             <section className="resume-section">
               <h2 className="resume-section-title">Volunteer</h2>
-              {volunteer.map((item) => (
+              {(volunteer || []).map((item) => (
                 <div key={item.id} className="resume-entry">
                   <div className="resume-entry-header">
                     <div>
                       <h3 className="resume-entry-title">{item.position}</h3>
-                      <span className="resume-entry-subtitle">
+                      <p className="resume-entry-subtitle">
                         {item.organization}
-                      </span>
+                      </p>
                     </div>
                     <span className="resume-entry-date">
                       {item.startDate}
@@ -194,9 +203,9 @@ export default function TechStackTemplate({
                   {item.summary && (
                     <p className="resume-text">{item.summary}</p>
                   )}
-                  {item.highlights.length > 0 && (
+                  {item.highlights && (item.highlights || []).length > 0 && (
                     <ul className="resume-bullets">
-                      {item.highlights.map((h, i) => (
+                      {(item.highlights || []).map((h, i) => (
                         <li key={`vol-${item.id}-${i}`}>{h}</li>
                       ))}
                     </ul>
@@ -210,14 +219,14 @@ export default function TechStackTemplate({
         {/* Sidebar (right) */}
         <aside className="ts-sidebar">
           {/* Skills */}
-          {sectionVisibility.skills && skills?.length > 0 && (
+          {sectionVisibility?.skills && (skills || []).length > 0 && (
             <section className="resume-section">
               <h2 className="ts-sidebar-title">Skills</h2>
-              {skills.map((group) => (
+              {(skills || []).map((group) => (
                 <div key={group.id} className="ts-skill-block">
                   <h4 className="ts-skill-category">{group.name}</h4>
                   <div className="ts-skill-tags">
-                    {group.keywords.map((kw) => (
+                    {(group.keywords || []).map((kw) => (
                       <span key={kw} className="ts-tag">
                         {kw}
                       </span>
@@ -229,10 +238,10 @@ export default function TechStackTemplate({
           )}
 
           {/* Education */}
-          {sectionVisibility.education && education.length > 0 && (
+          {sectionVisibility?.education && (education || []).length > 0 && (
             <section className="resume-section">
               <h2 className="ts-sidebar-title">Education</h2>
-              {education.map((item) => (
+              {(education || []).map((item) => (
                 <div key={item.id} className="ts-edu-block">
                   <h4 className="ts-edu-title">{item.institution}</h4>
                   <p className="ts-edu-degree">
@@ -249,24 +258,25 @@ export default function TechStackTemplate({
           )}
 
           {/* Certifications */}
-          {sectionVisibility.certifications && certifications.length > 0 && (
-            <section className="resume-section">
-              <h2 className="ts-sidebar-title">Certifications</h2>
-              {certifications.map((item) => (
-                <div key={item.id} className="ts-cert-block">
-                  <h4 className="ts-edu-title">{item.name}</h4>
-                  <p className="ts-edu-degree">{item.issuer}</p>
-                  {item.date && <p className="ts-edu-date">{item.date}</p>}
-                </div>
-              ))}
-            </section>
-          )}
+          {sectionVisibility?.certifications &&
+            (certifications || []).length > 0 && (
+              <section className="resume-section">
+                <h2 className="ts-sidebar-title">Certifications</h2>
+                {(certifications || []).map((item) => (
+                  <div key={item.id} className="ts-cert-block">
+                    <h4 className="ts-edu-title">{item.name}</h4>
+                    <p className="ts-edu-degree">{item.issuer}</p>
+                    {item.date && <p className="ts-edu-date">{item.date}</p>}
+                  </div>
+                ))}
+              </section>
+            )}
 
           {/* Languages */}
-          {sectionVisibility.languages && languages.length > 0 && (
+          {sectionVisibility?.languages && (languages || []).length > 0 && (
             <section className="resume-section">
               <h2 className="ts-sidebar-title">Languages</h2>
-              {languages.map((item) => (
+              {(languages || []).map((item) => (
                 <div key={item.id} className="ts-lang-item">
                   <span className="ts-lang-name">{item.language}</span>
                   <span className="ts-lang-level">{item.fluency}</span>
@@ -276,10 +286,10 @@ export default function TechStackTemplate({
           )}
 
           {/* Awards */}
-          {sectionVisibility.awards && awards.length > 0 && (
+          {sectionVisibility?.awards && (awards || []).length > 0 && (
             <section className="resume-section">
               <h2 className="ts-sidebar-title">Awards</h2>
-              {awards.map((item) => (
+              {(awards || []).map((item) => (
                 <div key={item.id} className="ts-cert-block">
                   <h4 className="ts-edu-title">{item.title}</h4>
                   <p className="ts-edu-degree">{item.awarder}</p>
@@ -290,26 +300,27 @@ export default function TechStackTemplate({
           )}
 
           {/* Publications */}
-          {sectionVisibility.publications && publications.length > 0 && (
-            <section className="resume-section">
-              <h2 className="ts-sidebar-title">Publications</h2>
-              {publications.map((item) => (
-                <div key={item.id} className="ts-cert-block">
-                  <h4 className="ts-edu-title">{item.name}</h4>
-                  <p className="ts-edu-degree">{item.publisher}</p>
-                  {item.releaseDate && (
-                    <p className="ts-edu-date">{item.releaseDate}</p>
-                  )}
-                </div>
-              ))}
-            </section>
-          )}
+          {sectionVisibility?.publications &&
+            (publications || []).length > 0 && (
+              <section className="resume-section">
+                <h2 className="ts-sidebar-title">Publications</h2>
+                {(publications || []).map((item) => (
+                  <div key={item.id} className="ts-cert-block">
+                    <h4 className="ts-edu-title">{item.name}</h4>
+                    <p className="ts-edu-degree">{item.publisher}</p>
+                    {item.releaseDate && (
+                      <p className="ts-edu-date">{item.releaseDate}</p>
+                    )}
+                  </div>
+                ))}
+              </section>
+            )}
 
           {/* References */}
-          {sectionVisibility.references && references.length > 0 && (
+          {sectionVisibility?.references && (references || []).length > 0 && (
             <section className="resume-section">
               <h2 className="ts-sidebar-title">References</h2>
-              {references.map((item) => (
+              {(references || []).map((item) => (
                 <div key={item.id} className="ts-cert-block">
                   <h4 className="ts-edu-title">{item.name}</h4>
                   {item.reference && (

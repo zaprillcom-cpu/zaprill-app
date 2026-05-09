@@ -95,6 +95,7 @@ export default function ResumeEditorPage({
   const [loadError, setLoadError] = useState<string | null>(null);
   const [showPreview, setShowPreview] = useState(true);
   const [validationErrors, setValidationErrors] = useState<any>(null);
+  const [isExporting, setIsExporting] = useState(false);
 
   // ─── Fetch resume on mount ──────────────────────
   useEffect(() => {
@@ -444,9 +445,30 @@ export default function ResumeEditorPage({
           <Button
             size="sm"
             className="gap-1.5"
-            onClick={() => window.open(`/resumes/${id}/export`, "_blank")}
+            disabled={isExporting}
+            onClick={async () => {
+              setIsExporting(true);
+              try {
+                if (isDirty) {
+                  await handleServerSave();
+                }
+                window.open(
+                  `/resumes/${id}/export`,
+                  "_blank",
+                  "noopener,noreferrer",
+                );
+              } catch (err) {
+                console.error("Export error:", err);
+              } finally {
+                setIsExporting(false);
+              }
+            }}
           >
-            <Download className="h-4 w-4" />
+            {isExporting ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Download className="h-4 w-4" />
+            )}
             <span className="hidden sm:inline">Export</span>
           </Button>
         </div>

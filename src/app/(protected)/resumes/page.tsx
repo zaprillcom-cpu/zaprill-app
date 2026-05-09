@@ -37,7 +37,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import useAuth from "@/hooks/useAuth";
-import type { ResumeListItem } from "@/types/resume";
+import {
+  DEFAULT_RESUME_DATA,
+  DEFAULT_RESUME_METADATA,
+  type ResumeListItem,
+} from "@/types/resume";
 import "@/components/resume/templates/resume-templates.css";
 
 const TEMPLATE_COMPONENTS: Record<string, any> = {
@@ -52,11 +56,16 @@ function ResumeThumbnail({ resume }: { resume: ResumeListItem }) {
   const TemplateComponent =
     TEMPLATE_COMPONENTS[resume.templateSlug] ?? MinimalistTemplate;
 
+  // Safety check: ensure data and metadata are present
+  // Even if they are null in the DB, we pass fallbacks to the template
+  const resumeData = resume.data || DEFAULT_RESUME_DATA;
+  const resumeMetadata = resume.metadata || DEFAULT_RESUME_METADATA;
+
   return (
     <div className="w-[320px] h-[452px] relative overflow-hidden rounded-md border border-border/10 shadow-2xl bg-white group-hover:shadow-primary/20 transition-all duration-500">
       <div className="w-[800px] h-[1130px] absolute top-0 left-0 origin-top-left scale-[0.4] pointer-events-none">
         <div className="w-full h-full p-10">
-          <TemplateComponent data={resume.data} metadata={resume.metadata} />
+          <TemplateComponent data={resumeData} metadata={resumeMetadata} />
         </div>
       </div>
     </div>
@@ -252,7 +261,7 @@ export default function ResumesPage() {
                   className="overflow-hidden border-2 border-border/50 hover:border-primary/30 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-2xl hover:shadow-primary/5 rounded-3xl"
                   onClick={() => router.push(`/resumes/${activeResume.id}`)}
                 >
-                  <div className="aspect-[4/3] bg-gradient-to-br from-muted/30 to-muted/80 flex items-center justify-center relative overflow-hidden">
+                  <div className="aspect-4/3 bg-linear-to-br from-muted/30 to-muted/80 flex items-center justify-center relative overflow-hidden">
                     <div className="absolute inset-0 bg-grid-white/10" />
 
                     <div className="mt-12 transition-all duration-700 group-hover:scale-105 group-hover:-translate-y-2">
@@ -307,7 +316,7 @@ export default function ResumesPage() {
               {/* Stats & Actions */}
               <div className="space-y-6">
                 {/* ATS Score Card */}
-                <Card className="p-8 rounded-3xl border-2 border-primary/5 bg-primary/[0.02] shadow-sm">
+                <Card className="p-8 rounded-3xl border-2 border-primary/5 bg-primary/2 shadow-sm">
                   <h3 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-6">
                     ATS Intelligence
                   </h3>

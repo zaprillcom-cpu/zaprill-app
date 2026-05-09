@@ -1,9 +1,11 @@
 "use client";
 
 import { Loader2 } from "lucide-react";
-import { use, useEffect, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
+import CreativePortfolioTemplate from "@/components/resume/templates/CreativePortfolioTemplate";
 import ExecutiveProTemplate from "@/components/resume/templates/ExecutiveProTemplate";
 import MinimalistTemplate from "@/components/resume/templates/MinimalistTemplate";
+import ModernSplitTemplate from "@/components/resume/templates/ModernSplitTemplate";
 import TechStackTemplate from "@/components/resume/templates/TechStackTemplate";
 import type { ResumeData, ResumeMetadata } from "@/types/resume";
 import "@/components/resume/templates/resume-templates.css";
@@ -15,6 +17,8 @@ const TEMPLATE_COMPONENTS: Record<
   minimalist: MinimalistTemplate,
   "tech-stack": TechStackTemplate,
   "executive-pro": ExecutiveProTemplate,
+  "creative-portfolio": CreativePortfolioTemplate,
+  "modern-split": ModernSplitTemplate,
 };
 
 export default function ResumeExportPage({
@@ -22,6 +26,7 @@ export default function ResumeExportPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const printedRef = useRef(false);
   const { id } = use(params);
   const [resumeData, setResumeData] = useState<{
     data: ResumeData;
@@ -32,16 +37,19 @@ export default function ResumeExportPage({
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let isMounted = true;
     const fetchAndPrint = async () => {
       try {
         const res = await fetch(`/api/resumes/${id}/export`, {
           method: "POST",
         });
         if (!res.ok) {
-          setError("Failed to load resume for export");
+          if (isMounted) setError("Failed to load resume for export");
           return;
         }
         const { resume } = await res.json();
+        if (!isMounted) return;
+
         setResumeData({
           data: resume.data,
           metadata: resume.metadata,
@@ -57,17 +65,23 @@ export default function ResumeExportPage({
           new URLSearchParams(window.location.search).get("preview") === "true";
 
         // Trigger print dialog after a short delay for rendering (only if NOT preview)
-        if (!isPreview) {
+        if (!isPreview && !printedRef.current) {
+          printedRef.current = true;
           setTimeout(() => {
-            window.print();
-          }, 800);
+            if (isMounted) {
+              window.print();
+            }
+          }, 1000);
         }
       } catch {
-        setError("Failed to export resume");
+        if (isMounted) setError("Failed to export resume");
       }
     };
 
     fetchAndPrint();
+    return () => {
+      isMounted = false;
+    };
   }, [id]);
 
   if (error) {

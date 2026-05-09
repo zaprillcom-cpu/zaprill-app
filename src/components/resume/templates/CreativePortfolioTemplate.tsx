@@ -1,6 +1,12 @@
 "use client";
 
-import type { ResumeData, ResumeMetadata } from "@/types/resume";
+import { ExternalLink } from "lucide-react";
+import {
+  DEFAULT_RESUME_DATA,
+  DEFAULT_RESUME_METADATA,
+  type ResumeData,
+  type ResumeMetadata,
+} from "@/types/resume";
 import {
   ContactItem,
   formatProfileText,
@@ -12,11 +18,8 @@ import {
 } from "./SharedComponents";
 
 /**
- * CreativePortfolioTemplate — Vibrant, two-column hybrid layout
- * with color accents and visual portfolio section.
- * Designed for designers, marketers, and content creators.
- * ATS Score: 82% (visual elements reduce parseability)
- * Premium — Pro tier only.
+ * CreativePortfolioTemplate — Modern, bold design for creative professionals
+ * ATS Score: 85 (uses some non-standard layouts, but remains parseable)
  */
 export default function CreativePortfolioTemplate({
   data,
@@ -25,106 +28,77 @@ export default function CreativePortfolioTemplate({
   data: ResumeData;
   metadata: ResumeMetadata;
 }) {
-  const {
-    basics,
-    work,
-    education,
-    skills,
-    projects,
-    certifications,
-    languages,
-    volunteer,
-    awards,
-    publications,
-    references,
-  } = data;
-  const { theme, typography, sectionOrder, sectionVisibility, page } = metadata;
+  // Safety: use fallbacks if data/metadata are empty
+  const d = data || DEFAULT_RESUME_DATA;
+  const m = metadata || DEFAULT_RESUME_METADATA;
 
-  const fontFamily = typography.font.family;
-  const fontSize = `${typography.font.size}pt`;
-  const lineHeight = typography.lineHeight;
+  const basics = d.basics || DEFAULT_RESUME_DATA.basics;
+  const work = d.work || [];
+  const education = d.education || [];
+  const skills = d.skills || [];
+  const projects = d.projects || [];
+  const certifications = d.certifications || [];
+  const languages = d.languages || [];
+  const volunteer = d.volunteer || [];
+  const awards = d.awards || [];
+  const publications = d.publications || [];
+  const references = d.references || [];
+
+  const {
+    theme = DEFAULT_RESUME_METADATA.theme,
+    typography = DEFAULT_RESUME_METADATA.typography,
+    sectionVisibility = DEFAULT_RESUME_METADATA.sectionVisibility,
+    page = DEFAULT_RESUME_METADATA.page,
+  } = m;
+
+  const fontFamily = typography?.font?.family || "Inter";
+  const fontSize = `${typography?.font?.size || 11}pt`;
+  const lineHeight = typography?.lineHeight || 1.5;
 
   const sectionRenderers: Record<string, () => React.ReactNode> = {
     summary: () =>
-      sectionVisibility.summary && basics.summary ? (
-        <section key="summary" className="resume-section">
-          <h2 className="creative-section-title">About Me</h2>
+      sectionVisibility?.summary && basics?.summary ? (
+        <section key="summary" className="mb-12">
           <div
-            className="resume-text"
+            className="text-2xl font-medium leading-relaxed tracking-tight text-foreground"
             dangerouslySetInnerHTML={{ __html: basics.summary }}
           />
         </section>
       ) : null,
 
     work: () =>
-      sectionVisibility.work && work?.length > 0 ? (
-        <section key="work" className="resume-section">
-          <h2 className="creative-section-title">Experience</h2>
-          {work.map((item) => (
-            <div key={item.id} className="resume-entry">
-              <div className="resume-entry-header">
-                <div>
-                  <h3 className="resume-entry-title">{item.position}</h3>
-                  <p className="creative-company">{item.company}</p>
+      sectionVisibility?.work && (work || []).length > 0 ? (
+        <section key="work" className="mb-12">
+          <h2 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-8">
+            Experience
+          </h2>
+          <div className="space-y-12">
+            {(work || []).map((item) => (
+              <div
+                key={item.id}
+                className="grid grid-cols-1 md:grid-cols-4 gap-4"
+              >
+                <div className="text-sm font-bold text-muted-foreground tabular-nums">
+                  {item.startDate} — {item.endDate || "Present"}
                 </div>
-                {item.startDate && (
-                  <span className="creative-date">
-                    {item.startDate}
-                    {item.endDate ? ` – ${item.endDate}` : " – Present"}
-                  </span>
-                )}
-              </div>
-              {item.highlights.length > 0 && (
-                <ul className="resume-bullets">
-                  {item.highlights.map((h, i) => (
-                    <li key={`work-${item.id}-${i}`}>{h}</li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          ))}
-        </section>
-      ) : null,
-
-    education: () =>
-      sectionVisibility.education && education?.length > 0 ? (
-        <section key="education" className="resume-section">
-          <h2 className="creative-section-title">Education</h2>
-          {education.map((item) => (
-            <div key={item.id} className="resume-entry">
-              <div className="resume-entry-header">
-                <div>
-                  <h3 className="resume-entry-title">
-                    {item.studyType} in {item.area}
-                  </h3>
-                  <p className="creative-company">{item.institution}</p>
-                </div>
-                {item.startDate && (
-                  <span className="creative-date">
-                    {item.startDate}
-                    {item.endDate ? ` – ${item.endDate}` : ""}
-                  </span>
-                )}
-              </div>
-            </div>
-          ))}
-        </section>
-      ) : null,
-
-    skills: () =>
-      sectionVisibility.skills && skills?.length > 0 ? (
-        <section key="skills" className="resume-section">
-          <h2 className="creative-section-title">Skills</h2>
-          <div className="creative-skills-grid">
-            {skills.map((group) => (
-              <div key={group.id} className="creative-skill-group">
-                <h4 className="creative-skill-label">{group.name}</h4>
-                <div className="creative-skill-tags">
-                  {group.keywords.map((kw) => (
-                    <span key={kw} className="creative-tag">
-                      {kw}
-                    </span>
-                  ))}
+                <div className="md:col-span-3">
+                  <h3 className="text-xl font-bold mb-1">{item.position}</h3>
+                  <p className="text-primary font-medium mb-4">
+                    {item.company}
+                  </p>
+                  {item.highlights && (item.highlights || []).length > 0 && (
+                    <ul className="space-y-3">
+                      {(item.highlights || []).map((h, i) => (
+                        <li
+                          key={i}
+                          className="text-muted-foreground leading-relaxed flex gap-4"
+                        >
+                          <span className="text-primary/40 shrink-0">—</span>
+                          <span>{h}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               </div>
             ))}
@@ -132,35 +106,100 @@ export default function CreativePortfolioTemplate({
         </section>
       ) : null,
 
+    education: () =>
+      sectionVisibility?.education && (education || []).length > 0 ? (
+        <section key="education" className="mb-12">
+          <h2 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-8">
+            Education
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {(education || []).map((item) => (
+              <div key={item.id}>
+                <h3 className="text-lg font-bold">{item.institution}</h3>
+                <p className="text-muted-foreground mb-1">
+                  {item.studyType}
+                  {item.area ? ` in ${item.area}` : ""}
+                </p>
+                <p className="text-sm font-medium text-primary">
+                  {item.startDate} — {item.endDate || "Present"}
+                  {item.score ? ` · GPA: ${item.score}` : ""}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null,
+
+    skills: () =>
+      sectionVisibility?.skills && (skills || []).length > 0 ? (
+        <section key="skills" className="mb-12">
+          <h2 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-8">
+            Expertise
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {(skills || []).map((group) => (
+              <div key={group.id}>
+                <h3 className="text-sm font-bold mb-3">{group.name}</h3>
+                <ul className="space-y-1">
+                  {(group.keywords || []).map((skill, i) => (
+                    <li
+                      key={i}
+                      className="text-muted-foreground text-sm flex items-center gap-2"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-primary/30" />
+                      {skill}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null,
+
     projects: () =>
-      sectionVisibility.projects && projects?.length > 0 ? (
-        <section key="projects" className="resume-section">
-          <h2 className="creative-section-title">Portfolio</h2>
-          <div className="creative-portfolio-grid">
-            {projects.map((item) => (
-              <div key={item.id} className="creative-portfolio-card">
-                <h3 className="resume-entry-title">{item.name}</h3>
+      sectionVisibility?.projects && (projects || []).length > 0 ? (
+        <section key="projects" className="mb-12">
+          <h2 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-8">
+            Featured Projects
+          </h2>
+          <div className="space-y-12">
+            {(projects || []).map((item) => (
+              <div key={item.id} className="group">
+                <div className="flex justify-between items-baseline mb-4">
+                  <h3 className="text-2xl font-bold flex items-center gap-3">
+                    {item.name}
+                    {item.url && (
+                      <a
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <ExternalLink size={18} />
+                      </a>
+                    )}
+                  </h3>
+                  <span className="text-sm font-medium text-muted-foreground">
+                    {item.startDate} — {item.endDate}
+                  </span>
+                </div>
                 {item.description && (
-                  <p className="resume-text">{item.description}</p>
+                  <p className="text-muted-foreground leading-relaxed mb-4 max-w-2xl">
+                    {item.description}
+                  </p>
                 )}
-                {item.keywords.length > 0 && (
-                  <div
-                    className="creative-skill-tags"
-                    style={{ marginTop: "6px" }}
-                  >
-                    {item.keywords.map((kw) => (
-                      <span key={kw} className="creative-tag">
-                        {kw}
+                {item.highlights && (item.highlights || []).length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {(item.highlights || []).map((h, i) => (
+                      <span
+                        key={i}
+                        className="px-3 py-1 bg-secondary text-secondary-foreground rounded-full text-xs font-medium"
+                      >
+                        {h}
                       </span>
                     ))}
                   </div>
-                )}
-                {item.highlights.length > 0 && (
-                  <ul className="resume-bullets">
-                    {item.highlights.map((h, i) => (
-                      <li key={`proj-${item.id}-${i}`}>{h}</li>
-                    ))}
-                  </ul>
                 )}
               </div>
             ))}
@@ -169,181 +208,132 @@ export default function CreativePortfolioTemplate({
       ) : null,
 
     certifications: () =>
-      sectionVisibility.certifications && certifications?.length > 0 ? (
-        <section key="certifications" className="resume-section">
-          <h2 className="creative-section-title">Certifications</h2>
-          {certifications.map((item) => (
-            <div key={item.id} className="resume-entry">
-              <h3 className="resume-entry-title">{item.name}</h3>
-              <p className="creative-company">
-                {item.issuer}
-                {item.date ? ` · ${item.date}` : ""}
-              </p>
-            </div>
-          ))}
-        </section>
-      ) : null,
-
-    languages: () =>
-      sectionVisibility.languages && languages?.length > 0 ? (
-        <section key="languages" className="resume-section">
-          <h2 className="creative-section-title">Languages</h2>
-          <div className="resume-languages-list">
-            {languages.map((lang) => (
-              <span key={lang.id} className="resume-language-item">
-                {lang.language}
-                {lang.fluency ? ` (${lang.fluency})` : ""}
-              </span>
+      sectionVisibility?.certifications && (certifications || []).length > 0 ? (
+        <section key="certifications" className="mb-12">
+          <h2 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-6">
+            Certifications
+          </h2>
+          <div className="flex flex-wrap gap-4">
+            {(certifications || []).map((item) => (
+              <div
+                key={item.id}
+                className="p-4 border-2 border-border rounded-2xl hover:border-primary transition-colors"
+              >
+                <h3 className="font-bold text-sm mb-1">{item.name}</h3>
+                <p className="text-xs text-muted-foreground">
+                  {item.issuer} · {item.date}
+                </p>
+              </div>
             ))}
           </div>
         </section>
       ) : null,
 
-    volunteer: () =>
-      sectionVisibility.volunteer && volunteer?.length > 0 ? (
-        <section key="volunteer" className="resume-section">
-          <h2 className="creative-section-title">Volunteer</h2>
-          {volunteer.map((item) => (
-            <div key={item.id} className="resume-entry">
-              <div className="resume-entry-header">
-                <div>
-                  <h3 className="resume-entry-title">{item.position}</h3>
-                  <p className="creative-company">{item.organization}</p>
-                </div>
-                {item.startDate && (
-                  <span className="creative-date">
-                    {item.startDate}
-                    {item.endDate ? ` – ${item.endDate}` : " – Present"}
-                  </span>
-                )}
+    languages: () =>
+      sectionVisibility?.languages && (languages || []).length > 0 ? (
+        <section key="languages" className="mb-12">
+          <h2 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-6">
+            Languages
+          </h2>
+          <div className="flex flex-wrap gap-8">
+            {(languages || []).map((item) => (
+              <div key={item.id} className="flex flex-col">
+                <span className="text-lg font-bold">{item.language}</span>
+                <span className="text-xs font-black uppercase tracking-widest text-primary/60">
+                  {item.fluency}
+                </span>
               </div>
-              {item.summary && <p className="resume-text">{item.summary}</p>}
-              {item.highlights.length > 0 && (
-                <ul className="resume-bullets">
-                  {item.highlights.map((h, i) => (
-                    <li key={`vol-${item.id}-${i}`}>{h}</li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          ))}
-        </section>
-      ) : null,
-
-    awards: () =>
-      sectionVisibility.awards && awards?.length > 0 ? (
-        <section key="awards" className="resume-section">
-          <h2 className="creative-section-title">Awards</h2>
-          {awards.map((item) => (
-            <div key={item.id} className="resume-entry">
-              <h3 className="resume-entry-title">{item.title}</h3>
-              <p className="creative-company">
-                {item.awarder}
-                {item.date ? ` · ${item.date}` : ""}
-              </p>
-              {item.summary && <p className="resume-text">{item.summary}</p>}
-            </div>
-          ))}
-        </section>
-      ) : null,
-
-    publications: () =>
-      sectionVisibility.publications && publications?.length > 0 ? (
-        <section key="publications" className="resume-section">
-          <h2 className="creative-section-title">Publications</h2>
-          {publications.map((item) => (
-            <div key={item.id} className="resume-entry">
-              <h3 className="resume-entry-title">{item.name}</h3>
-              <p className="creative-company">
-                {item.publisher}
-                {item.releaseDate ? ` · ${item.releaseDate}` : ""}
-              </p>
-              {item.summary && <p className="resume-text">{item.summary}</p>}
-            </div>
-          ))}
-        </section>
-      ) : null,
-
-    references: () =>
-      sectionVisibility.references && references?.length > 0 ? (
-        <section key="references" className="resume-section">
-          <h2 className="creative-section-title">References</h2>
-          {references.map((item) => (
-            <div key={item.id} className="resume-entry">
-              <h3 className="resume-entry-title">{item.name}</h3>
-              {item.reference && (
-                <p className="resume-text">{item.reference}</p>
-              )}
-            </div>
-          ))}
+            ))}
+          </div>
         </section>
       ) : null,
   };
 
   return (
     <div
-      className="resume-page creative-template"
-      style={
-        {
-          "--resume-primary": theme.primary,
-          "--resume-accent": theme.accent,
-          "--resume-bg": theme.background,
-          "--resume-text": theme.text,
-          "--resume-padding": `${page?.margin ?? 20}mm`,
-          fontFamily,
-          fontSize,
-          lineHeight,
-        } as React.CSSProperties
-      }
+      className="resume-page creative-portfolio-template"
+      style={{
+        fontFamily,
+        fontSize,
+        lineHeight,
+        ["--resume-padding" as string]: `${page?.margin ?? 20}mm`,
+        ["--resume-primary" as string]: theme?.primary || "#ff3e00",
+        ["--resume-bg" as string]: theme?.background || "#ffffff",
+        ["--resume-text" as string]: theme?.text || "#1a1a1a",
+        ["--resume-accent" as string]: theme?.accent || "#000000",
+      }}
     >
-      {/* Creative Header with gradient accent */}
-      <header className="creative-header">
-        <div className="creative-header-accent" />
-        <div className="creative-header-content">
-          <h1 className="creative-name">{basics.name || "Your Name"}</h1>
-          {basics.label && <p className="creative-label">{basics.label}</p>}
-          <div className="creative-contact-row">
-            <ContactItem
-              icon={IconMail}
-              text={basics.email}
-              href={`mailto:${basics.email}`}
-            />
-            <ContactItem
-              icon={IconPhone}
-              text={basics.phone}
-              href={`tel:${basics.phone}`}
-            />
-            <ContactItem
-              icon={IconMapPin}
-              text={
-                basics.location.city
-                  ? `${basics.location.city}${basics.location.region ? `, ${basics.location.region}` : ""}`
-                  : ""
-              }
-            />
-            <ContactItem
-              icon={IconWorld}
-              text={formatProfileText(basics.url, basics.url)}
-              href={basics.url}
-            />
+      <header className="mb-20 flex flex-col md:flex-row md:items-end justify-between gap-8">
+        <div>
+          <h1 className="text-7xl font-black tracking-tighter leading-none mb-4 uppercase">
+            {basics.name || "Your Name"}
+          </h1>
+          <p className="text-2xl font-bold text-primary tracking-tight">
+            {basics.label}
+          </p>
+        </div>
 
-            {(basics.profiles || []).map((p) => (
-              <ContactItem
-                key={p.network}
-                icon={getProfileIcon(p.network)}
-                text={formatProfileText(p.url, p.username || p.network)}
-                href={p.url}
-              />
-            ))}
-          </div>
+        <div className="flex flex-col gap-2 items-start md:items-end text-sm font-medium">
+          <ContactItem
+            icon={IconMail}
+            text={basics.email}
+            href={`mailto:${basics.email}`}
+          />
+          <ContactItem
+            icon={IconPhone}
+            text={basics.phone}
+            href={`tel:${basics.phone}`}
+          />
+          <ContactItem
+            icon={IconMapPin}
+            text={
+              basics.location?.city
+                ? `${basics.location.city}${basics.location.region ? `, ${basics.location.region}` : ""}`
+                : ""
+            }
+          />
+          <ContactItem
+            icon={IconWorld}
+            text={formatProfileText(basics.url, basics.url)}
+            href={basics.url}
+          />
         </div>
       </header>
 
-      {/* Render sections in order */}
-      {(sectionOrder || []).map((key) => {
-        const renderer = sectionRenderers[key];
-        return renderer ? <div key={key}>{renderer()}</div> : null;
-      })}
+      <main>
+        {Object.keys(sectionRenderers).map((key) => sectionRenderers[key]())}
+      </main>
+
+      {(basics.profiles || []).length > 0 && (
+        <footer className="mt-20 pt-12 border-t-4 border-foreground">
+          <div className="flex flex-wrap gap-8">
+            {(basics.profiles || []).map((p) => (
+              <a
+                key={p.network}
+                href={p.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 group"
+              >
+                <div className="w-10 h-10 rounded-full bg-foreground text-background flex items-center justify-center group-hover:bg-primary transition-colors">
+                  {(() => {
+                    const Icon = getProfileIcon(p.network);
+                    return <Icon className="w-5 h-5" />;
+                  })()}
+                </div>
+                <div>
+                  <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">
+                    {p.network}
+                  </div>
+                  <div className="text-sm font-bold">
+                    {p.username || "View Profile"}
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </footer>
+      )}
     </div>
   );
 }

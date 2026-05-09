@@ -195,20 +195,94 @@
 }
 
 /* ─── Print styles ────────────────────────────── */
+@page {
+  size: A4;
+  margin: 15mm !important;
+}
+
 @media print {
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+  }
+
   .resume-page {
-    /* Respect user's selected padding margin with 15mm fallback */
-    padding: var(--resume-padding, 15mm) !important;
-    max-width: none;
-    box-shadow: none;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    width: 100% !important;
+    background: white !important;
+    overflow: visible !important;
+    display: block !important; /* Fix flexbox page-break issues */
+    position: static !important;
   }
 
+  /* Allow sections and entries to break more naturally to fill space */
   .resume-section {
-    break-inside: avoid;
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+    margin-bottom: 1rem !important;
+    display: block !important;
   }
 
+  .resume-section-title {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+    margin-top: 0.5rem !important;
+  }
+
+  /* Entries can break if they are long (like projects with many bullets) */
   .resume-entry {
-    break-inside: avoid;
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+    margin-bottom: 0.8rem !important;
+    display: block !important;
+  }
+
+  /* But keep the entry header together with the first line of content */
+  .resume-entry-header {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+    display: flex !important; /* Keep flex for header layout */
+  }
+
+  .resume-bullets {
+    orphans: 2;
+    widows: 2;
+    margin-top: 0.2rem !important;
+  }
+
+  .resume-text {
+    orphans: 2;
+    widows: 2;
+  }
+
+  /* Specific sidebar titles for TechStack */
+  .ts-sidebar-title {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
+  
+  .ts-columns, 
+  .modern-split-body, 
+  .resume-skills-grid, 
+  .creative-portfolio-grid,
+  .creative-skills-grid {
+    display: block !important;
+  }
+  
+  .ts-sidebar, 
+  .modern-split-sidebar {
+    width: 100% !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-top: 1.5px solid var(--resume-primary) !important;
+    padding: 1rem 0 0 0 !important;
+    margin-top: 1rem !important;
   }
 }
 
@@ -547,23 +621,6 @@
   min-height: 100vh;
 }
 
-@media print {
-  .resume-export-page {
-    margin: 0;
-    padding: 0;
-  }
-
-  @page {
-    margin: 0;
-    size: A4;
-  }
-
-  body {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-}
-
 /* ═══════════════════════════════════════════════════
    Creative Portfolio Template
    ═══════════════════════════════════════════════════ */
@@ -692,137 +749,181 @@
   padding: 12px;
 }
 
-/* ═══════════════════════════════════════════════════
-   Modern Split Template
-   ═══════════════════════════════════════════════════ */
-
-.modern-split-template {
+/* ─── Modern Split Template ───────────────────── */
+.modern-split-template .ms-container {
   display: flex;
-  flex-direction: column;
+  gap: 24px;
 }
 
-.modern-split-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  padding-bottom: 6px;
-  margin-bottom: 8px;
-  border-bottom: 2px solid var(--resume-primary, #1a1a2e);
-}
-
-.modern-split-header-left {
-  flex: 1;
-}
-
-.modern-split-header-right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 2px;
-  font-size: 0.82em;
-  color: var(--resume-text, #333);
-  opacity: 0.8;
-}
-
-.modern-split-name {
-  font-size: 2em;
-  font-weight: 900;
-  letter-spacing: -0.02em;
-  color: var(--resume-primary, #1a1a2e);
-  margin: 0;
-  line-height: 1.1;
-}
-
-.modern-split-label {
-  font-size: 1em;
-  font-weight: 500;
-  color: var(--resume-accent, #4a6cf7);
-  margin: 4px 0 0;
-}
-
-.modern-split-body {
-  display: flex;
-  gap: 16px;
-  flex: 1;
-}
-
-.modern-split-sidebar {
-  width: 28%;
+.modern-split-template .ms-sidebar {
+  width: 200px;
   flex-shrink: 0;
-  border-right: 1px solid
-    color-mix(in srgb, var(--resume-text, #333) 12%, transparent);
-  padding-right: 14px;
+  border-right: 1px solid var(--resume-primary);
+  padding-right: 20px;
 }
 
-.modern-split-main {
+.modern-split-template .ms-main {
   flex: 1;
   min-width: 0;
 }
 
-.modern-split-section-title {
-  font-size: 0.85em;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--resume-primary, #1a1a2e);
-  margin-bottom: 10px;
-  padding-bottom: 4px;
-  border-bottom: 1px solid
-    color-mix(in srgb, var(--resume-primary, #1a1a2e) 25%, transparent);
+.modern-split-template .ms-header {
+  margin-bottom: 20px;
 }
 
-.modern-split-skill-group {
-  margin-bottom: 6px;
+.modern-split-template .ms-sidebar-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.modern-split-skill-label {
-  font-size: 0.78em;
+.modern-split-template .ms-sidebar-section {
+  margin-bottom: 20px;
+}
+
+.modern-split-template .ms-sidebar-title {
+  font-size: 0.8em;
   font-weight: 700;
-  color: var(--resume-accent, #4a6cf7);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--resume-primary);
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--resume-primary);
+  padding-bottom: 2px;
+}
+
+.modern-split-template .ms-sidebar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.modern-split-template .ms-skills-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modern-split-template .ms-skill-group {
   margin-bottom: 4px;
 }
 
-.modern-split-skill-list {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.modern-split-skill-item {
-  font-size: 0.85em;
-  color: var(--resume-text, #333);
-  padding-left: 8px;
-  border-left: 2px solid var(--resume-accent, #4a6cf7);
-}
-
-.modern-split-edu-item,
-.modern-split-cert-item {
-  margin-bottom: 10px;
-}
-
-.modern-split-institution,
-.modern-split-company {
-  font-size: 0.88em;
-  color: var(--resume-accent, #4a6cf7);
-  font-weight: 500;
-}
-
-.modern-split-date {
+.modern-split-template .ms-skill-name {
   font-size: 0.8em;
-  color: var(--resume-text, #333);
-  opacity: 0.6;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--resume-text);
+}
+
+.modern-split-template .ms-skill-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.modern-split-template .ms-skill-badge {
+  font-size: 10px;
+  padding: 2px 8px;
+  background: color-mix(in srgb, var(--resume-primary, #2563eb) 8%, transparent);
+  color: var(--resume-primary, #2563eb);
+  border: 1px solid color-mix(in srgb, var(--resume-primary, #2563eb) 15%, transparent);
+  border-radius: 6px;
+  font-weight: 600;
   white-space: nowrap;
 }
 
-.modern-split-lang-item {
+.modern-split-template .ms-lang-item {
   display: flex;
   justify-content: space-between;
-  font-size: 0.88em;
-  padding: 2px 0;
+  font-size: 0.8em;
+  margin-bottom: 2px;
 }
 
-.modern-split-fluency {
+.modern-split-template .ms-lang-name {
+  font-weight: 600;
+}
+
+.modern-split-template .ms-lang-level {
+  opacity: 0.7;
+}
+
+.modern-split-template .ms-section {
+  margin-bottom: 24px;
+}
+
+.modern-split-template .ms-section-title {
+  font-size: 1.1em;
+  font-weight: 700;
+  color: var(--resume-primary);
+  margin-bottom: 12px;
+  border-bottom: 2px solid var(--resume-primary);
+  padding-bottom: 4px;
+}
+
+.modern-split-template .ms-entry {
+  margin-bottom: 16px;
+}
+
+.modern-split-template .ms-entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 4px;
+}
+
+.modern-split-template .ms-entry-title {
+  font-size: 1em;
+  font-weight: 700;
+  margin: 0;
+}
+
+.modern-split-template .ms-entry-org {
+  font-size: 0.9em;
+  color: var(--resume-primary);
+  font-weight: 600;
+  margin: 2px 0;
+}
+
+.modern-split-template .ms-entry-date {
   font-size: 0.85em;
-  color: var(--resume-text, #333);
-  opacity: 0.6;
+  color: var(--resume-text);
+  opacity: 0.7;
+}
+
+.modern-split-template .ms-bullets {
+  margin-top: 6px;
+  padding-left: 18px;
+}
+
+.modern-split-template .ms-bullets li {
+  font-size: 0.88em;
+  line-height: 1.5;
+  margin-bottom: 2px;
+}
+
+.modern-split-template .ms-entry-inline {
+  display: flex;
+  align-items: baseline;
+  font-size: 0.9em;
+  margin-bottom: 4px;
+}
+
+@media print {
+  .modern-split-template .ms-container {
+    display: flex !important; /* Force flex for layout */
+    flex-direction: row !important;
+  }
+  
+  .modern-split-template .ms-sidebar {
+    width: 30% !important;
+    border-right: 1px solid var(--resume-primary) !important;
+    padding-right: 15px !important;
+    border-top: none !important;
+    margin-top: 0 !important;
+  }
+  
+  .modern-split-template .ms-main {
+    width: 70% !important;
+    padding-left: 15px !important;
+  }
 }
