@@ -27,6 +27,7 @@ import {
   useState,
 } from "react";
 import JobCard from "@/components/JobCard";
+import { JobTitleAutocomplete } from "@/components/JobTitleAutocomplete";
 import LearningRoadmap from "@/components/LearningRoadmap";
 import {
   extractCityFromLocation,
@@ -140,7 +141,7 @@ function MemeLoader({ step }: { step: AnalysisStep }) {
           alt="Job Meme"
           className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-500"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent" />
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3">
           <Loader2 className="h-6 w-6 text-white animate-spin" />
           <span className="text-white font-black tracking-widest text-sm uppercase">
@@ -370,17 +371,6 @@ function AnalyzePageContent() {
       setSelectedTitles(selectedTitles.filter((t) => t !== title));
     } else if (selectedTitles.length < 3) {
       setSelectedTitles([...selectedTitles, title]);
-    }
-  };
-
-  const addTitle = () => {
-    const val = newTitleValue.trim();
-    if (val && !reviewTitles.includes(val)) {
-      setReviewTitles([...reviewTitles, val]);
-      if (selectedTitles.length < 3) {
-        setSelectedTitles([...selectedTitles, val]);
-      }
-      setNewTitleValue("");
     }
   };
 
@@ -891,23 +881,21 @@ function AnalyzePageContent() {
                     })}
                   </div>
 
-                  <div className="flex gap-2 p-3 bg-muted/30 rounded-xl border border-dashed border-border">
-                    <Input
-                      placeholder="Add custom job title (e.g. Lead Dev)..."
-                      value={newTitleValue}
-                      onChange={(e) => setNewTitleValue(e.target.value)}
-                      onKeyDown={(e) => e.key === "Enter" && addTitle()}
-                      className="bg-background border-border font-bold h-12"
-                    />
-                    <Button
-                      onClick={addTitle}
-                      variant="outline"
-                      className="h-12 px-6 font-bold"
-                    >
-                      <Plus className="h-4 w-4 mr-2" />
-                      Add
-                    </Button>
-                  </div>
+                  <JobTitleAutocomplete
+                    value={newTitleValue}
+                    onChange={setNewTitleValue}
+                    onAdd={(title) => {
+                      const val = title.trim();
+                      if (val && !reviewTitles.includes(val)) {
+                        setReviewTitles([...reviewTitles, val]);
+                        if (selectedTitles.length < 3) {
+                          setSelectedTitles([...selectedTitles, val]);
+                        }
+                        setNewTitleValue("");
+                      }
+                    }}
+                    placeholder="Add custom job title (e.g. Lead Dev)..."
+                  />
                 </CardContent>
               </Card>
 

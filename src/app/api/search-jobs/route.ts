@@ -1,5 +1,12 @@
+import { eq, sql } from "drizzle-orm";
+import { nanoid } from "nanoid";
 import { NextResponse } from "next/server";
+import {
+  jobTitleAliases as jobTitleAliasesTable,
+  jobTitles as jobTitlesTable,
+} from "@/db/schema";
 import { extractSkillsFromText } from "@/lib/skill-extractor";
+import { normalizeJobTitle } from "@/lib/title-normalizer";
 import type { JobListing } from "@/types";
 
 export const maxDuration = 240;
@@ -67,7 +74,6 @@ export async function POST(request: Request) {
     );
     const db = (await import("@/db")).default;
     const { user } = await import("@/db/schema");
-    const { eq } = await import("drizzle-orm");
 
     const activeSub = await getActiveSubscription(userId);
     const isPro = !!activeSub;
@@ -213,6 +219,61 @@ export async function POST(request: Request) {
         for (const result of outcome.value) {
           if (seenIds.has(result.id)) continue;
           seenIds.add(result.id);
+
+          // Enrichment: Add job title to index in background
+          const rawTitle = result.title;
+          const normalized = normalizeJobTitle(rawTitle);
+          if (normalized) {
+            // Background enrichment
+            (async () => {
+              try {
+                const slug = normalized.toLowerCase().replace(/\s+/g, "-");
+                const [existing] = await db
+                  .select({ id: jobTitlesTable.id })
+                  .from(jobTitlesTable)
+                  .where(eq(jobTitlesTable.title, normalized))
+                  .limit(1);
+
+                let titleId = existing?.id;
+                if (!titleId) {
+                  titleId = nanoid();
+                  await db.insert(jobTitlesTable).values({
+                    id: titleId,
+                    title: normalized,
+                    slug: slug,
+                    popularityScore: 1,
+                    searchCount: 0,
+                  });
+                } else {
+                  // Increment popularity for existing
+                  await db
+                    .update(jobTitlesTable)
+                    .set({
+                      popularityScore: sql`${jobTitlesTable.popularityScore} + 1`,
+                    })
+                    .where(eq(jobTitlesTable.id, titleId));
+                }
+
+                // Add original raw title as alias if it's different
+                if (rawTitle.toLowerCase() !== normalized.toLowerCase()) {
+                  await db
+                    .insert(jobTitleAliasesTable)
+                    .values({
+                      id: nanoid(),
+                      jobTitleId: titleId,
+                      alias: rawTitle,
+                    })
+                    .onConflictDoNothing();
+                }
+              } catch (err) {
+                // Silently fail for enrichment
+                console.warn(
+                  `[search-jobs] Title enrichment failed for "${rawTitle}":`,
+                  err,
+                );
+              }
+            })();
+          }
 
           const requiredSkills = extractSkillsFromText(
             result.description ?? "",

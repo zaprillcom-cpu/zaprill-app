@@ -17,6 +17,7 @@ import { nanoid } from "nanoid";
 import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
+import { JobTitleAutocomplete } from "@/components/JobTitleAutocomplete";
 import Navbar from "@/components/Navbar";
 import ResumeUploader from "@/components/ResumeUploader";
 import { Badge } from "@/components/ui/badge";
@@ -198,17 +199,6 @@ export default function ProfilePage() {
       (_, i) => i !== index,
     );
     updBasics({ profiles: current });
-  };
-
-  const addRole = () => {
-    if (!resumeData || !newRole.trim()) return;
-    const currentRoles = resumeData.inferredJobTitles || [];
-    if (currentRoles.includes(newRole.trim())) {
-      setNewRole("");
-      return;
-    }
-    updResume({ inferredJobTitles: [...currentRoles, newRole.trim()] });
-    setNewRole("");
   };
 
   const removeRole = (role: string) => {
@@ -645,22 +635,24 @@ export default function ProfilePage() {
                           </Badge>
                         ))}
                       </div>
-                      <div className="flex gap-2">
-                        <Input
-                          value={newRole}
-                          onChange={(e) => setNewRole(e.target.value)}
-                          onKeyDown={(e) => e.key === "Enter" && addRole()}
-                          placeholder="Add targeted role... (e.g. Frontend Developer)"
-                          className="h-11 font-semibold"
-                        />
-                        <Button
-                          variant="secondary"
-                          className="font-black"
-                          onClick={addRole}
-                        >
-                          Add
-                        </Button>
-                      </div>
+                      <JobTitleAutocomplete
+                        value={newRole}
+                        onChange={setNewRole}
+                        onAdd={(role) => {
+                          if (!resumeData || !role.trim()) return;
+                          const currentRoles =
+                            resumeData.inferredJobTitles || [];
+                          if (currentRoles.includes(role.trim())) {
+                            setNewRole("");
+                            return;
+                          }
+                          updResume({
+                            inferredJobTitles: [...currentRoles, role.trim()],
+                          });
+                          setNewRole("");
+                        }}
+                        placeholder="Add targeted role... (e.g. Frontend Developer)"
+                      />
                     </div>
                   </CardContent>
                 </Card>

@@ -679,3 +679,44 @@ export const auditLog = pgTable(
     index("audit_log_created_at_idx").on(t.createdAt),
   ],
 );
+
+/**
+ * Canonical job titles for standardization.
+ */
+export const jobTitles = pgTable(
+  "job_titles",
+  {
+    id: text("id").primaryKey(), // nanoid
+    title: text("title").notNull(),
+    slug: text("slug").notNull(),
+    popularityScore: integer("popularity_score").default(0),
+    searchCount: integer("search_count").default(0),
+    source: text("source").default("static"), // "static", "adzuna", "onet", "esco"
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  },
+  (t) => [
+    uniqueIndex("job_titles_title_idx").on(t.title),
+    uniqueIndex("job_titles_slug_idx").on(t.slug),
+    index("job_titles_popularity_idx").on(t.popularityScore),
+  ],
+);
+
+/**
+ * Aliases for job titles to support fuzzy autocomplete and mapping.
+ */
+export const jobTitleAliases = pgTable(
+  "job_title_aliases",
+  {
+    id: text("id").primaryKey(), // nanoid
+    jobTitleId: text("job_title_id")
+      .notNull()
+      .references(() => jobTitles.id, { onDelete: "cascade" }),
+    alias: text("alias").notNull(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  },
+  (t) => [
+    uniqueIndex("job_title_aliases_alias_idx").on(t.alias),
+    index("job_title_aliases_job_title_id_idx").on(t.jobTitleId),
+  ],
+);
