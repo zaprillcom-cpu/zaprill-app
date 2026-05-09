@@ -53,9 +53,12 @@ export default async function CheckoutPage(props: CheckoutPageProps) {
 
     // 2. Check if the plan amount meets the minimum order value requirement
     if (c.minOrderValue) {
-      return parseFloat(c.minOrderValue) <= parseFloat(selectedPlan.amount);
+      if (parseFloat(c.minOrderValue) > parseFloat(selectedPlan.amount))
+        return false;
     }
-    return true;
+
+    // 3. Visibility check
+    return c.isPublic;
   });
 
   return (

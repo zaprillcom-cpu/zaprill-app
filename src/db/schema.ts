@@ -302,6 +302,7 @@ export const coupons = pgTable(
     usageLimitPerUser: integer("usage_limit_per_user").default(1),
     newUserOnly: boolean("new_user_only").notNull().default(false),
     status: couponStatusEnum("status").notNull().default("active"),
+    isPublic: boolean("is_public").notNull().default(true),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },

@@ -1,7 +1,7 @@
 "use client";
 
 import { format } from "date-fns";
-import { Archive, Loader2, Pencil, Plus, Tag } from "lucide-react";
+import { Archive, Eye, EyeOff, Loader2, Pencil, Plus, Tag } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
@@ -53,6 +53,7 @@ const EMPTY_FORM = {
   usageLimitGlobal: "",
   usageLimitPerUser: "1",
   newUserOnly: false,
+  isPublic: true,
   status: "active" as "active" | "expired" | "disabled",
 };
 
@@ -99,6 +100,7 @@ export function CouponsTab({ coupons, loading, onMutate, onRefresh }: Props) {
         coupon.usageLimitGlobal != null ? String(coupon.usageLimitGlobal) : "",
       usageLimitPerUser: String(coupon.usageLimitPerUser),
       newUserOnly: coupon.newUserOnly,
+      isPublic: coupon.isPublic,
       status: coupon.status,
     });
     setOpen(true);
@@ -204,6 +206,7 @@ export function CouponsTab({ coupons, loading, onMutate, onRefresh }: Props) {
                   <TableHead>Value</TableHead>
                   <TableHead>Expires</TableHead>
                   <TableHead>Usage</TableHead>
+                  <TableHead>Public</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
@@ -236,6 +239,19 @@ export function CouponsTab({ coupons, loading, onMutate, onRefresh }: Props) {
                         : "∞"}
                       {" / "}
                       {c.usageLimitPerUser}/user
+                    </TableCell>
+                    <TableCell>
+                      {c.isPublic ? (
+                        <div className="flex items-center text-emerald-600 gap-1.5">
+                          <Eye className="h-3.5 w-3.5" />
+                          <span className="text-xs font-medium">Public</span>
+                        </div>
+                      ) : (
+                        <div className="flex items-center text-muted-foreground gap-1.5">
+                          <EyeOff className="h-3.5 w-3.5" />
+                          <span className="text-xs font-medium">Private</span>
+                        </div>
+                      )}
                     </TableCell>
                     <TableCell>
                       <Badge
@@ -430,6 +446,20 @@ export function CouponsTab({ coupons, loading, onMutate, onRefresh }: Props) {
                   }
                 />
                 <Label>New users only</Label>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <Switch
+                checked={form.isPublic}
+                onCheckedChange={(v) => setForm((f) => ({ ...f, isPublic: v }))}
+              />
+              <div className="space-y-0.5">
+                <Label>Publicly Visible</Label>
+                <p className="text-xs text-muted-foreground">
+                  If enabled, this coupon will be shown in the "Available
+                  Coupons" list during checkout.
+                </p>
               </div>
             </div>
           </div>

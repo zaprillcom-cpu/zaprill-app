@@ -110,6 +110,7 @@ export async function POST(request: Request) {
           usageLimitPerUser: data.usageLimitPerUser ?? 1,
           newUserOnly: data.newUserOnly ?? false,
           status: data.status ?? "active",
+          isPublic: data.isPublic ?? true,
         })
         .returning();
       return NextResponse.json({ coupon: newCoupon[0] });
@@ -121,6 +122,7 @@ export async function POST(request: Request) {
         .set({
           status: data.status,
           usageLimitGlobal: data.usageLimitGlobal,
+          isPublic: data.isPublic,
           endTime: data.endTime ? new Date(data.endTime) : null,
           updatedAt: new Date(),
         })

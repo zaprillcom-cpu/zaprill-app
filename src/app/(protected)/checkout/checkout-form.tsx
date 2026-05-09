@@ -113,6 +113,12 @@ export default function CheckoutForm({
         return;
       }
 
+      if (data.isFree) {
+        toast.success("Subscription activated!");
+        router.push(`/payment/status?orderId=${data.invoiceId}`);
+        return;
+      }
+
       // 2. Initialize Cashfree Web SDK for seamless checkout
       // Cashfree script should be loaded globally, or redirect to payment link
       // Since we generated paymentSessionId, we redirect to CF checkout

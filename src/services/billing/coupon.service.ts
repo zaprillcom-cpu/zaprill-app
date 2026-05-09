@@ -8,7 +8,8 @@
  */
 
 import { and, count, eq, inArray, isNull, ne, or } from "drizzle-orm";
-import db from "@/db";
+import { drizzle as pgDrizzle } from "drizzle-orm/node-postgres";
+import db, { schema } from "@/db";
 import { withTransaction } from "@/db/pool";
 import { coupons, couponUsage, invoice } from "@/db/schema";
 
@@ -113,16 +114,7 @@ export async function validateCoupon(
       and(
         eq(couponUsage.couponId, coupon.id),
         eq(couponUsage.userId, userId),
-        or(
-          eq(couponUsage.status, "redeemed"),
-          and(
-            eq(couponUsage.status, "reserved"),
-            or(
-              isNull(invoice.status),
-              and(ne(invoice.status, "void"), ne(invoice.status, "failed")),
-            ),
-          ),
-        ),
+        eq(couponUsage.status, "redeemed"),
       ),
     );
 
@@ -164,37 +156,53 @@ export async function reserveCoupon(
   invoiceId: string,
 ): Promise<{ couponUsageId: string; coupon: Coupon }> {
   return withTransaction(async (client) => {
-    // Lock the coupon row for update
-    const couponResult = await client.query(
-      `SELECT * FROM coupons WHERE code = $1 FOR UPDATE`,
-      [couponCode.toUpperCase().trim()],
-    );
+    // Create a Drizzle instance using the transactional pg client
+    const tx = pgDrizzle(client, { schema });
 
-    if (couponResult.rows.length === 0) {
+    // 1. Find and lock the coupon row
+    const [coupon] = await tx
+      .select()
+      .from(coupons)
+      .where(eq(coupons.code, couponCode.toUpperCase().trim()))
+      .for("update")
+      .limit(1);
+
+    if (!coupon) {
       throw new BillingError("Invalid coupon code", "COUPON_NOT_FOUND");
     }
 
-    const row = couponResult.rows[0];
-
-    if (row.status !== "active") {
-      throw new BillingError(`Coupon is ${row.status}`, "COUPON_INACTIVE");
+    if (coupon.status !== "active") {
+      throw new BillingError(`Coupon is ${coupon.status}`, "COUPON_INACTIVE");
     }
 
     const now = new Date();
-    if (row.end_time && now > new Date(row.end_time)) {
+    if (coupon.endTime && now > coupon.endTime) {
       throw new BillingError("Coupon has expired", "COUPON_EXPIRED");
     }
 
-    // Check global usage (within lock)
-    if (row.usage_limit_global !== null) {
-      const usageRes = await client.query(
-        `SELECT count(*) FROM coupon_usage cu
-         LEFT JOIN invoice i ON cu.order_id = i.id
-         WHERE cu.coupon_id = $1 
-         AND (cu.status = 'redeemed' OR (cu.status = 'reserved' AND (i.status IS NULL OR i.status NOT IN ('void', 'failed'))))`,
-        [row.id],
-      );
-      if (Number(usageRes.rows[0].count) >= Number(row.usage_limit_global)) {
+    // 2. Check global usage (within lock)
+    if (coupon.usageLimitGlobal !== null) {
+      const [{ count: globalUsed }] = await tx
+        .select({ count: count() })
+        .from(couponUsage)
+        .leftJoin(invoice, eq(couponUsage.orderId, invoice.id))
+        .where(
+          and(
+            eq(couponUsage.couponId, coupon.id),
+            or(
+              eq(couponUsage.status, "redeemed"),
+              and(
+                eq(couponUsage.status, "reserved"),
+                or(
+                  isNull(invoice.status),
+                  and(ne(invoice.status, "void"), ne(invoice.status, "failed")),
+                ),
+              ),
+            ),
+          ),
+        );
+
+      if (Number(globalUsed) >= coupon.usageLimitGlobal) {
         throw new BillingError(
           "Coupon usage limit has been reached",
           "COUPON_GLOBAL_LIMIT",
@@ -202,49 +210,44 @@ export async function reserveCoupon(
       }
     }
 
-    // Check per-user usage (within lock)
-    const perUserLimit = row.usage_limit_per_user ?? 1;
-    const userUsageRes = await client.query(
-      `SELECT count(*) FROM coupon_usage cu
-       LEFT JOIN invoice i ON cu.order_id = i.id
-       WHERE cu.coupon_id = $1 AND cu.user_id = $2
-       AND (cu.status = 'redeemed' OR (cu.status = 'reserved' AND (i.status IS NULL OR i.status NOT IN ('void', 'failed'))))`,
-      [row.id, userId],
-    );
-    if (Number(userUsageRes.rows[0].count) >= perUserLimit) {
+    // 3. Check per-user usage (within lock)
+    // For per-user, we only count REDEEMED coupons to allow users to retry checkouts
+    // unless they have a currently ACTIVE reserved checkout for THIS specific coupon.
+    // However, the checkout API voids old invoices, so this is safe.
+    const perUserLimit = coupon.usageLimitPerUser ?? 1;
+    const [{ count: userUsed }] = await tx
+      .select({ count: count() })
+      .from(couponUsage)
+      .where(
+        and(
+          eq(couponUsage.couponId, coupon.id),
+          eq(couponUsage.userId, userId),
+          eq(couponUsage.status, "redeemed"),
+        ),
+      );
+
+    if (Number(userUsed) >= perUserLimit) {
       throw new BillingError(
         "You have already used this coupon",
         "COUPON_USER_LIMIT",
       );
     }
 
-    // Insert reservation
+    // 4. Insert reservation
     const usageId = generateId("cu");
-    await client.query(
-      `INSERT INTO coupon_usage (id, coupon_id, user_id, order_id, status, reserved_at, created_at, updated_at)
-       VALUES ($1, $2, $3, $4, 'reserved', NOW(), NOW(), NOW())`,
-      [usageId, row.id, userId, invoiceId],
-    );
+    await tx.insert(couponUsage).values({
+      id: usageId,
+      couponId: coupon.id,
+      userId,
+      orderId: invoiceId,
+      status: "reserved",
+      reservedAt: new Date(),
+    });
 
-    // Map snake_case to camelCase
-    const coupon: Coupon = {
-      id: row.id,
-      code: row.code,
-      type: row.type,
-      value: row.value,
-      maxDiscount: row.max_discount,
-      minOrderValue: row.min_order_value,
-      startTime: row.start_time,
-      endTime: row.end_time,
-      usageLimitGlobal: row.usage_limit_global,
-      usageLimitPerUser: row.usage_limit_per_user,
-      newUserOnly: row.new_user_only,
-      status: row.status,
-      createdAt: row.created_at,
-      updatedAt: row.updated_at,
+    return {
+      couponUsageId: usageId,
+      coupon: coupon as Coupon,
     };
-
-    return { couponUsageId: usageId, coupon };
   });
 }
 

@@ -38,6 +38,7 @@ export type Coupon = {
   usageLimitGlobal: number | null;
   usageLimitPerUser: number;
   newUserOnly: boolean;
+  isPublic: boolean;
   status: "active" | "expired" | "disabled";
   createdAt: string;
 };

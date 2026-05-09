@@ -4,11 +4,11 @@
  * validate coupon → create invoice → create payment → create Cashfree order
  */
 
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import db from "@/db";
-import { plan } from "@/db/schema";
+import { coupons, couponUsage, invoice, payment, plan } from "@/db/schema";
 import { auth } from "@/lib/auth";
 import {
   BillingError,
@@ -17,16 +17,21 @@ import {
 } from "@/lib/billing-utils";
 import { createCashfreeOrder } from "@/lib/cashfree";
 import {
+  redeemCoupon,
   reserveCoupon,
   validateCoupon,
 } from "@/services/billing/coupon.service";
 import {
   createInvoice,
+  markInvoicePaid,
   setInvoiceCashfreeOrderId,
   voidInvoice,
 } from "@/services/billing/invoice.service";
 import { createPayment } from "@/services/billing/payment.service";
-import { getActiveSubscription } from "@/services/billing/subscription.service";
+import {
+  createSubscription,
+  getActiveSubscription,
+} from "@/services/billing/subscription.service";
 import type { CheckoutRequest } from "@/types/billing";
 
 export const maxDuration = 30;
@@ -49,6 +54,17 @@ export async function POST(request: Request) {
         { error: "planId is required" },
         { status: 400 },
       );
+    }
+
+    // ── Clean up: void any existing pending invoices for this user ──────
+    // This releases any reserved coupons so they can be re-applied.
+    const pendingInvoices = await db
+      .select({ id: invoice.id })
+      .from(invoice)
+      .where(and(eq(invoice.userId, user.id), eq(invoice.status, "pending")));
+
+    for (const inv of pendingInvoices) {
+      await voidInvoice(inv.id);
     }
 
     // ── Guard: already subscribed? ──────────────────────────────────────
@@ -135,6 +151,44 @@ export async function POST(request: Request) {
     // ── Create payment record ───────────────────────────────────────────
     const totalAmount = parseFloat(inv.totalAmount);
     const pay = await createPayment(inv.id, user.id, totalAmount);
+
+    // ── Handle Free Checkout (totalAmount === 0) ────────────────────────
+    if (totalAmount <= 0) {
+      // 1. Mark invoice as paid
+      await markInvoicePaid(inv.id, 0, new Date());
+
+      // 2. Mark payment as success
+      await db
+        .update(payment)
+        .set({
+          status: "success",
+          paidAt: new Date(),
+          metadata: { note: "Free checkout via coupon" },
+        })
+        .where(eq(payment.id, pay.id));
+
+      // 3. Redeem coupon
+      if (couponUsageId) {
+        await redeemCoupon(couponUsageId);
+      }
+
+      // 4. Create subscription
+      await createSubscription({
+        userId: user.id,
+        planId,
+        billingCycle: selectedPlan.billingCycle,
+        priceAtPurchase: 0,
+        couponId,
+        discountAmount,
+      });
+
+      return NextResponse.json({
+        success: true,
+        isFree: true,
+        invoiceId: inv.id,
+        totalAmount: 0,
+      });
+    }
 
     // ── Create Cashfree order ───────────────────────────────────────────
     const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";

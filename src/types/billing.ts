@@ -49,6 +49,7 @@ export interface Coupon {
   usageLimitGlobal: number | null;
   usageLimitPerUser: number;
   newUserOnly: boolean;
+  isPublic: boolean;
   status: CouponStatus;
   createdAt: Date;
   updatedAt: Date;
