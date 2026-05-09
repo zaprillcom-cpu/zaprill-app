@@ -1,10 +1,10 @@
 "use client";
 
-import { ArrowRight, BriefcaseIcon, Loader2 } from "lucide-react";
+import { ArrowRight, BriefcaseIcon, Gift, Loader2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { checkUserExists } from "@/app/actions/auth";
 import GithubIcon from "@/components/icons/github-svg";
 import GoogleIcon from "@/components/icons/google-svg";
@@ -19,6 +19,10 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
+import {
+  captureReferralCode,
+  getStoredReferralCode,
+} from "@/hooks/useReferralClaim";
 import { signIn, signUp } from "@/lib/auth-client";
 
 function SignUpForm() {
@@ -34,6 +38,26 @@ function SignUpForm() {
   const [error, setError] = useState<string | null>(null);
   const [emailSent, setEmailSent] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
+  const [referralCode, setReferralCode] = useState<string | null>(null);
+  const [referralDiscount, setReferralDiscount] = useState<number | null>(null);
+
+  // Capture ?ref= from URL into localStorage on mount
+  useEffect(() => {
+    captureReferralCode();
+    const code = getStoredReferralCode();
+    if (code) {
+      setReferralCode(code);
+      // Fetch discount % from validate endpoint (best-effort)
+      fetch(`/api/referrals/validate?code=${encodeURIComponent(code)}`)
+        .then((r) => r.json())
+        .then((data) => {
+          if (data.valid && data.discountPct) {
+            setReferralDiscount(data.discountPct);
+          }
+        })
+        .catch(() => {});
+    }
+  }, []);
 
   const handleCredentialsSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -167,6 +191,17 @@ function SignUpForm() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
+              {/* Referral banner */}
+              {referralCode && (
+                <div className="flex items-center gap-2 p-3 rounded-md bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 text-sm">
+                  <Gift size={14} className="text-emerald-600 shrink-0" />
+                  <span className="text-emerald-700 dark:text-emerald-300 font-medium">
+                    {referralDiscount
+                      ? `You were referred! Get ${referralDiscount}% off your first subscription.`
+                      : `Referral code applied: ${referralCode}`}
+                  </span>
+                </div>
+              )}
               {error && (
                 <div className="p-3 text-sm font-medium text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
                   {error}

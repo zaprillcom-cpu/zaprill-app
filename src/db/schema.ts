@@ -77,6 +77,9 @@ export const user = pgTable("user", {
   // usage limits
   monthlySearchesCount: integer("monthly_searches_count").default(0),
   searchesResetDate: timestamp("searches_reset_date"),
+
+  // referral system
+  referralCode: text("referral_code").unique(), // lazily generated on first request
 });
 
 export const session = pgTable("session", {
@@ -285,6 +288,31 @@ export const paymentStatusEnum = pgEnum("payment_status", [
   "failed",
   "refunded",
 ]);
+
+// ─────────────────────────────────────────────────
+// Referral Enums
+// ─────────────────────────────────────────────────
+
+export const referralStatusEnum = pgEnum("referral_status", [
+  "signed_up", // referee signed up, payment not yet made
+  "converted", // referee made first payment → rewards issued
+  "expired", // referral timed out before conversion
+  "fraudulent", // flagged by admin
+]);
+
+export const referralTypeEnum = pgEnum("referral_type", [
+  "user", // normal user referral
+  "influencer", // influencer with custom commission config
+]);
+
+export const influencerCommissionTypeEnum = pgEnum(
+  "influencer_commission_type",
+  [
+    "flat", // fixed ₹ amount per conversion
+    "per_user", // ₹ amount per converted user (same as flat, clearer semantics)
+    "percentage", // % of invoice amount
+  ],
+);
 
 // ─────────────────────────────────────────────────
 // Billing Tables
@@ -808,5 +836,135 @@ export const resourceClicks = pgTable(
   (t) => [
     index("resource_clicks_resource_id_idx").on(t.resourceId),
     index("resource_clicks_clicked_at_idx").on(t.clickedAt),
+  ],
+);
+
+// ─────────────────────────────────────────────────
+// Referral System Tables
+// ─────────────────────────────────────────────────
+
+/**
+ * Tracks every referral relationship.
+ *
+ * Lifecycle:
+ *   (referral link clicked + user signs up) → status: signed_up
+ *   (referred user makes first payment)     → status: converted  → rewards issued
+ *   (90 days pass without conversion)       → status: expired  (via background job)
+ *
+ * Design notes:
+ *  - referralCode on this row is the CODE that was used (snapshot), not the referrer's code.
+ *  - One referral row per (referrer, referred user). A user can only be referred once.
+ *  - influencerConfig jsonb holds commission configuration for influencer-type referrals.
+ */
+export const referrals = pgTable(
+  "referrals",
+  {
+    id: text("id").primaryKey(), // nanoid
+
+    // The user who owns the referral code
+    referrerUserId: text("referrer_user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+
+    // The user who was referred (set after they sign up)
+    referredUserId: text("referred_user_id").references(() => user.id, {
+      onDelete: "set null",
+    }),
+
+    // The code that was used (snapshot — survives if referrer changes their code)
+    referralCode: text("referral_code").notNull(),
+
+    // Type of referral
+    type: referralTypeEnum("type").notNull().default("user"),
+
+    // Lifecycle status
+    status: referralStatusEnum("status").notNull().default("signed_up"),
+
+    // Email captured from the signup form at attribution time (for audit/dedup)
+    referredEmail: text("referred_email"),
+
+    // The invoice that triggered conversion (for traceability)
+    conversionInvoiceId: text("conversion_invoice_id").references(
+      () => invoice.id,
+      { onDelete: "set null" },
+    ),
+
+    // For influencer referrals: commission config snapshot at time of referral creation.
+    // { commissionType: "flat"|"percentage"|"per_user", commissionValue: number }
+    influencerConfig: jsonb("influencer_config"),
+
+    // Timestamp when conversion happened
+    convertedAt: timestamp("converted_at"),
+
+    // Extensibility: UTM params, referrer name used, etc.
+    metadata: jsonb("metadata").default({}),
+
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  },
+  (t) => [
+    index("referrals_referrer_user_id_idx").on(t.referrerUserId),
+    index("referrals_referred_user_id_idx").on(t.referredUserId),
+    index("referrals_referral_code_idx").on(t.referralCode),
+    index("referrals_status_idx").on(t.status),
+    index("referrals_type_idx").on(t.type),
+    // Prevent a user from being the referred party more than once
+    uniqueIndex("referrals_referred_user_id_unique").on(t.referredUserId),
+  ],
+);
+
+/**
+ * Rewards issued as a result of a successful referral conversion.
+ *
+ * One referral can produce multiple rewards:
+ *  - A reward for the referrer (coupon or commission)
+ *  - A reward for the referee (coupon for first subscription)
+ *
+ * For coupon-based rewards: couponId is set, commissionAmount is null.
+ * For commission-based rewards (influencers): commissionAmount is set, couponId is null.
+ */
+export const referralRewards = pgTable(
+  "referral_rewards",
+  {
+    id: text("id").primaryKey(), // nanoid
+
+    referralId: text("referral_id")
+      .notNull()
+      .references(() => referrals.id, { onDelete: "cascade" }),
+
+    // Who receives this reward
+    recipientUserId: text("recipient_user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+
+    // "referrer" = the person who shared the link
+    // "referee"  = the person who signed up via the link
+    recipientRole: text("recipient_role").notNull(), // "referrer" | "referee"
+
+    // Reward type
+    rewardType: text("reward_type").notNull(), // "coupon" | "commission"
+
+    // Coupon-based reward
+    couponId: text("coupon_id").references(() => coupons.id, {
+      onDelete: "set null",
+    }),
+
+    // Commission-based reward (influencers)
+    commissionAmount: numeric("commission_amount", {
+      precision: 10,
+      scale: 2,
+    }),
+    commissionCurrency: text("commission_currency").default("INR"),
+    commissionStatus: text("commission_status").default("pending"), // "pending" | "paid" | "void"
+    commissionPaidAt: timestamp("commission_paid_at"),
+    commissionPaymentRef: text("commission_payment_ref"), // admin notes: bank ref, UPI id etc.
+
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  },
+  (t) => [
+    index("referral_rewards_referral_id_idx").on(t.referralId),
+    index("referral_rewards_recipient_user_id_idx").on(t.recipientUserId),
+    index("referral_rewards_commission_status_idx").on(t.commissionStatus),
   ],
 );

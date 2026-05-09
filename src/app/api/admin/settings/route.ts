@@ -153,6 +153,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ companySettings: updated });
     }
 
+    if (_action === "update_setting") {
+      const { setSettingValue } = await import("@/lib/app-settings");
+      await setSettingValue(data.key as any, String(data.value ?? ""));
+      return NextResponse.json({ success: true });
+    }
+
     return NextResponse.json({ error: "Unknown action" }, { status: 400 });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });

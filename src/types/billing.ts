@@ -130,6 +130,7 @@ export interface Payment {
 export interface CheckoutRequest {
   planId: string;
   couponCode?: string;
+  referralCode?: string; // optional referral attribution
 }
 
 export interface CheckoutResponse {

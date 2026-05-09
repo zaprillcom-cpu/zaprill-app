@@ -8,6 +8,7 @@ import { AuthConfigTab } from "./auth-config-tab";
 import { CompanyTab } from "./company-tab";
 import { CouponsTab } from "./coupons-tab";
 import { PlansTab } from "./plans-tab";
+import { ReferralsTab } from "./referrals-tab";
 import { ResourcesTab } from "./resources-tab";
 
 export type LearningResource = {
@@ -134,9 +135,10 @@ export function SettingsContent() {
 
   return (
     <Tabs defaultValue="plans" className="w-full">
-      <TabsList className="mb-6 grid w-full max-w-2xl grid-cols-5">
+      <TabsList className="mb-6 grid w-full max-w-3xl grid-cols-6">
         <TabsTrigger value="plans">Plans</TabsTrigger>
         <TabsTrigger value="coupons">Coupons</TabsTrigger>
+        <TabsTrigger value="referrals">Referrals</TabsTrigger>
         <TabsTrigger value="resources">Resources</TabsTrigger>
         <TabsTrigger value="company">Company</TabsTrigger>
         <TabsTrigger value="auth">Auth Config</TabsTrigger>
@@ -167,6 +169,10 @@ export function SettingsContent() {
           onMutate={mutate}
           onRefresh={fetchData}
         />
+      </TabsContent>
+
+      <TabsContent value="referrals">
+        <ReferralsTab />
       </TabsContent>
 
       <TabsContent value="company">

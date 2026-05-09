@@ -13,6 +13,7 @@ import db from "@/db";
 import { invoice, plan, subscription } from "@/db/schema";
 import { auth } from "@/lib/auth";
 import { formatCurrency } from "@/lib/billing-utils";
+import { BillingClientShell } from "./_components/billing-client-shell";
 import { BillingInvoiceTable } from "./_components/billing-invoice-table";
 import CancelSubscriptionButton from "./cancel-button";
 
@@ -65,110 +66,116 @@ export default async function BillingPage() {
     sub && ["active", "trialing", "past_due"].includes(sub.status);
 
   return (
-    <div className="container max-w-7xl mx-auto py-10 space-y-8">
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">
-          Billing & Subscription
-        </h1>
-        <p className="text-muted-foreground mt-2">
-          Manage your plan, payment methods, and invoices.
-        </p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <BillingClientShell />
 
-      {/* Subscription Status Card */}
-      <Card className={isFunctionallyActive ? "border-primary/50" : ""}>
-        <CardHeader>
-          <CardTitle>Current Plan</CardTitle>
-          <CardDescription>
-            {sub?.status === "active"
-              ? "Your subscription is active and will auto-renew."
-              : sub?.status === "canceled"
-                ? "Your subscription has been canceled but remains active until the end of the billing period."
-                : "You are currently on the free plan."}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          {isFunctionallyActive && activePlan ? (
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 border rounded-lg bg-muted/20">
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="font-semibold text-lg">
-                    {activePlan.name}
-                  </span>
-                  <Badge
-                    variant={sub.status === "active" ? "default" : "secondary"}
-                  >
-                    {sub.status.toUpperCase()}
-                  </Badge>
-                </div>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {formatCurrency(sub.priceAtPurchase)} / {sub.billingCycle}
-                </p>
-                <p className="text-xs text-muted-foreground mt-2">
-                  Current period:{" "}
-                  {new Date(sub.currentPeriodStart).toLocaleDateString()} —{" "}
-                  {new Date(sub.currentPeriodEnd).toLocaleDateString()}
-                </p>
-              </div>
-              {sub.status === "active" && (
-                <CancelSubscriptionButton subscriptionId={sub.id} />
-              )}
-            </div>
-          ) : sub?.status === "canceled" && activePlan ? (
-            <div className="space-y-6">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 border rounded-lg bg-yellow-500/10 border-yellow-500/20">
+      <div className="container max-w-4xl mx-auto py-10 space-y-8">
+        {/* Header */}
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Billing & Subscription
+          </h1>
+          <p className="text-muted-foreground mt-2">
+            Manage your plan, payment methods, and invoices.
+          </p>
+        </div>
+
+        {/* Subscription Status Card */}
+        <Card className={isFunctionallyActive ? "border-primary/50" : ""}>
+          <CardHeader>
+            <CardTitle>Current Plan</CardTitle>
+            <CardDescription>
+              {sub?.status === "active"
+                ? "Your subscription is active and will auto-renew."
+                : sub?.status === "canceled"
+                  ? "Your subscription has been canceled but remains active until the end of the billing period."
+                  : "You are currently on the free plan."}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {isFunctionallyActive && activePlan ? (
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 border rounded-lg bg-muted/20">
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="font-semibold text-lg">
                       {activePlan.name}
                     </span>
                     <Badge
-                      variant="outline"
-                      className="text-yellow-600 border-yellow-600"
+                      variant={
+                        sub.status === "active" ? "default" : "secondary"
+                      }
                     >
-                      CANCELED
+                      {sub.status.toUpperCase()}
                     </Badge>
                   </div>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    {formatCurrency(sub.priceAtPurchase)} / {sub.billingCycle}
+                  </p>
                   <p className="text-xs text-muted-foreground mt-2">
-                    Access ends on:{" "}
+                    Current period:{" "}
+                    {new Date(sub.currentPeriodStart).toLocaleDateString()} —{" "}
                     {new Date(sub.currentPeriodEnd).toLocaleDateString()}
                   </p>
                 </div>
+                {sub.status === "active" && (
+                  <CancelSubscriptionButton subscriptionId={sub.id} />
+                )}
               </div>
-              <div className="pt-4 border-t">
-                <p className="text-sm font-medium mb-4">
-                  Want to restart your subscription?
-                </p>
+            ) : sub?.status === "canceled" && activePlan ? (
+              <div className="space-y-6">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 border rounded-lg bg-yellow-500/10 border-yellow-500/20">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-semibold text-lg">
+                        {activePlan.name}
+                      </span>
+                      <Badge
+                        variant="outline"
+                        className="text-yellow-600 border-yellow-600"
+                      >
+                        CANCELED
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-2">
+                      Access ends on:{" "}
+                      {new Date(sub.currentPeriodEnd).toLocaleDateString()}
+                    </p>
+                  </div>
+                </div>
+                <div className="pt-4 border-t">
+                  <p className="text-sm font-medium mb-4">
+                    Want to restart your subscription?
+                  </p>
+                  <PricingPlans plans={plans} />
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-8">
+                <div className="p-8 border rounded-lg bg-muted/10 text-center">
+                  <p className="text-muted-foreground font-medium">
+                    You don&apos;t have an active premium subscription. Choose a
+                    plan below to get started.
+                  </p>
+                </div>
                 <PricingPlans plans={plans} />
               </div>
-            </div>
-          ) : (
-            <div className="space-y-8">
-              <div className="p-8 border rounded-lg bg-muted/10 text-center">
-                <p className="text-muted-foreground font-medium">
-                  You don&apos;t have an active premium subscription. Choose a
-                  plan below to get started.
-                </p>
-              </div>
-              <PricingPlans plans={plans} />
-            </div>
-          )}
-        </CardContent>
-      </Card>
+            )}
+          </CardContent>
+        </Card>
 
-      {/* Invoice History */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Invoice History</CardTitle>
-          <CardDescription>
-            Click any invoice to view details and download a PDF receipt.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <BillingInvoiceTable invoices={invoices as any} />
-        </CardContent>
-      </Card>
+        {/* Invoice History */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Invoice History</CardTitle>
+            <CardDescription>
+              Click any invoice to view details and download a PDF receipt.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <BillingInvoiceTable invoices={invoices as any} />
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

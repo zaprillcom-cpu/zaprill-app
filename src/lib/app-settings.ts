@@ -21,6 +21,12 @@ export const APP_SETTING_KEYS = [
   "company_address",
   "company_cin",
   "company_email",
+  // Referral system settings
+  "referral_enabled", // "true" | "false"
+  "referral_referrer_reward_pct", // % discount coupon for referrer (e.g. "20")
+  "referral_referee_reward_pct", // % discount coupon for referee  (e.g. "10")
+  "referral_expiry_days", // days before a referral expires  (e.g. "90")
+  "referral_max_per_user", // max referrals per user (e.g. "50", "" = unlimited)
 ] as const;
 
 export type AppSettingKey = (typeof APP_SETTING_KEYS)[number];
@@ -31,6 +37,14 @@ export interface CompanySettings {
   company_address: string;
   company_cin: string;
   company_email: string;
+}
+
+export interface ReferralSettings {
+  referral_enabled: boolean;
+  referral_referrer_reward_pct: number; // %
+  referral_referee_reward_pct: number; // %
+  referral_expiry_days: number;
+  referral_max_per_user: number | null; // null = unlimited
 }
 
 // ─────────────────────────────────────────────────
@@ -53,6 +67,38 @@ export async function getCompanySettings(): Promise<CompanySettings> {
     company_address: map.company_address ?? "",
     company_cin: map.company_cin ?? "",
     company_email: map.company_email ?? "billing@zaprill.com",
+  };
+}
+
+/** Returns referral system settings from the app_settings table. */
+export async function getReferralSettings(): Promise<ReferralSettings> {
+  const keys: AppSettingKey[] = [
+    "referral_enabled",
+    "referral_referrer_reward_pct",
+    "referral_referee_reward_pct",
+    "referral_expiry_days",
+    "referral_max_per_user",
+  ];
+  const rows = await db
+    .select()
+    .from(appSettings)
+    .where(inArray(appSettings.key, keys));
+
+  const map: Record<string, string> = {};
+  for (const row of rows) map[row.key] = row.value;
+
+  return {
+    referral_enabled: (map.referral_enabled ?? "true") === "true",
+    referral_referrer_reward_pct: parseFloat(
+      map.referral_referrer_reward_pct ?? "20",
+    ),
+    referral_referee_reward_pct: parseFloat(
+      map.referral_referee_reward_pct ?? "10",
+    ),
+    referral_expiry_days: parseInt(map.referral_expiry_days ?? "90", 10),
+    referral_max_per_user: map.referral_max_per_user
+      ? parseInt(map.referral_max_per_user, 10)
+      : null,
   };
 }
 

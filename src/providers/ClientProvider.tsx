@@ -1,9 +1,11 @@
 "use client";
 
+import type { User } from "better-auth/types";
+import type React from "react";
+import { useRef } from "react";
 import { useDispatch } from "react-redux";
-import React, { useRef } from "react";
+import { useReferralClaim } from "@/hooks/useReferralClaim";
 import { login } from "@/store/authSlice";
-import { User } from "better-auth/types";
 
 /** Recursively convert Date values to ISO strings so Redux serialization passes. */
 function serializeUser(user: User): User {
@@ -20,6 +22,9 @@ function AuthInitializer({ user }: { user: User }) {
     dispatch(login(serializeUser(user)));
     dispatched.current = true;
   }
+
+  // Auto-claim any pending referral code stored from the sign-up page
+  useReferralClaim(true);
 
   return null;
 }

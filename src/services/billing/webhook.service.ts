@@ -198,6 +198,15 @@ export async function handleWebhookEvent(
     })();
 
     console.log(`[webhook] SUCCESS handled for invoice ${inv.id}`);
+
+    // f) Convert referral if the referred user has a pending referral (fire-and-forget)
+    void import("@/services/billing/referral.service").then(
+      ({ convertReferral }) =>
+        convertReferral(inv.userId, inv.id).catch((err) =>
+          console.error("[webhook] Referral conversion failed:", err),
+        ),
+    );
+
     return { handled: true, action: "payment_success" };
   }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Gift } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -232,6 +232,13 @@ export default function Navbar({
                     className="font-semibold cursor-pointer"
                   >
                     Billing
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => router.push("/referrals")}
+                    className="font-semibold cursor-pointer text-emerald-600 dark:text-emerald-400 focus:text-emerald-600 dark:focus:text-emerald-400"
+                  >
+                    <Gift size={14} className="mr-2 shrink-0" />
+                    Refer &amp; Earn
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() => router.push("/history")}
