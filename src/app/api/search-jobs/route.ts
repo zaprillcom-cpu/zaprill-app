@@ -17,11 +17,15 @@ interface AdzunaResult {
   company: { display_name: string };
   location: { display_name: string };
   description: string;
+  /** Extended description – available when the API returns it */
+  full_description?: string;
   redirect_url: string;
   salary_min?: number;
   salary_max?: number;
   contract_time?: string; // "full_time" | "part_time"
   created: string; // ISO date
+  /** Highlighted snippets returned by Adzuna – sometimes contain skill mentions */
+  highlights?: { title?: string; description?: string };
 }
 
 function buildSalaryString(result: AdzunaResult): string | undefined {
@@ -139,11 +143,14 @@ export async function POST(request: Request) {
       : undefined;
 
     // Refine queries based on experience if provided
+    // Seniority ladder: mid (0-6 yrs, no prefix) → Senior (7-11 yrs) → Lead (12+ yrs)
+    // Note: "Junior" is omitted — very few Indian job postings use this label
     const queries = (jobTitles || []).map((t) => {
       let title = optimizeJobTitle(t);
       if (experienceYears !== undefined) {
         if (experienceYears >= 12) title = `Lead ${title}`;
         else if (experienceYears >= 7) title = `Senior ${title}`;
+        // 0-6 yrs: no prefix — broadest result set
       }
       return title;
     });
@@ -228,31 +235,26 @@ export async function POST(request: Request) {
             (async () => {
               try {
                 const slug = normalized.toLowerCase().replace(/\s+/g, "-");
-                const [existing] = await db
-                  .select({ id: jobTitlesTable.id })
-                  .from(jobTitlesTable)
-                  .where(eq(jobTitlesTable.title, normalized))
-                  .limit(1);
-
-                let titleId = existing?.id;
-                if (!titleId) {
-                  titleId = nanoid();
-                  await db.insert(jobTitlesTable).values({
-                    id: titleId,
+                // Upsert: avoids duplicate key race conditions from parallel enrichment tasks.
+                // ON CONFLICT (title) → increment popularity score atomically.
+                const [upserted] = await db
+                  .insert(jobTitlesTable)
+                  .values({
+                    id: nanoid(),
                     title: normalized,
                     slug: slug,
                     popularityScore: 1,
                     searchCount: 0,
-                  });
-                } else {
-                  // Increment popularity for existing
-                  await db
-                    .update(jobTitlesTable)
-                    .set({
+                  })
+                  .onConflictDoUpdate({
+                    target: jobTitlesTable.title,
+                    set: {
                       popularityScore: sql`${jobTitlesTable.popularityScore} + 1`,
-                    })
-                    .where(eq(jobTitlesTable.id, titleId));
-                }
+                    },
+                  })
+                  .returning({ id: jobTitlesTable.id });
+
+                const titleId = upserted?.id;
 
                 // Add original raw title as alias if it's different
                 if (rawTitle.toLowerCase() !== normalized.toLowerCase()) {
@@ -275,9 +277,20 @@ export async function POST(request: Request) {
             })();
           }
 
-          const requiredSkills = extractSkillsFromText(
-            result.description ?? "",
-          );
+          // Build the richest possible text for skill extraction:
+          // prefer full_description if available, fallback to truncated description.
+          // Also append highlights and the job title itself so the extractor
+          // can pick up context even from minimal descriptions.
+          const descriptionText = [
+            result.full_description ?? result.description ?? "",
+            result.highlights?.description ?? "",
+            result.highlights?.title ?? "",
+            result.title, // title often contains tech (e.g. "React Developer")
+          ]
+            .filter(Boolean)
+            .join(" ");
+
+          const requiredSkills = extractSkillsFromText(descriptionText);
 
           allJobs.push({
             id: result.id,
