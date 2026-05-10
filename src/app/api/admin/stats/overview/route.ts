@@ -19,7 +19,7 @@ export async function GET() {
         .from(subscription)
         .where(eq(subscription.status, "active")),
       db.execute(
-        sql`SELECT SUM(CAST(total_amount as NUMERIC)) as total FROM invoice WHERE status = 'paid'`,
+        sql`SELECT SUM(CAST(amount_paid as NUMERIC) - CAST(tax_amount as NUMERIC)) as total FROM invoice WHERE status = 'paid'`,
       ),
       db.execute(sql`SELECT SUM(total_tokens) as total FROM ai_usage_log`),
     ]);

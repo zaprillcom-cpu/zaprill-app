@@ -24,7 +24,7 @@ export async function GET(request: Request) {
     const revenueStats = await db.execute(sql`
       SELECT 
         DATE(created_at) as date,
-        SUM(CAST(total_amount as NUMERIC)) as revenue,
+        SUM(CAST(amount_paid as NUMERIC) - CAST(tax_amount as NUMERIC)) as revenue,
         COUNT(*) as count
       FROM invoice
       WHERE status = 'paid' AND created_at >= ${startDate}
