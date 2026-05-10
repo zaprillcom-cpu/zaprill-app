@@ -2,7 +2,7 @@ import { count, eq, sql } from "drizzle-orm";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import db from "@/db";
-import { aiUsageLog, invoice, subscription, user } from "@/db/schema";
+import { subscription, user } from "@/db/schema";
 import { auth } from "@/lib/auth";
 
 export async function GET() {

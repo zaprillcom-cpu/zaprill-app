@@ -3,7 +3,6 @@ import { and, desc, eq, gte, sql } from "drizzle-orm";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import db from "@/db";
-import { aiUsageLog, invoice } from "@/db/schema";
 import { auth } from "@/lib/auth";
 
 export async function GET(request: Request) {
