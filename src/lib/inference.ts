@@ -95,10 +95,12 @@ export function enrichResumeMetadata(data: ResumeData): ResumeData {
   return {
     ...data,
     inferredJobTitles:
-      inferredJobTitles.length > 0 ? inferredJobTitles : data.inferredJobTitles,
+      data.inferredJobTitles && data.inferredJobTitles.length > 0
+        ? data.inferredJobTitles
+        : inferredJobTitles,
     totalYearsOfExperience:
-      totalYearsOfExperience > 0
-        ? totalYearsOfExperience
-        : data.totalYearsOfExperience,
+      data.totalYearsOfExperience !== undefined
+        ? data.totalYearsOfExperience
+        : totalYearsOfExperience,
   };
 }

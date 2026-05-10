@@ -126,55 +126,57 @@ export default function ProfilePage() {
 
   const addSkill = () => {
     if (!newSkill.trim()) return;
-    const currentSkills = [...(resumeData.skills || [])];
     const skillName = newSkill.trim();
 
-    // Check if skill already exists in any group
-    const exists = currentSkills.some((g) =>
-      g.keywords.some((k) => k.toLowerCase() === skillName.toLowerCase()),
-    );
-    if (exists) {
-      setNewSkill("");
-      return;
-    }
+    setResumeData((prev) => {
+      const currentSkills = [...(prev.skills || [])];
 
-    // Add to "Top Skills" group or create it
-    const topSkillsGroup = currentSkills.find(
-      (g) => g.name === "Top Skills" || g.name === "General",
-    );
+      // Check if skill already exists in any group
+      const exists = currentSkills.some((g) =>
+        g.keywords.some((k) => k.toLowerCase() === skillName.toLowerCase()),
+      );
+      if (exists) return prev;
 
-    if (topSkillsGroup) {
-      topSkillsGroup.keywords = [...topSkillsGroup.keywords, skillName];
-      updResume({ skills: currentSkills });
-    } else {
-      const newGroup: ResumeSkillItem = {
-        id: nanoid(),
-        name: "Top Skills",
-        level: "Intermediate",
-        keywords: [skillName],
-        category: "technical",
-      };
-      updResume({ skills: [...currentSkills, newGroup] });
-    }
+      // Add to "Top Skills" group or create it
+      const topSkillsGroup = currentSkills.find(
+        (g) => g.name === "Top Skills" || g.name === "General",
+      );
+
+      if (topSkillsGroup) {
+        topSkillsGroup.keywords = [...topSkillsGroup.keywords, skillName];
+        return { ...prev, skills: currentSkills };
+      } else {
+        const newGroup: ResumeSkillItem = {
+          id: nanoid(),
+          name: "Top Skills",
+          level: "Intermediate",
+          keywords: [skillName],
+          category: "technical",
+        };
+        return { ...prev, skills: [...currentSkills, newGroup] };
+      }
+    });
     setNewSkill("");
   };
 
   const removeSkill = (groupId: string, keyword: string) => {
-    const currentSkills = (resumeData.skills || [])
-      .map((group) => {
-        if (group.id === groupId) {
-          return {
-            ...group,
-            keywords: group.keywords.filter((k) => k !== keyword),
-          };
-        }
-        return group;
-      })
-      .filter(
-        (group) => group.keywords.length > 0 || group.name !== "Top Skills",
-      ); // Keep empty groups if they are named categories, except temporary ones
+    setResumeData((prev) => {
+      const currentSkills = (prev.skills || [])
+        .map((group) => {
+          if (group.id === groupId) {
+            return {
+              ...group,
+              keywords: group.keywords.filter((k) => k !== keyword),
+            };
+          }
+          return group;
+        })
+        .filter(
+          (group) => group.keywords.length > 0 || group.name !== "Top Skills",
+        );
 
-    updResume({ skills: currentSkills });
+      return { ...prev, skills: currentSkills };
+    });
   };
 
   const addSocialProfile = () => {
@@ -202,12 +204,12 @@ export default function ProfilePage() {
   };
 
   const removeRole = (role: string) => {
-    if (!resumeData) return;
-    updResume({
-      inferredJobTitles: (resumeData.inferredJobTitles || []).filter(
+    setResumeData((prev) => ({
+      ...prev,
+      inferredJobTitles: (prev.inferredJobTitles || []).filter(
         (r) => r !== role,
       ),
-    });
+    }));
   };
 
   const handleResumeUpload = async (file: File) => {
@@ -628,10 +630,16 @@ export default function ProfilePage() {
                             className="h-9 px-4 text-sm font-black bg-foreground text-background flex items-center gap-2 rounded-lg"
                           >
                             {role}
-                            <Trash2
-                              className="h-3.5 w-3.5 cursor-pointer hover:text-red-400 transition-colors"
-                              onClick={() => removeRole(role)}
-                            />
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                removeRole(role);
+                              }}
+                              className="inline-flex items-center justify-center p-0.5 hover:bg-muted/20 rounded-md transition-colors"
+                            >
+                              <Trash2 className="h-3.5 w-3.5 cursor-pointer hover:text-red-400 transition-colors" />
+                            </button>
                           </Badge>
                         ))}
                       </div>
@@ -683,12 +691,16 @@ export default function ProfilePage() {
                             className="h-9 px-4 text-sm font-bold border-2 flex items-center gap-2 rounded-lg group hover:border-foreground transition-all"
                           >
                             {skill.name}
-                            <Trash2
-                              className="h-3.5 w-3.5 cursor-pointer text-muted-foreground group-hover:text-red-500 transition-colors"
-                              onClick={() =>
-                                removeSkill(skill.groupId, skill.name)
-                              }
-                            />
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                removeSkill(skill.groupId, skill.name);
+                              }}
+                              className="inline-flex items-center justify-center p-0.5 hover:bg-muted rounded-md transition-colors"
+                            >
+                              <Trash2 className="h-3.5 w-3.5 cursor-pointer text-muted-foreground group-hover:text-red-500 transition-colors" />
+                            </button>
                           </Badge>
                         ))}
                     </div>
