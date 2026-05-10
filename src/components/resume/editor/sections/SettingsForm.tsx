@@ -58,7 +58,11 @@ const SECTION_LABELS: Record<string, string> = {
 
 type ThemeKey = "primary" | "accent" | "text" | "background";
 
-export default function SettingsForm({ serverErrors }: { serverErrors?: any }) {
+export default function SettingsForm({
+  serverErrors: _serverErrors,
+}: {
+  serverErrors?: unknown;
+}) {
   const dispatch = useDispatch<AppDispatch>();
   const templateSlug = useSelector((s: RootState) => s.resume.templateSlug);
   const metadata = useSelector((s: RootState) => s.resume.metadata);
