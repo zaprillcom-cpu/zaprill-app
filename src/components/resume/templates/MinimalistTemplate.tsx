@@ -47,6 +47,7 @@ export default function MinimalistTemplate({
     theme = DEFAULT_RESUME_METADATA.theme,
     typography = DEFAULT_RESUME_METADATA.typography,
     sectionVisibility = DEFAULT_RESUME_METADATA.sectionVisibility,
+    sectionOrder,
     page = DEFAULT_RESUME_METADATA.page,
   } = m;
 
@@ -352,7 +353,9 @@ export default function MinimalistTemplate({
       </header>
 
       <main>
-        {Object.keys(sectionRenderers).map((key) => sectionRenderers[key]())}
+        {(sectionOrder || Object.keys(sectionRenderers)).map((key) =>
+          sectionRenderers[key]?.(),
+        )}
       </main>
     </div>
   );

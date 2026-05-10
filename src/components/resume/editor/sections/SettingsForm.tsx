@@ -420,38 +420,40 @@ export default function SettingsForm({ serverErrors }: { serverErrors?: any }) {
         </Card>
       </section>
 
-      {/* Section Order */}
-      <section>
-        <h3 className="text-sm font-black uppercase tracking-widest text-muted-foreground mb-4">
-          Section Order
-        </h3>
-        <p className="text-xs text-muted-foreground mb-3">
-          Drag sections to reorder them on your resume
-        </p>
-        <Card className="border-border">
-          <CardContent className="p-2">
-            <DndContext
-              collisionDetection={closestCenter}
-              onDragEnd={handleSectionDragEnd}
-            >
-              <SortableContext
-                items={orderableSections}
-                strategy={verticalListSortingStrategy}
+      {/* Section Order — only available for Minimalist template */}
+      {templateSlug === "minimalist" && (
+        <section>
+          <h3 className="text-sm font-black uppercase tracking-widest text-muted-foreground mb-4">
+            Section Order
+          </h3>
+          <p className="text-xs text-muted-foreground mb-3">
+            Drag sections to reorder them on your resume
+          </p>
+          <Card className="border-border">
+            <CardContent className="p-2">
+              <DndContext
+                collisionDetection={closestCenter}
+                onDragEnd={handleSectionDragEnd}
               >
-                {orderableSections.map((key: string) => (
-                  <SortableItem key={key} id={key}>
-                    <div className="flex items-center gap-2 py-2.5 px-2 rounded-lg hover:bg-muted/50 transition-colors">
-                      <span className="text-sm font-medium pl-6">
-                        {SECTION_LABELS[key] || key}
-                      </span>
-                    </div>
-                  </SortableItem>
-                ))}
-              </SortableContext>
-            </DndContext>
-          </CardContent>
-        </Card>
-      </section>
+                <SortableContext
+                  items={orderableSections}
+                  strategy={verticalListSortingStrategy}
+                >
+                  {orderableSections.map((key: string) => (
+                    <SortableItem key={key} id={key}>
+                      <div className="flex items-center gap-2 py-2.5 px-2 rounded-lg hover:bg-muted/50 transition-colors">
+                        <span className="text-sm font-medium pl-6">
+                          {SECTION_LABELS[key] || key}
+                        </span>
+                      </div>
+                    </SortableItem>
+                  ))}
+                </SortableContext>
+              </DndContext>
+            </CardContent>
+          </Card>
+        </section>
+      )}
     </div>
   );
 }
