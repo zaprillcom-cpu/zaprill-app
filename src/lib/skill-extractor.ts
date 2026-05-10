@@ -554,8 +554,11 @@ export function extractSkillsFromText(text: string): string[] {
   // Even if the description is truncated, these phrases often appear early.
   for (const pattern of CONTEXT_PATTERNS) {
     pattern.lastIndex = 0; // reset stateful regex
-    let match: RegExpExecArray | null;
-    while ((match = pattern.exec(text)) !== null) {
+    for (
+      let match = pattern.exec(text);
+      match !== null;
+      match = pattern.exec(text)
+    ) {
       const raw = match[1] ?? "";
       // Split on commas, "and", "or", "/"
       const candidates = raw
