@@ -1,5 +1,5 @@
 import { startOfDay, subDays } from "date-fns";
-import { and, desc, eq, gte, sql } from "drizzle-orm";
+import { sql } from "drizzle-orm";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import db from "@/db";
