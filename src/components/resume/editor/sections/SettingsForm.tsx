@@ -5,12 +5,9 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, Lock, Palette, Type } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import type { z } from "zod";
 import SortableItem from "@/components/resume/editor/SortableItem";
 import { TEMPLATE_REGISTRY } from "@/components/resume/templates/registry";
 import { Badge } from "@/components/ui/badge";
@@ -26,10 +23,8 @@ import {
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
-import { resumeMetadataSchema } from "@/lib/validations/resume";
 import { resumeActions } from "@/store/resumeSlice";
 import type { AppDispatch, RootState } from "@/store/store";
-import { DEFAULT_RESUME_METADATA } from "@/types/resume";
 
 const FONT_OPTIONS = [
   "Inter",
@@ -61,7 +56,7 @@ const SECTION_LABELS: Record<string, string> = {
   references: "References",
 };
 
-type SettingsFormValues = z.input<typeof resumeMetadataSchema>;
+type ThemeKey = "primary" | "accent" | "text" | "background";
 
 export default function SettingsForm({ serverErrors }: { serverErrors?: any }) {
   const dispatch = useDispatch<AppDispatch>();
@@ -70,56 +65,38 @@ export default function SettingsForm({ serverErrors }: { serverErrors?: any }) {
 
   const [isPro, setIsPro] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-    setError,
-    reset,
-    getValues,
-  } = useForm<SettingsFormValues>({
-    resolver: zodResolver(resumeMetadataSchema),
-    defaultValues: metadata || DEFAULT_RESUME_METADATA,
-    mode: "onChange",
-  });
-
-  // Handle server-side errors
-  useEffect(() => {
-    if (!serverErrors) return;
-
-    Object.entries(serverErrors).forEach(([path, messages]) => {
-      if (Array.isArray(messages) && messages.length > 0) {
-        setError(path as any, {
-          type: "server",
-          message: messages[0] as string,
-        });
-      }
-    });
-  }, [serverErrors, setError]);
-
-  const getWatch = watch as any;
-  const setVal = setValue as any;
-  const watchedMetadata = watch();
-
-  // Watch for changes and update Redux
-  useEffect(() => {
-    const subscription = watch((value: any) => {
-      if (value) {
-        dispatch(resumeActions.setMetadata(value as any));
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, [watch, dispatch]);
-
-  // Update form if Redux changes externally (e.g., AI enhancements)
-  useEffect(() => {
-    const currentRHF = getValues();
-    if (JSON.stringify(currentRHF) !== JSON.stringify(metadata)) {
-      reset(metadata || DEFAULT_RESUME_METADATA);
-    }
-  }, [metadata, reset, getValues]);
+  // Derive everything from Redux metadata
+  const theme = metadata?.theme ?? {
+    primary: "#1a1a2e",
+    background: "#ffffff",
+    text: "#333333",
+    accent: "#4a6cf7",
+  };
+  const typography = metadata?.typography ?? {
+    font: { family: "Inter", size: 11 },
+    lineHeight: 1.5,
+  };
+  const page = metadata?.page ?? { format: "a4" as const, margin: 20 };
+  const sectionVisibility = metadata?.sectionVisibility ?? {
+    summary: true,
+    work: true,
+    education: true,
+    skills: true,
+    projects: false,
+    certifications: false,
+    languages: false,
+    volunteer: false,
+    awards: false,
+    publications: false,
+    references: false,
+  };
+  const sectionOrder = metadata?.sectionOrder ?? [
+    "summary",
+    "work",
+    "education",
+    "skills",
+    "projects",
+  ];
 
   useEffect(() => {
     fetch("/api/billing/subscription")
@@ -130,30 +107,130 @@ export default function SettingsForm({ serverErrors }: { serverErrors?: any }) {
       .catch(() => setIsPro(false));
   }, []);
 
-  const orderableSections = (watchedMetadata.sectionOrder || []).filter(
-    (key: string) => key in SECTION_LABELS,
+  const orderableSections = useMemo(
+    () => sectionOrder.filter((key) => key in SECTION_LABELS),
+    [sectionOrder],
+  );
+
+  // ── Direct Redux dispatch helpers ──────────────────────
+
+  const setTemplate = (slug: string) => {
+    dispatch(resumeActions.setTemplateSlug(slug));
+  };
+
+  const setThemeColor = useCallback(
+    (key: ThemeKey, value: string) => {
+      dispatch(
+        resumeActions.setMetadata({ theme: { ...theme, [key]: value } }),
+      );
+    },
+    [dispatch, theme],
+  );
+
+  const handleThemeHexInput = useCallback(
+    (key: ThemeKey, value: string) => {
+      if (/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(value)) {
+        dispatch(
+          resumeActions.setMetadata({ theme: { ...theme, [key]: value } }),
+        );
+      }
+    },
+    [dispatch, theme],
+  );
+
+  const setFontFamily = useCallback(
+    (family: string) => {
+      dispatch(
+        resumeActions.setMetadata({
+          typography: { ...typography, font: { ...typography.font, family } },
+        }),
+      );
+    },
+    [dispatch, typography],
+  );
+
+  const setFontSize = useCallback(
+    (size: number) => {
+      dispatch(
+        resumeActions.setMetadata({
+          typography: { ...typography, font: { ...typography.font, size } },
+        }),
+      );
+    },
+    [dispatch, typography],
+  );
+
+  const setLineHeight = useCallback(
+    (lineHeight: number) => {
+      dispatch(
+        resumeActions.setMetadata({
+          typography: { ...typography, lineHeight },
+        }),
+      );
+    },
+    [dispatch, typography],
+  );
+
+  const setPageFormat = useCallback(
+    (format: "a4" | "letter") => {
+      dispatch(resumeActions.setMetadata({ page: { ...page, format } }));
+    },
+    [dispatch, page],
+  );
+
+  const setMargin = useCallback(
+    (margin: number) => {
+      dispatch(resumeActions.setMetadata({ page: { ...page, margin } }));
+    },
+    [dispatch, page],
+  );
+
+  const toggleSectionVisibility = useCallback(
+    (key: string) => {
+      dispatch(
+        resumeActions.setMetadata({
+          sectionVisibility: {
+            ...sectionVisibility,
+            [key]: !sectionVisibility[key as keyof typeof sectionVisibility],
+          },
+        }),
+      );
+    },
+    [dispatch, sectionVisibility],
   );
 
   const handleSectionDragEnd = useCallback(
     (event: DragEndEvent) => {
       const { active, over } = event;
       if (over && active.id !== over.id) {
-        const currentOrder = [...(watchedMetadata.sectionOrder || [])];
-        const from = currentOrder.indexOf(active.id as string);
-        const to = currentOrder.indexOf(over.id as string);
+        const from = sectionOrder.indexOf(active.id as string);
+        const to = sectionOrder.indexOf(over.id as string);
         if (from !== -1 && to !== -1) {
-          const [removed] = currentOrder.splice(from, 1);
-          currentOrder.splice(to, 0, removed);
-          setVal("sectionOrder", currentOrder, { shouldValidate: true });
+          dispatch(resumeActions.reorderSections({ from, to }));
         }
       }
     },
-    [watchedMetadata.sectionOrder, setValue],
+    [dispatch, sectionOrder],
   );
 
-  const setTemplate = (slug: string) => {
-    dispatch(resumeActions.setTemplateSlug(slug));
-  };
+  // ── Theme color inputs ──────────────────────────────────
+
+  type ThemeColorState = { [k in ThemeKey]: string };
+  const [themeInputs, setThemeInputs] = useState<ThemeColorState>({
+    primary: theme.primary ?? "",
+    accent: theme.accent ?? "",
+    text: theme.text ?? "",
+    background: theme.background ?? "",
+  });
+  // Sync input state when Redux theme changes externally
+  useEffect(() => {
+    setThemeInputs({
+      primary: theme.primary ?? "",
+      accent: theme.accent ?? "",
+      text: theme.text ?? "",
+      background: theme.background ?? "",
+    });
+  }, [theme.primary, theme.accent, theme.text, theme.background]);
 
   return (
     <div className="space-y-8">
@@ -226,12 +303,14 @@ export default function SettingsForm({ serverErrors }: { serverErrors?: any }) {
           <Palette className="h-4 w-4" /> Colors
         </h3>
         <div className="grid grid-cols-2 gap-4">
-          {[
-            { key: "primary", label: "Primary" },
-            { key: "accent", label: "Accent" },
-            { key: "text", label: "Text" },
-            { key: "background", label: "Background" },
-          ].map(({ key, label }) => (
+          {(
+            [
+              { key: "primary" as ThemeKey, label: "Primary" },
+              { key: "accent" as ThemeKey, label: "Accent" },
+              { key: "text" as ThemeKey, label: "Text" },
+              { key: "background" as ThemeKey, label: "Background" },
+            ] as const
+          ).map(({ key, label }) => (
             <div key={key} className="space-y-2">
               <Label className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
                 {label}
@@ -239,19 +318,26 @@ export default function SettingsForm({ serverErrors }: { serverErrors?: any }) {
               <div className="flex items-center gap-2">
                 <input
                   type="color"
-                  value={
-                    (getWatch(`theme.${key as any}` as any) as string) ||
-                    "#000000"
-                  }
-                  onChange={(e) =>
-                    setVal(`theme.${key as any}` as any, e.target.value, {
-                      shouldValidate: true,
-                    })
-                  }
+                  value={theme[key] ?? "#000000"}
+                  onChange={(e) => setThemeColor(key, e.target.value)}
                   className="w-10 h-10 rounded-lg border border-border cursor-pointer"
                 />
                 <Input
-                  {...register(`theme.${key as any}` as any)}
+                  value={themeInputs[key]}
+                  onChange={(e) => {
+                    const v = e.target.value;
+                    setThemeInputs((prev) => ({ ...prev, [key]: v }));
+                    if (/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(v)) {
+                      handleThemeHexInput(key, v);
+                    }
+                  }}
+                  onBlur={() => {
+                    // Revert to Redux value on blur if input is invalid
+                    setThemeInputs((prev) => ({
+                      ...prev,
+                      [key]: theme[key] ?? "",
+                    }));
+                  }}
                   className="h-10 text-xs font-mono"
                   maxLength={7}
                 />
@@ -273,12 +359,10 @@ export default function SettingsForm({ serverErrors }: { serverErrors?: any }) {
                 Font Family
               </Label>
               <Select
-                value={getWatch("typography.font.family" as any)}
-                onValueChange={(v) =>
-                  setVal("typography.font.family" as any, v, {
-                    shouldValidate: true,
-                  })
-                }
+                value={typography.font.family}
+                onValueChange={(v) => {
+                  if (v) setFontFamily(v);
+                }}
               >
                 <SelectTrigger className="h-11">
                   <SelectValue placeholder="Select font" />
@@ -299,19 +383,15 @@ export default function SettingsForm({ serverErrors }: { serverErrors?: any }) {
                   Font Size
                 </Label>
                 <span className="text-sm font-bold">
-                  {getWatch("typography.font.size" as any)}pt
+                  {typography.font.size}pt
                 </span>
               </div>
               <Slider
-                value={[getWatch("typography.font.size" as any) || 11]}
+                value={[typography.font.size]}
                 min={9}
                 max={14}
                 step={0.5}
-                onValueChange={(v: any) =>
-                  setVal("typography.font.size" as any, v[0], {
-                    shouldValidate: true,
-                  })
-                }
+                onValueChange={(v) => setFontSize(Array.isArray(v) ? v[0] : v)}
               />
             </div>
 
@@ -321,18 +401,16 @@ export default function SettingsForm({ serverErrors }: { serverErrors?: any }) {
                   Line Height
                 </Label>
                 <span className="text-sm font-bold">
-                  {getWatch("typography.lineHeight" as any)}
+                  {typography.lineHeight}
                 </span>
               </div>
               <Slider
-                value={[getWatch("typography.lineHeight" as any) || 1.5]}
+                value={[typography.lineHeight]}
                 min={1.2}
                 max={2.0}
                 step={0.05}
-                onValueChange={(v: any) =>
-                  setVal("typography.lineHeight" as any, v[0], {
-                    shouldValidate: true,
-                  })
+                onValueChange={(v) =>
+                  setLineHeight(Array.isArray(v) ? v[0] : v)
                 }
               />
             </div>
@@ -352,10 +430,10 @@ export default function SettingsForm({ serverErrors }: { serverErrors?: any }) {
                 Page Format
               </Label>
               <Select
-                value={getWatch("page.format")}
-                onValueChange={(v) =>
-                  setVal("page.format", v as any, { shouldValidate: true })
-                }
+                value={page.format}
+                onValueChange={(v) => {
+                  if (v) setPageFormat(v as "a4" | "letter");
+                }}
               >
                 <SelectTrigger className="h-11">
                   <SelectValue />
@@ -375,18 +453,14 @@ export default function SettingsForm({ serverErrors }: { serverErrors?: any }) {
                 <Label className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
                   Margin
                 </Label>
-                <span className="text-sm font-bold">
-                  {getWatch("page.margin")}mm
-                </span>
+                <span className="text-sm font-bold">{page.margin}mm</span>
               </div>
               <Slider
-                value={[getWatch("page.margin") || 20]}
+                value={[page.margin]}
                 min={10}
                 max={30}
                 step={1}
-                onValueChange={(v: any) =>
-                  setVal("page.margin", v[0], { shouldValidate: true })
-                }
+                onValueChange={(v) => setMargin(Array.isArray(v) ? v[0] : v)}
               />
             </div>
           </CardContent>
@@ -407,12 +481,12 @@ export default function SettingsForm({ serverErrors }: { serverErrors?: any }) {
               >
                 <span className="text-sm font-medium">{label}</span>
                 <Switch
-                  checked={getWatch(`sectionVisibility.${key as any}`) ?? false}
-                  onCheckedChange={(checked) =>
-                    setVal(`sectionVisibility.${key as any}` as any, checked, {
-                      shouldValidate: true,
-                    })
+                  checked={
+                    (sectionVisibility as unknown as Record<string, boolean>)[
+                      key
+                    ] ?? false
                   }
+                  onCheckedChange={() => toggleSectionVisibility(key)}
                 />
               </div>
             ))}
@@ -420,40 +494,38 @@ export default function SettingsForm({ serverErrors }: { serverErrors?: any }) {
         </Card>
       </section>
 
-      {/* Section Order — only available for Minimalist template */}
-      {templateSlug === "minimalist" && (
-        <section>
-          <h3 className="text-sm font-black uppercase tracking-widest text-muted-foreground mb-4">
-            Section Order
-          </h3>
-          <p className="text-xs text-muted-foreground mb-3">
-            Drag sections to reorder them on your resume
-          </p>
-          <Card className="border-border">
-            <CardContent className="p-2">
-              <DndContext
-                collisionDetection={closestCenter}
-                onDragEnd={handleSectionDragEnd}
+      {/* Section Order */}
+      <section>
+        <h3 className="text-sm font-black uppercase tracking-widest text-muted-foreground mb-4">
+          Section Order
+        </h3>
+        <p className="text-xs text-muted-foreground mb-3">
+          Drag sections to reorder them on your resume
+        </p>
+        <Card className="border-border">
+          <CardContent className="p-2">
+            <DndContext
+              collisionDetection={closestCenter}
+              onDragEnd={handleSectionDragEnd}
+            >
+              <SortableContext
+                items={orderableSections}
+                strategy={verticalListSortingStrategy}
               >
-                <SortableContext
-                  items={orderableSections}
-                  strategy={verticalListSortingStrategy}
-                >
-                  {orderableSections.map((key: string) => (
-                    <SortableItem key={key} id={key}>
-                      <div className="flex items-center gap-2 py-2.5 px-2 rounded-lg hover:bg-muted/50 transition-colors">
-                        <span className="text-sm font-medium pl-6">
-                          {SECTION_LABELS[key] || key}
-                        </span>
-                      </div>
-                    </SortableItem>
-                  ))}
-                </SortableContext>
-              </DndContext>
-            </CardContent>
-          </Card>
-        </section>
-      )}
+                {orderableSections.map((key: string) => (
+                  <SortableItem key={key} id={key}>
+                    <div className="flex items-center gap-2 py-2.5 px-2 rounded-lg hover:bg-muted/50 transition-colors">
+                      <span className="text-sm font-medium pl-6">
+                        {SECTION_LABELS[key] || key}
+                      </span>
+                    </div>
+                  </SortableItem>
+                ))}
+              </SortableContext>
+            </DndContext>
+          </CardContent>
+        </Card>
+      </section>
     </div>
   );
 }

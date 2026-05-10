@@ -210,11 +210,12 @@
   }
 
   .resume-page {
-    margin: 0 !important;
-    padding: 0 !important;
+    padding: var(--resume-padding, 0mm) !important;
     box-shadow: none !important;
     border: none !important;
-    width: 100% !important;
+    width: 210mm !important;
+    max-width: none !important;
+    margin: 0 auto !important;
     background: white !important;
     overflow: visible !important;
     display: block !important; /* Fix flexbox page-break issues */
