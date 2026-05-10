@@ -388,6 +388,10 @@ export default function ExecutiveProTemplate({
         ["--resume-bg" as string]: theme?.background || "#ffffff",
         ["--resume-text" as string]: theme?.text || "#334155",
         ["--resume-accent" as string]: theme?.accent || "#3b82f6",
+        ["--primary" as string]: theme?.primary || "#1e293b",
+        ["--foreground" as string]: theme?.text || "#334155",
+        ["--background" as string]: theme?.background || "#ffffff",
+        ["--muted-foreground" as string]: theme?.accent || "#3b82f6",
       }}
     >
       <header className="mb-10 text-center">

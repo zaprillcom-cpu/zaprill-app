@@ -261,6 +261,10 @@ export default function CreativePortfolioTemplate({
         ["--resume-bg" as string]: theme?.background || "#ffffff",
         ["--resume-text" as string]: theme?.text || "#1a1a1a",
         ["--resume-accent" as string]: theme?.accent || "#000000",
+        ["--primary" as string]: theme?.primary || "#ff3e00",
+        ["--foreground" as string]: theme?.text || "#1a1a1a",
+        ["--background" as string]: theme?.background || "#ffffff",
+        ["--muted-foreground" as string]: theme?.accent || "#000000",
       }}
     >
       <header className="mb-20 flex flex-col md:flex-row md:items-end justify-between gap-8">

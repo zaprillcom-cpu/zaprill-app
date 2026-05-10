@@ -6,7 +6,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { Check, Lock, Palette, Type } from "lucide-react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SortableItem from "@/components/resume/editor/SortableItem";
 import { TEMPLATE_REGISTRY } from "@/components/resume/templates/registry";
@@ -116,6 +116,16 @@ export default function SettingsForm({
     [sectionOrder],
   );
 
+  // ── Refs for latest derived state (avoid stale closures in callbacks) ──
+  const themeRef = useRef(theme);
+  themeRef.current = theme;
+  const typographyRef = useRef(typography);
+  typographyRef.current = typography;
+  const pageRef = useRef(page);
+  pageRef.current = page;
+  const sectionVisibilityRef = useRef(sectionVisibility);
+  sectionVisibilityRef.current = sectionVisibility;
+
   // ── Direct Redux dispatch helpers ──────────────────────
 
   const setTemplate = (slug: string) => {
@@ -125,82 +135,92 @@ export default function SettingsForm({
   const setThemeColor = useCallback(
     (key: ThemeKey, value: string) => {
       dispatch(
-        resumeActions.setMetadata({ theme: { ...theme, [key]: value } }),
+        resumeActions.setMetadata({
+          theme: { ...themeRef.current, [key]: value },
+        }),
       );
     },
-    [dispatch, theme],
+    [dispatch],
   );
 
   const handleThemeHexInput = useCallback(
     (key: ThemeKey, value: string) => {
       if (/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(value)) {
         dispatch(
-          resumeActions.setMetadata({ theme: { ...theme, [key]: value } }),
+          resumeActions.setMetadata({
+            theme: { ...themeRef.current, [key]: value },
+          }),
         );
       }
     },
-    [dispatch, theme],
+    [dispatch],
   );
 
   const setFontFamily = useCallback(
     (family: string) => {
+      const t = typographyRef.current;
       dispatch(
         resumeActions.setMetadata({
-          typography: { ...typography, font: { ...typography.font, family } },
+          typography: { ...t, font: { ...t.font, family } },
         }),
       );
     },
-    [dispatch, typography],
+    [dispatch],
   );
 
   const setFontSize = useCallback(
     (size: number) => {
+      const t = typographyRef.current;
       dispatch(
         resumeActions.setMetadata({
-          typography: { ...typography, font: { ...typography.font, size } },
+          typography: { ...t, font: { ...t.font, size } },
         }),
       );
     },
-    [dispatch, typography],
+    [dispatch],
   );
 
   const setLineHeight = useCallback(
     (lineHeight: number) => {
+      const t = typographyRef.current;
       dispatch(
         resumeActions.setMetadata({
-          typography: { ...typography, lineHeight },
+          typography: { ...t, lineHeight },
         }),
       );
     },
-    [dispatch, typography],
+    [dispatch],
   );
 
   const setPageFormat = useCallback(
     (format: "a4" | "letter") => {
-      dispatch(resumeActions.setMetadata({ page: { ...page, format } }));
+      const p = pageRef.current;
+      dispatch(resumeActions.setMetadata({ page: { ...p, format } }));
     },
-    [dispatch, page],
+    [dispatch],
   );
 
   const setMargin = useCallback(
     (margin: number) => {
-      dispatch(resumeActions.setMetadata({ page: { ...page, margin } }));
+      const p = pageRef.current;
+      dispatch(resumeActions.setMetadata({ page: { ...p, margin } }));
     },
-    [dispatch, page],
+    [dispatch],
   );
 
   const toggleSectionVisibility = useCallback(
     (key: string) => {
+      const sv = sectionVisibilityRef.current;
       dispatch(
         resumeActions.setMetadata({
           sectionVisibility: {
-            ...sectionVisibility,
-            [key]: !sectionVisibility[key as keyof typeof sectionVisibility],
+            ...sv,
+            [key]: !sv[key as keyof typeof sv],
           },
         }),
       );
     },
-    [dispatch, sectionVisibility],
+    [dispatch],
   );
 
   const handleSectionDragEnd = useCallback(
