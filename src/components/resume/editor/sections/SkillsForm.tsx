@@ -198,7 +198,7 @@ export default function SkillsForm({ serverErrors }: { serverErrors?: any }) {
                           <Select
                             value={watch(`skills.${idx}.category`)}
                             onValueChange={(val) =>
-                              setValue(`skills.${idx}.category`, val, {
+                              setValue(`skills.${idx}.category`, val || "", {
                                 shouldValidate: true,
                               })
                             }
@@ -242,7 +242,7 @@ export default function SkillsForm({ serverErrors }: { serverErrors?: any }) {
                             onValueChange={(val) =>
                               setValue(
                                 `skills.${idx}.level`,
-                                val === "none" ? "" : val,
+                                !val || val === "none" ? "" : val,
                                 {
                                   shouldValidate: true,
                                 },

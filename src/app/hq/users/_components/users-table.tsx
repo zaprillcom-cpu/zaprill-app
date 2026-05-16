@@ -227,7 +227,10 @@ export function UsersTable() {
       searchKey="name"
       onExport={() => console.log("Exporting CSV...")}
       toolbarContent={
-        <Select value={proFilter} onValueChange={setProFilter}>
+        <Select
+          value={proFilter}
+          onValueChange={(v) => setProFilter(v ?? "all")}
+        >
           <SelectTrigger className="w-[150px]">
             <SelectValue placeholder="Subscription" />
           </SelectTrigger>
