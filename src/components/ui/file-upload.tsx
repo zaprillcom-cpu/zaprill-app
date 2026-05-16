@@ -75,7 +75,7 @@ export const FileUpload = ({
           onChange={(e) => handleFileChange(Array.from(e.target.files || []))}
           className="hidden"
         />
-        <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,white,transparent)]">
+        <div className="mask-[radial-gradient(ellipse_at_center,white,transparent)] absolute inset-0">
           <GridPattern />
         </div>
         <div className="flex flex-col items-center justify-center">
@@ -146,7 +146,7 @@ export const FileUpload = ({
                   damping: 20,
                 }}
                 className={cn(
-                  "relative z-40 mx-auto mt-4 flex h-32 w-full max-w-[8rem] items-center justify-center rounded-md bg-white group-hover/file:shadow-2xl dark:bg-neutral-900",
+                  "relative z-40 mx-auto mt-4 flex h-32 w-full max-w-32 items-center justify-center rounded-md bg-white group-hover/file:shadow-2xl dark:bg-neutral-900",
                   "shadow-[0px_10px_50px_rgba(0,0,0,0.1)]",
                 )}
               >
@@ -168,7 +168,7 @@ export const FileUpload = ({
             {!files.length && (
               <motion.div
                 variants={secondaryVariant}
-                className="absolute inset-0 z-30 mx-auto mt-4 flex h-32 w-full max-w-[8rem] items-center justify-center rounded-md border border-sky-400 border-dashed bg-transparent opacity-0"
+                className="absolute inset-0 z-30 mx-auto mt-4 flex h-32 w-full max-w-32 items-center justify-center rounded-md border border-sky-400 border-dashed bg-transparent opacity-0"
               ></motion.div>
             )}
           </div>

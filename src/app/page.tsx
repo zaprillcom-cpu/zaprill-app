@@ -96,7 +96,7 @@ export default function HomePage() {
   if (session && profile?.onboardingStatus === "completed") {
     return (
       <main className="relative flex min-h-screen flex-col overflow-hidden bg-background">
-        <div className="pointer-events-none absolute inset-0 z-0 opacity-50 [mask-image:linear-gradient(to_bottom,white,transparent)] dark:opacity-20">
+        <div className="mask-[linear-gradient(to_bottom,white,transparent)] pointer-events-none absolute inset-0 z-0 opacity-50 dark:opacity-20">
           <GridPattern />
         </div>
         <Navbar

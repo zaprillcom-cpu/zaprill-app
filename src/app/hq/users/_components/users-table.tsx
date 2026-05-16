@@ -82,7 +82,7 @@ function buildColumns(
                 {user.isPro && (
                   <Badge
                     variant="default"
-                    className="h-4 border-none bg-gradient-to-r from-yellow-400 to-orange-500 px-1 font-bold text-[10px] text-white uppercase tracking-wider"
+                    className="h-4 border-none bg-linear-to-r from-yellow-400 to-orange-500 px-1 font-bold text-[10px] text-white uppercase tracking-wider"
                   >
                     Pro
                   </Badge>

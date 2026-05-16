@@ -220,7 +220,7 @@ export default function ResumeScanResults({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <Card className="overflow-hidden rounded-2xl border-border/50 bg-gradient-to-br from-background to-muted/30 shadow-sm">
+        <Card className="overflow-hidden rounded-2xl border-border/50 bg-linear-to-br from-background to-muted/30 shadow-sm">
           <CardContent className="p-8">
             <div className="flex flex-col items-center gap-8 md:flex-row">
               {/* Score Ring */}
@@ -441,7 +441,7 @@ export default function ResumeScanResults({
         transition={{ duration: 0.5, delay: 0.6 }}
         className="space-y-4"
       >
-        <Card className="rounded-2xl border-border/50 bg-gradient-to-r from-background to-muted/20">
+        <Card className="rounded-2xl border-border/50 bg-linear-to-r from-background to-muted/20">
           <CardContent className="p-6">
             <h3 className="mb-1 font-bold text-base">What&apos;s next?</h3>
             <p className="mb-6 font-medium text-muted-foreground text-sm">

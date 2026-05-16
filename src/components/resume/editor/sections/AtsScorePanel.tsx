@@ -424,7 +424,7 @@ export default function AtsScorePanel() {
       {result && (
         <div className="fade-in slide-in-from-bottom-4 animate-in space-y-5 duration-500">
           {/* Overall Score & Perfect Resume CTA */}
-          <Card className="overflow-hidden rounded-2xl border-border/50 bg-gradient-to-br from-background to-muted/30 shadow-sm">
+          <Card className="overflow-hidden rounded-2xl border-border/50 bg-linear-to-br from-background to-muted/30 shadow-sm">
             <CardContent className="p-6">
               <div className="mb-6 flex items-center justify-between">
                 <div className="space-y-1">

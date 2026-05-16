@@ -135,7 +135,7 @@ export default function UserDashboard({
         </Card>
 
         {/* ATS Score Card */}
-        <Card className="flex flex-col justify-between overflow-hidden rounded-2xl border-border/50 bg-gradient-to-br from-background to-muted/30 shadow-sm">
+        <Card className="flex flex-col justify-between overflow-hidden rounded-2xl border-border/50 bg-linear-to-br from-background to-muted/30 shadow-sm">
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center gap-2 font-bold text-[10px] text-muted-foreground uppercase tracking-widest">
               <Shield className="h-3.5 w-3.5" />
@@ -256,7 +256,7 @@ export default function UserDashboard({
           {latestAnalysis && (
             <Link
               href={`/analyze?id=${latestAnalysis.id}`}
-              className="flex items-center gap-1.5 rounded-lg px-4 py-2 font-bold text-primary text-xs uppercase tracking-[0.1em] transition-colors hover:bg-primary/5"
+              className="flex items-center gap-1.5 rounded-lg px-4 py-2 font-bold text-primary text-xs uppercase tracking-widest transition-colors hover:bg-primary/5"
             >
               See all {latestAnalysis.jobs?.length || 0} matches
               <ChevronRight className="h-4 w-4" />

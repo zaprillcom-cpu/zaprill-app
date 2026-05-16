@@ -10,7 +10,7 @@ export default function NotFound() {
 
       <div className="relative flex flex-1 flex-col items-center justify-center p-6">
         {/* Decorative background grid */}
-        <div className="-z-10 pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:32px_32px]" />
+        <div className="-z-10 pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[32px_32px]" />
 
         <div className="fade-in slide-in-from-bottom-10 relative z-10 w-full max-w-xl animate-in space-y-8 text-center duration-700">
           {/* Animated Ghost Icon */}

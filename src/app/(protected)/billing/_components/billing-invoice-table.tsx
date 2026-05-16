@@ -120,7 +120,7 @@ function InvoiceModal({
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
       <DialogContent className="w-full max-w-lg gap-0 overflow-hidden p-0">
         {/* Header */}
-        <div className="bg-gradient-to-br from-foreground to-foreground/90 px-6 py-5 text-background">
+        <div className="bg-linear-to-br from-foreground to-foreground/90 px-6 py-5 text-background">
           <DialogHeader>
             <div className="flex items-start justify-between">
               <div>

@@ -168,7 +168,7 @@ export default function DatabasePage() {
               Displaying {data.length} of {total} records.
             </CardDescription>
           </div>
-          <div className="flex flex-shrink-0 items-center gap-2">
+          <div className="flex shrink-0 items-center gap-2">
             <Select
               value={selectedTable || ""}
               onValueChange={(val) => {

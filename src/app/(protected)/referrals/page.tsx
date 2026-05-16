@@ -191,7 +191,7 @@ export default function ReferralsPage() {
         ) : (
           <>
             {/* ── Referral link card ── */}
-            <Card className="border-emerald-200 bg-gradient-to-br from-emerald-50/60 to-background dark:border-emerald-800 dark:from-emerald-950/20">
+            <Card className="border-emerald-200 bg-linear-to-br from-emerald-50/60 to-background dark:border-emerald-800 dark:from-emerald-950/20">
               <CardHeader>
                 <CardTitle className="text-lg">Your Referral Link</CardTitle>
                 <CardDescription>

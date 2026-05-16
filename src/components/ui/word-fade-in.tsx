@@ -33,7 +33,7 @@ export function WordFadeIn({
       initial="hidden"
       animate="show"
       className={cn(
-        "text-center font-bold font-display text-4xl text-black tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem] dark:text-white",
+        "text-center font-bold font-display text-4xl text-black tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-20 dark:text-white",
         className,
       )}
     >
