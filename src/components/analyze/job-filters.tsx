@@ -21,7 +21,8 @@ import {
   trackFilterPanelOpen,
   trackLocationSearch,
 } from "@/lib/analytics";
-import type { JobMatch, ParsedResume } from "@/types";
+import type { JobMatch } from "@/types";
+import type { ResumeData } from "@/types/resume";
 import type { FilterState } from "./types";
 
 interface JobFiltersProps {
@@ -30,9 +31,9 @@ interface JobFiltersProps {
   showFilters: boolean;
   setShowFilters: (show: boolean) => void;
   isSearchingLocation: boolean;
-  resume: ParsedResume | null;
+  resume: ResumeData | null;
   jobs: JobMatch[];
-  runAnalysis: (resume: ParsedResume, locationOverride?: string) => void;
+  runAnalysis: (resume: ResumeData, locationOverride?: string) => void;
 }
 
 export function JobFilters({

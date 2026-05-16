@@ -1,44 +1,4 @@
-export interface ParsedResume {
-  name: string;
-  email: string;
-  phone?: string;
-  location?: string;
-  skills: string[];
-  experience: WorkExperience[];
-  projects: Project[];
-  education: Education[];
-  inferredJobTitles: string[];
-  summary?: string;
-  totalYearsOfExperience?: number;
-  socialProfiles: SocialProfile[];
-}
-
-export interface SocialProfile {
-  platform: string;
-  url: string;
-}
-
-export interface WorkExperience {
-  role: string;
-  company: string;
-  duration?: string;
-  description: string;
-  skillsUsed: string[];
-}
-
-export interface Project {
-  name: string;
-  description: string;
-  technologies: string[];
-  url?: string;
-}
-
-export interface Education {
-  degree: string;
-  institution: string;
-  year?: number;
-  field?: string;
-}
+import type { ResumeData } from "./resume";
 
 export interface JobListing {
   id: string;
@@ -108,7 +68,7 @@ export type AnalysisStep =
 export interface AnalysisState {
   step: AnalysisStep;
   error?: string;
-  resume?: ParsedResume;
+  resume?: ResumeData;
   jobs?: JobMatch[];
   skillGaps?: SkillGap[];
   roadmap?: RoadmapItem[];

@@ -1,5 +1,3 @@
-import { ParsedResume } from "@/types";
-
 export interface ReviewState {
   reviewSkills: string[];
   newSkill: string;

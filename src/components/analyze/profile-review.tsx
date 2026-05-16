@@ -14,14 +14,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
-import type { ParsedResume } from "@/types";
+import type { ResumeData } from "@/types/resume";
 import type { ReviewState } from "./types";
 
 interface ProfileReviewProps {
-  resume: ParsedResume;
+  resume: ResumeData;
   reviewState: ReviewState;
   setReviewState: Dispatch<SetStateAction<ReviewState>>;
-  runAnalysis: (resume: ParsedResume) => void;
+  runAnalysis: (resume: ResumeData) => void;
 }
 
 export function ProfileReview({

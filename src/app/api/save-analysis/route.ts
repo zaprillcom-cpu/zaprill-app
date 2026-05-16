@@ -9,7 +9,8 @@ import {
   userProfile,
 } from "@/db/schema";
 import { auth } from "@/lib/auth";
-import type { JobMatch, ParsedResume, RoadmapItem, SkillGap } from "@/types";
+import type { JobMatch, RoadmapItem, SkillGap } from "@/types";
+import type { ResumeData } from "@/types/resume";
 
 export async function POST(req: Request) {
   try {
@@ -23,7 +24,7 @@ export async function POST(req: Request) {
 
     const body = await req.json();
     const { resume, jobs, skillGaps, roadmap, advice } = body as {
-      resume: ParsedResume;
+      resume: ResumeData;
       jobs: JobMatch[];
       skillGaps: SkillGap[];
       roadmap: RoadmapItem[];
@@ -57,21 +58,25 @@ export async function POST(req: Request) {
 
     const analysisId = crypto.randomUUID();
 
+    // Flatten skills for indexing
+    const flattenedSkills = resume.skills.flatMap((s) => s.keywords || []);
+    const locationStr = resume.basics.location.city || "";
+
     await db.insert(resumeAnalysis).values({
       id: analysisId,
       userId: session.user.id,
-      resumeName: resume.name,
-      resumeEmail: resume.email,
-      resumePhone: resume.phone,
-      resumeLocation: resume.location,
-      resumeSkills: resume.skills,
-      inferredJobTitles: resume.inferredJobTitles,
-      resumeRaw: resume,
+      resumeName: resume.basics.name,
+      resumeEmail: resume.basics.email,
+      resumePhone: resume.basics.phone,
+      resumeLocation: locationStr,
+      resumeSkills: flattenedSkills,
+      inferredJobTitles: resume.inferredJobTitles || [],
+      resumeRaw: resume as any,
       jobs: jobs || [],
       skillGaps: skillGaps || [],
       roadmap: roadmap || [],
       advice: advice || "",
-      searchLocation: resume.location,
+      searchLocation: locationStr,
       totalJobsFound,
       topMatchScore,
       avgMatchScore,
@@ -84,12 +89,12 @@ export async function POST(req: Request) {
         .values({
           id: crypto.randomUUID(),
           userId: session.user.id,
-          resumeRaw: resume,
+          resumeRaw: resume as any,
         })
         .onConflictDoUpdate({
           target: userProfile.userId,
           set: {
-            resumeRaw: resume,
+            resumeRaw: resume as any,
             updatedAt: new Date(),
           },
         });
@@ -103,7 +108,7 @@ export async function POST(req: Request) {
         await db
           .update(resumeTable)
           .set({
-            data: resume,
+            data: resume as any,
             updatedAt: new Date(),
           })
           .where(eq(resumeTable.id, profile.primaryResumeId));
@@ -115,7 +120,7 @@ export async function POST(req: Request) {
           userId: session.user.id,
           title: "Imported Resume",
           slug: `${session.user.id.slice(0, 8)}-${nanoid(6)}`,
-          data: resume,
+          data: resume as any,
           status: "complete",
         });
 

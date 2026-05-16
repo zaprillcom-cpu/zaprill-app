@@ -1,11 +1,11 @@
 import { User } from "lucide-react";
 import SkillBadge from "@/components/SkillBadge";
 import { Card, CardContent } from "@/components/ui/card";
-import type { ParsedResume } from "@/types";
+import type { ResumeData } from "@/types/resume";
 import { StatCard } from "./stat-card";
 
 interface ResultsHeaderProps {
-  resume: ParsedResume;
+  resume: ResumeData;
   summary: {
     topMatch: number;
     avg: number;
@@ -15,6 +15,8 @@ interface ResultsHeaderProps {
 }
 
 export function ResultsHeader({ resume, summary }: ResultsHeaderProps) {
+  console.log("Resume data: ", resume);
+  const skills = resume.skills.flatMap((s) => s.keywords);
   return (
     <>
       {/* Profile header */}
@@ -26,25 +28,26 @@ export function ResultsHeader({ resume, summary }: ResultsHeaderProps) {
             </div>
             <div className="flex-1 text-center sm:text-left">
               <h1 className="text-3xl font-black text-foreground mb-2 tracking-tight">
-                {resume.name}
+                {resume.basics.name}
               </h1>
               <p className="text-base font-semibold text-muted-foreground mb-5 pb-5 border-b border-border/50">
-                {resume.email}{" "}
-                {resume.location && (
+                {resume.basics.email}{" "}
+                {resume.basics.location.city && (
                   <>
-                    <span className="opacity-50 mx-2">·</span> {resume.location}
+                    <span className="opacity-50 mx-2">·</span>{" "}
+                    {resume.basics.location.city}
                   </>
                 )}{" "}
                 <span className="opacity-50 mx-2">·</span> Target:{" "}
-                {resume.inferredJobTitles.slice(0, 3).join(", ")}
+                {resume.inferredJobTitles?.slice(0, 3).join(", ")}
               </p>
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
-                {resume.skills.slice(0, 15).map((s) => (
+                {skills.slice(0, 15).map((s) => (
                   <SkillBadge key={s} skill={s} variant="neutral" size="md" />
                 ))}
-                {resume.skills.length > 15 && (
+                {skills.length > 15 && (
                   <span className="text-sm font-black text-muted-foreground ml-2">
-                    +{resume.skills.length - 15}
+                    +{skills.length - 15}
                   </span>
                 )}
               </div>

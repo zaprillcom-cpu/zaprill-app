@@ -171,7 +171,7 @@ export const resumeAnalysis = pgTable("resume_analysis", {
   resumeLocation: text("resume_location"),
   resumeSkills: text("resume_skills").array().default([]), // flat skill list for indexed search
   inferredJobTitles: text("inferred_job_titles").array().default([]),
-  resumeRaw: jsonb("resume_raw"), // full ParsedResume object
+  resumeRaw: jsonb("resume_raw"), // full ResumeData object
 
   // Analysis results
   jobs: jsonb("jobs").default([]), // JobMatch[]

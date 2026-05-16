@@ -10,11 +10,12 @@ import {
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import type { ParsedResume, SkillGap } from "@/types";
+import type { SkillGap } from "@/types";
+import type { ResumeData } from "@/types/resume";
 import SkillBadge from "./SkillBadge";
 
 interface SkillGapPanelProps {
-  resume: ParsedResume;
+  resume: ResumeData;
   skillGaps: SkillGap[];
   totalJobs: number;
 }
@@ -45,10 +46,9 @@ export default function SkillGapPanel({
   const lowPriority = skillGaps.filter((g) => g.priority === "low");
 
   const LIMIT = 12;
+  const allSkills = resume.skills.flatMap((s) => s.keywords);
   const displayedGaps = showAllMissing ? skillGaps : skillGaps.slice(0, LIMIT);
-  const displayedHave = showAllHave
-    ? resume.skills
-    : resume.skills.slice(0, LIMIT);
+  const displayedHave = showAllHave ? allSkills : allSkills.slice(0, LIMIT);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -64,7 +64,7 @@ export default function SkillGapPanel({
                 Skills You Have
               </h3>
               <p className="text-xs text-muted-foreground font-medium">
-                {resume.skills.length} skills detected
+                {allSkills.length} skills detected
               </p>
             </div>
           </div>
@@ -80,7 +80,7 @@ export default function SkillGapPanel({
             ))}
           </div>
 
-          {resume.skills.length > LIMIT && (
+          {allSkills.length > LIMIT && (
             <Button
               variant="outline"
               size="sm"
@@ -95,7 +95,7 @@ export default function SkillGapPanel({
               ) : (
                 <>
                   <ChevronDown className="mr-1.5 h-3.5 w-3.5" /> +
-                  {resume.skills.length - LIMIT} more
+                  {allSkills.length - LIMIT} more
                 </>
               )}
             </Button>

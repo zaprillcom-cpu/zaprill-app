@@ -1,14 +1,16 @@
 import ProgressTimeline from "@/components/ProgressTimeline";
 import SkillBadge from "@/components/SkillBadge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { AnalysisStep, ParsedResume } from "@/types";
+import type { AnalysisStep } from "@/types";
+import type { ResumeData } from "@/types/resume";
 
 interface ParsingProgressProps {
   step: AnalysisStep;
-  resume: ParsedResume | null;
+  resume: ResumeData | null;
 }
 
 export function ParsingProgress({ step, resume }: ParsingProgressProps) {
+  const skills = resume?.skills.flatMap((s) => s.keywords) || [];
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-10 items-start">
       <Card className="sticky top-28 shadow-sm border-border rounded-xl">
@@ -25,18 +27,18 @@ export function ParsingProgress({ step, resume }: ParsingProgressProps) {
                 Target Profile
               </p>
               <p className="text-base font-black text-foreground mb-1">
-                {resume.name}
+                {resume.basics.name}
               </p>
               <p className="text-sm tracking-tight text-muted-foreground font-semibold mb-4">
-                {resume.skills.length} skills · {resume.experience.length} roles
+                {skills.length} skills · {resume.work.length} roles
               </p>
               <div className="flex flex-wrap gap-2">
-                {resume.skills.slice(0, 10).map((s) => (
+                {skills.slice(0, 10).map((s) => (
                   <SkillBadge key={s} skill={s} variant="neutral" size="md" />
                 ))}
-                {resume.skills.length > 10 && (
+                {skills.length > 10 && (
                   <span className="text-xs font-bold text-muted-foreground pt-1.5 pl-1.5">
-                    +{resume.skills.length - 10}
+                    +{skills.length - 10}
                   </span>
                 )}
               </div>
