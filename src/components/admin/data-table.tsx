@@ -53,6 +53,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   searchKey?: string;
   onExport?: () => void;
+  toolbarContent?: React.ReactNode;
 }
 
 /** Generate page number array with ellipsis logic */
@@ -70,6 +71,7 @@ export function DataTable<TData, TValue>({
   data,
   searchKey,
   onExport,
+  toolbarContent,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -128,6 +130,7 @@ export function DataTable<TData, TValue>({
               className="max-w-sm"
             />
           )}
+          {toolbarContent}
         </div>
         <div className="flex items-center gap-2">
           {onExport && (

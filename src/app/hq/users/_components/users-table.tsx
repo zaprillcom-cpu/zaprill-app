@@ -3,10 +3,17 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { Ban, ShieldCheck } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { DataTable } from "@/components/admin/data-table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { UserRowActions } from "../user-row-actions";
 
@@ -17,6 +24,7 @@ type User = {
   role: string;
   image?: string;
   banned?: boolean;
+  isPro?: boolean;
   createdAt: Date;
 };
 
@@ -57,17 +65,46 @@ function buildColumns(
         const user = row.original;
         return (
           <div className="flex items-center gap-3">
-            <Avatar className="h-8 w-8">
-              <AvatarImage src={user.image} alt={user.name} />
-              <AvatarFallback>{user.name[0]}</AvatarFallback>
-            </Avatar>
+            <div className="relative">
+              <Avatar className="h-8 w-8">
+                <AvatarImage src={user.image} alt={user.name} />
+                <AvatarFallback>{user.name[0]}</AvatarFallback>
+              </Avatar>
+              {user.isPro && (
+                <div className="absolute -right-1 -top-1 flex h-3 w-3 items-center justify-center rounded-full bg-primary border-2 border-background">
+                  <div className="h-1 w-1 rounded-full bg-white" />
+                </div>
+              )}
+            </div>
             <div className="flex flex-col">
-              <span className="font-medium">{user.name}</span>
+              <div className="flex items-center gap-2">
+                <span className="font-medium">{user.name}</span>
+                {user.isPro && (
+                  <Badge
+                    variant="default"
+                    className="h-4 px-1 text-[10px] font-bold uppercase tracking-wider bg-gradient-to-r from-yellow-400 to-orange-500 border-none text-white"
+                  >
+                    Pro
+                  </Badge>
+                )}
+              </div>
               <span className="text-xs text-muted-foreground">
                 {user.email}
               </span>
             </div>
           </div>
+        );
+      },
+    },
+    {
+      accessorKey: "isPro",
+      header: "Subscription",
+      cell: ({ row }) => {
+        const isPro = row.getValue("isPro") as boolean;
+        return (
+          <Badge variant={isPro ? "default" : "outline"} className="capitalize">
+            {isPro ? "Pro" : "Free"}
+          </Badge>
         );
       },
     },
@@ -151,6 +188,7 @@ function TableSkeleton() {
 export function UsersTable() {
   const [users, setUsers] = useState<User[] | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [proFilter, setProFilter] = useState<string>("all");
 
   useEffect(() => {
     fetch("/api/admin/users")
@@ -162,6 +200,13 @@ export function UsersTable() {
   const handleMutate = useCallback((payload: MutatePayload) => {
     setUsers((prev) => (prev ? applyMutation(prev, payload) : prev));
   }, []);
+
+  const filteredUsers = useMemo(() => {
+    if (!users) return [];
+    if (proFilter === "pro") return users.filter((u) => u.isPro);
+    if (proFilter === "free") return users.filter((u) => !u.isPro);
+    return users;
+  }, [users, proFilter]);
 
   const columns = buildColumns(handleMutate);
 
@@ -178,9 +223,21 @@ export function UsersTable() {
   return (
     <DataTable
       columns={columns}
-      data={users as any}
+      data={filteredUsers as any}
       searchKey="name"
       onExport={() => console.log("Exporting CSV...")}
+      toolbarContent={
+        <Select value={proFilter} onValueChange={setProFilter}>
+          <SelectTrigger className="w-[150px]">
+            <SelectValue placeholder="Subscription" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Users</SelectItem>
+            <SelectItem value="pro">Pro Users</SelectItem>
+            <SelectItem value="free">Free Users</SelectItem>
+          </SelectContent>
+        </Select>
+      }
     />
   );
 }
