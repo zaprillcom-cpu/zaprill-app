@@ -131,6 +131,17 @@ export async function setInvoiceCashfreeOrderId(
     .where(eq(invoice.id, invoiceId));
 }
 
+/** Link a subscription to an invoice (used after subscription creation). */
+export async function attachSubscriptionToInvoice(
+  invoiceId: string,
+  subscriptionId: string,
+): Promise<void> {
+  await db
+    .update(invoice)
+    .set({ subscriptionId })
+    .where(eq(invoice.id, invoiceId));
+}
+
 // ─────────────────────────────────────────────────
 // Queries
 // ─────────────────────────────────────────────────

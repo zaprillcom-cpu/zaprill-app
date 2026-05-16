@@ -17,6 +17,7 @@ import {
   redeemCoupon,
 } from "@/services/billing/coupon.service";
 import {
+  attachSubscriptionToInvoice,
   getInvoiceById,
   markInvoicePaid,
   setInvoiceCashfreeOrderId,
@@ -106,7 +107,7 @@ export async function GET(request: Request) {
         if (!existingSub && inv.billingReason === "subscription_create") {
           const meta = inv.metadata as Record<string, string>;
           if (meta.planId) {
-            await createSubscription({
+            const newSub = await createSubscription({
               userId: inv.userId,
               planId: meta.planId,
               billingCycle:
@@ -115,6 +116,7 @@ export async function GET(request: Request) {
               couponId: inv.couponId ?? undefined,
               discountAmount: parseFloat(inv.discountAmount),
             });
+            await attachSubscriptionToInvoice(inv.id, newSub.id);
           }
         }
 

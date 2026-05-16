@@ -24,6 +24,7 @@ import {
   validateCoupon,
 } from "@/services/billing/coupon.service";
 import {
+  attachSubscriptionToInvoice,
   createInvoice,
   markInvoicePaid,
   setInvoiceCashfreeOrderId,
@@ -181,7 +182,7 @@ export async function POST(request: Request) {
       }
 
       // 4. Create subscription
-      await createSubscription({
+      const newSub = await createSubscription({
         userId: user.id,
         planId,
         billingCycle: selectedPlan.billingCycle,
@@ -189,6 +190,7 @@ export async function POST(request: Request) {
         couponId,
         discountAmount,
       });
+      await attachSubscriptionToInvoice(inv.id, newSub.id);
 
       // 5. Send receipt email (fire-and-forget)
       void (async () => {

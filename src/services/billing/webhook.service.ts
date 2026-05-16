@@ -13,6 +13,7 @@ import { sendInvoiceReceiptEmail } from "@/lib/emails/invoice-email";
 import type { CashfreeWebhookEvent } from "@/types/billing";
 import { getCouponUsageByInvoice, redeemCoupon } from "./coupon.service";
 import {
+  attachSubscriptionToInvoice,
   getInvoiceByCashfreeOrderId,
   markInvoiceFailed,
   markInvoicePaid,
@@ -121,7 +122,7 @@ export async function handleWebhookEvent(
           | "yearly";
 
         if (planId) {
-          await createSubscription({
+          const newSub = await createSubscription({
             userId: inv.userId,
             planId,
             billingCycle,
@@ -129,6 +130,7 @@ export async function handleWebhookEvent(
             couponId: inv.couponId ?? undefined,
             discountAmount: parseFloat(inv.discountAmount),
           });
+          await attachSubscriptionToInvoice(inv.id, newSub.id);
         }
       }
     } else if (inv.billingReason === "renewal" && inv.subscriptionId) {
