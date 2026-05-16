@@ -37,7 +37,7 @@ import {
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Switch } from "@/components/ui/switch";
-import type { LearningResource } from "./settings-content";
+import type { LearningResource } from "../../_types";
 
 interface Props {
   resources: LearningResource[];
@@ -57,7 +57,7 @@ const EMPTY_FORM = {
   isActive: true,
 };
 
-export function ResourcesTab({
+export function ResourcesContent({
   resources,
   loading,
   onMutate,

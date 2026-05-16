@@ -34,7 +34,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import type { Coupon } from "./settings-content";
+import type { Coupon } from "../../_types";
 
 interface Props {
   coupons: Coupon[];
@@ -66,7 +66,12 @@ const STATUS_VARIANT: Record<
   disabled: "outline",
 };
 
-export function CouponsTab({ coupons, loading, onMutate, onRefresh }: Props) {
+export function CouponsContent({
+  coupons,
+  loading,
+  onMutate,
+  onRefresh,
+}: Props) {
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState<string | null>(null);

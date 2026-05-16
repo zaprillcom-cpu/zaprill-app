@@ -31,8 +31,7 @@ import {
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
-import type { Plan } from "./settings-content";
+import type { Plan } from "../../_types";
 
 interface Props {
   plans: Plan[];
@@ -56,7 +55,7 @@ const EMPTY_FORM = {
   sortOrder: 0,
 };
 
-export function PlansTab({ plans, loading, onMutate, onRefresh }: Props) {
+export function PlansContent({ plans, loading, onMutate, onRefresh }: Props) {
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState<string | null>(null);

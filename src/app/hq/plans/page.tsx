@@ -2,21 +2,18 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import type { CompanySettings } from "@/lib/app-settings";
-import { AuthConfigTab } from "./auth-config-tab";
-import { CompanyTab } from "./company-tab";
+import { Skeleton } from "@/components/ui/skeleton";
+import type { Plan } from "../_types";
+import { PlansContent } from "./_components/plans-content";
 
-export function SettingsContent() {
-  const [companySettings, setCompanySettings] =
-    useState<CompanySettings | null>(null);
+export default function PlansPage() {
+  const [plans, setPlans] = useState<Plan[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
       const res = await fetch("/api/admin/settings");
-
       if (!res.ok) {
         const errorText = await res.text();
         try {
@@ -26,12 +23,11 @@ export function SettingsContent() {
           throw new Error(errorText || `Error ${res.status}`);
         }
       }
-
       const json = await res.json();
-      setCompanySettings(json.companySettings ?? null);
+      setPlans(json.plans ?? []);
     } catch (e: any) {
-      console.error("[FETCH_DATA]", e);
-      toast.error(e.message || "Failed to load settings");
+      console.error("[FETCH_PLANS]", e);
+      toast.error(e.message || "Failed to load plans");
     } finally {
       setLoading(false);
     }
@@ -43,8 +39,7 @@ export function SettingsContent() {
 
   const mutate = useCallback(
     async (action: string, data: Record<string, any>) => {
-      const endpoint = "/api/admin/settings";
-      const res = await fetch(endpoint, {
+      const res = await fetch("/api/admin/settings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ _action: action, ...data }),
@@ -66,26 +61,20 @@ export function SettingsContent() {
   );
 
   return (
-    <Tabs defaultValue="company" className="w-full">
-      <TabsList className="mb-6 grid w-full max-w-md grid-cols-2">
-        <TabsTrigger value="company">Company</TabsTrigger>
-        <TabsTrigger value="auth">Auth Config</TabsTrigger>
-      </TabsList>
+    <div className="flex flex-col gap-6">
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight">Plans</h1>
+        <p className="text-muted-foreground">
+          Manage subscription plans and pricing.
+        </p>
+      </div>
 
-      <TabsContent value="company">
-        <CompanyTab
-          initialSettings={companySettings!}
-          onMutate={async (action, data) => {
-            const res = await mutate(action, data);
-            setCompanySettings(res.companySettings);
-            return res;
-          }}
-        />
-      </TabsContent>
-
-      <TabsContent value="auth">
-        <AuthConfigTab />
-      </TabsContent>
-    </Tabs>
+      <PlansContent
+        plans={plans}
+        loading={loading}
+        onMutate={mutate}
+        onRefresh={fetchData}
+      />
+    </div>
   );
 }
