@@ -4,7 +4,10 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { Ban, ShieldCheck } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { DataTable } from "@/components/admin/data-table";
+import {
+  DataTable,
+  DataTableColumnHeader,
+} from "@/components/admin/data-table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -60,7 +63,9 @@ function buildColumns(
   return [
     {
       accessorKey: "name",
-      header: "User",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="User" />
+      ),
       cell: ({ row }) => {
         const user = row.original;
         return (
@@ -98,7 +103,9 @@ function buildColumns(
     },
     {
       accessorKey: "isPro",
-      header: "Subscription",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Subscription" />
+      ),
       cell: ({ row }) => {
         const isPro = row.getValue("isPro") as boolean;
         return (
@@ -110,7 +117,9 @@ function buildColumns(
     },
     {
       accessorKey: "role",
-      header: "Role",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Role" />
+      ),
       cell: ({ row }) => {
         const role = row.getValue("role") as string;
         return (
@@ -126,7 +135,9 @@ function buildColumns(
     },
     {
       accessorKey: "banned",
-      header: "Status",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Status" />
+      ),
       cell: ({ row }) => {
         const isBanned = row.getValue("banned") as boolean;
         return (
@@ -147,7 +158,9 @@ function buildColumns(
     },
     {
       accessorKey: "createdAt",
-      header: "Joined",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Joined" />
+      ),
       cell: ({ row }) => (
         <span className="text-muted-foreground text-sm">
           {format(new Date(row.getValue("createdAt")), "MMM d, yyyy")}
@@ -231,7 +244,7 @@ export function UsersTable() {
           value={proFilter}
           onValueChange={(v) => setProFilter(v ?? "all")}
         >
-          <SelectTrigger className="w-[150px]">
+          <SelectTrigger className="w-37.5">
             <SelectValue placeholder="Subscription" />
           </SelectTrigger>
           <SelectContent>
