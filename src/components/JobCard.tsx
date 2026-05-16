@@ -171,10 +171,10 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
           </div>
 
           {/* Skills Section - Hidden on very small screens, shown as middle block on desktop */}
-          <div className="flex-1 px-6 lg:px-4 py-2 lg:py-0 border-t lg:border-t-0 lg:border-x border-border/40">
-            <div className="space-y-3 lg:space-y-2 py-4">
+          <div className="flex-1 px-6 lg:px-6 py-4 lg:py-0 border-t lg:border-t-0 lg:border-x border-border/40">
+            <div className="space-y-4 lg:space-y-3 py-4">
               {showMatched.length > 0 && (
-                <div className="flex gap-1.5 flex-wrap items-center">
+                <div className="flex gap-2 flex-wrap items-center">
                   <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest w-16">
                     Matched
                   </span>
@@ -189,14 +189,14 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
                     ))}
                     {job.matchedSkills.length > 5 && (
                       <span className="text-[10px] text-muted-foreground font-bold">
-                        +{job.matchedSkills.length - 5} more
+                        +{job.matchedSkills.length - 5}
                       </span>
                     )}
                   </div>
                 </div>
               )}
               {showMissing.length > 0 && (
-                <div className="flex gap-1.5 flex-wrap items-center">
+                <div className="flex gap-2 flex-wrap items-center">
                   <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest w-16">
                     Missing
                   </span>
@@ -211,7 +211,7 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
                     ))}
                     {job.missingSkills.length > 4 && (
                       <span className="text-[10px] text-muted-foreground font-bold">
-                        +{job.missingSkills.length - 4} more
+                        +{job.missingSkills.length - 4}
                       </span>
                     )}
                   </div>
@@ -221,21 +221,31 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
           </div>
 
           {/* Action/Match Section */}
-          <div className="p-6 lg:p-8 flex items-center justify-between lg:justify-end gap-8 bg-muted/20 lg:bg-transparent border-t lg:border-t-0 border-border/40">
-            <div className="flex items-center gap-4 lg:flex-row-reverse">
+          <div className="p-6 lg:p-8 flex items-center justify-between lg:justify-end gap-6 bg-muted/5 lg:bg-transparent border-t lg:border-t-0 border-border/40">
+            <div className="flex items-center gap-4">
               <MatchRing
                 percentage={job.matchPercentage}
-                size={52}
+                size={56}
                 strokeWidth={5}
               />
-              {/* <div className="text-right flex flex-col items-end lg:items-start shrink-0">
-                <span className="text-[10px] font-black text-muted-foreground uppercase tracking-tighter">
+              <div className="hidden sm:flex flex-col">
+                <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest leading-none mb-1">
                   Match Score
                 </span>
-                <span className="text-lg font-black text-foreground leading-none">
+                <span
+                  className={`text-xl font-black leading-none ${
+                    job.matchPercentage >= 90
+                      ? "text-emerald-500"
+                      : job.matchPercentage >= 75
+                        ? "text-primary"
+                        : job.matchPercentage >= 50
+                          ? "text-amber-500"
+                          : "text-destructive"
+                  }`}
+                >
                   {job.matchPercentage}%
                 </span>
-              </div> */}
+              </div>
             </div>
 
             <div className="flex items-center gap-3">
