@@ -92,6 +92,7 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
     const llmStart = Date.now();
     const { text, usage } = await generateText({
       model: hackclub(MODEL),
+      temperature: 0,
       prompt: `You are an expert resume writer specializing in ATS-friendly, high-impact resumes. 
 Rewrite the provided resume sections to better align with the target job description while adhering to these strict quality standards:
 
@@ -101,7 +102,7 @@ Rewrite the provided resume sections to better align with the target job descrip
    - Technical: Engineered, Architected, Deployed, Automated, Integrated.
    - Strategy: Devised, Formulated, Pioneered, Transformed, Reengineered.
 2. BE CONCISE: Decrease wordiness. Every word must earn its place. Avoid filler phrases like "Responsible for" or "Tasked with".
-3. IMPACT-DRIVEN: Use the "Action Verb + Task + Measurable Result" formula for every bullet point. If specific metrics are not provided in the original text, use realistic estimations based on the context, but NEVER use bracketed placeholders like "[specific percentage]" or "[specific number]".
+3. IMPACT-DRIVEN: Use the "Action Verb + Task + Measurable Result" formula for every bullet point. If specific metrics are not provided in the original text, use realistic estimations based on the context, but NEVER use dummy placeholders like "X%", "Y%", "[number]", or "[percentage]".
 4. TAILOR STRATEGICALLY: Prioritize skills and experiences that match the Job Description's keywords and requirements.
 5. 1-PAGE LIMIT: Resumes must be 1 page. Ensure rewritten content is extremely concise and punchy. Avoid long sentences. Use the high-density pattern: [Action Verb] + [Result] + [Context/Tool]. No fluff.
 

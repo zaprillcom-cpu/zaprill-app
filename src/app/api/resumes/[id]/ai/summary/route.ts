@@ -76,12 +76,14 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
     const llmStart = Date.now();
     const { text, usage } = await generateText({
       model: hackclub(MODEL),
+      temperature: 0,
       prompt: `You are an expert resume writer. Generate a professional summary for this candidate.
 
 Rules:
 - Write exactly 2-3 sentences
 - Highlight years of experience, key skills, and career focus
 - Use confident, active language
+- NEVER use dummy placeholders like "X%", "Y%", "[number]", or "[percentage]".
 - Do NOT use first person ("I", "my")
 - Do NOT use generic phrases like "results-driven professional" or "team player"
 - Be specific to their actual experience and skills

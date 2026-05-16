@@ -63,11 +63,14 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
     const llmStart = Date.now();
     const { text, usage } = await generateText({
       model: hackclub(MODEL),
+      temperature: 0,
       prompt: `You are an expert resume writer. Rewrite the following resume bullet point to be more impactful.
 
 Rules:
 - Start with a strong action verb (e.g., "Spearheaded", "Engineered", "Orchestrated", "Drove")
-- Quantify the impact with numbers, percentages, or dollar amounts when possible
+- Quantify the impact with numbers, percentages, or dollar amounts ONLY if the data is provided or can be realistically inferred.
+- NEVER use dummy placeholders like "X%", "Y%", "[number]", or "[percentage]".
+- If no specific metric is available, focus on the scale or qualitative impact (e.g., "at scale", "across multiple departments").
 - Use the STAR method (Situation, Task, Action, Result) condensed into one line
 - Keep it concise — ONE sentence, under 30 words
 - Do NOT use vague phrases like "responsible for" or "helped with"

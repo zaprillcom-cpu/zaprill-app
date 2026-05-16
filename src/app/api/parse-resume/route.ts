@@ -211,6 +211,7 @@ Be precise and thorough. Do not make up information that isn't in the resume.`,
     const llmStart = Date.now();
     const { output: parsed, usage } = await generateText({
       model: hackclub(MODEL),
+      temperature: 0,
       output: Output.object({ schema: ResumeSchema }),
       messages: [
         {
