@@ -27,6 +27,7 @@ export async function GET() {
 
     // If we have a primaryResumeId, fetch that resume's data
     let resumeData = profile.resumeRaw;
+    let lastAtsScore = null;
 
     if (profile.primaryResumeId) {
       const primaryResume = await db.query.resume.findFirst({
@@ -34,6 +35,7 @@ export async function GET() {
       });
       if (primaryResume) {
         resumeData = primaryResume.data;
+        lastAtsScore = primaryResume.lastAtsScore;
       }
     }
 
@@ -45,6 +47,7 @@ export async function GET() {
         ...profile,
         resumeData: normalizedResume, // Send the clean normalized object
         resumeRaw: normalizedResume, // For backward compatibility
+        lastAtsScore,
       },
     });
   } catch (error: any) {

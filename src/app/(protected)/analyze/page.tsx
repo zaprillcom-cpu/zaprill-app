@@ -43,9 +43,8 @@ import {
   locationMatchesCity,
 } from "@/components/LocationCombobox";
 import LockedJobCard from "@/components/LockedJobCard";
+import { AnalyzeSkeleton } from "@/components/loading/PageLoaders";
 import Navbar from "@/components/Navbar";
-import ProgressTimeline from "@/components/ProgressTimeline";
-import SkillBadge from "@/components/SkillBadge";
 import SkillGapPanel from "@/components/SkillGapPanel";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -543,7 +542,9 @@ function AnalyzePageContent() {
               <Zap className="h-4 w-4 text-primary-foreground" />
             </div>
             <span className="font-extrabold text-lg tracking-tight text-foreground truncate">
-              {resume?.name ? `${resume.name}'s Setup` : "Career Setup"}
+              {resume?.basics.name
+                ? `${resume.basics.name}'s Setup`
+                : "Career Setup"}
             </span>
             {analysisId && (
               <span className="text-[10px] uppercase font-bold text-muted-foreground flex items-center gap-1.5 px-2 py-0.5 rounded-sm bg-muted/50 border border-border/50 animate-in fade-in zoom-in duration-300">
@@ -807,13 +808,9 @@ export default function AnalyzePage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-background flex items-center justify-center">
-          <div className="flex flex-col items-center">
-            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground mr-2 mb-4" />
-            <span className="text-muted-foreground font-medium">
-              Preparing space...
-            </span>
-          </div>
+        <div className="min-h-screen bg-background">
+          <Navbar sticky={true} user={null} sessionLoading={true} />
+          <AnalyzeSkeleton />
         </div>
       }
     >

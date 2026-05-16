@@ -11,8 +11,8 @@ export default function MatchRing({
   size = 64,
   strokeWidth = 4,
 }: MatchRingProps) {
-  // Increase radius reduction to create a visible gutter between text and ring
-  const radius = (size - strokeWidth * 2) / 2;
+  // Use a larger multiplier for strokeWidth to push the ring further out
+  const radius = (size - strokeWidth * 3) / 2;
   const circumference = radius * 2 * Math.PI;
   const offset = circumference - (percentage / 100) * circumference;
 
@@ -64,12 +64,12 @@ export default function MatchRing({
       <div className="absolute flex flex-col items-center justify-center">
         <span
           className="font-black leading-none tracking-tighter"
-          style={{ fontSize: size * 0.26 }} // Reduced from 0.32 to create space
+          style={{ fontSize: size * 0.24 }} // Further reduced from 0.26 to prevent "sticking"
         >
           {percentage}%
         </span>
         {size >= 64 && (
-          <span className="text-[10px] font-black uppercase tracking-widest opacity-70 mt-0.5">
+          <span className="text-[9px] font-black uppercase tracking-widest opacity-60 mt-0.5">
             Match
           </span>
         )}

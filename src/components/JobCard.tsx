@@ -41,16 +41,14 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
   const [isSavedState, setIsSavedState] = useState(false);
 
   const postedText = timeAgo(job.postedAt);
-  const showMatched = job.matchedSkills.slice(0, 5);
-  const showMissing = job.missingSkills.slice(0, 4);
+  const showMatched = job.matchedSkills.slice(0, 8); // Increased from 5
+  const showMissing = job.missingSkills.slice(0, 6); // Increased from 4
 
   const handleToggleSave = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
     const previousState = isSavedState;
-
-    // High-priority synchronous update for instant UI feedback
     setIsSavedState(!previousState);
 
     const method = previousState ? "DELETE" : "POST";
@@ -71,7 +69,6 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
       });
 
       if (!res.ok) {
-        // Revert on failure
         setIsSavedState(previousState);
       }
     } catch (err) {
@@ -80,7 +77,6 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
     }
   };
 
-  // ── Impression tracking via Intersection Observer ──────────────────────────
   useEffect(() => {
     const node = cardRef.current;
     if (!node) return;
@@ -112,7 +108,7 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
   return (
     <Card
       ref={cardRef}
-      className="animate-slide-up hover:shadow-md transition-all hover:border-primary/30 bg-card rounded-xl overflow-hidden border border-border/60"
+      className="animate-slide-up hover:shadow-xl transition-all duration-300 hover:border-primary/40 bg-card rounded-2xl overflow-hidden border border-border/50 group"
       style={{
         animationDelay: `${rank * 50}ms`,
         animationFillMode: "both",
@@ -120,47 +116,46 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
       id={`job-card-${job.id}`}
     >
       <CardContent className="p-0">
-        <div className="flex flex-col lg:flex-row lg:items-stretch min-h-[120px]">
-          {/* Main Info Section - Column 1 (Fixed Width on Desktop) */}
-          <div className="lg:w-[400px] lg:shrink-0 p-5 lg:p-6 flex items-start gap-4">
-            {/* Rank - Subtle */}
-            <div className="hidden sm:flex shrink-0 w-8 h-8 rounded-lg items-center justify-center text-xs font-black bg-muted text-muted-foreground border border-border/50">
+        <div className="flex flex-col lg:flex-row lg:items-center min-h-[140px]">
+          {/* Main Info Section - Column 1 */}
+          <div className="lg:w-[380px] lg:shrink-0 p-6 flex items-start gap-4">
+            <div className="hidden sm:flex shrink-0 w-10 h-10 rounded-xl items-center justify-center text-xs font-black bg-muted text-muted-foreground border border-border/50 group-hover:bg-primary/5 group-hover:text-primary group-hover:border-primary/20 transition-colors">
               {rank + 1}
             </div>
 
             <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-1">
+              <div className="flex items-center gap-2 mb-2">
                 <h3
-                  className="text-lg font-black text-foreground tracking-tight truncate leading-tight"
+                  className="text-xl font-black text-foreground tracking-tight truncate leading-tight group-hover:text-primary transition-colors"
                   title={job.title}
                 >
                   {job.title}
                 </h3>
-                {job.isRemote && (
-                  <Badge
-                    variant="secondary"
-                    className="shrink-0 h-5 px-1.5 text-[10px] font-black uppercase tracking-wider bg-primary/10 text-primary border-none"
-                  >
-                    Remote
-                  </Badge>
-                )}
               </div>
 
-              <div className="flex flex-col gap-1 text-muted-foreground text-sm font-semibold">
-                <div className="flex items-center gap-1.5 text-foreground truncate">
-                  <Building2 className="h-3.5 w-3.5 shrink-0 opacity-70" />
+              <div className="flex flex-col gap-2 text-muted-foreground text-sm font-semibold">
+                <div className="flex items-center gap-2 text-foreground/90">
+                  <Building2 className="h-4 w-4 shrink-0 opacity-60" />
                   <span className="truncate">{job.company}</span>
                 </div>
-                <div className="flex items-center gap-4 text-[13px]">
-                  <div className="flex items-center gap-1.5 truncate max-w-[150px]">
-                    <MapPin className="h-3.5 w-3.5 shrink-0 opacity-70" />
+                <div className="flex flex-wrap items-center gap-4 text-[13px]">
+                  <div className="flex items-center gap-1.5 truncate">
+                    <MapPin className="h-4 w-4 shrink-0 opacity-60" />
                     <span className="truncate">{job.location}</span>
                   </div>
                   {postedText && (
-                    <div className="flex items-center gap-1.5 shrink-0 opacity-80">
+                    <div className="flex items-center gap-1.5 shrink-0 px-2 py-0.5 rounded bg-muted/50 text-[11px] font-bold uppercase tracking-wider">
                       <Clock className="h-3.5 w-3.5" />
                       <span>{postedText}</span>
                     </div>
+                  )}
+                  {job.isRemote && (
+                    <Badge
+                      variant="secondary"
+                      className="shrink-0 h-6 px-2 text-[10px] font-black uppercase tracking-wider bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
+                    >
+                      Remote
+                    </Badge>
                   )}
                 </div>
               </div>
@@ -168,11 +163,11 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
           </div>
 
           {/* Skills Section - Column 2 (Flexible Middle) */}
-          <div className="flex-1 min-w-0 px-5 lg:px-6 py-4 lg:py-0 border-t lg:border-t-0 lg:border-x border-border/40 flex flex-col justify-center bg-muted/5 lg:bg-transparent">
-            <div className="space-y-3">
+          <div className="flex-1 min-w-0 px-8 py-6 lg:py-0 border-t lg:border-t-0 lg:border-x border-border/40 flex flex-col justify-center bg-muted/5 lg:bg-transparent self-stretch">
+            <div className="space-y-4">
               {showMatched.length > 0 && (
-                <div className="flex gap-3 items-center">
-                  <span className="text-[9px] font-black text-muted-foreground uppercase tracking-widest w-14 shrink-0">
+                <div className="flex gap-4 items-center">
+                  <span className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] w-16 shrink-0 opacity-60">
                     Matched
                   </span>
                   <div className="flex flex-wrap gap-1.5 min-w-0">
@@ -184,17 +179,17 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
                         size="sm"
                       />
                     ))}
-                    {job.matchedSkills.length > 5 && (
-                      <span className="text-[10px] text-muted-foreground font-bold shrink-0">
-                        +{job.matchedSkills.length - 5}
+                    {job.matchedSkills.length > showMatched.length && (
+                      <span className="text-[10px] text-muted-foreground font-black shrink-0 px-2 py-1 rounded-md bg-muted/50">
+                        +{job.matchedSkills.length - showMatched.length}
                       </span>
                     )}
                   </div>
                 </div>
               )}
               {showMissing.length > 0 && (
-                <div className="flex gap-3 items-center">
-                  <span className="text-[9px] font-black text-muted-foreground uppercase tracking-widest w-14 shrink-0">
+                <div className="flex gap-4 items-center">
+                  <span className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] w-16 shrink-0 opacity-60">
                     Missing
                   </span>
                   <div className="flex flex-wrap gap-1.5 min-w-0">
@@ -206,9 +201,9 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
                         size="sm"
                       />
                     ))}
-                    {job.missingSkills.length > 4 && (
-                      <span className="text-[10px] text-muted-foreground font-bold shrink-0">
-                        +{job.missingSkills.length - 4}
+                    {job.missingSkills.length > showMissing.length && (
+                      <span className="text-[10px] text-muted-foreground font-black shrink-0 px-2 py-1 rounded-md bg-muted/50">
+                        +{job.missingSkills.length - showMissing.length}
                       </span>
                     )}
                   </div>
@@ -217,12 +212,12 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
             </div>
           </div>
 
-          {/* Action/Match Section - Column 3 (Fixed Width on Desktop) */}
-          <div className="lg:w-[320px] lg:shrink-0 p-5 lg:p-6 flex items-center justify-between lg:justify-end gap-5">
-            <div className="flex items-center shrink-0">
+          {/* Action/Match Section - Column 3 */}
+          <div className="lg:w-[320px] lg:shrink-0 p-6 flex items-center justify-between lg:justify-end gap-6">
+            <div className="flex flex-col items-center gap-1">
               <MatchRing
                 percentage={job.matchPercentage}
-                size={56}
+                size={60}
                 strokeWidth={5}
               />
             </div>
@@ -232,17 +227,17 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
                 variant="outline"
                 size="icon"
                 onClick={handleToggleSave}
-                className={`w-10 h-10 rounded-xl transition-all active:scale-95 border-border/60 shrink-0 ${
+                className={`w-12 h-12 rounded-2xl transition-all active:scale-90 border-border/60 shrink-0 ${
                   isSavedState
                     ? "bg-primary/5 text-primary border-primary/20 hover:bg-primary/10 hover:text-primary"
-                    : "text-muted-foreground hover:text-foreground"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
                 }`}
                 title={isSavedState ? "Remove bookmark" : "Save job"}
               >
                 {isSavedState ? (
-                  <BookmarkCheck className="h-4 w-4 fill-current" />
+                  <BookmarkCheck className="h-5 w-5 fill-current" />
                 ) : (
-                  <Bookmark className="h-4 w-4" />
+                  <Bookmark className="h-5 w-5" />
                 )}
               </Button>
 
@@ -251,8 +246,8 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={
-                  buttonVariants({ variant: "default", size: "default" }) +
-                  " font-black px-6 shadow-sm hover:shadow-md transition-all active:scale-95 h-10 rounded-xl flex items-center shrink-0"
+                  buttonVariants({ variant: "default", size: "lg" }) +
+                  " font-black px-8 shadow-xl shadow-primary/10 hover:shadow-primary/20 transition-all active:scale-95 h-12 rounded-2xl flex items-center shrink-0 text-base group/apply"
                 }
                 id={`apply-btn-${job.id}`}
                 onClick={() => {
@@ -265,7 +260,6 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
                     job_rank: rank,
                   });
 
-                  // Track the visit in our database
                   fetch("/api/track-visit", {
                     method: "POST",
                     body: JSON.stringify({
@@ -283,7 +277,7 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
                 }}
               >
                 Apply
-                <ExternalLink className="ml-2 h-3.5 w-3.5" />
+                <ExternalLink className="ml-2.5 h-4 w-4 transition-transform group-hover/apply:translate-x-0.5 group-hover/apply:-translate-y-0.5" />
               </a>
             </div>
           </div>

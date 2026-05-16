@@ -1,5 +1,7 @@
 import type { ResumeData } from "./resume";
 
+export type { ResumeData };
+
 export interface JobListing {
   id: string;
   title: string;
