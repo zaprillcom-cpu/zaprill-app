@@ -5,10 +5,8 @@ import {
   BookmarkCheck,
   Building2,
   Clock,
-  DollarSign,
   ExternalLink,
   MapPin,
-  Wifi,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Badge } from "@/components/ui/badge";
@@ -122,63 +120,62 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
       id={`job-card-${job.id}`}
     >
       <CardContent className="p-0">
-        <div className="flex flex-col lg:flex-row lg:items-center">
-          {/* Main Info Section */}
-          <div className="flex-1 p-6 lg:p-8 flex items-start gap-5">
+        <div className="flex flex-col lg:flex-row lg:items-stretch min-h-[120px]">
+          {/* Main Info Section - Column 1 (Fixed Width on Desktop) */}
+          <div className="lg:w-[400px] lg:shrink-0 p-5 lg:p-6 flex items-start gap-4">
             {/* Rank - Subtle */}
             <div className="hidden sm:flex shrink-0 w-8 h-8 rounded-lg items-center justify-center text-xs font-black bg-muted text-muted-foreground border border-border/50">
               {rank + 1}
             </div>
 
             <div className="flex-1 min-w-0">
-              <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                <h3 className="text-xl font-black text-foreground tracking-tight truncate leading-tight">
+              <div className="flex items-center gap-2 mb-1">
+                <h3
+                  className="text-lg font-black text-foreground tracking-tight truncate leading-tight"
+                  title={job.title}
+                >
                   {job.title}
                 </h3>
                 {job.isRemote && (
                   <Badge
                     variant="secondary"
-                    className="h-5 px-1.5 text-[10px] font-black uppercase tracking-wider bg-primary/10 text-primary border-none"
+                    className="shrink-0 h-5 px-1.5 text-[10px] font-black uppercase tracking-wider bg-primary/10 text-primary border-none"
                   >
                     Remote
                   </Badge>
                 )}
               </div>
 
-              <div className="flex items-center gap-x-4 gap-y-2 text-muted-foreground text-sm flex-wrap font-semibold">
-                <div className="flex items-center gap-1.5 text-foreground">
-                  <Building2 className="h-3.5 w-3.5 opacity-70" />
-                  <span>{job.company}</span>
+              <div className="flex flex-col gap-1 text-muted-foreground text-sm font-semibold">
+                <div className="flex items-center gap-1.5 text-foreground truncate">
+                  <Building2 className="h-3.5 w-3.5 shrink-0 opacity-70" />
+                  <span className="truncate">{job.company}</span>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <MapPin className="h-3.5 w-3.5 opacity-70" />
-                  <span className="truncate max-w-[150px]">{job.location}</span>
+                <div className="flex items-center gap-4 text-[13px]">
+                  <div className="flex items-center gap-1.5 truncate max-w-[150px]">
+                    <MapPin className="h-3.5 w-3.5 shrink-0 opacity-70" />
+                    <span className="truncate">{job.location}</span>
+                  </div>
+                  {postedText && (
+                    <div className="flex items-center gap-1.5 shrink-0 opacity-80">
+                      <Clock className="h-3.5 w-3.5" />
+                      <span>{postedText}</span>
+                    </div>
+                  )}
                 </div>
-                {job.salary && (
-                  <div className="flex items-center gap-1.5 text-foreground font-bold">
-                    <DollarSign className="h-3.5 w-3.5" />
-                    <span>{job.salary}</span>
-                  </div>
-                )}
-                {postedText && (
-                  <div className="flex items-center gap-1.5 opacity-80">
-                    <Clock className="h-3.5 w-3.5" />
-                    <span>{postedText}</span>
-                  </div>
-                )}
               </div>
             </div>
           </div>
 
-          {/* Skills Section - Hidden on very small screens, shown as middle block on desktop */}
-          <div className="flex-1 px-6 lg:px-6 py-4 lg:py-0 border-t lg:border-t-0 lg:border-x border-border/40">
-            <div className="space-y-4 lg:space-y-3 py-4">
+          {/* Skills Section - Column 2 (Flexible Middle) */}
+          <div className="flex-1 min-w-0 px-5 lg:px-6 py-4 lg:py-0 border-t lg:border-t-0 lg:border-x border-border/40 flex flex-col justify-center bg-muted/5 lg:bg-transparent">
+            <div className="space-y-3">
               {showMatched.length > 0 && (
-                <div className="flex gap-2 flex-wrap items-center">
-                  <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest w-16">
+                <div className="flex gap-3 items-center">
+                  <span className="text-[9px] font-black text-muted-foreground uppercase tracking-widest w-14 shrink-0">
                     Matched
                   </span>
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="flex flex-wrap gap-1.5 min-w-0">
                     {showMatched.map((s) => (
                       <SkillBadge
                         key={s}
@@ -188,7 +185,7 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
                       />
                     ))}
                     {job.matchedSkills.length > 5 && (
-                      <span className="text-[10px] text-muted-foreground font-bold">
+                      <span className="text-[10px] text-muted-foreground font-bold shrink-0">
                         +{job.matchedSkills.length - 5}
                       </span>
                     )}
@@ -196,11 +193,11 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
                 </div>
               )}
               {showMissing.length > 0 && (
-                <div className="flex gap-2 flex-wrap items-center">
-                  <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest w-16">
+                <div className="flex gap-3 items-center">
+                  <span className="text-[9px] font-black text-muted-foreground uppercase tracking-widest w-14 shrink-0">
                     Missing
                   </span>
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="flex flex-wrap gap-1.5 min-w-0">
                     {showMissing.map((s) => (
                       <SkillBadge
                         key={s}
@@ -210,7 +207,7 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
                       />
                     ))}
                     {job.missingSkills.length > 4 && (
-                      <span className="text-[10px] text-muted-foreground font-bold">
+                      <span className="text-[10px] text-muted-foreground font-bold shrink-0">
                         +{job.missingSkills.length - 4}
                       </span>
                     )}
@@ -220,40 +217,22 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
             </div>
           </div>
 
-          {/* Action/Match Section */}
-          <div className="p-6 lg:p-8 flex items-center justify-between lg:justify-end gap-6 bg-muted/5 lg:bg-transparent border-t lg:border-t-0 border-border/40">
-            <div className="flex items-center gap-4">
+          {/* Action/Match Section - Column 3 (Fixed Width on Desktop) */}
+          <div className="lg:w-[320px] lg:shrink-0 p-5 lg:p-6 flex items-center justify-between lg:justify-end gap-5">
+            <div className="flex items-center shrink-0">
               <MatchRing
                 percentage={job.matchPercentage}
                 size={56}
                 strokeWidth={5}
               />
-              <div className="hidden sm:flex flex-col">
-                <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest leading-none mb-1">
-                  Match Score
-                </span>
-                <span
-                  className={`text-xl font-black leading-none ${
-                    job.matchPercentage >= 90
-                      ? "text-emerald-500"
-                      : job.matchPercentage >= 75
-                        ? "text-primary"
-                        : job.matchPercentage >= 50
-                          ? "text-amber-500"
-                          : "text-destructive"
-                  }`}
-                >
-                  {job.matchPercentage}%
-                </span>
-              </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5">
               <Button
                 variant="outline"
-                size="lg"
+                size="icon"
                 onClick={handleToggleSave}
-                className={`w-12 h-12 p-0 rounded-xl transition-all active:scale-95 border-border/60 ${
+                className={`w-10 h-10 rounded-xl transition-all active:scale-95 border-border/60 shrink-0 ${
                   isSavedState
                     ? "bg-primary/5 text-primary border-primary/20 hover:bg-primary/10 hover:text-primary"
                     : "text-muted-foreground hover:text-foreground"
@@ -261,9 +240,9 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
                 title={isSavedState ? "Remove bookmark" : "Save job"}
               >
                 {isSavedState ? (
-                  <BookmarkCheck className="h-5 w-5 fill-current" />
+                  <BookmarkCheck className="h-4 w-4 fill-current" />
                 ) : (
-                  <Bookmark className="h-5 w-5" />
+                  <Bookmark className="h-4 w-4" />
                 )}
               </Button>
 
@@ -272,8 +251,8 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={
-                  buttonVariants({ variant: "default", size: "lg" }) +
-                  " font-black px-8 shadow-sm hover:shadow-md transition-all active:scale-95 h-12 rounded-xl flex items-center"
+                  buttonVariants({ variant: "default", size: "default" }) +
+                  " font-black px-6 shadow-sm hover:shadow-md transition-all active:scale-95 h-10 rounded-xl flex items-center shrink-0"
                 }
                 id={`apply-btn-${job.id}`}
                 onClick={() => {
@@ -304,7 +283,7 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
                 }}
               >
                 Apply
-                <ExternalLink className="ml-2 h-4 w-4" />
+                <ExternalLink className="ml-2 h-3.5 w-3.5" />
               </a>
             </div>
           </div>
