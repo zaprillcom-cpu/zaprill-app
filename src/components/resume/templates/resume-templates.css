@@ -267,16 +267,16 @@
     break-after: avoid !important;
     page-break-after: avoid !important;
   }
-  
-  .ts-columns, 
-  .modern-split-body, 
-  .resume-skills-grid, 
+
+  .ts-columns,
+  .modern-split-body,
+  .resume-skills-grid,
   .creative-portfolio-grid,
   .creative-skills-grid {
     display: block !important;
   }
-  
-  .ts-sidebar, 
+
+  .ts-sidebar,
   .modern-split-sidebar {
     width: 100% !important;
     border-left: none !important;
@@ -827,7 +827,8 @@
   padding: 2px 8px;
   background: color-mix(in srgb, var(--resume-primary, #2563eb) 8%, transparent);
   color: var(--resume-primary, #2563eb);
-  border: 1px solid color-mix(in srgb, var(--resume-primary, #2563eb) 15%, transparent);
+  border: 1px solid
+    color-mix(in srgb, var(--resume-primary, #2563eb) 15%, transparent);
   border-radius: 6px;
   font-weight: 600;
   white-space: nowrap;
@@ -914,7 +915,7 @@
     display: flex !important; /* Force flex for layout */
     flex-direction: row !important;
   }
-  
+
   .modern-split-template .ms-sidebar {
     width: 30% !important;
     border-right: 1px solid var(--resume-primary) !important;
@@ -922,7 +923,7 @@
     border-top: none !important;
     margin-top: 0 !important;
   }
-  
+
   .modern-split-template .ms-main {
     width: 70% !important;
     padding-left: 15px !important;

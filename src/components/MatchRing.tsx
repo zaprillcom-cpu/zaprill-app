@@ -28,11 +28,11 @@ export default function MatchRing({
 
   return (
     <div
-      className={`relative flex items-center justify-center shrink-0 ${colorClass}`}
+      className={`relative flex shrink-0 items-center justify-center ${colorClass}`}
       style={{ width: size, height: size }}
     >
       <svg
-        className="w-full h-full -rotate-90 transform"
+        className="-rotate-90 h-full w-full transform"
         viewBox={`0 0 ${size} ${size}`}
       >
         <circle
@@ -69,7 +69,7 @@ export default function MatchRing({
           {percentage}%
         </span>
         {size >= 64 && (
-          <span className="text-[9px] font-black uppercase tracking-widest opacity-60 mt-0.5">
+          <span className="mt-0.5 font-black text-[9px] uppercase tracking-widest opacity-60">
             Match
           </span>
         )}

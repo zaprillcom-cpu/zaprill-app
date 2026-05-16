@@ -288,7 +288,7 @@ export default function MinimalistTemplate({
             {(references || []).map((item) => (
               <div key={item.id} className="resume-reference-item">
                 <h3 className="resume-entry-title">{item.name}</h3>
-                <p className="resume-text italic font-serif">
+                <p className="resume-text font-serif italic">
                   &quot;{item.reference}&quot;
                 </p>
               </div>

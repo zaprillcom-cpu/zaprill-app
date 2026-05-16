@@ -129,9 +129,9 @@ export function ResourcesContent({
 
   return (
     <>
-      <div className="flex items-center justify-between mb-4">
+      <div className="mb-4 flex items-center justify-between">
         <div>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             {resources.length} resource{resources.length !== 1 ? "s" : ""}{" "}
             configured
           </p>
@@ -165,23 +165,23 @@ export function ResourcesContent({
                 <div className="flex items-start justify-between gap-2">
                   <div className="overflow-hidden">
                     <CardTitle
-                      className="text-base truncate"
+                      className="truncate text-base"
                       title={resource.name}
                     >
                       {resource.name}
                     </CardTitle>
-                    <CardDescription className="text-xs mt-0.5 font-mono">
+                    <CardDescription className="mt-0.5 font-mono text-xs">
                       {resource.skill}
                     </CardDescription>
                   </div>
-                  <div className="flex gap-1 shrink-0 flex-wrap justify-end">
-                    <Badge variant="outline" className="capitalize text-xs">
+                  <div className="flex shrink-0 flex-wrap justify-end gap-1">
+                    <Badge variant="outline" className="text-xs capitalize">
                       {resource.type}
                     </Badge>
                     {resource.isAffiliate && (
                       <Badge
                         variant="secondary"
-                        className="text-xs bg-indigo-500/10 text-indigo-500 border-indigo-500/20"
+                        className="border-indigo-500/20 bg-indigo-500/10 text-indigo-500 text-xs"
                       >
                         Affiliate
                       </Badge>
@@ -189,14 +189,14 @@ export function ResourcesContent({
                     {resource.isFree ? (
                       <Badge
                         variant="outline"
-                        className="text-xs text-emerald-500 border-emerald-500/30"
+                        className="border-emerald-500/30 text-emerald-500 text-xs"
                       >
                         Free
                       </Badge>
                     ) : (
                       <Badge
                         variant="outline"
-                        className="text-xs text-amber-500 border-amber-500/30"
+                        className="border-amber-500/30 text-amber-500 text-xs"
                       >
                         Paid
                       </Badge>
@@ -210,21 +210,21 @@ export function ResourcesContent({
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="flex flex-col mb-4 space-y-2">
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <div className="mb-4 flex flex-col space-y-2">
+                  <div className="flex items-center gap-2 text-muted-foreground text-xs">
                     <LinkIcon className="h-3 w-3 shrink-0" />
                     <a
                       href={resource.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="truncate hover:underline hover:text-foreground transition-colors"
+                      className="truncate transition-colors hover:text-foreground hover:underline"
                       title={resource.url}
                     >
                       {resource.url}
                     </a>
                     <ExternalLink className="h-3 w-3 shrink-0 opacity-50" />
                   </div>
-                  <div className="flex items-center justify-between text-xs text-muted-foreground bg-muted/30 p-2 rounded-md">
+                  <div className="flex items-center justify-between rounded-md bg-muted/30 p-2 text-muted-foreground text-xs">
                     <span>Clicks Tracked:</span>
                     <span className="font-medium text-foreground">
                       {resource.clickCount}
@@ -244,7 +244,7 @@ export function ResourcesContent({
                   <Button
                     size="sm"
                     variant="ghost"
-                    className="text-destructive hover:text-destructive shrink-0"
+                    className="shrink-0 text-destructive hover:text-destructive"
                     onClick={() => handleDelete(resource.id, resource.name)}
                     disabled={deleting === resource.id}
                   >
@@ -375,7 +375,7 @@ export function ResourcesContent({
                   Is Free
                 </Label>
               </div>
-              <div className="flex items-center gap-3 col-span-2 mt-2">
+              <div className="col-span-2 mt-2 flex items-center gap-3">
                 <Switch
                   checked={form.isActive}
                   onCheckedChange={(v) =>

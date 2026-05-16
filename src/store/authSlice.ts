@@ -1,6 +1,10 @@
-import { AuthState } from "@/types/auth";
-import { createSlice, configureStore, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "better-auth/types";
+import {
+  configureStore,
+  createSlice,
+  type PayloadAction,
+} from "@reduxjs/toolkit";
+import type { User } from "better-auth/types";
+import type { AuthState } from "@/types/auth";
 
 const initialState: AuthState["auth"] = {
   user: null,

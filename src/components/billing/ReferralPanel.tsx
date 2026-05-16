@@ -100,7 +100,7 @@ export function ReferralPanel() {
     <Card>
       <CardHeader>
         <div className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
             <Gift size={16} className="text-primary" />
           </div>
           <div>
@@ -121,12 +121,12 @@ export function ReferralPanel() {
           <>
             {/* Referral link box */}
             {data?.referralLink ? (
-              <div className="rounded-lg border border-border bg-muted/30 p-4 space-y-3">
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+              <div className="space-y-3 rounded-lg border border-border bg-muted/30 p-4">
+                <p className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">
                   Your Referral Link
                 </p>
                 <div className="flex items-center gap-2">
-                  <code className="flex-1 text-sm font-mono bg-background border border-border rounded-md px-3 py-2 truncate">
+                  <code className="flex-1 truncate rounded-md border border-border bg-background px-3 py-2 font-mono text-sm">
                     {data.referralLink}
                   </code>
                   <Button
@@ -156,7 +156,7 @@ export function ReferralPanel() {
                     <span className="ml-1.5 hidden sm:inline">Share</span>
                   </Button>
                 </div>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-muted-foreground text-xs">
                   Code:{" "}
                   <Badge variant="secondary" className="font-mono text-xs">
                     {data.referralCode}
@@ -164,8 +164,8 @@ export function ReferralPanel() {
                 </p>
               </div>
             ) : (
-              <div className="rounded-lg border border-dashed border-border bg-muted/20 p-6 text-center space-y-3">
-                <p className="text-sm text-muted-foreground">
+              <div className="space-y-3 rounded-lg border border-border border-dashed bg-muted/20 p-6 text-center">
+                <p className="text-muted-foreground text-sm">
                   You don&apos;t have a referral code yet. Generate one to start
                   earning rewards.
                 </p>
@@ -185,28 +185,28 @@ export function ReferralPanel() {
             )}
 
             {/* Stats grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               <div className="rounded-lg border border-border bg-muted/20 p-3 text-center">
                 <Users
                   size={16}
                   className="mx-auto mb-1 text-muted-foreground"
                 />
-                <div className="text-2xl font-bold">
+                <div className="font-bold text-2xl">
                   {data?.totalReferrals ?? 0}
                 </div>
-                <div className="text-xs text-muted-foreground mt-0.5">
+                <div className="mt-0.5 text-muted-foreground text-xs">
                   Total Referrals
                 </div>
               </div>
-              <div className="rounded-lg border border-green-200 dark:border-green-800 bg-green-50/50 dark:bg-green-950/20 p-3 text-center">
+              <div className="rounded-lg border border-green-200 bg-green-50/50 p-3 text-center dark:border-green-800 dark:bg-green-950/20">
                 <TrendingUp
                   size={16}
                   className="mx-auto mb-1 text-green-600 dark:text-green-400"
                 />
-                <div className="text-2xl font-bold text-green-700 dark:text-green-300">
+                <div className="font-bold text-2xl text-green-700 dark:text-green-300">
                   {data?.converted ?? 0}
                 </div>
-                <div className="text-xs text-muted-foreground mt-0.5">
+                <div className="mt-0.5 text-muted-foreground text-xs">
                   Converted
                 </div>
               </div>
@@ -215,10 +215,10 @@ export function ReferralPanel() {
                   size={16}
                   className="mx-auto mb-1 text-muted-foreground"
                 />
-                <div className="text-2xl font-bold">
+                <div className="font-bold text-2xl">
                   {data?.totalRewards ?? 0}
                 </div>
-                <div className="text-xs text-muted-foreground mt-0.5">
+                <div className="mt-0.5 text-muted-foreground text-xs">
                   Rewards Earned
                 </div>
               </div>
@@ -227,10 +227,10 @@ export function ReferralPanel() {
                   size={16}
                   className="mx-auto mb-1 text-muted-foreground"
                 />
-                <div className="text-2xl font-bold">
+                <div className="font-bold text-2xl">
                   {data?.totalReferrals ? `${conversionRate}%` : "—"}
                 </div>
-                <div className="text-xs text-muted-foreground mt-0.5">
+                <div className="mt-0.5 text-muted-foreground text-xs">
                   Conversion Rate
                 </div>
               </div>
@@ -238,7 +238,7 @@ export function ReferralPanel() {
 
             {/* How it works */}
             <div className="rounded-lg border border-border bg-muted/10 p-4">
-              <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">
+              <p className="mb-3 font-bold text-muted-foreground text-xs uppercase tracking-wider">
                 How it works
               </p>
               <ol className="space-y-2">
@@ -250,9 +250,9 @@ export function ReferralPanel() {
                 ].map((step, i) => (
                   <li
                     key={i}
-                    className="flex items-start gap-3 text-sm text-muted-foreground"
+                    className="flex items-start gap-3 text-muted-foreground text-sm"
                   >
-                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-[10px] font-bold text-primary">
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 font-bold text-[10px] text-primary">
                       {i + 1}
                     </span>
                     {step}

@@ -1,7 +1,7 @@
 "use client";
 
-import React, { Component, ErrorInfo, ReactNode } from "react";
 import { AlertCircle, RefreshCcw } from "lucide-react";
+import React, { Component, type ErrorInfo, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 
 interface Props {
@@ -39,15 +39,15 @@ export class ErrorBoundary extends Component<Props, State> {
       }
 
       return (
-        <div className="w-full flex-1 min-h-[200px] flex flex-col items-center justify-center p-6 border border-destructive/20 bg-destructive/5 rounded-xl animate-in fade-in duration-300">
-          <AlertCircle className="h-10 w-10 text-destructive mb-4 opacity-80" />
-          <h3 className="text-lg font-bold text-foreground mb-2">
+        <div className="fade-in flex min-h-[200px] w-full flex-1 animate-in flex-col items-center justify-center rounded-xl border border-destructive/20 bg-destructive/5 p-6 duration-300">
+          <AlertCircle className="mb-4 h-10 w-10 text-destructive opacity-80" />
+          <h3 className="mb-2 font-bold text-foreground text-lg">
             Component Crashed
           </h3>
-          <p className="text-sm text-muted-foreground text-center mb-6 max-w-sm">
+          <p className="mb-6 max-w-sm text-center text-muted-foreground text-sm">
             A section of this page failed to load due to an unexpected error.
             {this.state.error && (
-              <span className="block mt-2 text-xs font-mono opacity-60 truncate">
+              <span className="mt-2 block truncate font-mono text-xs opacity-60">
                 {this.state.error.message}
               </span>
             )}
@@ -56,7 +56,7 @@ export class ErrorBoundary extends Component<Props, State> {
             variant="outline"
             size="sm"
             onClick={this.handleReset}
-            className="font-bold border-border"
+            className="border-border font-bold"
           >
             <RefreshCcw className="mr-2 h-4 w-4" /> Try section again
           </Button>

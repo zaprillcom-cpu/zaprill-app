@@ -254,10 +254,10 @@ export default function ResumeEditorPage({
   // ─── Loading state ──────────────────────────────
   if (isLoadingResume) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="flex min-h-screen items-center justify-center bg-background">
         <div className="flex flex-col items-center gap-4">
           <Loader2 className="h-10 w-10 animate-spin text-muted-foreground" />
-          <p className="text-sm font-medium text-muted-foreground">
+          <p className="font-medium text-muted-foreground text-sm">
             Loading resume...
           </p>
         </div>
@@ -267,10 +267,10 @@ export default function ResumeEditorPage({
 
   if (loadError) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="flex min-h-screen items-center justify-center bg-background">
         <div className="flex flex-col items-center gap-4 text-center">
           <AlertCircle className="h-10 w-10 text-destructive" />
-          <p className="text-lg font-bold">{loadError}</p>
+          <p className="font-bold text-lg">{loadError}</p>
           <Button variant="outline" onClick={() => router.push("/resumes")}>
             Back to Resumes
           </Button>
@@ -345,9 +345,9 @@ export default function ResumeEditorPage({
     return (
       <>
         {isHidden && (
-          <div className="flex items-center gap-3 p-3 mb-4 rounded-lg border border-amber-500/30 bg-amber-500/5 text-sm">
-            <EyeOff className="h-4 w-4 text-amber-500 shrink-0" />
-            <span className="text-muted-foreground flex-1">
+          <div className="mb-4 flex items-center gap-3 rounded-lg border border-amber-500/30 bg-amber-500/5 p-3 text-sm">
+            <EyeOff className="h-4 w-4 shrink-0 text-amber-500" />
+            <span className="flex-1 text-muted-foreground">
               This section is hidden from your resume.
             </span>
             <Button
@@ -369,9 +369,9 @@ export default function ResumeEditorPage({
   };
 
   return (
-    <div className="h-screen flex flex-col bg-background text-foreground overflow-hidden">
+    <div className="flex h-screen flex-col overflow-hidden bg-background text-foreground">
       {/* ─── Top Bar ──────────────────────────────── */}
-      <header className="h-14 border-b border-border flex items-center justify-between px-4 bg-background/95 backdrop-blur-sm z-20 shrink-0">
+      <header className="z-20 flex h-14 shrink-0 items-center justify-between border-border border-b bg-background/95 px-4 backdrop-blur-sm">
         <div className="flex items-center gap-3">
           <Button
             variant="ghost"
@@ -388,20 +388,20 @@ export default function ResumeEditorPage({
           <Input
             value={resumeTitle}
             onChange={(e) => dispatch(resumeActions.setTitle(e.target.value))}
-            className="h-8 w-48 sm:w-64 font-bold text-sm border-none bg-transparent focus-visible:ring-1 focus-visible:ring-ring px-2"
+            className="h-8 w-48 border-none bg-transparent px-2 font-bold text-sm focus-visible:ring-1 focus-visible:ring-ring sm:w-64"
           />
         </div>
 
         <div className="flex items-center gap-2">
           {/* Save status */}
-          <div className="flex items-center gap-1.5 text-xs text-muted-foreground mr-2">
+          <div className="mr-2 flex items-center gap-1.5 text-muted-foreground text-xs">
             {isSaving ? (
               <>
                 <Loader2 className="h-3 w-3 animate-spin" />
                 <span>Saving...</span>
               </>
             ) : isDirty ? (
-              <span className="text-amber-500 font-medium">
+              <span className="font-medium text-amber-500">
                 Unsaved changes
               </span>
             ) : (
@@ -412,7 +412,7 @@ export default function ResumeEditorPage({
             )}
           </div>
 
-          <Badge variant="outline" className="text-[10px] font-bold uppercase">
+          <Badge variant="outline" className="font-bold text-[10px] uppercase">
             {status}
           </Badge>
 
@@ -423,7 +423,7 @@ export default function ResumeEditorPage({
               sessionStorage.setItem("ai_job_god_resume", JSON.stringify(data));
               router.push("/analyze");
             }}
-            className="gap-1.5 text-primary hover:text-primary hover:bg-primary/10"
+            className="gap-1.5 text-primary hover:bg-primary/10 hover:text-primary"
           >
             <Search className="h-4 w-4" />
             <span className="hidden sm:inline">Search Jobs</span>
@@ -433,7 +433,7 @@ export default function ResumeEditorPage({
             variant="ghost"
             size="sm"
             onClick={() => setShowPreview(!showPreview)}
-            className="gap-1.5 hidden lg:flex"
+            className="hidden gap-1.5 lg:flex"
           >
             <Eye className="h-4 w-4" />
             {showPreview ? "Hide" : "Show"} Preview
@@ -486,25 +486,25 @@ export default function ResumeEditorPage({
       </header>
 
       {/* ─── Three-panel Layout ────────────────────── */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex flex-1 overflow-hidden">
         {/* Left: Section Navigation */}
-        <nav className="w-14 lg:w-48 border-r border-border bg-muted/30 shrink-0 flex flex-col">
+        <nav className="flex w-14 shrink-0 flex-col border-border border-r bg-muted/30 lg:w-48">
           <ScrollArea className="flex-1 py-2">
             {SECTIONS.map(({ key, label, icon: Icon }) => (
               <button
                 type="button"
                 key={key}
                 onClick={() => dispatch(resumeActions.setActiveSection(key))}
-                className={`w-full flex items-center gap-3 px-3 lg:px-4 py-2.5 text-sm font-medium transition-colors relative ${
+                className={`relative flex w-full items-center gap-3 px-3 py-2.5 font-medium text-sm transition-colors lg:px-4 ${
                   activeSection === key
-                    ? "bg-primary/10 text-primary border-r-2 border-primary"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                    ? "border-primary border-r-2 bg-primary/10 text-primary"
+                    : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
                 }`}
               >
                 <Icon className="h-4 w-4 shrink-0" />
-                <span className="hidden lg:inline truncate">{label}</span>
+                <span className="hidden truncate lg:inline">{label}</span>
                 {validationErrors?.[key] && (
-                  <span className="absolute right-2 top-1/2 -translate-y-1/2 h-1.5 w-1.5 rounded-full bg-destructive shadow-[0_0_8px_rgba(239,68,68,0.5)]" />
+                  <span className="-translate-y-1/2 absolute top-1/2 right-2 h-1.5 w-1.5 rounded-full bg-destructive shadow-[0_0_8px_rgba(239,68,68,0.5)]" />
                 )}
               </button>
             ))}
@@ -515,8 +515,8 @@ export default function ResumeEditorPage({
         <div
           className={`flex-1 overflow-y-auto ${showPreview ? "lg:max-w-[50%]" : ""}`}
         >
-          <div className="max-w-2xl mx-auto p-6">
-            <h2 className="text-xl font-black tracking-tight mb-6">
+          <div className="mx-auto max-w-2xl p-6">
+            <h2 className="mb-6 font-black text-xl tracking-tight">
               {SECTIONS.find((s) => s.key === activeSection)?.label ??
                 "Section"}
             </h2>
@@ -526,7 +526,7 @@ export default function ResumeEditorPage({
 
         {/* Right: Live Preview */}
         {showPreview && (
-          <div className="hidden lg:flex flex-1 border-l border-border bg-muted/20 overflow-y-auto">
+          <div className="hidden flex-1 overflow-y-auto border-border border-l bg-muted/20 lg:flex">
             <PreviewPanel data={data} metadata={metadata} />
           </div>
         )}
@@ -536,7 +536,7 @@ export default function ResumeEditorPage({
       <AlertDialog open={showErrorDialog} onOpenChange={setShowErrorDialog}>
         <AlertDialogContent className="max-w-md">
           <AlertDialogHeader>
-            <div className="flex items-center gap-2 text-destructive mb-2">
+            <div className="mb-2 flex items-center gap-2 text-destructive">
               <AlertCircle className="h-5 w-5" />
               <AlertDialogTitle>Validation Failed</AlertDialogTitle>
             </div>
@@ -545,7 +545,7 @@ export default function ResumeEditorPage({
                 We found some issues that need your attention before we can
                 save. Please check the following sections:
               </p>
-              <div className="space-y-3 max-h-[40vh] overflow-y-auto pr-2">
+              <div className="max-h-[40vh] space-y-3 overflow-y-auto pr-2">
                 {validationErrors &&
                   Object.entries(validationErrors).map(([section, errors]) => {
                     const sectionLabel =
@@ -553,12 +553,12 @@ export default function ResumeEditorPage({
                     return (
                       <div
                         key={section}
-                        className="p-3 rounded-lg border border-destructive/20 bg-destructive/5"
+                        className="rounded-lg border border-destructive/20 bg-destructive/5 p-3"
                       >
-                        <p className="font-bold text-sm text-destructive capitalize mb-1">
+                        <p className="mb-1 font-bold text-destructive text-sm capitalize">
                           {sectionLabel}
                         </p>
-                        <ul className="list-disc list-inside text-xs text-muted-foreground space-y-1">
+                        <ul className="list-inside list-disc space-y-1 text-muted-foreground text-xs">
                           {Object.values(errors as any)
                             .flat()
                             .map((msg: any, i) => (

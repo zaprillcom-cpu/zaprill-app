@@ -36,7 +36,7 @@ export default function PreviewPanel({
     TEMPLATE_COMPONENTS[templateSlug] ?? MinimalistTemplate;
 
   return (
-    <div className="resume-preview-container w-full h-full p-6">
+    <div className="resume-preview-container h-full w-full p-6">
       <div className="resume-preview-paper">
         <TemplateComponent data={data} metadata={metadata} />
       </div>

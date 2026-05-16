@@ -95,9 +95,9 @@ export default function BasicsForm({ serverErrors }: { serverErrors?: any }) {
   return (
     <div className="space-y-6">
       {/* Name + Label */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Field>
-          <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+          <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
             Full Name *
           </FieldLabel>
           <FieldContent>
@@ -111,7 +111,7 @@ export default function BasicsForm({ serverErrors }: { serverErrors?: any }) {
         </Field>
 
         <Field>
-          <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+          <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
             Professional Title
           </FieldLabel>
           <FieldContent>
@@ -126,9 +126,9 @@ export default function BasicsForm({ serverErrors }: { serverErrors?: any }) {
       </div>
 
       {/* Email + Phone */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Field>
-          <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+          <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
             Email
           </FieldLabel>
           <FieldContent>
@@ -143,7 +143,7 @@ export default function BasicsForm({ serverErrors }: { serverErrors?: any }) {
         </Field>
 
         <Field>
-          <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+          <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
             Phone
           </FieldLabel>
           <FieldContent>
@@ -158,9 +158,9 @@ export default function BasicsForm({ serverErrors }: { serverErrors?: any }) {
       </div>
 
       {/* Location */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Field>
-          <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+          <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
             City
           </FieldLabel>
           <FieldContent>
@@ -174,7 +174,7 @@ export default function BasicsForm({ serverErrors }: { serverErrors?: any }) {
         </Field>
 
         <Field>
-          <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+          <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
             State / Region
           </FieldLabel>
           <FieldContent>
@@ -188,7 +188,7 @@ export default function BasicsForm({ serverErrors }: { serverErrors?: any }) {
         </Field>
 
         <Field>
-          <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+          <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
             Country
           </FieldLabel>
           <FieldContent>
@@ -204,7 +204,7 @@ export default function BasicsForm({ serverErrors }: { serverErrors?: any }) {
 
       {/* Website */}
       <Field>
-        <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+        <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
           Personal Website
         </FieldLabel>
         <FieldContent>
@@ -220,7 +220,7 @@ export default function BasicsForm({ serverErrors }: { serverErrors?: any }) {
       {/* Summary */}
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+          <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
             Professional Summary
           </FieldLabel>
           <Button
@@ -247,7 +247,7 @@ export default function BasicsForm({ serverErrors }: { serverErrors?: any }) {
                 setIsGenerating(false);
               }
             }}
-            className="h-7 text-xs gap-1.5 text-amber-500 hover:text-amber-400 hover:bg-amber-500/10"
+            className="h-7 gap-1.5 text-amber-500 text-xs hover:bg-amber-500/10 hover:text-amber-400"
           >
             {isGenerating ? (
               <Loader2 className="h-3 w-3 animate-spin" />
@@ -265,7 +265,7 @@ export default function BasicsForm({ serverErrors }: { serverErrors?: any }) {
           placeholder="A brief overview of your professional background, key achievements, and career objectives..."
         />
         <FieldError errors={[errors.summary]} />
-        <p className="text-xs text-muted-foreground">
+        <p className="text-muted-foreground text-xs">
           {(watch("summary") || "").length}/5000 characters
         </p>
       </div>
@@ -273,7 +273,7 @@ export default function BasicsForm({ serverErrors }: { serverErrors?: any }) {
       {/* Social Profiles */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground">
+          <h3 className="font-bold text-muted-foreground text-sm uppercase tracking-widest">
             Social Profiles
           </h3>
           <Button
@@ -289,7 +289,7 @@ export default function BasicsForm({ serverErrors }: { serverErrors?: any }) {
         </div>
 
         {fields.length === 0 && (
-          <p className="text-xs text-muted-foreground italic">
+          <p className="text-muted-foreground text-xs italic">
             No social profiles added yet.
           </p>
         )}
@@ -297,9 +297,9 @@ export default function BasicsForm({ serverErrors }: { serverErrors?: any }) {
         <div className="grid grid-cols-1 gap-4">
           {fields.map((field, idx) => (
             <Card key={field.id} className="border-border">
-              <CardContent className="p-4 space-y-4">
+              <CardContent className="space-y-4 p-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-muted-foreground uppercase">
+                  <span className="font-bold text-muted-foreground text-xs uppercase">
                     Profile {idx + 1}
                   </span>
                   <Button
@@ -313,9 +313,9 @@ export default function BasicsForm({ serverErrors }: { serverErrors?: any }) {
                   </Button>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <Field>
-                    <FieldLabel className="font-bold text-[10px] uppercase tracking-wider text-muted-foreground">
+                    <FieldLabel className="font-bold text-[10px] text-muted-foreground uppercase tracking-wider">
                       Network
                     </FieldLabel>
                     <FieldContent>
@@ -330,7 +330,7 @@ export default function BasicsForm({ serverErrors }: { serverErrors?: any }) {
                     </FieldContent>
                   </Field>
                   <Field>
-                    <FieldLabel className="font-bold text-[10px] uppercase tracking-wider text-muted-foreground">
+                    <FieldLabel className="font-bold text-[10px] text-muted-foreground uppercase tracking-wider">
                       Username
                     </FieldLabel>
                     <FieldContent>
@@ -346,7 +346,7 @@ export default function BasicsForm({ serverErrors }: { serverErrors?: any }) {
                   </Field>
                 </div>
                 <Field>
-                  <FieldLabel className="font-bold text-[10px] uppercase tracking-wider text-muted-foreground">
+                  <FieldLabel className="font-bold text-[10px] text-muted-foreground uppercase tracking-wider">
                     URL
                   </FieldLabel>
                   <FieldContent>

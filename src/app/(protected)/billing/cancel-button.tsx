@@ -53,7 +53,7 @@ export default function CancelSubscriptionButton({
       <DialogTrigger
         render={
           <Button variant="destructive" size="sm">
-            <XCircle className="w-4 h-4 mr-2" />
+            <XCircle className="mr-2 h-4 w-4" />
             Cancel Plan
           </Button>
         }
@@ -80,7 +80,7 @@ export default function CancelSubscriptionButton({
             onClick={handleCancel}
             disabled={isCanceling}
           >
-            {isCanceling && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+            {isCanceling && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Yes, Cancel Plan
           </Button>
         </DialogFooter>

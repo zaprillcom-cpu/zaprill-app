@@ -20,7 +20,7 @@ export default function HQLoading() {
         {Array.from({ length: 4 }).map((_, i) => (
           <div
             key={i}
-            className="rounded-xl border bg-card p-6 flex flex-col gap-3"
+            className="flex flex-col gap-3 rounded-xl border bg-card p-6"
           >
             <div className="flex items-center justify-between">
               <Skeleton className="h-4 w-28" />
@@ -34,19 +34,19 @@ export default function HQLoading() {
 
       {/* Chart + activity */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-        <div className="col-span-4 rounded-xl border bg-card p-6 space-y-4">
+        <div className="col-span-4 space-y-4 rounded-xl border bg-card p-6">
           <Skeleton className="h-5 w-32" />
           <Skeleton className="h-4 w-56" />
           <Skeleton className="h-[220px] w-full rounded-lg" />
         </div>
-        <div className="col-span-3 rounded-xl border bg-card p-6 space-y-4">
+        <div className="col-span-3 space-y-4 rounded-xl border bg-card p-6">
           <Skeleton className="h-5 w-40" />
           <Skeleton className="h-4 w-52" />
           <div className="space-y-6 pt-2">
             {Array.from({ length: 5 }).map((_, i) => (
               <div key={i} className="flex items-center gap-4">
                 <Skeleton className="h-9 w-9 rounded-full" />
-                <div className="space-y-1.5 flex-1">
+                <div className="flex-1 space-y-1.5">
                   <Skeleton className="h-4 w-full" />
                   <Skeleton className="h-3 w-24" />
                 </div>

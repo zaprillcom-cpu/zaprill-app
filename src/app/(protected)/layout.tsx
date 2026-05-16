@@ -1,8 +1,8 @@
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+import type React from "react";
 import { auth } from "@/lib/auth";
 import ClientProvider from "@/providers/ClientProvider";
-import { redirect } from "next/navigation";
-import { headers } from "next/headers";
-import React from "react";
 
 export async function AuthLayout({ children }: { children: React.ReactNode }) {
   const session = await auth.api.getSession({

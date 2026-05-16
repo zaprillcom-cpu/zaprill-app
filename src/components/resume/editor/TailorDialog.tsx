@@ -129,14 +129,14 @@ export default function TailorDialog() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
         render={
-          <Button variant="outline" size="sm" className="gap-2 shrink-0">
+          <Button variant="outline" size="sm" className="shrink-0 gap-2">
             <Wand2 className="h-4 w-4 text-primary" />
             <span className="hidden sm:inline">Tailor to Job</span>
           </Button>
         }
       />
-      <DialogContent className="max-w-2xl max-h-[90vh] flex flex-col p-0 overflow-hidden">
-        <DialogHeader className="px-6 py-4 border-b">
+      <DialogContent className="flex max-h-[90vh] max-w-2xl flex-col overflow-hidden p-0">
+        <DialogHeader className="border-b px-6 py-4">
           <DialogTitle className="flex items-center gap-2 text-xl">
             <Wand2 className="h-5 w-5 text-primary" />
             AI Job Tailoring
@@ -148,20 +148,20 @@ export default function TailorDialog() {
           </DialogDescription>
         </DialogHeader>
 
-        <div className="flex-1 overflow-hidden flex flex-col">
+        <div className="flex flex-1 flex-col overflow-hidden">
           {!tailoredData ? (
-            <div className="px-6 pb-6 pt-2 flex-1 flex flex-col min-h-0 space-y-4">
-              <div className="space-y-2 flex-1 flex flex-col min-h-0">
+            <div className="flex min-h-0 flex-1 flex-col space-y-4 px-6 pt-2 pb-6">
+              <div className="flex min-h-0 flex-1 flex-col space-y-2">
                 <Label>Job Description</Label>
                 <Textarea
                   value={jobDescription}
                   onChange={(e) => setJobDescription(e.target.value)}
                   placeholder="Paste the target job description here..."
-                  className="flex-1 min-h-[200px] field-sizing-fixed overflow-y-auto resize-none text-sm [&::-webkit-scrollbar-track]:my-3"
+                  className="field-sizing-fixed min-h-[200px] flex-1 resize-none overflow-y-auto text-sm [&::-webkit-scrollbar-track]:my-3"
                 />
               </div>
 
-              {error && <div className="text-sm text-red-500">{error}</div>}
+              {error && <div className="text-red-500 text-sm">{error}</div>}
 
               <Button
                 onClick={handleGenerate}
@@ -180,12 +180,12 @@ export default function TailorDialog() {
             </div>
           ) : (
             <div className="flex-1 overflow-y-auto">
-              <div className="p-6 space-y-8">
+              <div className="space-y-8 p-6">
                 {/* Summary */}
                 {tailoredData.summary && (
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <Label className="text-base font-bold flex items-center gap-2">
+                      <Label className="flex items-center gap-2 font-bold text-base">
                         Professional Summary
                       </Label>
                       <Switch
@@ -194,10 +194,10 @@ export default function TailorDialog() {
                       />
                     </div>
                     <div
-                      className={`p-4 rounded-lg border text-sm transition-colors ${
+                      className={`rounded-lg border p-4 text-sm transition-colors ${
                         selectSummary
-                          ? "bg-primary/5 border-primary/20"
-                          : "bg-muted/50 border-border opacity-50"
+                          ? "border-primary/20 bg-primary/5"
+                          : "border-border bg-muted/50 opacity-50"
                       }`}
                     >
                       {tailoredData.summary}
@@ -208,7 +208,7 @@ export default function TailorDialog() {
                 {/* Work */}
                 {tailoredData.work && tailoredData.work.length > 0 && (
                   <div className="space-y-4">
-                    <Label className="text-base font-bold flex items-center gap-2">
+                    <Label className="flex items-center gap-2 font-bold text-base">
                       Work Experience
                     </Label>
                     {tailoredData.work.map((w) => {
@@ -219,14 +219,14 @@ export default function TailorDialog() {
                       return (
                         <div
                           key={w.id}
-                          className="space-y-3 border rounded-lg p-4"
+                          className="space-y-3 rounded-lg border p-4"
                         >
                           <div className="flex items-start justify-between">
                             <div>
                               <div className="font-semibold">
                                 {origWork.position}
                               </div>
-                              <div className="text-xs text-muted-foreground">
+                              <div className="text-muted-foreground text-xs">
                                 {origWork.company}
                               </div>
                             </div>
@@ -247,7 +247,7 @@ export default function TailorDialog() {
                           >
                             {w.highlights.map((h, i) => (
                               <div key={i} className="flex gap-2 text-sm">
-                                <ArrowRight className="h-4 w-4 shrink-0 text-primary mt-0.5" />
+                                <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                                 <span>{h}</span>
                               </div>
                             ))}
@@ -261,7 +261,7 @@ export default function TailorDialog() {
                 {/* Projects */}
                 {tailoredData.projects && tailoredData.projects.length > 0 && (
                   <div className="space-y-4">
-                    <Label className="text-base font-bold flex items-center gap-2">
+                    <Label className="flex items-center gap-2 font-bold text-base">
                       Projects
                     </Label>
                     {tailoredData.projects.map((p) => {
@@ -272,7 +272,7 @@ export default function TailorDialog() {
                       return (
                         <div
                           key={p.id}
-                          className="space-y-3 border rounded-lg p-4"
+                          className="space-y-3 rounded-lg border p-4"
                         >
                           <div className="flex items-start justify-between">
                             <div className="font-semibold">{origProj.name}</div>
@@ -293,7 +293,7 @@ export default function TailorDialog() {
                           >
                             {p.highlights.map((h, i) => (
                               <div key={i} className="flex gap-2 text-sm">
-                                <ArrowRight className="h-4 w-4 shrink-0 text-primary mt-0.5" />
+                                <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                                 <span>{h}</span>
                               </div>
                             ))}
@@ -307,7 +307,7 @@ export default function TailorDialog() {
                 {/* Skills */}
                 {tailoredData.skills && tailoredData.skills.length > 0 && (
                   <div className="space-y-4">
-                    <Label className="text-base font-bold flex items-center gap-2">
+                    <Label className="flex items-center gap-2 font-bold text-base">
                       Skills
                     </Label>
                     <div className="grid grid-cols-1 gap-3">
@@ -321,14 +321,14 @@ export default function TailorDialog() {
                         return (
                           <div
                             key={s.id}
-                            className={`border rounded-lg p-3 flex items-center justify-between transition-colors ${
+                            className={`flex items-center justify-between rounded-lg border p-3 transition-colors ${
                               isSelected
-                                ? "bg-primary/5 border-primary/20"
+                                ? "border-primary/20 bg-primary/5"
                                 : "opacity-50"
                             }`}
                           >
-                            <div className="flex-1 mr-4">
-                              <div className="text-xs font-bold text-muted-foreground uppercase mb-1">
+                            <div className="mr-4 flex-1">
+                              <div className="mb-1 font-bold text-muted-foreground text-xs uppercase">
                                 {origSkill.name}
                               </div>
                               <div className="flex flex-wrap gap-1">
@@ -336,7 +336,7 @@ export default function TailorDialog() {
                                   <Badge
                                     key={i}
                                     variant="secondary"
-                                    className="text-xs font-normal"
+                                    className="font-normal text-xs"
                                   >
                                     {kw}
                                   </Badge>
@@ -364,7 +364,7 @@ export default function TailorDialog() {
         </div>
 
         {tailoredData && (
-          <DialogFooter className="px-6 py-4 border-t bg-muted/20">
+          <DialogFooter className="border-t bg-muted/20 px-6 py-4">
             <Button variant="ghost" onClick={() => setTailoredData(null)}>
               Cancel
             </Button>

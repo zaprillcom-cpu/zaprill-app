@@ -86,18 +86,18 @@ export default function ResumeExportPage({
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white">
-        <p className="text-red-500 font-bold">{error}</p>
+      <div className="flex min-h-screen items-center justify-center bg-white">
+        <p className="font-bold text-red-500">{error}</p>
       </div>
     );
   }
 
   if (!resumeData) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white print:hidden">
+      <div className="flex min-h-screen items-center justify-center bg-white print:hidden">
         <div className="flex flex-col items-center gap-4">
           <Loader2 className="h-10 w-10 animate-spin text-gray-400" />
-          <p className="text-sm font-medium text-gray-500">
+          <p className="font-medium text-gray-500 text-sm">
             Preparing export...
           </p>
         </div>

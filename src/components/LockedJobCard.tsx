@@ -18,7 +18,7 @@ export default function LockedJobCard({ job, rank }: LockedJobCardProps) {
 
   return (
     <Card
-      className="relative overflow-hidden border border-border/60 bg-card rounded-xl"
+      className="relative overflow-hidden rounded-xl border border-border/60 bg-card"
       style={{
         animationDelay: `${rank * 50}ms`,
         animationFillMode: "both",
@@ -28,28 +28,28 @@ export default function LockedJobCard({ job, rank }: LockedJobCardProps) {
       <CardContent className="p-0">
         <div className="flex flex-col lg:flex-row lg:items-center">
           {/* ── Readable Header: title + company (NOT blurred) ── */}
-          <div className="flex-1 p-6 lg:p-8 flex items-start gap-5">
-            <div className="hidden sm:flex shrink-0 w-8 h-8 rounded-lg items-center justify-center text-xs font-black bg-muted text-muted-foreground border border-border/50">
+          <div className="flex flex-1 items-start gap-5 p-6 lg:p-8">
+            <div className="hidden h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-border/50 bg-muted font-black text-muted-foreground text-xs sm:flex">
               {rank + 1}
             </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                <h3 className="text-xl font-black text-foreground tracking-tight truncate leading-tight">
+            <div className="min-w-0 flex-1">
+              <div className="mb-1.5 flex flex-wrap items-center gap-2">
+                <h3 className="truncate font-black text-foreground text-xl leading-tight tracking-tight">
                   {job.title}
                 </h3>
                 {job.isRemote && (
                   <Badge
                     variant="secondary"
-                    className="h-5 px-1.5 text-[10px] font-black uppercase tracking-wider bg-primary/10 text-primary border-none"
+                    className="h-5 border-none bg-primary/10 px-1.5 font-black text-[10px] text-primary uppercase tracking-wider"
                   >
                     Remote
                   </Badge>
                 )}
               </div>
-              <div className="flex items-center gap-x-4 gap-y-2 text-muted-foreground text-sm flex-wrap font-semibold">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-semibold text-muted-foreground text-sm">
                 <div className="flex items-center gap-1.5">
                   <MapPin className="h-3.5 w-3.5 opacity-70" />
-                  <span className="truncate max-w-[150px]">{job.location}</span>
+                  <span className="max-w-[150px] truncate">{job.location}</span>
                 </div>
               </div>
             </div>
@@ -57,37 +57,37 @@ export default function LockedJobCard({ job, rank }: LockedJobCardProps) {
 
           {/* ── Blurred skills section ── */}
           <div
-            className="flex-1 px-6 lg:px-4 py-4 border-t lg:border-t-0 lg:border-x border-border/40 select-none"
+            className="flex-1 select-none border-border/40 border-t px-6 py-4 lg:border-x lg:border-t-0 lg:px-4"
             aria-hidden="true"
           >
             <div
-              className="space-y-3 py-1 blur-sm pointer-events-none opacity-60"
+              className="pointer-events-none space-y-3 py-1 opacity-60 blur-sm"
               style={{ userSelect: "none" }}
             >
-              <div className="flex gap-1.5 flex-wrap items-center">
-                <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest w-16">
+              <div className="flex flex-wrap items-center gap-1.5">
+                <span className="w-16 font-black text-[10px] text-muted-foreground uppercase tracking-widest">
                   Matched
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {["React", "TypeScript", "Node.js"].map((s) => (
                     <span
                       key={s}
-                      className="inline-flex px-2 py-0.5 text-xs font-bold rounded-md bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400"
+                      className="inline-flex rounded-md bg-green-100 px-2 py-0.5 font-bold text-green-700 text-xs dark:bg-green-900/30 dark:text-green-400"
                     >
                       {s}
                     </span>
                   ))}
                 </div>
               </div>
-              <div className="flex gap-1.5 flex-wrap items-center">
-                <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest w-16">
+              <div className="flex flex-wrap items-center gap-1.5">
+                <span className="w-16 font-black text-[10px] text-muted-foreground uppercase tracking-widest">
                   Missing
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {["AWS", "Docker"].map((s) => (
                     <span
                       key={s}
-                      className="inline-flex px-2 py-0.5 text-xs font-bold rounded-md bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400"
+                      className="inline-flex rounded-md bg-red-100 px-2 py-0.5 font-bold text-red-700 text-xs dark:bg-red-900/30 dark:text-red-400"
                     >
                       {s}
                     </span>
@@ -98,7 +98,7 @@ export default function LockedJobCard({ job, rank }: LockedJobCardProps) {
           </div>
 
           {/* ── Lock CTA section ── */}
-          <div className="p-6 lg:p-8 flex items-center justify-between lg:justify-end gap-6 bg-muted/20 lg:bg-transparent border-t lg:border-t-0 border-border/40">
+          <div className="flex items-center justify-between gap-6 border-border/40 border-t bg-muted/20 p-6 lg:justify-end lg:border-t-0 lg:bg-transparent lg:p-8">
             <div className="flex items-center gap-4 lg:flex-row-reverse">
               <MatchRing
                 percentage={job.matchPercentage}
@@ -110,7 +110,7 @@ export default function LockedJobCard({ job, rank }: LockedJobCardProps) {
             <Button
               variant="default"
               size="lg"
-              className="font-bold px-5 shadow-sm bg-primary/90 hover:bg-primary gap-2"
+              className="gap-2 bg-primary/90 px-5 font-bold shadow-sm hover:bg-primary"
               onClick={() => router.push("/billing")}
             >
               <Lock className="h-4 w-4" />
@@ -121,7 +121,7 @@ export default function LockedJobCard({ job, rank }: LockedJobCardProps) {
       </CardContent>
 
       {/* ── Subtle lock badge top-right ── */}
-      <div className="absolute top-3 right-3 flex items-center gap-1 bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-wider px-2 py-1 rounded-full shadow-sm">
+      <div className="absolute top-3 right-3 flex items-center gap-1 rounded-full bg-primary px-2 py-1 font-black text-[10px] text-primary-foreground uppercase tracking-wider shadow-sm">
         <Sparkles className="h-3 w-3" />
         Pro
       </div>

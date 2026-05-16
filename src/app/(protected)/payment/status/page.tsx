@@ -141,8 +141,8 @@ export default function PaymentStatusPage({
   const planName = meta?.planName || "Subscription";
 
   return (
-    <div className="container max-w-lg mx-auto py-12 md:py-20 px-4">
-      <Card className="shadow-xl border-muted/60 overflow-hidden">
+    <div className="container mx-auto max-w-lg px-4 py-12 md:py-20">
+      <Card className="overflow-hidden border-muted/60 shadow-xl">
         {/* Status Header */}
         <div
           className={`h-2 w-full ${
@@ -150,13 +150,13 @@ export default function PaymentStatusPage({
               ? "bg-emerald-500"
               : status === "failed" || status === "void"
                 ? "bg-destructive"
-                : "bg-primary animate-pulse"
+                : "animate-pulse bg-primary"
           }`}
         />
 
-        <CardHeader className="text-center pt-10 pb-6">
+        <CardHeader className="pt-10 pb-6 text-center">
           <div
-            className={`mx-auto w-20 h-20 rounded-full flex items-center justify-center mb-5 ${
+            className={`mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full ${
               status === "paid"
                 ? "bg-emerald-50"
                 : status === "failed" || status === "void"
@@ -165,20 +165,20 @@ export default function PaymentStatusPage({
             }`}
           >
             {status === "loading" || status === "pending" ? (
-              <Loader2 className="w-10 h-10 text-primary animate-spin" />
+              <Loader2 className="h-10 w-10 animate-spin text-primary" />
             ) : status === "paid" ? (
-              <CheckCircle2 className="w-10 h-10 text-emerald-500" />
+              <CheckCircle2 className="h-10 w-10 text-emerald-500" />
             ) : (
-              <XCircle className="w-10 h-10 text-destructive" />
+              <XCircle className="h-10 w-10 text-destructive" />
             )}
           </div>
-          <CardTitle className="text-2xl font-bold tracking-tight">
+          <CardTitle className="font-bold text-2xl tracking-tight">
             {status === "loading" && "Verifying Payment..."}
             {status === "pending" && "Payment Processing"}
             {status === "paid" && "Payment Successful"}
             {(status === "failed" || status === "void") && "Payment Failed"}
           </CardTitle>
-          <CardDescription className="text-base max-w-xs mx-auto mt-2">
+          <CardDescription className="mx-auto mt-2 max-w-xs text-base">
             {status === "loading" &&
               "Please wait while we confirm your transaction with the bank."}
             {status === "pending" &&
@@ -193,21 +193,21 @@ export default function PaymentStatusPage({
         <CardContent className="space-y-6">
           {/* Summary Section (Only on success/pending) */}
           {(status === "paid" || status === "pending") && invoice && (
-            <div className="rounded-xl border bg-muted/20 overflow-hidden">
-              <div className="bg-muted/40 px-5 py-3 border-bottom flex justify-between items-center">
-                <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+            <div className="overflow-hidden rounded-xl border bg-muted/20">
+              <div className="flex items-center justify-between border-bottom bg-muted/40 px-5 py-3">
+                <span className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                   Order Summary
                 </span>
-                <span className="text-xs font-mono text-muted-foreground">
+                <span className="font-mono text-muted-foreground text-xs">
                   {orderId?.replace("inv_", "INV-").toUpperCase()}
                 </span>
               </div>
-              <div className="p-5 space-y-4">
-                <div className="flex justify-between items-start">
+              <div className="space-y-4 p-5">
+                <div className="flex items-start justify-between">
                   <div className="space-y-1">
                     <p className="font-bold text-foreground">{planName}</p>
-                    <p className="text-xs text-muted-foreground flex items-center gap-1.5">
-                      <Calendar className="w-3.5 h-3.5" />
+                    <p className="flex items-center gap-1.5 text-muted-foreground text-xs">
+                      <Calendar className="h-3.5 w-3.5" />
                       {new Date(invoice.createdAt).toLocaleDateString("en-IN", {
                         day: "2-digit",
                         month: "long",
@@ -215,18 +215,18 @@ export default function PaymentStatusPage({
                       })}
                     </p>
                   </div>
-                  <span className="font-bold text-lg tabular-nums text-foreground">
+                  <span className="font-bold text-foreground text-lg tabular-nums">
                     {formatCurrency(invoice.totalAmount, invoice.currency)}
                   </span>
                 </div>
 
                 {status === "paid" && (
-                  <div className="pt-3 border-t border-muted-foreground/10 flex items-center justify-between">
+                  <div className="flex items-center justify-between border-muted-foreground/10 border-t pt-3">
                     <div className="flex items-center gap-1.5 text-emerald-600">
-                      <CheckCircle2 className="w-4 h-4" />
-                      <span className="text-sm font-medium">Fully Paid</span>
+                      <CheckCircle2 className="h-4 w-4" />
+                      <span className="font-medium text-sm">Fully Paid</span>
                     </div>
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-muted-foreground text-xs">
                       Ref: {invoice.cashfreeOrderId || "—"}
                     </span>
                   </div>
@@ -240,35 +240,35 @@ export default function PaymentStatusPage({
             status === "void" ||
             status === "loading") && (
             <div className="flex flex-col items-center gap-2 py-2">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">
+              <p className="font-semibold text-muted-foreground text-xs uppercase tracking-widest">
                 Transaction Reference
               </p>
-              <code className="text-sm px-3 py-1 bg-muted rounded-md border font-mono">
+              <code className="rounded-md border bg-muted px-3 py-1 font-mono text-sm">
                 {orderId}
               </code>
             </div>
           )}
         </CardContent>
 
-        <CardFooter className="flex-col gap-3 pb-10 px-6">
+        <CardFooter className="flex-col gap-3 px-6 pb-10">
           {status === "paid" && (
             <>
               <Button
-                className="w-full h-11 text-base shadow-sm"
+                className="h-11 w-full text-base shadow-sm"
                 onClick={() => router.push("/")}
               >
                 Go to Dashboard
               </Button>
               <Button
                 variant="outline"
-                className="w-full h-11"
+                className="h-11 w-full"
                 onClick={handleDownload}
                 disabled={downloading}
               >
                 {downloading ? (
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 ) : (
-                  <ArrowDownToLine className="w-4 h-4 mr-2" />
+                  <ArrowDownToLine className="mr-2 h-4 w-4" />
                 )}
                 {downloading ? "Preparing PDF..." : "Download Invoice PDF"}
               </Button>
@@ -276,29 +276,29 @@ export default function PaymentStatusPage({
           )}
 
           {(status === "failed" || status === "void") && (
-            <div className="flex flex-col md:flex-row gap-3 w-full">
+            <div className="flex w-full flex-col gap-3 md:flex-row">
               <Button
                 variant="outline"
-                className="flex-1 h-11"
+                className="h-11 flex-1"
                 onClick={() => router.push("/billing")}
               >
                 Back to Billing
               </Button>
-              <Button className="flex-1 h-11" onClick={handleRetryPayment}>
-                <RefreshCcw className="w-4 h-4 mr-2" />
+              <Button className="h-11 flex-1" onClick={handleRetryPayment}>
+                <RefreshCcw className="mr-2 h-4 w-4" />
                 Retry Payment
               </Button>
             </div>
           )}
 
           {(status === "loading" || status === "pending") && (
-            <Button variant="secondary" className="w-full h-11" disabled>
-              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+            <Button variant="secondary" className="h-11 w-full" disabled>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               Waiting for Confirmation...
             </Button>
           )}
 
-          <p className="text-[10px] text-muted-foreground text-center mt-2 px-4">
+          <p className="mt-2 px-4 text-center text-[10px] text-muted-foreground">
             A copy of this receipt has been sent to your registered email
             address. For billing support, please contact help@zaprill.com
           </p>

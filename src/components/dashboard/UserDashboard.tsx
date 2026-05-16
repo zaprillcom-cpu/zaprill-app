@@ -55,23 +55,23 @@ export default function UserDashboard({
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-6 py-12 space-y-12 animate-in fade-in duration-700">
+    <div className="fade-in mx-auto w-full max-w-6xl animate-in space-y-12 px-6 py-12 duration-700">
       {/* Welcome Header */}
-      <header className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <header className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
         <div className="space-y-2">
-          <div className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-[0.2em]">
+          <div className="flex items-center gap-2 font-bold text-primary text-xs uppercase tracking-[0.2em]">
             <Zap className="h-3 w-3 fill-current" />
             Personal Dashboard
           </div>
-          <h1 className="text-4xl md:text-5xl font-black tracking-tighter">
+          <h1 className="font-black text-4xl tracking-tighter md:text-5xl">
             Welcome back, {session.user.name.split(" ")[0]}
           </h1>
-          <p className="text-muted-foreground font-medium text-lg">
+          <p className="font-medium text-lg text-muted-foreground">
             Your career growth engine is fueled and ready.
           </p>
         </div>
         <Link href="/analyze">
-          <Button className="font-bold h-12 px-8 rounded-xl shadow-xl shadow-primary/20 group text-base">
+          <Button className="group h-12 rounded-xl px-8 font-bold text-base shadow-primary/20 shadow-xl">
             Start New Analysis
             <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
           </Button>
@@ -79,11 +79,11 @@ export default function UserDashboard({
       </header>
 
       {/* Metrics Row - Moved to Top */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {/* Profile Summary Card */}
-        <Card className="border-border/50 shadow-sm overflow-hidden rounded-2xl flex flex-col justify-between">
-          <CardHeader className="bg-muted/30 pb-4 flex-row items-center justify-between space-y-0">
-            <CardTitle className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+        <Card className="flex flex-col justify-between overflow-hidden rounded-2xl border-border/50 shadow-sm">
+          <CardHeader className="flex-row items-center justify-between space-y-0 bg-muted/30 pb-4">
+            <CardTitle className="flex items-center gap-2 font-bold text-[10px] text-muted-foreground uppercase tracking-widest">
               <Target className="h-3.5 w-3.5" />
               Career Profile
             </CardTitle>
@@ -91,42 +91,42 @@ export default function UserDashboard({
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-7 text-[10px] font-bold uppercase tracking-widest"
+                className="h-7 font-bold text-[10px] uppercase tracking-widest"
               >
                 Edit
               </Button>
             </Link>
           </CardHeader>
-          <CardContent className="pt-6 space-y-6">
+          <CardContent className="space-y-6 pt-6">
             <div className="flex items-start gap-4">
-              <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 border border-primary/20">
-                <span className="text-xl font-black text-primary">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-primary/20 bg-primary/10">
+                <span className="font-black text-primary text-xl">
                   {session.user.name.charAt(0)}
                 </span>
               </div>
               <div className="min-w-0">
-                <h3 className="font-bold text-lg truncate">
+                <h3 className="truncate font-bold text-lg">
                   {resumeData?.basics?.name || session.user.name}
                 </h3>
-                <p className="text-sm font-medium text-muted-foreground truncate">
+                <p className="truncate font-medium text-muted-foreground text-sm">
                   {resumeData?.basics?.label || "Professional"}
                 </p>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
-                <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">
+                <p className="font-bold text-[9px] text-muted-foreground uppercase tracking-widest">
                   Experience
                 </p>
-                <p className="text-sm font-black">
+                <p className="font-black text-sm">
                   {resumeData?.totalYearsOfExperience || 0} Years
                 </p>
               </div>
               <div className="space-y-1 text-right">
-                <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">
+                <p className="font-bold text-[9px] text-muted-foreground uppercase tracking-widest">
                   Location
                 </p>
-                <p className="text-sm font-black truncate">
+                <p className="truncate font-black text-sm">
                   {resumeData?.basics?.location?.city || "Remote"}
                 </p>
               </div>
@@ -135,27 +135,27 @@ export default function UserDashboard({
         </Card>
 
         {/* ATS Score Card */}
-        <Card className="border-border/50 shadow-sm overflow-hidden rounded-2xl bg-gradient-to-br from-background to-muted/30 flex flex-col justify-between">
+        <Card className="flex flex-col justify-between overflow-hidden rounded-2xl border-border/50 bg-gradient-to-br from-background to-muted/30 shadow-sm">
           <CardHeader className="pb-2">
-            <CardTitle className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+            <CardTitle className="flex items-center gap-2 font-bold text-[10px] text-muted-foreground uppercase tracking-widest">
               <Shield className="h-3.5 w-3.5" />
               ATS Score
             </CardTitle>
           </CardHeader>
-          <CardContent className="pt-2 space-y-4">
+          <CardContent className="space-y-4 pt-2">
             <div className="flex items-center justify-between gap-4">
               <div className="space-y-0">
                 <div
-                  className={`text-4xl font-black ${getScoreColor(lastAtsScore)}`}
+                  className={`font-black text-4xl ${getScoreColor(lastAtsScore)}`}
                 >
                   {lastAtsScore || 0}%
                 </div>
-                <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">
+                <p className="font-bold text-[9px] text-muted-foreground uppercase tracking-widest">
                   Compatibility
                 </p>
               </div>
-              <div className="h-12 w-12 rounded-full border-2 border-muted flex items-center justify-center relative">
-                <svg className="h-full w-full -rotate-90 transform">
+              <div className="relative flex h-12 w-12 items-center justify-center rounded-full border-2 border-muted">
+                <svg className="-rotate-90 h-full w-full transform">
                   <circle
                     cx="24"
                     cy="24"
@@ -189,7 +189,7 @@ export default function UserDashboard({
             <Link href="/resumes" className="block">
               <Button
                 variant="secondary"
-                className="w-full font-bold h-9 rounded-lg text-[10px] uppercase tracking-widest gap-2"
+                className="h-9 w-full gap-2 rounded-lg font-bold text-[10px] uppercase tracking-widest"
               >
                 <Zap className="h-3 w-3" />
                 Boost Score
@@ -199,28 +199,28 @@ export default function UserDashboard({
         </Card>
 
         {/* Market Insights Card */}
-        <Card className="border-border/50 shadow-sm overflow-hidden rounded-2xl flex flex-col justify-between">
+        <Card className="flex flex-col justify-between overflow-hidden rounded-2xl border-border/50 shadow-sm">
           <CardHeader className="pb-2">
-            <CardTitle className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+            <CardTitle className="flex items-center gap-2 font-bold text-[10px] text-muted-foreground uppercase tracking-widest">
               <Briefcase className="h-3.5 w-3.5" />
               Market Standing
             </CardTitle>
           </CardHeader>
-          <CardContent className="pt-2 space-y-4">
+          <CardContent className="space-y-4 pt-2">
             <div className="grid grid-cols-2 gap-4">
-              <div className="p-3 rounded-xl bg-accent/10 border border-accent/20">
-                <div className="text-xl font-black">
+              <div className="rounded-xl border border-accent/20 bg-accent/10 p-3">
+                <div className="font-black text-xl">
                   {latestAnalysis?.jobs?.length || 0}
                 </div>
-                <div className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">
+                <div className="font-bold text-[9px] text-muted-foreground uppercase tracking-widest">
                   Jobs matched
                 </div>
               </div>
-              <div className="p-3 rounded-xl bg-emerald-500/5 border border-emerald-500/10">
-                <div className="text-xl font-black text-emerald-600">
+              <div className="rounded-xl border border-emerald-500/10 bg-emerald-500/5 p-3">
+                <div className="font-black text-emerald-600 text-xl">
                   {latestAnalysis?.skillGaps?.length || 0}
                 </div>
-                <div className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">
+                <div className="font-bold text-[9px] text-muted-foreground uppercase tracking-widest">
                   Skill Gaps
                 </div>
               </div>
@@ -229,7 +229,7 @@ export default function UserDashboard({
               <Link href={`/analyze?id=${latestAnalysis.id}`} className="block">
                 <Button
                   variant="outline"
-                  className="w-full font-bold h-9 rounded-lg text-[10px] uppercase tracking-widest"
+                  className="h-9 w-full rounded-lg font-bold text-[10px] uppercase tracking-widest"
                 >
                   View Gap Analysis
                 </Button>
@@ -243,20 +243,20 @@ export default function UserDashboard({
       <div className="space-y-6">
         <div className="flex items-center justify-between px-2">
           <div className="space-y-1">
-            <h2 className="text-2xl font-black tracking-tight flex items-center gap-3">
-              <span className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
+            <h2 className="flex items-center gap-3 font-black text-2xl tracking-tight">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
                 <Briefcase className="h-5 w-5 text-primary" />
               </span>
               Recommended for You
             </h2>
-            <p className="text-sm text-muted-foreground font-medium">
+            <p className="font-medium text-muted-foreground text-sm">
               Top opportunities based on your refined skill DNA.
             </p>
           </div>
           {latestAnalysis && (
             <Link
               href={`/analyze?id=${latestAnalysis.id}`}
-              className="text-xs font-bold text-primary uppercase tracking-[0.1em] hover:bg-primary/5 px-4 py-2 rounded-lg transition-colors flex items-center gap-1.5"
+              className="flex items-center gap-1.5 rounded-lg px-4 py-2 font-bold text-primary text-xs uppercase tracking-[0.1em] transition-colors hover:bg-primary/5"
             >
               See all {latestAnalysis.jobs?.length || 0} matches
               <ChevronRight className="h-4 w-4" />
@@ -265,7 +265,7 @@ export default function UserDashboard({
         </div>
 
         {isLoadingAnalysis ? (
-          <div className="h-96 flex flex-col items-center justify-center text-muted-foreground gap-4 bg-muted/20 rounded-3xl border-2 border-dashed border-border/50 animate-pulse">
+          <div className="flex h-96 animate-pulse flex-col items-center justify-center gap-4 rounded-3xl border-2 border-border/50 border-dashed bg-muted/20 text-muted-foreground">
             <Loader2 className="h-10 w-10 animate-spin" />
             <p className="font-bold text-xs uppercase tracking-[0.2em]">
               Synthesizing recommendations...
@@ -275,7 +275,7 @@ export default function UserDashboard({
           latestAnalysis.jobs &&
           latestAnalysis.jobs.length > 0 ? (
           <div className="flex flex-col gap-6">
-            <div className="grid gap-4 w-full">
+            <div className="grid w-full gap-4">
               {latestAnalysis.jobs
                 .slice(0, 5)
                 .map((job: JobMatch, idx: number) => (
@@ -290,13 +290,13 @@ export default function UserDashboard({
             {latestAnalysis.jobs.length > 5 && (
               <Link
                 href={`/analyze?id=${latestAnalysis.id}`}
-                className="block group"
+                className="group block"
               >
-                <div className="py-6 border-2 border-dashed border-border/60 rounded-2xl flex flex-col items-center justify-center gap-2 text-muted-foreground hover:bg-muted/30 hover:border-primary/30 transition-all duration-300">
-                  <p className="font-black text-lg group-hover:text-primary transition-colors">
+                <div className="flex flex-col items-center justify-center gap-2 rounded-2xl border-2 border-border/60 border-dashed py-6 text-muted-foreground transition-all duration-300 hover:border-primary/30 hover:bg-muted/30">
+                  <p className="font-black text-lg transition-colors group-hover:text-primary">
                     Explore {latestAnalysis.jobs.length - 5} more tailored roles
                   </p>
-                  <p className="text-xs font-bold uppercase tracking-widest opacity-60">
+                  <p className="font-bold text-xs uppercase tracking-widest opacity-60">
                     Discover hidden gems in your match pool
                   </p>
                 </div>
@@ -304,19 +304,19 @@ export default function UserDashboard({
             )}
           </div>
         ) : (
-          <div className="h-96 flex flex-col items-center justify-center text-center p-12 bg-muted/20 rounded-3xl border-2 border-dashed border-border/50">
-            <div className="h-20 w-20 rounded-2xl bg-primary/5 flex items-center justify-center mb-6">
+          <div className="flex h-96 flex-col items-center justify-center rounded-3xl border-2 border-border/50 border-dashed bg-muted/20 p-12 text-center">
+            <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-primary/5">
               <Briefcase className="h-10 w-10 text-primary opacity-30" />
             </div>
-            <h3 className="text-2xl font-black mb-3">No matches detected</h3>
-            <p className="text-muted-foreground text-base max-w-md mb-10 leading-relaxed font-medium">
+            <h3 className="mb-3 font-black text-2xl">No matches detected</h3>
+            <p className="mb-10 max-w-md font-medium text-base text-muted-foreground leading-relaxed">
               We need to decode your professional profile before we can suggest
               elite opportunities. Start your first analysis to begin.
             </p>
             <Link href="/analyze">
               <Button
                 size="lg"
-                className="rounded-xl font-bold px-10 h-14 text-base shadow-xl shadow-primary/10"
+                className="h-14 rounded-xl px-10 font-bold text-base shadow-primary/10 shadow-xl"
               >
                 Activate Job Match Engine
               </Button>

@@ -153,8 +153,8 @@ export default function SkillsForm({ serverErrors }: { serverErrors?: any }) {
   return (
     <div className="space-y-5">
       {fields.length === 0 && (
-        <div className="text-center py-12 border-2 border-dashed border-border rounded-xl">
-          <p className="text-muted-foreground font-medium mb-4">
+        <div className="rounded-xl border-2 border-border border-dashed py-12 text-center">
+          <p className="mb-4 font-medium text-muted-foreground">
             No skill groups added yet
           </p>
           <Button variant="outline" onClick={addGroup} className="gap-2">
@@ -171,11 +171,11 @@ export default function SkillsForm({ serverErrors }: { serverErrors?: any }) {
           {fields.map((field, idx) => (
             <SortableItem key={field.id} id={field.id}>
               <Card className="border-border">
-                <CardContent className="p-5 pl-10 space-y-4">
+                <CardContent className="space-y-4 p-5 pl-10">
                   <div className="flex items-start justify-between gap-4">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 flex-1">
+                    <div className="grid flex-1 grid-cols-1 gap-4 md:grid-cols-3">
                       <Field>
-                        <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+                        <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                           Group Name *
                         </FieldLabel>
                         <FieldContent>
@@ -191,7 +191,7 @@ export default function SkillsForm({ serverErrors }: { serverErrors?: any }) {
                       </Field>
 
                       <Field>
-                        <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+                        <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                           Category
                         </FieldLabel>
                         <FieldContent>
@@ -233,7 +233,7 @@ export default function SkillsForm({ serverErrors }: { serverErrors?: any }) {
                       </Field>
 
                       <Field>
-                        <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+                        <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                           Proficiency
                         </FieldLabel>
                         <FieldContent>
@@ -272,7 +272,7 @@ export default function SkillsForm({ serverErrors }: { serverErrors?: any }) {
                       variant="ghost"
                       size="sm"
                       onClick={() => remove(idx)}
-                      className="h-8 w-8 p-0 text-muted-foreground hover:text-destructive mt-7"
+                      className="mt-7 h-8 w-8 p-0 text-muted-foreground hover:text-destructive"
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
@@ -280,10 +280,10 @@ export default function SkillsForm({ serverErrors }: { serverErrors?: any }) {
 
                   {/* Keywords */}
                   <div className="space-y-2">
-                    <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+                    <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                       Skills / Keywords
                     </FieldLabel>
-                    <div className="flex flex-wrap gap-2 mb-2">
+                    <div className="mb-2 flex flex-wrap gap-2">
                       {(watch(`skills.${idx}.keywords`) || []).map((kw) => (
                         <Badge
                           key={kw}

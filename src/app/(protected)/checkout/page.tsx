@@ -62,8 +62,8 @@ export default async function CheckoutPage(props: CheckoutPageProps) {
   });
 
   return (
-    <div className="container max-w-4xl py-12 mx-auto px-4">
-      <h1 className="text-3xl font-bold mb-8 text-center">
+    <div className="container mx-auto max-w-4xl px-4 py-12">
+      <h1 className="mb-8 text-center font-bold text-3xl">
         Complete your purchase
       </h1>
       <CheckoutForm

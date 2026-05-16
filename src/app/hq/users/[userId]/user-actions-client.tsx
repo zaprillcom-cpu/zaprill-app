@@ -50,7 +50,7 @@ export function UserActionsClient({ user }: UserActionsClientProps) {
   return (
     <div className="grid gap-4 sm:grid-cols-2">
       <div className="space-y-2">
-        <p className="text-sm font-medium">Access Management</p>
+        <p className="font-medium text-sm">Access Management</p>
         <div className="flex flex-col gap-2">
           <Button
             variant="outline"
@@ -95,7 +95,7 @@ export function UserActionsClient({ user }: UserActionsClientProps) {
       </div>
 
       <div className="space-y-2">
-        <p className="text-sm font-medium">Session Control</p>
+        <p className="font-medium text-sm">Session Control</p>
         <div className="flex flex-col gap-2">
           <Button
             variant="outline"

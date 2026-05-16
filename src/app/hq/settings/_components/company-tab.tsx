@@ -58,11 +58,11 @@ export function CompanyTab({ initialSettings, onMutate }: CompanyTabProps) {
   };
 
   return (
-    <div className="space-y-6 max-w-2xl">
+    <div className="max-w-2xl space-y-6">
       <Card>
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Building2 className="w-5 h-5 text-muted-foreground" />
+            <Building2 className="h-5 w-5 text-muted-foreground" />
             <CardTitle>Company Details</CardTitle>
           </div>
           <CardDescription>
@@ -93,7 +93,7 @@ export function CompanyTab({ initialSettings, onMutate }: CompanyTabProps) {
               onChange={(e) => handleChange("company_email", e.target.value)}
               placeholder="billing@zaprill.com"
             />
-            <p className="text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-xs">
               Shown in invoice footers and as the reply-to address for receipts.
             </p>
           </div>
@@ -102,7 +102,7 @@ export function CompanyTab({ initialSettings, onMutate }: CompanyTabProps) {
           <div className="space-y-1.5">
             <Label htmlFor="company_address">
               Registered Address{" "}
-              <span className="text-muted-foreground font-normal">
+              <span className="font-normal text-muted-foreground">
                 (leave blank if unregistered)
               </span>
             </Label>
@@ -120,7 +120,7 @@ export function CompanyTab({ initialSettings, onMutate }: CompanyTabProps) {
             <div className="space-y-1.5">
               <Label htmlFor="company_gstin">
                 GSTIN{" "}
-                <span className="text-muted-foreground font-normal">
+                <span className="font-normal text-muted-foreground">
                   (optional)
                 </span>
               </Label>
@@ -138,7 +138,7 @@ export function CompanyTab({ initialSettings, onMutate }: CompanyTabProps) {
             <div className="space-y-1.5">
               <Label htmlFor="company_cin">
                 CIN{" "}
-                <span className="text-muted-foreground font-normal">
+                <span className="font-normal text-muted-foreground">
                   (optional)
                 </span>
               </Label>
@@ -160,18 +160,18 @@ export function CompanyTab({ initialSettings, onMutate }: CompanyTabProps) {
                 "Saving…"
               ) : saved ? (
                 <>
-                  <CheckCircle2 className="w-4 h-4 mr-2 text-emerald-400" />
+                  <CheckCircle2 className="mr-2 h-4 w-4 text-emerald-400" />
                   Saved
                 </>
               ) : (
                 <>
-                  <Save className="w-4 h-4 mr-2" />
+                  <Save className="mr-2 h-4 w-4" />
                   Save Changes
                 </>
               )}
             </Button>
             {saved && (
-              <p className="text-sm text-emerald-600 font-medium">
+              <p className="font-medium text-emerald-600 text-sm">
                 Invoice details updated successfully.
               </p>
             )}
@@ -182,7 +182,7 @@ export function CompanyTab({ initialSettings, onMutate }: CompanyTabProps) {
       {/* Info callout */}
       <Card className="border-dashed bg-muted/30">
         <CardContent className="py-4">
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             <strong className="text-foreground">📌 Note:</strong> Fields left
             blank will simply be omitted from invoices — no placeholder values
             will be shown to customers. Add GSTIN and CIN once your company is

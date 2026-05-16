@@ -62,7 +62,7 @@ function RoadmapCard({ item, index }: { item: RoadmapItem; index: number }) {
 
   return (
     <Card
-      className={`overflow-hidden transition-all rounded-xl shadow-sm border ${expanded ? "border-foreground/20 bg-card" : "border-border bg-card/50"}`}
+      className={`overflow-hidden rounded-xl border shadow-sm transition-all ${expanded ? "border-foreground/20 bg-card" : "border-border bg-card/50"}`}
       id={`roadmap-item-${index}`}
     >
       {/* Header */}
@@ -78,31 +78,31 @@ function RoadmapCard({ item, index }: { item: RoadmapItem; index: number }) {
             });
           }
         }}
-        className="w-full p-5 flex items-center gap-4 bg-transparent border-none cursor-pointer text-left hover:bg-muted/30 transition-colors focus-visible:outline-none"
+        className="flex w-full cursor-pointer items-center gap-4 border-none bg-transparent p-5 text-left transition-colors hover:bg-muted/30 focus-visible:outline-none"
         id={`roadmap-toggle-${index}`}
         aria-expanded={expanded}
       >
         {/* Step number */}
         <div
-          className={`w-9 h-9 rounded-sm shrink-0 flex items-center justify-center text-sm font-bold border ${style.bg} ${style.border} ${style.color}`}
+          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-sm border font-bold text-sm ${style.bg} ${style.border} ${style.color}`}
         >
           {index + 1}
         </div>
 
         <div className="flex-1">
-          <div className="flex items-center gap-3 mb-1.5 pl-1">
-            <span className="text-base font-bold text-foreground capitalize tracking-tight">
+          <div className="mb-1.5 flex items-center gap-3 pl-1">
+            <span className="font-bold text-base text-foreground capitalize tracking-tight">
               {item.skill}
             </span>
             <span
-              className={`text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded border ${style.bg} ${style.border} ${style.color}`}
+              className={`rounded border px-2 py-0.5 font-bold text-[10px] uppercase tracking-widest ${style.bg} ${style.border} ${style.color}`}
             >
               {style.label}
             </span>
           </div>
-          <div className="flex items-center gap-3 text-xs font-medium text-muted-foreground pl-1">
+          <div className="flex items-center gap-3 pl-1 font-medium text-muted-foreground text-xs">
             <span className="flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5" /> {item.estimatedTime}
+              <Clock className="h-3.5 w-3.5" /> {item.estimatedTime}
             </span>
             <span>·</span>
             <span>{item.resources.length} resources</span>
@@ -110,17 +110,17 @@ function RoadmapCard({ item, index }: { item: RoadmapItem; index: number }) {
         </div>
 
         {expanded ? (
-          <ChevronUp className="w-5 h-5 text-muted-foreground" />
+          <ChevronUp className="h-5 w-5 text-muted-foreground" />
         ) : (
-          <ChevronDown className="w-5 h-5 text-muted-foreground" />
+          <ChevronDown className="h-5 w-5 text-muted-foreground" />
         )}
       </button>
 
       {/* Expanded content */}
       {expanded && (
-        <CardContent className="px-6 pb-6 pt-0 border-t border-border mt-1">
+        <CardContent className="mt-1 border-border border-t px-6 pt-0 pb-6">
           {/* Why */}
-          <p className="text-sm font-medium text-muted-foreground leading-relaxed py-4">
+          <p className="py-4 font-medium text-muted-foreground text-sm leading-relaxed">
             <span className="font-bold text-foreground">Why: </span>
             {item.why}
           </p>
@@ -134,28 +134,28 @@ function RoadmapCard({ item, index }: { item: RoadmapItem; index: number }) {
               return (
                 <div
                   key={i}
-                  className="flex items-center gap-3 p-3 rounded-md bg-background border border-border group hover:border-foreground/30 transition-colors"
+                  className="group flex items-center gap-3 rounded-md border border-border bg-background p-3 transition-colors hover:border-foreground/30"
                 >
-                  <div className="w-8 h-8 rounded shrink-0 bg-muted flex items-center justify-center text-foreground border border-border">
-                    <Icon className="w-4 h-4" />
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded border border-border bg-muted text-foreground">
+                    <Icon className="h-4 w-4" />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-bold text-foreground truncate pl-1">
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate pl-1 font-bold text-foreground text-sm">
                       {res.name}
                     </p>
-                    <div className="flex items-center gap-2 text-[11px] font-medium text-muted-foreground mt-0.5 pl-1">
+                    <div className="mt-0.5 flex items-center gap-2 pl-1 font-medium text-[11px] text-muted-foreground">
                       <span className="uppercase tracking-wider">
                         {res.type}
                       </span>
                       {res.estimatedTime && <span>· {res.estimatedTime}</span>}
                       <span
-                        className={`px-1.5 py-0.5 rounded-sm border ${res.free ? "bg-muted text-foreground border-border" : "bg-background border-border text-muted-foreground"}`}
+                        className={`rounded-sm border px-1.5 py-0.5 ${res.free ? "border-border bg-muted text-foreground" : "border-border bg-background text-muted-foreground"}`}
                       >
                         {res.free ? "Free" : "Paid"}
                       </span>
                       {isSearch && (
-                        <span className="flex items-center gap-1 text-[10px] font-bold text-accent-foreground uppercase tracking-tighter">
-                          <Search className="w-2.5 h-2.5" /> Fallback
+                        <span className="flex items-center gap-1 font-bold text-[10px] text-accent-foreground uppercase tracking-tighter">
+                          <Search className="h-2.5 w-2.5" /> Fallback
                         </span>
                       )}
                     </div>
@@ -166,7 +166,7 @@ function RoadmapCard({ item, index }: { item: RoadmapItem; index: number }) {
                       target="_blank"
                       rel="noopener noreferrer"
                       id={`resource-link-${index}-${i}`}
-                      className="text-muted-foreground transition-colors shrink-0 p-2 hover:text-foreground hover:bg-muted rounded flex items-center gap-1.5"
+                      className="flex shrink-0 items-center gap-1.5 rounded p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                       onClick={() =>
                         trackResourceLinkClicked({
                           skill_name: item.skill,
@@ -178,18 +178,18 @@ function RoadmapCard({ item, index }: { item: RoadmapItem; index: number }) {
                       }
                     >
                       {isSearch ? (
-                        <span className="text-xs font-bold uppercase tracking-widest hidden sm:inline">
+                        <span className="hidden font-bold text-xs uppercase tracking-widest sm:inline">
                           Search
                         </span>
                       ) : (
-                        <span className="text-xs font-bold uppercase tracking-widest hidden sm:inline">
+                        <span className="hidden font-bold text-xs uppercase tracking-widest sm:inline">
                           Open
                         </span>
                       )}
                       {isSearch ? (
-                        <Search className="w-4 h-4" />
+                        <Search className="h-4 w-4" />
                       ) : (
-                        <ExternalLink className="w-4 h-4" />
+                        <ExternalLink className="h-4 w-4" />
                       )}
                     </a>
                   )}
@@ -217,14 +217,14 @@ export default function LearningRoadmap({
   return (
     <div className="flex flex-col gap-6">
       {advice && (
-        <div className="p-5 bg-primary/5 rounded-xl border border-primary/10">
-          <div className="flex items-center gap-2 mb-2">
+        <div className="rounded-xl border border-primary/10 bg-primary/5 p-5">
+          <div className="mb-2 flex items-center gap-2">
             <TrendingUp className="h-4 w-4 text-primary" />
-            <span className="text-[10px] font-black uppercase tracking-widest text-primary">
+            <span className="font-black text-[10px] text-primary uppercase tracking-widest">
               Strategic Guidance
             </span>
           </div>
-          <p className="text-sm font-medium text-foreground leading-relaxed">
+          <p className="font-medium text-foreground text-sm leading-relaxed">
             {advice}
           </p>
         </div>

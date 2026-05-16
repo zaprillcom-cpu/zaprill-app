@@ -1,4 +1,4 @@
-import { User } from "better-auth/types";
+import type { User } from "better-auth/types";
 
 export type AuthState = {
   auth: {

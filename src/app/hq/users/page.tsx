@@ -10,7 +10,7 @@ export default function UsersPage() {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Users</h1>
+          <h1 className="font-bold text-3xl tracking-tight">Users</h1>
           <p className="text-muted-foreground">
             Manage your platform users, roles, and permissions.
           </p>

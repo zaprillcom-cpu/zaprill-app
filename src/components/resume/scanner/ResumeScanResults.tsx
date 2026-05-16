@@ -213,20 +213,20 @@ export default function ResumeScanResults({
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto py-8 px-4 space-y-8">
+    <div className="mx-auto w-full max-w-3xl space-y-8 px-4 py-8">
       {/* Hero Score Card */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <Card className="border-border/50 overflow-hidden bg-gradient-to-br from-background to-muted/30 rounded-2xl shadow-sm">
+        <Card className="overflow-hidden rounded-2xl border-border/50 bg-gradient-to-br from-background to-muted/30 shadow-sm">
           <CardContent className="p-8">
-            <div className="flex flex-col md:flex-row items-center gap-8">
+            <div className="flex flex-col items-center gap-8 md:flex-row">
               {/* Score Ring */}
-              <div className="relative flex items-center justify-center shrink-0">
+              <div className="relative flex shrink-0 items-center justify-center">
                 <svg
-                  className="h-28 w-28 -rotate-90"
+                  className="-rotate-90 h-28 w-28"
                   viewBox="0 0 112 112"
                   role="img"
                 >
@@ -257,27 +257,27 @@ export default function ResumeScanResults({
                 </svg>
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
                   <span
-                    className={`text-3xl font-black ${getScoreColor(result.score)}`}
+                    className={`font-black text-3xl ${getScoreColor(result.score)}`}
                   >
                     {result.score}
                   </span>
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mt-0.5">
+                  <span className="mt-0.5 font-bold text-[10px] text-muted-foreground uppercase tracking-widest">
                     ATS Score
                   </span>
                 </div>
               </div>
 
               <div className="flex-1 text-center md:text-left">
-                <div className="flex items-center gap-2 justify-center md:justify-start mb-2">
+                <div className="mb-2 flex items-center justify-center gap-2 md:justify-start">
                   <Shield className="h-5 w-5 text-primary" />
-                  <span className="font-bold text-xs uppercase tracking-widest text-muted-foreground">
+                  <span className="font-bold text-muted-foreground text-xs uppercase tracking-widest">
                     Scan Complete
                   </span>
                 </div>
-                <h2 className="text-2xl font-black tracking-tight mb-2">
+                <h2 className="mb-2 font-black text-2xl tracking-tight">
                   {getScoreLabel(result.score)}
                 </h2>
-                <p className="text-sm text-muted-foreground font-medium">
+                <p className="font-medium text-muted-foreground text-sm">
                   Your resume scored {result.score}/100 on ATS compatibility.
                   {result.score < 80
                     ? " Review the suggestions below to improve."
@@ -285,12 +285,12 @@ export default function ResumeScanResults({
                 </p>
 
                 {/* Section mini-scores */}
-                <div className="flex flex-wrap gap-2 mt-4">
+                <div className="mt-4 flex flex-wrap gap-2">
                   {Object.entries(result.sectionScores).map(([s, score]) => (
                     <Badge
                       key={s}
                       variant="secondary"
-                      className={`text-[10px] font-bold ${getScoreBg(score)}`}
+                      className={`font-bold text-[10px] ${getScoreBg(score)}`}
                     >
                       {s} {score}%
                     </Badge>
@@ -310,13 +310,13 @@ export default function ResumeScanResults({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <Card className="border-border/50 rounded-2xl">
-            <CardContent className="p-6 space-y-4">
+          <Card className="rounded-2xl border-border/50">
+            <CardContent className="space-y-4 p-6">
               <div className="flex items-center gap-2">
                 <Search className="h-5 w-5 text-sky-500" />
                 <div>
                   <h3 className="font-bold text-base">Keyword Analysis</h3>
-                  <p className="text-xs text-muted-foreground font-medium">
+                  <p className="font-medium text-muted-foreground text-xs">
                     Keywords detected and missing from your resume
                   </p>
                 </div>
@@ -324,7 +324,7 @@ export default function ResumeScanResults({
 
               {result.keywordMatches.length > 0 && (
                 <div className="space-y-2">
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-emerald-500 flex items-center gap-1.5">
+                  <p className="flex items-center gap-1.5 font-bold text-[10px] text-emerald-500 uppercase tracking-widest">
                     <CheckCircle2 className="h-3 w-3" /> Matched Keywords
                   </p>
                   <div className="flex flex-wrap gap-1.5">
@@ -332,7 +332,7 @@ export default function ResumeScanResults({
                       <Badge
                         key={kw}
                         variant="secondary"
-                        className="text-[10px] bg-emerald-500/5 text-emerald-600 border-emerald-500/10"
+                        className="border-emerald-500/10 bg-emerald-500/5 text-[10px] text-emerald-600"
                       >
                         {kw}
                       </Badge>
@@ -343,7 +343,7 @@ export default function ResumeScanResults({
 
               {result.missingKeywords.length > 0 && (
                 <div className="space-y-2">
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-rose-500 flex items-center gap-1.5">
+                  <p className="flex items-center gap-1.5 font-bold text-[10px] text-rose-500 uppercase tracking-widest">
                     <XCircle className="h-3 w-3" /> Missing Keywords
                   </p>
                   <div className="flex flex-wrap gap-1.5">
@@ -351,7 +351,7 @@ export default function ResumeScanResults({
                       <Badge
                         key={kw}
                         variant="secondary"
-                        className="text-[10px] bg-rose-500/5 text-rose-600 border-rose-500/10"
+                        className="border-rose-500/10 bg-rose-500/5 text-[10px] text-rose-600"
                       >
                         {kw}
                       </Badge>
@@ -380,9 +380,9 @@ export default function ResumeScanResults({
             transition={{ duration: 0.5, delay: 0.15 + catIdx * 0.1 }}
           >
             <Card
-              className={`border rounded-2xl ${config.borderClass} ${config.bgClass}`}
+              className={`rounded-2xl border ${config.borderClass} ${config.bgClass}`}
             >
-              <CardContent className="p-6 space-y-4">
+              <CardContent className="space-y-4 p-6">
                 <div className="flex items-center gap-2">
                   <div
                     className={`h-8 w-8 rounded-lg ${config.bgClass} border ${config.borderClass} flex items-center justify-center`}
@@ -391,7 +391,7 @@ export default function ResumeScanResults({
                   </div>
                   <div>
                     <h3 className="font-bold text-base">{config.title}</h3>
-                    <p className="text-xs text-muted-foreground font-medium">
+                    <p className="font-medium text-muted-foreground text-xs">
                       {config.subtitle} &mdash; {items.length}{" "}
                       {items.length === 1 ? "issue" : "issues"} found
                     </p>
@@ -402,24 +402,24 @@ export default function ResumeScanResults({
                   {items.map((item) => (
                     <div
                       key={`${category}-${item.suggestion.section}-${item.suggestion.issue.slice(0, 30)}`}
-                      className="p-4 rounded-xl bg-background/60 border border-border/30"
+                      className="rounded-xl border border-border/30 bg-background/60 p-4"
                     >
                       <div className="flex items-start gap-3">
                         <div className="flex-1 space-y-2">
                           <Badge
                             variant="outline"
-                            className="text-[9px] uppercase font-bold tracking-widest h-5"
+                            className="h-5 font-bold text-[9px] uppercase tracking-widest"
                           >
                             {item.suggestion.section}
                           </Badge>
-                          <p className="text-sm font-semibold">
+                          <p className="font-semibold text-sm">
                             {item.suggestion.issue}
                           </p>
-                          <div className="p-3 rounded-lg bg-muted/30 border border-border/20">
-                            <p className="text-xs text-muted-foreground font-medium mb-1 flex items-center gap-1">
+                          <div className="rounded-lg border border-border/20 bg-muted/30 p-3">
+                            <p className="mb-1 flex items-center gap-1 font-medium text-muted-foreground text-xs">
                               <Wand2 className="h-3 w-3 text-primary" /> Fix:
                             </p>
-                            <p className="text-sm italic font-medium">
+                            <p className="font-medium text-sm italic">
                               &ldquo;{item.suggestion.fix}&rdquo;
                             </p>
                           </div>
@@ -441,18 +441,18 @@ export default function ResumeScanResults({
         transition={{ duration: 0.5, delay: 0.6 }}
         className="space-y-4"
       >
-        <Card className="border-border/50 rounded-2xl bg-gradient-to-r from-background to-muted/20">
+        <Card className="rounded-2xl border-border/50 bg-gradient-to-r from-background to-muted/20">
           <CardContent className="p-6">
-            <h3 className="font-bold text-base mb-1">What&apos;s next?</h3>
-            <p className="text-sm text-muted-foreground font-medium mb-6">
+            <h3 className="mb-1 font-bold text-base">What&apos;s next?</h3>
+            <p className="mb-6 font-medium text-muted-foreground text-sm">
               Choose how you&apos;d like to proceed with your freshly scanned
               resume.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col gap-3 sm:flex-row">
               <Button
                 onClick={handleJobSearch}
-                className="flex-1 h-14 font-bold text-base gap-2 rounded-xl shadow-lg shadow-primary/10 hover:shadow-primary/20 transition-all"
+                className="h-14 flex-1 gap-2 rounded-xl font-bold text-base shadow-lg shadow-primary/10 transition-all hover:shadow-primary/20"
               >
                 <Search className="h-5 w-5" />
                 Continue to Job Search
@@ -461,7 +461,7 @@ export default function ResumeScanResults({
               <Button
                 onClick={handleFixResume}
                 variant="outline"
-                className="flex-1 h-14 font-bold text-base gap-2 rounded-xl border-2 hover:bg-primary/5 hover:border-primary/30 transition-all"
+                className="h-14 flex-1 gap-2 rounded-xl border-2 font-bold text-base transition-all hover:border-primary/30 hover:bg-primary/5"
               >
                 <Wrench className="h-5 w-5" />
                 Fix in Resume Builder
@@ -469,13 +469,13 @@ export default function ResumeScanResults({
               </Button>
             </div>
 
-            <p className="text-xs text-muted-foreground text-center mt-4 font-medium">
+            <p className="mt-4 text-center font-medium text-muted-foreground text-xs">
               Your resume has been saved. You can also access it anytime from
               your{" "}
               <button
                 type="button"
                 onClick={() => router.push("/resumes")}
-                className="underline hover:text-foreground transition-colors font-bold"
+                className="font-bold underline transition-colors hover:text-foreground"
               >
                 Resume Dashboard
               </button>

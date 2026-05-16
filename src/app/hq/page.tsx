@@ -22,7 +22,7 @@ export default function AdminDashboard() {
     <div className="flex flex-col gap-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Overview</h1>
+          <h1 className="font-bold text-3xl tracking-tight">Overview</h1>
           <p className="text-muted-foreground">
             Welcome to the Zaprill management headquarters.
           </p>
@@ -30,9 +30,9 @@ export default function AdminDashboard() {
         <div className="flex items-center gap-2">
           <Badge
             variant="outline"
-            className="px-2 py-1 border-emerald-500/50 text-emerald-500"
+            className="border-emerald-500/50 px-2 py-1 text-emerald-500"
           >
-            <span className="mr-1.5 flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="mr-1.5 flex h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
             System Healthy
           </Badge>
           <Badge variant="secondary" className="px-2 py-1">

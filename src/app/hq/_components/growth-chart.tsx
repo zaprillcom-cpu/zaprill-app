@@ -48,7 +48,7 @@ export function GrowthChart() {
       </CardHeader>
       <CardContent className="pl-2">
         {error ? (
-          <p className="text-sm text-destructive py-10 text-center">{error}</p>
+          <p className="py-10 text-center text-destructive text-sm">{error}</p>
         ) : !chartData ? (
           <Skeleton className="h-[300px] w-full rounded-md" />
         ) : (

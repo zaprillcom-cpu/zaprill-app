@@ -57,7 +57,7 @@ export function AdminSidebar() {
           <SidebarMenuItem>
             {/* Base UI uses render prop, not asChild */}
             <SidebarMenuButton size="lg" render={<Link href="/hq" />}>
-              <div className="flex aspect-square size-8 items-center justify-center rounded-lg overflow-hidden">
+              <div className="flex aspect-square size-8 items-center justify-center overflow-hidden rounded-lg">
                 <Image
                   src="/favicon.ico"
                   alt="Zaprill"
@@ -68,7 +68,7 @@ export function AdminSidebar() {
               </div>
               <div className="flex flex-col gap-0.5 leading-none">
                 <span className="font-semibold">Zaprill HQ</span>
-                <span className="text-xs text-muted-foreground">
+                <span className="text-muted-foreground text-xs">
                   Admin Console
                 </span>
               </div>
@@ -109,7 +109,7 @@ export function AdminSidebar() {
       </SidebarContent>
 
       <SidebarFooter>
-        <div className="p-4 text-xs text-muted-foreground">v1.0.0-stable</div>
+        <div className="p-4 text-muted-foreground text-xs">v1.0.0-stable</div>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

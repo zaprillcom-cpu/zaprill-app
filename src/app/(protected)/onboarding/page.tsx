@@ -143,11 +143,11 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 overflow-hidden relative">
+    <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-background p-4">
       {/* Decorative background elements */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[120px]" />
+      <div className="-z-10 pointer-events-none absolute top-0 left-0 h-full w-full overflow-hidden">
+        <div className="absolute top-[-10%] left-[-10%] h-[40%] w-[40%] rounded-full bg-primary/5 blur-[120px]" />
+        <div className="absolute right-[-10%] bottom-[-10%] h-[40%] w-[40%] rounded-full bg-primary/10 blur-[120px]" />
       </div>
 
       <AnimatePresence mode="wait">
@@ -157,17 +157,17 @@ export default function OnboardingPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="text-center max-w-2xl"
+            className="max-w-2xl text-center"
           >
             <WordFadeIn
               words="Welcome to Career Intelligence"
-              className="text-4xl md:text-6xl font-bold text-foreground mb-6"
+              className="mb-6 font-bold text-4xl text-foreground md:text-6xl"
             />
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
-              className="text-muted-foreground text-lg mb-10"
+              className="mb-10 text-lg text-muted-foreground"
             >
               Let&apos;s get your profile ready to find your dream job and
               bridge your skill gaps.
@@ -182,10 +182,10 @@ export default function OnboardingPage() {
                 size="lg"
                 onClick={handleStartOnboarding}
                 disabled={isUpdatingStatus}
-                className="group px-8 h-12 text-base rounded-full transition-all duration-300"
+                className="group h-12 rounded-full px-8 text-base transition-all duration-300"
               >
                 {isUpdatingStatus ? (
-                  <IconLoader2 className="h-5 w-5 animate-spin mr-2" />
+                  <IconLoader2 className="mr-2 h-5 w-5 animate-spin" />
                 ) : (
                   <>
                     Get Started
@@ -205,8 +205,8 @@ export default function OnboardingPage() {
             exit={{ opacity: 0, x: -50 }}
             className="w-full max-w-4xl"
           >
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-foreground mb-4">
+            <div className="mb-12 text-center">
+              <h2 className="mb-4 font-bold text-3xl text-foreground">
                 How would you like to start?
               </h2>
               <p className="text-muted-foreground">
@@ -214,7 +214,7 @@ export default function OnboardingPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <ChoiceCard
                 title="I have a resume"
                 description="Upload your existing PDF or Word document. We'll scan it for ATS compatibility and give you instant feedback."
@@ -239,8 +239,8 @@ export default function OnboardingPage() {
             exit={{ opacity: 0, scale: 1.05 }}
             className="w-full max-w-2xl"
           >
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-foreground mb-2">
+            <div className="mb-8 text-center">
+              <h2 className="mb-2 font-bold text-3xl text-foreground">
                 Upload your Resume
               </h2>
               <p className="text-muted-foreground">
@@ -250,7 +250,7 @@ export default function OnboardingPage() {
 
             <Card
               className={cn(
-                "p-1 border-2 border-dashed border-border bg-card transition-colors",
+                "border-2 border-border border-dashed bg-card p-1 transition-colors",
               )}
             >
               <FileUpload onChange={handleFileUpload} />
@@ -259,7 +259,7 @@ export default function OnboardingPage() {
             <Button
               variant="ghost"
               onClick={() => setStep("choice")}
-              className="mt-6 mx-auto flex items-center text-muted-foreground hover:text-foreground"
+              className="mx-auto mt-6 flex items-center text-muted-foreground hover:text-foreground"
             >
               Go back
             </Button>
@@ -316,11 +316,11 @@ function ChoiceCard({
       onClick={onClick}
       className="text-left"
     >
-      <Card className="h-full p-8 border-border bg-card hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-xl hover:shadow-primary/5 group">
-        <div className="mb-6 p-3 w-fit rounded-2xl bg-muted group-hover:bg-primary/10 transition-colors">
+      <Card className="group h-full border-border bg-card p-8 shadow-sm transition-all duration-300 hover:border-primary/50 hover:shadow-primary/5 hover:shadow-xl">
+        <div className="mb-6 w-fit rounded-2xl bg-muted p-3 transition-colors group-hover:bg-primary/10">
           {icon}
         </div>
-        <h3 className="text-xl font-bold text-foreground mb-3">{title}</h3>
+        <h3 className="mb-3 font-bold text-foreground text-xl">{title}</h3>
         <p className="text-muted-foreground leading-relaxed">{description}</p>
       </Card>
     </motion.button>

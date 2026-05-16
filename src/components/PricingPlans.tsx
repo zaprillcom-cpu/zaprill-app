@@ -77,9 +77,9 @@ export default function PricingPlans({ plans }: { plans: Plan[] }) {
           : "md:grid-cols-4 max-w-7xl";
 
   return (
-    <div className="w-full max-w-7xl mx-auto py-12 flex flex-col items-center gap-10">
+    <div className="mx-auto flex w-full max-w-7xl flex-col items-center gap-10 py-12">
       {/* Category Tabs Switcher (only if more than 1 premium category) */}
-      <div className={`grid grid-cols-1 ${gridCols} gap-8 w-full pt-6`}>
+      <div className={`grid grid-cols-1 ${gridCols} w-full gap-8 pt-6`}>
         {activePlans.map((p) => {
           const isYearly = p.billingCycle === "yearly";
           const isQuarterly = p.billingCycle === "quarterly";
@@ -109,29 +109,29 @@ export default function PricingPlans({ plans }: { plans: Plan[] }) {
               key={p.id}
               className={`relative flex flex-col overflow-visible transition-all duration-300 ${
                 isYearly
-                  ? "border-primary shadow-lg scale-105 z-10 ring-2 ring-primary/10"
+                  ? "z-10 scale-105 border-primary shadow-lg ring-2 ring-primary/10"
                   : "border-border hover:border-primary/50"
               }`}
             >
               {isYearly && (
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                  <Badge className="bg-primary text-primary-foreground font-semibold px-3 py-1">
+                <div className="-translate-x-1/2 -translate-y-1/2 absolute top-0 left-1/2">
+                  <Badge className="bg-primary px-3 py-1 font-semibold text-primary-foreground">
                     Best Value
                   </Badge>
                 </div>
               )}
               {isQuarterly && (
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                <div className="-translate-x-1/2 -translate-y-1/2 absolute top-0 left-1/2">
                   <Badge
                     variant="secondary"
-                    className="font-semibold px-3 py-1"
+                    className="px-3 py-1 font-semibold"
                   >
                     Save More
                   </Badge>
                 </div>
               )}
 
-              <CardHeader className="text-center pt-8 space-y-4">
+              <CardHeader className="space-y-4 pt-8 text-center">
                 <CardTitle className="text-2xl capitalize">{p.name}</CardTitle>
                 <CardDescription className="h-12">
                   {p.description}
@@ -139,50 +139,50 @@ export default function PricingPlans({ plans }: { plans: Plan[] }) {
 
                 <div className="flex flex-col items-center pt-4">
                   <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-black tracking-tight">
+                    <span className="font-black text-4xl tracking-tight">
                       {formatCurrency(pricePerMonth.toFixed(2))}
                     </span>
-                    <span className="text-muted-foreground font-bold text-sm">
+                    <span className="font-bold text-muted-foreground text-sm">
                       /mo
                     </span>
                   </div>
                   {isYearly && (
-                    <div className="flex flex-col items-center mt-1">
-                      <span className="text-[10px] font-black text-primary uppercase tracking-widest">
+                    <div className="mt-1 flex flex-col items-center">
+                      <span className="font-black text-[10px] text-primary uppercase tracking-widest">
                         Billed Yearly
                       </span>
-                      <span className="text-xs text-muted-foreground font-medium">
+                      <span className="font-medium text-muted-foreground text-xs">
                         {formatCurrency(p.amount)} / year
                       </span>
                     </div>
                   )}
                   {isQuarterly && (
-                    <div className="flex flex-col items-center mt-1">
-                      <span className="text-[10px] font-black text-primary uppercase tracking-widest">
+                    <div className="mt-1 flex flex-col items-center">
+                      <span className="font-black text-[10px] text-primary uppercase tracking-widest">
                         Billed Quarterly
                       </span>
-                      <span className="text-xs text-muted-foreground font-medium">
+                      <span className="font-medium text-muted-foreground text-xs">
                         {formatCurrency(p.amount)} / quarter
                       </span>
                     </div>
                   )}
                   {p.isGstEnabled && (
-                    <span className="text-[10px] text-emerald-500 font-bold uppercase tracking-wider mt-1.5">
+                    <span className="mt-1.5 font-bold text-[10px] text-emerald-500 uppercase tracking-wider">
                       + {p.gstPercentage}% GST
                     </span>
                   )}
                 </div>
 
-                <div className="mt-3 flex items-center justify-center gap-2 min-h-[28px]">
+                <div className="mt-3 flex min-h-[28px] items-center justify-center gap-2">
                   {originalAmount > amount && (
-                    <span className="text-muted-foreground line-through text-sm font-medium">
+                    <span className="font-medium text-muted-foreground text-sm line-through">
                       {formatCurrency(originalAmount.toString())}
                     </span>
                   )}
                   {savings > 0 && (
                     <Badge
                       variant="outline"
-                      className="text-green-600 border-green-200 bg-green-50 dark:bg-green-950/30 font-bold"
+                      className="border-green-200 bg-green-50 font-bold text-green-600 dark:bg-green-950/30"
                     >
                       Save {formatCurrency(savings.toString())}
                     </Badge>
@@ -190,7 +190,7 @@ export default function PricingPlans({ plans }: { plans: Plan[] }) {
                 </div>
               </CardHeader>
 
-              <CardContent className="flex-1 mt-6">
+              <CardContent className="mt-6 flex-1">
                 <TooltipProvider>
                   <ul className="space-y-3">
                     {features.map((feature: any, i: number) => {
@@ -201,8 +201,8 @@ export default function PricingPlans({ plans }: { plans: Plan[] }) {
 
                       return (
                         <li key={i} className="flex items-start text-left">
-                          <Check className="h-5 w-5 text-primary shrink-0 mr-3" />
-                          <div className="flex items-center gap-1.5 min-w-0">
+                          <Check className="mr-3 h-5 w-5 shrink-0 text-primary" />
+                          <div className="flex min-w-0 items-center gap-1.5">
                             <span className="text-muted-foreground text-sm">
                               {text}
                             </span>
@@ -211,7 +211,7 @@ export default function PricingPlans({ plans }: { plans: Plan[] }) {
                                 <TooltipTrigger>
                                   <button
                                     type="button"
-                                    className="text-muted-foreground/50 hover:text-primary transition-colors outline-none"
+                                    className="text-muted-foreground/50 outline-none transition-colors hover:text-primary"
                                   >
                                     <Info className="h-3.5 w-3.5" />
                                   </button>

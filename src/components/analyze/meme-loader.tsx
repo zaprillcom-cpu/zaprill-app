@@ -27,17 +27,17 @@ export function MemeLoader({ step }: { step: AnalysisStep }) {
   );
 
   return (
-    <div className="max-w-2xl mx-auto py-20 flex flex-col items-center text-center animate-in fade-in slide-in-from-bottom-8 duration-1000">
-      <div className="relative w-full aspect-video rounded-3xl overflow-hidden border-4 border-foreground/10 shadow-2xl mb-12 group">
+    <div className="fade-in slide-in-from-bottom-8 mx-auto flex max-w-2xl animate-in flex-col items-center py-20 text-center duration-1000">
+      <div className="group relative mb-12 aspect-video w-full overflow-hidden rounded-3xl border-4 border-foreground/10 shadow-2xl">
         <img
           src={JOB_MEMES[memeIdx]}
           alt="Job Meme"
-          className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-500"
+          className="h-full w-full object-cover grayscale-[0.2] transition-all duration-500 group-hover:grayscale-0"
         />
         <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent" />
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3">
-          <Loader2 className="h-6 w-6 text-white animate-spin" />
-          <span className="text-white font-black tracking-widest text-sm uppercase">
+        <div className="-translate-x-1/2 absolute bottom-6 left-1/2 flex items-center gap-3">
+          <Loader2 className="h-6 w-6 animate-spin text-white" />
+          <span className="font-black text-sm text-white uppercase tracking-widest">
             {step === "searching"
               ? "Scanning Universe..."
               : "Analyzing Data..."}
@@ -45,20 +45,20 @@ export function MemeLoader({ step }: { step: AnalysisStep }) {
         </div>
       </div>
 
-      <h3 className="text-3xl font-black text-foreground mb-4 tracking-tight">
+      <h3 className="mb-4 font-black text-3xl text-foreground tracking-tight">
         {JOB_MESSAGES[msgIdx]}
       </h3>
-      <p className="text-lg text-muted-foreground font-semibold max-w-md mx-auto leading-relaxed">
+      <p className="mx-auto max-w-md font-semibold text-lg text-muted-foreground leading-relaxed">
         Our AI is working hard behind the scenes to find your perfect job match.
         Sit tight, this won't take long!
       </p>
 
       <div className="mt-12 flex gap-4">
         <div
-          className={`h-1.5 w-16 rounded-full ${step === "searching" ? "bg-foreground animate-pulse" : "bg-muted"}`}
+          className={`h-1.5 w-16 rounded-full ${step === "searching" ? "animate-pulse bg-foreground" : "bg-muted"}`}
         />
         <div
-          className={`h-1.5 w-16 rounded-full ${step === "analyzing" ? "bg-foreground animate-pulse" : "bg-muted"}`}
+          className={`h-1.5 w-16 rounded-full ${step === "analyzing" ? "animate-pulse bg-foreground" : "bg-muted"}`}
         />
       </div>
     </div>

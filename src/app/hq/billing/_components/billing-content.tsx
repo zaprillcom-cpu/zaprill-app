@@ -138,17 +138,17 @@ export function BillingContent() {
       <div className="grid gap-4 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Net Margin</CardTitle>
+            <CardTitle className="font-medium text-sm">Net Margin</CardTitle>
             <DollarSign className="h-4 w-4 text-emerald-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
+            <div className="font-bold text-2xl">
               ₹
               {netMargin.toLocaleString(undefined, {
                 maximumFractionDigits: 0,
               })}
             </div>
-            <div className="flex items-center text-xs text-emerald-500 mt-1">
+            <div className="mt-1 flex items-center text-emerald-500 text-xs">
               <ArrowUpRight className="mr-1 h-3 w-3" />
               Healthy Profitability
             </div>
@@ -156,38 +156,38 @@ export function BillingContent() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Efficiency</CardTitle>
+            <CardTitle className="font-medium text-sm">Efficiency</CardTitle>
             <Activity className="h-4 w-4 text-purple-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
+            <div className="font-bold text-2xl">
               {efficiencyRatio.toFixed(1)}x
             </div>
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className="mt-1 text-muted-foreground text-xs">
               Revenue per ₹1 AI Spend
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Cost per User</CardTitle>
+            <CardTitle className="font-medium text-sm">Cost per User</CardTitle>
             <Coins className="h-4 w-4 text-amber-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">₹{costPerUser.toFixed(2)}</div>
-            <p className="text-xs text-muted-foreground mt-1">
+            <div className="font-bold text-2xl">₹{costPerUser.toFixed(2)}</div>
+            <p className="mt-1 text-muted-foreground text-xs">
               AI cost per registration
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">New Users</CardTitle>
+            <CardTitle className="font-medium text-sm">New Users</CardTitle>
             <Activity className="h-4 w-4 text-blue-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{totalNewUsers}</div>
-            <p className="text-xs text-muted-foreground mt-1">
+            <div className="font-bold text-2xl">{totalNewUsers}</div>
+            <p className="mt-1 text-muted-foreground text-xs">
               Last 30 days growth
             </p>
           </CardContent>
@@ -436,16 +436,16 @@ export function BillingContent() {
                     className="border-b transition-colors hover:bg-muted/50"
                   >
                     <td className="p-2 align-middle font-medium">{m.model}</td>
-                    <td className="p-2 align-middle text-right">
+                    <td className="p-2 text-right align-middle">
                       {parseInt(m.usage_count).toLocaleString()}
                     </td>
-                    <td className="p-2 align-middle text-right">
+                    <td className="p-2 text-right align-middle">
                       {(parseInt(m.total_tokens) / 1000).toFixed(1)}k
                     </td>
-                    <td className="p-2 align-middle text-right text-amber-500 font-mono">
+                    <td className="p-2 text-right align-middle font-mono text-amber-500">
                       ${parseFloat(m.total_cost).toFixed(4)}
                     </td>
-                    <td className="p-2 align-middle text-right text-blue-500 font-medium">
+                    <td className="p-2 text-right align-middle font-medium text-blue-500">
                       {(
                         parseInt(m.total_tokens) /
                         (parseFloat(m.total_cost) || 1) /

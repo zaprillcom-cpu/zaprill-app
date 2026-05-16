@@ -61,8 +61,8 @@ export default function HomePage() {
   // 1. Initial Auth Loading - Show Skeleton
   if (sessionLoading) {
     return (
-      <main className="min-h-screen flex flex-col bg-background relative overflow-hidden">
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-50 dark:opacity-20">
+      <main className="relative flex min-h-screen flex-col overflow-hidden bg-background">
+        <div className="pointer-events-none absolute inset-0 z-0 opacity-50 dark:opacity-20">
           <GridPattern />
         </div>
         <Navbar sticky={true} user={undefined} sessionLoading={true} />
@@ -74,8 +74,8 @@ export default function HomePage() {
   // 2. Fetching Profile for Logged In User - Show Skeleton
   if (session && isFetchingProfile && !profile) {
     return (
-      <main className="min-h-screen flex flex-col bg-background relative overflow-hidden">
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-50 dark:opacity-20">
+      <main className="relative flex min-h-screen flex-col overflow-hidden bg-background">
+        <div className="pointer-events-none absolute inset-0 z-0 opacity-50 dark:opacity-20">
           <GridPattern />
         </div>
         <Navbar
@@ -95,8 +95,8 @@ export default function HomePage() {
   // 3. User logged in and completed onboarding - Show Dashboard
   if (session && profile?.onboardingStatus === "completed") {
     return (
-      <main className="min-h-screen flex flex-col bg-background relative overflow-hidden">
-        <div className="absolute inset-0 z-0 pointer-events-none [mask-image:linear-gradient(to_bottom,white,transparent)] opacity-50 dark:opacity-20">
+      <main className="relative flex min-h-screen flex-col overflow-hidden bg-background">
+        <div className="pointer-events-none absolute inset-0 z-0 opacity-50 [mask-image:linear-gradient(to_bottom,white,transparent)] dark:opacity-20">
           <GridPattern />
         </div>
         <Navbar
@@ -111,22 +111,22 @@ export default function HomePage() {
         <div className="relative z-10 flex-1">
           <UserDashboard profile={profile} session={session} />
         </div>
-        <footer className="py-12 border-t border-border bg-background relative z-10">
-          <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="text-sm font-medium text-muted-foreground">
+        <footer className="relative z-10 border-border border-t bg-background py-12">
+          <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-6 md:flex-row">
+            <div className="font-medium text-muted-foreground text-sm">
               Made with ❤️ by{" "}
-              <span className="italic text-primary">Team Zaprill</span>
+              <span className="text-primary italic">Team Zaprill</span>
             </div>
-            <div className="flex items-center gap-6 text-sm font-bold">
+            <div className="flex items-center gap-6 font-bold text-sm">
               <Link
                 href="/history"
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                className="text-muted-foreground transition-colors hover:text-foreground"
               >
                 History
               </Link>
               <Link
                 href="/profile"
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                className="text-muted-foreground transition-colors hover:text-foreground"
               >
                 Profile
               </Link>
@@ -139,9 +139,9 @@ export default function HomePage() {
 
   // 4. Guest View or Not Onboarded
   return (
-    <main className="min-h-screen flex flex-col bg-background relative overflow-hidden">
+    <main className="relative flex min-h-screen flex-col overflow-hidden bg-background">
       {/* Background Grid Pattern */}
-      <div className="absolute inset-0 z-0 pointer-events-none mask-[linear-gradient(to_bottom,white,transparent)] opacity-50 dark:opacity-20">
+      <div className="mask-[linear-gradient(to_bottom,white,transparent)] pointer-events-none absolute inset-0 z-0 opacity-50 dark:opacity-20">
         <GridPattern />
       </div>
 
@@ -160,9 +160,9 @@ export default function HomePage() {
       />
 
       {/* Hero Section */}
-      <section className="flex-1 pt-40 pb-32 flex flex-col items-center text-center px-6 relative z-10 w-full max-w-6xl mx-auto">
-        <div className="mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-[10px] font-bold text-primary uppercase tracking-[0.2em]">
+      <section className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col items-center px-6 pt-40 pb-32 text-center">
+        <div className="fade-in slide-in-from-bottom-4 mb-8 animate-in duration-700">
+          <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 font-bold text-[10px] text-primary uppercase tracking-[0.2em]">
             <Zap className="h-3 w-3 fill-current" />
             AI-Powered Career Intelligence
           </span>
@@ -170,50 +170,50 @@ export default function HomePage() {
 
         <WordFadeIn
           words="Find the job you actually deserve."
-          className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] max-w-5xl mb-8 text-foreground"
+          className="mb-8 max-w-5xl font-black text-6xl text-foreground leading-[0.9] tracking-tighter md:text-8xl"
         />
 
-        <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl leading-relaxed mb-12 font-medium animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-200">
+        <p className="fade-in slide-in-from-bottom-6 mb-12 max-w-2xl animate-in font-medium text-muted-foreground text-xl leading-relaxed delay-200 duration-1000 md:text-2xl">
           We decode your professional DNA to match you with roles where you'll
           actually thrive. No more keyword guessing, just pure data-driven
           career growth.
         </p>
 
         {/* Primary Action Area */}
-        <div className="w-full max-w-2xl flex flex-col items-center animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-500">
+        <div className="fade-in slide-in-from-bottom-8 flex w-full max-w-2xl animate-in flex-col items-center delay-500 duration-1000">
           {session ? (
-            <div className="flex flex-col items-center gap-6 w-full">
+            <div className="flex w-full flex-col items-center gap-6">
               <Link href="/onboarding" className="w-full sm:w-auto">
                 <Button
                   size="lg"
-                  className="h-20 px-12 rounded-2xl text-xl font-black shadow-2xl shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98] w-full group relative overflow-hidden"
+                  className="group relative h-20 w-full overflow-hidden rounded-2xl px-12 font-black text-xl shadow-2xl shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
                 >
-                  <div className="absolute inset-0 bg-(--gradient-primary) opacity-90 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute inset-0 bg-(--gradient-primary) opacity-90 transition-opacity group-hover:opacity-100" />
                   <span className="relative flex items-center gap-3">
                     Complete Your Onboarding
                     <ArrowRight className="h-6 w-6 transition-transform group-hover:translate-x-1" />
                   </span>
                 </Button>
               </Link>
-              <p className="text-sm text-muted-foreground font-bold">
+              <p className="font-bold text-muted-foreground text-sm">
                 Just one step away from personalized job matches.
               </p>
             </div>
           ) : (
-            <div className="flex flex-col items-center gap-8 w-full">
+            <div className="flex w-full flex-col items-center gap-8">
               <Link href="/sign-in" className="w-full sm:w-auto">
                 <Button
                   size="lg"
-                  className="h-20 px-12 rounded-2xl text-xl font-black shadow-2xl shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98] w-full relative overflow-hidden group"
+                  className="group relative h-20 w-full overflow-hidden rounded-2xl px-12 font-black text-xl shadow-2xl shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
                 >
-                  <div className="absolute inset-0 bg-(--gradient-primary) opacity-100 group-hover:opacity-90 transition-opacity" />
+                  <div className="absolute inset-0 bg-(--gradient-primary) opacity-100 transition-opacity group-hover:opacity-90" />
                   <span className="relative flex items-center gap-3">
                     Get Started Now
                     <ArrowRight className="h-6 w-6 transition-transform group-hover:translate-x-1" />
                   </span>
                 </Button>
               </Link>
-              <div className="flex items-center gap-8 text-muted-foreground font-bold text-xs uppercase tracking-widest opacity-60">
+              <div className="flex items-center gap-8 font-bold text-muted-foreground text-xs uppercase tracking-widest opacity-60">
                 <div className="flex items-center gap-2">
                   <Shield className="h-4 w-4" />
                   100% Private
@@ -228,22 +228,22 @@ export default function HomePage() {
         </div>
       </section>
 
-      <footer className="py-12 border-t border-border bg-background relative z-10">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="text-sm font-medium text-muted-foreground">
+      <footer className="relative z-10 border-border border-t bg-background py-12">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-6 md:flex-row">
+          <div className="font-medium text-muted-foreground text-sm">
             Made with ❤️ by{" "}
-            <span className="italic text-primary">Team Zaprill</span>
+            <span className="text-primary italic">Team Zaprill</span>
           </div>
-          <div className="flex items-center gap-6 text-sm font-bold">
+          <div className="flex items-center gap-6 font-bold text-sm">
             <Link
               href="/history"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-muted-foreground transition-colors hover:text-foreground"
             >
               History
             </Link>
             <Link
               href="/profile"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-muted-foreground transition-colors hover:text-foreground"
             >
               Profile
             </Link>

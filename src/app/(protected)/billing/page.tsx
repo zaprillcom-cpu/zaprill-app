@@ -69,13 +69,13 @@ export default async function BillingPage() {
     <div className="min-h-screen bg-background">
       <BillingClientShell />
 
-      <div className="container max-w-4xl mx-auto py-10 space-y-8">
+      <div className="container mx-auto max-w-4xl space-y-8 py-10">
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">
+          <h1 className="font-bold text-3xl tracking-tight">
             Billing & Subscription
           </h1>
-          <p className="text-muted-foreground mt-2">
+          <p className="mt-2 text-muted-foreground">
             Manage your plan, payment methods, and invoices.
           </p>
         </div>
@@ -94,7 +94,7 @@ export default async function BillingPage() {
           </CardHeader>
           <CardContent className="space-y-6">
             {isFunctionallyActive && activePlan ? (
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 border rounded-lg bg-muted/20">
+              <div className="flex flex-col justify-between gap-4 rounded-lg border bg-muted/20 p-4 md:flex-row md:items-center">
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="font-semibold text-lg">
@@ -108,10 +108,10 @@ export default async function BillingPage() {
                       {sub.status.toUpperCase()}
                     </Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground mt-1">
+                  <p className="mt-1 text-muted-foreground text-sm">
                     {formatCurrency(sub.priceAtPurchase)} / {sub.billingCycle}
                   </p>
-                  <p className="text-xs text-muted-foreground mt-2">
+                  <p className="mt-2 text-muted-foreground text-xs">
                     Current period:{" "}
                     {new Date(sub.currentPeriodStart).toLocaleDateString()} —{" "}
                     {new Date(sub.currentPeriodEnd).toLocaleDateString()}
@@ -123,7 +123,7 @@ export default async function BillingPage() {
               </div>
             ) : sub?.status === "canceled" && activePlan ? (
               <div className="space-y-6">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 border rounded-lg bg-yellow-500/10 border-yellow-500/20">
+                <div className="flex flex-col justify-between gap-4 rounded-lg border border-yellow-500/20 bg-yellow-500/10 p-4 md:flex-row md:items-center">
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="font-semibold text-lg">
@@ -131,19 +131,19 @@ export default async function BillingPage() {
                       </span>
                       <Badge
                         variant="outline"
-                        className="text-yellow-600 border-yellow-600"
+                        className="border-yellow-600 text-yellow-600"
                       >
                         CANCELED
                       </Badge>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-2">
+                    <p className="mt-2 text-muted-foreground text-xs">
                       Access ends on:{" "}
                       {new Date(sub.currentPeriodEnd).toLocaleDateString()}
                     </p>
                   </div>
                 </div>
-                <div className="pt-4 border-t">
-                  <p className="text-sm font-medium mb-4">
+                <div className="border-t pt-4">
+                  <p className="mb-4 font-medium text-sm">
                     Want to restart your subscription?
                   </p>
                   <PricingPlans plans={plans} />
@@ -151,8 +151,8 @@ export default async function BillingPage() {
               </div>
             ) : (
               <div className="space-y-8">
-                <div className="p-8 border rounded-lg bg-muted/10 text-center">
-                  <p className="text-muted-foreground font-medium">
+                <div className="rounded-lg border bg-muted/10 p-8 text-center">
+                  <p className="font-medium text-muted-foreground">
                     You don&apos;t have an active premium subscription. Choose a
                     plan below to get started.
                   </p>

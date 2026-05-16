@@ -32,15 +32,15 @@ function AuditSkeleton() {
       {Array.from({ length: 6 }).map((_, i) => (
         <div
           key={i}
-          className="flex items-start gap-4 pb-8 border-b last:border-0 last:pb-0"
+          className="flex items-start gap-4 border-b pb-8 last:border-0 last:pb-0"
         >
-          <Skeleton className="h-10 w-10 rounded-full shrink-0" />
+          <Skeleton className="h-10 w-10 shrink-0 rounded-full" />
           <div className="flex-1 space-y-2">
             <div className="flex justify-between">
               <Skeleton className="h-4 w-[200px]" />
               <Skeleton className="h-3 w-[80px]" />
             </div>
-            <div className="grid grid-cols-2 gap-4 mt-2">
+            <div className="mt-2 grid grid-cols-2 gap-4">
               <Skeleton className="h-3 w-[160px]" />
               <Skeleton className="h-3 w-[120px]" />
             </div>
@@ -72,7 +72,7 @@ export function AuditList() {
       </CardHeader>
       <CardContent>
         {error ? (
-          <p className="text-sm text-destructive text-center py-12">{error}</p>
+          <p className="py-12 text-center text-destructive text-sm">{error}</p>
         ) : !logs ? (
           <AuditSkeleton />
         ) : (
@@ -80,9 +80,9 @@ export function AuditList() {
             {logs.map((log) => (
               <div
                 key={log.id}
-                className="flex items-start gap-4 pb-8 border-b last:border-0 last:pb-0"
+                className="flex items-start gap-4 border-b pb-8 last:border-0 last:pb-0"
               >
-                <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center shrink-0">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-muted">
                   <ShieldAlert className="h-5 w-5 text-muted-foreground" />
                 </div>
                 <div className="flex-1 space-y-1">
@@ -91,33 +91,33 @@ export function AuditList() {
                       <span className="font-semibold text-sm">
                         {log.action}
                       </span>
-                      <Badge variant="outline" className="text-[10px] py-0">
+                      <Badge variant="outline" className="py-0 text-[10px]">
                         {log.entityType}
                       </Badge>
                     </div>
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-muted-foreground text-xs">
                       {format(new Date(log.createdAt), "MMM dd, HH:mm:ss")}
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4 mt-2">
+                  <div className="mt-2 grid grid-cols-2 gap-4">
                     <div className="space-y-1">
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <div className="flex items-center gap-2 text-muted-foreground text-xs">
                         <User className="h-3 w-3" />
                         <span>
                           Admin: {log.adminName || "System"} ({log.adminEmail})
                         </span>
                       </div>
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <div className="flex items-center gap-2 text-muted-foreground text-xs">
                         <Globe className="h-3 w-3" />
                         <span>IP: {log.ipAddress}</span>
                       </div>
                     </div>
                     <div className="space-y-1">
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <div className="flex items-center gap-2 text-muted-foreground text-xs">
                         <Monitor className="h-3 w-3" />
                         <span
-                          className="truncate max-w-[200px]"
+                          className="max-w-[200px] truncate"
                           title={log.userAgent || ""}
                         >
                           {log.userAgent}
@@ -127,8 +127,8 @@ export function AuditList() {
                   </div>
 
                   {log.details && (
-                    <div className="mt-3 bg-muted rounded-md p-3">
-                      <pre className="text-[10px] font-mono text-muted-foreground whitespace-pre-wrap">
+                    <div className="mt-3 rounded-md bg-muted p-3">
+                      <pre className="whitespace-pre-wrap font-mono text-[10px] text-muted-foreground">
                         {JSON.stringify(log.details, null, 2)}
                       </pre>
                     </div>

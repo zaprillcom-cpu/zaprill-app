@@ -1,4 +1,4 @@
-import { User } from "better-auth";
+import type { User } from "better-auth";
 import { sendMail } from "./sendMail";
 export const sendResetPasswordMail = async ({
   user,

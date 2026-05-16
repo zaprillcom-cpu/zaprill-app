@@ -41,33 +41,33 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-background p-4 relative overflow-hidden">
+    <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-background p-4">
       <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02]" />
 
-      <div className="w-full max-w-sm relative z-10 flex flex-col items-center">
+      <div className="relative z-10 flex w-full max-w-sm flex-col items-center">
         <Link
           href="/sign-in"
-          className="flex items-center gap-2 mb-8 group text-sm font-medium text-muted-foreground hover:text-foreground"
+          className="group mb-8 flex items-center gap-2 font-medium text-muted-foreground text-sm hover:text-foreground"
         >
-          <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+          <ArrowLeft className="group-hover:-translate-x-1 h-4 w-4 transition-transform" />
           Back to login
         </Link>
 
-        <Card className="w-full shadow-lg border-border">
-          <CardHeader className="text-center pb-6">
-            <div className="mx-auto w-12 h-12 bg-primary/10 flex items-center justify-center rounded-full mb-4">
+        <Card className="w-full border-border shadow-lg">
+          <CardHeader className="pb-6 text-center">
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
               <Mail className="h-6 w-6 text-primary" />
             </div>
-            <CardTitle className="text-2xl font-black tracking-tight">
+            <CardTitle className="font-black text-2xl tracking-tight">
               Forgot password?
             </CardTitle>
-            <CardDescription className="text-sm font-medium mt-1">
+            <CardDescription className="mt-1 font-medium text-sm">
               No worries, we'll send you reset instructions.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {error && (
-              <div className="p-3 text-sm font-medium text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
+              <div className="rounded-md border border-destructive/20 bg-destructive/10 p-3 font-medium text-destructive text-sm">
                 {error}
               </div>
             )}
@@ -76,7 +76,7 @@ export default function ForgotPasswordPage() {
               <div className="space-y-2">
                 <label
                   htmlFor="email"
-                  className="text-xs font-bold text-muted-foreground uppercase tracking-wider"
+                  className="font-bold text-muted-foreground text-xs uppercase tracking-wider"
                 >
                   Email
                 </label>
@@ -88,12 +88,12 @@ export default function ForgotPasswordPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={loading}
                   required
-                  className="h-11 font-medium bg-background"
+                  className="h-11 bg-background font-medium"
                 />
               </div>
               <Button
                 type="submit"
-                className="w-full font-bold h-11"
+                className="h-11 w-full font-bold"
                 disabled={loading || !email}
               >
                 {loading ? (
@@ -104,12 +104,12 @@ export default function ForgotPasswordPage() {
               </Button>
             </form>
           </CardContent>
-          <CardFooter className="flex flex-col border-t border-border pt-6 pb-6 bg-muted/20">
-            <p className="text-sm text-center text-muted-foreground font-medium">
+          <CardFooter className="flex flex-col border-border border-t bg-muted/20 pt-6 pb-6">
+            <p className="text-center font-medium text-muted-foreground text-sm">
               Remember your password?{" "}
               <Link
                 href="/sign-in"
-                className="text-foreground font-bold hover:underline"
+                className="font-bold text-foreground hover:underline"
               >
                 Log in
               </Link>

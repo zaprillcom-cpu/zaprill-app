@@ -27,7 +27,7 @@ function KpiSkeleton() {
         <Skeleton className="h-4 w-4 rounded" />
       </CardHeader>
       <CardContent>
-        <Skeleton className="h-8 w-[60px] mb-2" />
+        <Skeleton className="mb-2 h-8 w-[60px]" />
         <Skeleton className="h-3 w-[100px]" />
       </CardContent>
     </Card>
@@ -47,7 +47,7 @@ export function AnalyticsContent() {
 
   if (error) {
     return (
-      <p className="text-sm text-destructive text-center py-12">{error}</p>
+      <p className="py-12 text-center text-destructive text-sm">{error}</p>
     );
   }
 
@@ -60,7 +60,7 @@ export function AnalyticsContent() {
           <KpiSkeleton />
           <KpiSkeleton />
         </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7 mt-4">
+        <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-7">
           <Skeleton className="col-span-4 h-[380px] rounded-xl" />
           <Skeleton className="col-span-3 h-[380px] rounded-xl" />
         </div>
@@ -102,54 +102,54 @@ export function AnalyticsContent() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-blue-500">
+            <CardTitle className="font-medium text-blue-500 text-sm">
               Real-time Users
             </CardTitle>
-            <Activity className="h-4 w-4 text-blue-500 animate-pulse" />
+            <Activity className="h-4 w-4 animate-pulse text-blue-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{data.realtimeUsers}</div>
-            <p className="text-xs text-muted-foreground">
+            <div className="font-bold text-2xl">{data.realtimeUsers}</div>
+            <p className="text-muted-foreground text-xs">
               Active in last 30 minutes
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
+            <CardTitle className="font-medium text-sm">
               Total Users (30d)
             </CardTitle>
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
+            <div className="font-bold text-2xl">
               {totalUsers.toLocaleString()}
             </div>
-            <p className="text-xs text-muted-foreground">Unique visitors</p>
+            <p className="text-muted-foreground text-xs">Unique visitors</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Page Views</CardTitle>
+            <CardTitle className="font-medium text-sm">Page Views</CardTitle>
             <MousePointer2 className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
+            <div className="font-bold text-2xl">
               {totalViews.toLocaleString()}
             </div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-xs">
               Total screens viewed
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Avg. Session</CardTitle>
+            <CardTitle className="font-medium text-sm">Avg. Session</CardTitle>
             <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">1m 24s</div>
-            <p className="text-xs text-muted-foreground">
+            <div className="font-bold text-2xl">1m 24s</div>
+            <p className="text-muted-foreground text-xs">
               Time spent per session
             </p>
           </CardContent>
@@ -179,11 +179,11 @@ export function AnalyticsContent() {
             <div className="space-y-8">
               {eventDistribution.map((item: any) => (
                 <div key={item.name} className="flex items-center">
-                  <div className="ml-4 space-y-1 flex-1">
-                    <p className="text-sm font-medium leading-none capitalize">
+                  <div className="ml-4 flex-1 space-y-1">
+                    <p className="font-medium text-sm capitalize leading-none">
                       {item.name.replace(/_/g, " ")}
                     </p>
-                    <div className="h-2 w-full bg-secondary rounded-full overflow-hidden">
+                    <div className="h-2 w-full overflow-hidden rounded-full bg-secondary">
                       <div
                         className="h-full bg-primary"
                         style={{
@@ -202,7 +202,7 @@ export function AnalyticsContent() {
                 </div>
               ))}
               {eventDistribution.length === 0 && (
-                <p className="text-sm text-muted-foreground text-center py-8">
+                <p className="py-8 text-center text-muted-foreground text-sm">
                   No event data available.
                 </p>
               )}

@@ -16,32 +16,32 @@ export function ParsingProgress({ step, resume }: ParsingProgressProps) {
   const skills = resume?.skills.flatMap((s) => s.keywords) || [];
 
   return (
-    <div className="w-full max-w-5xl mx-auto space-y-10 animate-in fade-in duration-700">
+    <div className="fade-in mx-auto w-full max-w-5xl animate-in space-y-10 duration-700">
       {/* Top Status Banner */}
-      <div className="bg-primary/5 border border-primary/20 rounded-3xl p-8 flex flex-col md:flex-row items-center gap-6 shadow-sm">
-        <div className="h-20 w-20 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0 border border-primary/20 relative">
-          <Loader2 className="h-10 w-10 text-primary animate-spin" />
-          <Zap className="h-5 w-5 text-primary absolute -top-2 -right-2 fill-current" />
+      <div className="flex flex-col items-center gap-6 rounded-3xl border border-primary/20 bg-primary/5 p-8 shadow-sm md:flex-row">
+        <div className="relative flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10">
+          <Loader2 className="h-10 w-10 animate-spin text-primary" />
+          <Zap className="-top-2 -right-2 absolute h-5 w-5 fill-current text-primary" />
         </div>
-        <div className="flex-1 text-center md:text-left space-y-2">
-          <h2 className="text-2xl font-black tracking-tight text-foreground">
+        <div className="flex-1 space-y-2 text-center md:text-left">
+          <h2 className="font-black text-2xl text-foreground tracking-tight">
             {step === "parsing"
               ? "Decoding your Professional DNA..."
               : "Finalizing Profile..."}
           </h2>
-          <p className="text-muted-foreground font-medium">
+          <p className="font-medium text-muted-foreground">
             Our AI is extractingskills, experience, and impact metrics to build
             your search engine.
           </p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         {/* Left Column: Extraction Summary */}
-        <div className="lg:col-span-1 space-y-6">
-          <Card className="border-border/50 shadow-sm rounded-2xl overflow-hidden">
+        <div className="space-y-6 lg:col-span-1">
+          <Card className="overflow-hidden rounded-2xl border-border/50 shadow-sm">
             <CardHeader className="bg-muted/30 pb-4">
-              <CardTitle className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+              <CardTitle className="flex items-center gap-2 font-bold text-muted-foreground text-xs uppercase tracking-widest">
                 Live Extraction
               </CardTitle>
             </CardHeader>
@@ -49,33 +49,33 @@ export function ParsingProgress({ step, resume }: ParsingProgressProps) {
               {resume ? (
                 <div className="space-y-6">
                   <div>
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-1">
+                    <p className="mb-1 font-bold text-[10px] text-muted-foreground uppercase tracking-widest">
                       Candidate
                     </p>
-                    <p className="text-lg font-black truncate">
+                    <p className="truncate font-black text-lg">
                       {resume.basics.name}
                     </p>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-1">
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                      <p className="font-bold text-[10px] text-muted-foreground uppercase tracking-widest">
                         Skills
                       </p>
-                      <p className="text-base font-black text-primary">
+                      <p className="font-black text-base text-primary">
                         {skills.length}
                       </p>
                     </div>
                     <div className="space-y-1 text-right">
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                      <p className="font-bold text-[10px] text-muted-foreground uppercase tracking-widest">
                         Roles
                       </p>
-                      <p className="text-base font-black text-primary">
+                      <p className="font-black text-base text-primary">
                         {resume.work.length}
                       </p>
                     </div>
                   </div>
-                  <div className="pt-4 border-t border-border">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-3">
+                  <div className="border-border border-t pt-4">
+                    <p className="mb-3 font-bold text-[10px] text-muted-foreground uppercase tracking-widest">
                       Detected Keywords
                     </p>
                     <div className="flex flex-wrap gap-1.5">
@@ -88,7 +88,7 @@ export function ParsingProgress({ step, resume }: ParsingProgressProps) {
                         />
                       ))}
                       {skills.length > 15 && (
-                        <span className="text-[10px] font-black text-muted-foreground bg-muted/50 px-2 py-1 rounded">
+                        <span className="rounded bg-muted/50 px-2 py-1 font-black text-[10px] text-muted-foreground">
                           +{skills.length - 15}
                         </span>
                       )}
@@ -105,7 +105,7 @@ export function ParsingProgress({ step, resume }: ParsingProgressProps) {
                     <Skeleton className="h-10 w-full rounded-xl" />
                     <Skeleton className="h-10 w-full rounded-xl" />
                   </div>
-                  <div className="pt-4 space-y-3">
+                  <div className="space-y-3 pt-4">
                     <Skeleton className="h-3 w-24" />
                     <div className="flex flex-wrap gap-1.5">
                       {[1, 2, 3, 4, 5, 6].map((i) => (
@@ -118,25 +118,25 @@ export function ParsingProgress({ step, resume }: ParsingProgressProps) {
             </CardContent>
           </Card>
 
-          <div className="p-6 rounded-2xl bg-muted/20 border border-border/50 text-center space-y-2">
-            <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
+          <div className="space-y-2 rounded-2xl border border-border/50 bg-muted/20 p-6 text-center">
+            <p className="font-bold text-muted-foreground text-xs uppercase tracking-widest">
               Processing Time
             </p>
-            <p className="text-sm font-medium italic opacity-70">
+            <p className="font-medium text-sm italic opacity-70">
               Usually takes 10-15 seconds...
             </p>
           </div>
         </div>
 
         {/* Right Column: Simulated Feed */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="space-y-6 lg:col-span-2">
           <div className="flex items-center justify-between px-2">
-            <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-widest">
+            <h3 className="font-bold text-muted-foreground text-sm uppercase tracking-widest">
               Parsing Stream
             </h3>
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-[10px] font-black uppercase tracking-widest">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
+              <span className="font-black text-[10px] uppercase tracking-widest">
                 Active
               </span>
             </div>
@@ -146,10 +146,10 @@ export function ParsingProgress({ step, resume }: ParsingProgressProps) {
             {[1, 2, 3].map((i) => (
               <Card
                 key={i}
-                className="shadow-sm border-border/50 bg-card/50 rounded-2xl overflow-hidden opacity-60 grayscale-[0.5]"
+                className="overflow-hidden rounded-2xl border-border/50 bg-card/50 opacity-60 shadow-sm grayscale-[0.5]"
               >
-                <CardContent className="p-6 flex gap-6 items-center">
-                  <Skeleton className="h-12 w-12 rounded-xl shrink-0" />
+                <CardContent className="flex items-center gap-6 p-6">
+                  <Skeleton className="h-12 w-12 shrink-0 rounded-xl" />
                   <div className="flex-1 space-y-3">
                     <Skeleton className="h-5 w-2/5" />
                     <Skeleton className="h-4 w-1/4" />

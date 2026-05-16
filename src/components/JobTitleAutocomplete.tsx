@@ -125,12 +125,12 @@ export function JobTitleAutocomplete({
   const showDropdown = open && (suggestions.length > 0 || isLoading);
 
   return (
-    <div className="flex gap-3 w-full" ref={containerRef}>
+    <div className="flex w-full gap-3" ref={containerRef}>
       <div className="relative flex-1" ref={inputWrapperRef}>
         <div
           className={cn(
-            "relative group transition-all duration-300",
-            open && "ring-2 ring-primary/20 rounded-xl",
+            "group relative transition-all duration-300",
+            open && "rounded-xl ring-2 ring-primary/20",
           )}
         >
           <Input
@@ -142,11 +142,11 @@ export function JobTitleAutocomplete({
             }}
             onFocus={() => setOpen(true)}
             onKeyDown={handleKeyDown}
-            className="bg-background border-border font-bold h-12 w-full pl-11 pr-4 focus-visible:ring-primary shadow-sm rounded-xl transition-all"
+            className="h-12 w-full rounded-xl border-border bg-background pr-4 pl-11 font-bold shadow-sm transition-all focus-visible:ring-primary"
           />
           <Search
             className={cn(
-              "absolute left-3.5 top-1/2 -translate-y-1/2 h-4.5 w-4.5 transition-colors duration-300",
+              "-translate-y-1/2 absolute top-1/2 left-3.5 h-4.5 w-4.5 transition-colors duration-300",
               open ? "text-primary" : "text-muted-foreground",
             )}
           />
@@ -169,16 +169,16 @@ export function JobTitleAutocomplete({
                     width: coords.width,
                     zIndex: 9999,
                   }}
-                  className="bg-popover/90 backdrop-blur-xl border border-border/50 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] overflow-hidden"
+                  className="overflow-hidden rounded-2xl border border-border/50 bg-popover/90 shadow-[0_20px_50px_rgba(0,0,0,0.2)] backdrop-blur-xl"
                 >
-                  <div className="max-h-[350px] overflow-y-auto py-2 custom-scrollbar">
+                  <div className="custom-scrollbar max-h-[350px] overflow-y-auto py-2">
                     {isLoading && (
-                      <div className="p-6 flex items-center justify-center gap-3">
+                      <div className="flex items-center justify-center gap-3 p-6">
                         <div className="relative">
                           <Loader2 className="h-5 w-5 animate-spin text-primary" />
-                          <div className="absolute inset-0 blur-sm bg-primary/20 animate-pulse rounded-full" />
+                          <div className="absolute inset-0 animate-pulse rounded-full bg-primary/20 blur-sm" />
                         </div>
-                        <span className="font-black text-sm uppercase tracking-tighter text-foreground/70">
+                        <span className="font-black text-foreground/70 text-sm uppercase tracking-tighter">
                           Analyzing Market Titles...
                         </span>
                       </div>
@@ -186,7 +186,7 @@ export function JobTitleAutocomplete({
 
                     {!isLoading && suggestions.length > 0 && (
                       <div className="flex flex-col px-1">
-                        <div className="px-3 py-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                        <div className="flex items-center gap-2 px-3 py-2 font-black text-[10px] text-muted-foreground uppercase tracking-widest">
                           <Sparkles className="h-3 w-3 text-primary" />
                           Suggested Matches
                         </div>
@@ -197,9 +197,9 @@ export function JobTitleAutocomplete({
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: i * 0.03 }}
                             onClick={() => handleSelect(title)}
-                            className="group flex items-center gap-3 px-3 py-2.5 text-left text-sm hover:bg-primary hover:text-primary-foreground transition-all duration-200 rounded-xl mx-1 mb-0.5"
+                            className="group mx-1 mb-0.5 flex items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition-all duration-200 hover:bg-primary hover:text-primary-foreground"
                           >
-                            <div className="h-8 w-8 rounded-lg bg-muted flex items-center justify-center group-hover:bg-primary-foreground/20 transition-colors">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted transition-colors group-hover:bg-primary-foreground/20">
                               <Briefcase className="h-4 w-4 text-muted-foreground group-hover:text-primary-foreground" />
                             </div>
                             <span className="font-bold tracking-tight">
@@ -219,10 +219,10 @@ export function JobTitleAutocomplete({
 
       <Button
         onClick={() => onAdd(value)}
-        className="h-12 px-8 font-black shrink-0 shadow-lg hover:shadow-xl transition-all active:scale-95 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl"
+        className="h-12 shrink-0 rounded-xl bg-primary px-8 font-black text-primary-foreground shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl active:scale-95"
         disabled={!value.trim()}
       >
-        <Plus className="h-5 w-5 mr-2 stroke-3" />
+        <Plus className="mr-2 h-5 w-5 stroke-3" />
         ADD
       </Button>
     </div>

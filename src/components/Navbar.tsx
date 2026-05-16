@@ -62,10 +62,10 @@ function UserAvatar({ user }: { user: NavUser }) {
         </AvatarFallback>
       </Avatar>
       <div
-        className={`absolute -bottom-1 -right-1 px-1.5 py-0.5 text-[9px] font-bold uppercase rounded-sm border shadow-sm ${
+        className={`-bottom-1 -right-1 absolute rounded-sm border px-1.5 py-0.5 font-bold text-[9px] uppercase shadow-sm ${
           isPro
-            ? "bg-primary text-primary-foreground border-primary"
-            : "bg-muted text-muted-foreground border-border"
+            ? "border-primary bg-primary text-primary-foreground"
+            : "border-border bg-muted text-muted-foreground"
         }`}
       >
         {isPro ? "PRO" : "FREE"}
@@ -114,22 +114,22 @@ export default function Navbar({
 
   return (
     <nav
-      className={`${positionClass} z-50 bg-background/95 backdrop-blur-xl border-b border-border px-6`}
+      className={`${positionClass} z-50 border-border border-b bg-background/95 px-6 backdrop-blur-xl`}
     >
-      <div className="max-w-6xl mx-auto h-16 flex items-center gap-4">
+      <div className="mx-auto flex h-16 max-w-6xl items-center gap-4">
         {/* ── Logo (always visible when no back button) / Back button ── */}
         {showBack ? (
           <Button
             variant="ghost"
             size="sm"
             onClick={() => router.push(backHref)}
-            className="text-sm font-bold shrink-0"
+            className="shrink-0 font-bold text-sm"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             {backLabel}
           </Button>
         ) : (
-          <Link href="/" className="flex items-center gap-2.5 group shrink-0">
+          <Link href="/" className="group flex shrink-0 items-center gap-2.5">
             <span className="hidden sm:block">
               <Image
                 src={"/logo.png"}
@@ -144,7 +144,7 @@ export default function Navbar({
 
         {/* ── Page title slot ── */}
         {pageTitle && (
-          <div className="flex items-center gap-3 flex-1 border-l border-border pl-4 min-w-0">
+          <div className="flex min-w-0 flex-1 items-center gap-3 border-border border-l pl-4">
             {pageTitle}
           </div>
         )}
@@ -154,15 +154,15 @@ export default function Navbar({
 
         {/* ── Centre badge (optional) ── */}
         {centreBadge && (
-          <div className="hidden sm:flex items-center">{centreBadge}</div>
+          <div className="hidden items-center sm:flex">{centreBadge}</div>
         )}
 
         {/* ── Right-side actions ── */}
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex shrink-0 items-center gap-3">
           {sessionLoading ? (
             // Skeleton placeholder — prevents Sign In being clicked before session resolves
             <div
-              className="h-9 w-20 rounded-md bg-muted animate-pulse"
+              className="h-9 w-20 animate-pulse rounded-md bg-muted"
               aria-hidden
             />
           ) : user ? (
@@ -171,7 +171,7 @@ export default function Navbar({
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="font-bold text-xs hidden sm:inline-flex"
+                  className="hidden font-bold text-xs sm:inline-flex"
                 >
                   Resume Builder
                 </Button>
@@ -181,7 +181,7 @@ export default function Navbar({
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="font-bold text-xs hidden sm:inline-flex"
+                  className="hidden font-bold text-xs sm:inline-flex"
                 >
                   Insights
                 </Button>
@@ -191,7 +191,7 @@ export default function Navbar({
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="font-bold text-xs hidden sm:inline-flex"
+                  className="hidden font-bold text-xs sm:inline-flex"
                 >
                   My Jobs
                 </Button>
@@ -205,50 +205,50 @@ export default function Navbar({
                   <UserAvatar user={user} />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
-                  <div className="px-3 py-2 border-b border-border mb-1">
+                  <div className="mb-1 border-border border-b px-3 py-2">
                     {user.name && (
-                      <p className="text-sm font-bold truncate">{user.name}</p>
+                      <p className="truncate font-bold text-sm">{user.name}</p>
                     )}
                     {user.email && (
-                      <p className="text-xs text-muted-foreground truncate">
+                      <p className="truncate text-muted-foreground text-xs">
                         {user.email}
                       </p>
                     )}
                   </div>
                   <DropdownMenuItem
                     onClick={() => router.push("/resumes/primary")}
-                    className="font-semibold cursor-pointer"
+                    className="cursor-pointer font-semibold"
                   >
                     Resume Builder
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() => router.push("/profile")}
-                    className="font-semibold cursor-pointer"
+                    className="cursor-pointer font-semibold"
                   >
                     Profile
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() => router.push("/billing")}
-                    className="font-semibold cursor-pointer"
+                    className="cursor-pointer font-semibold"
                   >
                     Billing
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() => router.push("/referrals")}
-                    className="font-semibold cursor-pointer text-emerald-600 dark:text-emerald-400 focus:text-emerald-600 dark:focus:text-emerald-400"
+                    className="cursor-pointer font-semibold text-emerald-600 focus:text-emerald-600 dark:text-emerald-400 dark:focus:text-emerald-400"
                   >
                     <Gift size={14} className="mr-2 shrink-0" />
                     Refer &amp; Earn
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() => router.push("/history")}
-                    className="font-semibold cursor-pointer"
+                    className="cursor-pointer font-semibold"
                   >
                     Insights
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() => router.push("/jobs")}
-                    className="font-semibold cursor-pointer"
+                    className="cursor-pointer font-semibold"
                   >
                     My Jobs
                   </DropdownMenuItem>
@@ -258,7 +258,7 @@ export default function Navbar({
                         fetchOptions: { onSuccess: () => router.push("/") },
                       })
                     }
-                    className="font-semibold text-destructive focus:text-destructive cursor-pointer"
+                    className="cursor-pointer font-semibold text-destructive focus:text-destructive"
                   >
                     Log out
                   </DropdownMenuItem>
@@ -267,7 +267,7 @@ export default function Navbar({
             </>
           ) : (
             <Link href="/sign-in">
-              <Button variant="default" size="sm" className="font-bold h-9">
+              <Button variant="default" size="sm" className="h-9 font-bold">
                 Sign In
               </Button>
             </Link>

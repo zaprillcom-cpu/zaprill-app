@@ -153,15 +153,15 @@ export default function CheckoutForm({
   };
 
   return (
-    <div className="grid md:grid-cols-5 gap-8">
+    <div className="grid gap-8 md:grid-cols-5">
       {/* Left Column: Form / Billing Selector / Coupon */}
-      <div className="md:col-span-3 space-y-6">
+      <div className="space-y-6 md:col-span-3">
         {/* Billing Cycle Selector */}
         {availablePlans.length > 1 && (
           <Card className="border-primary/20 bg-primary/5">
             <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-primary" />
+              <CardTitle className="flex items-center gap-2 text-lg">
+                <CheckCircle2 className="h-5 w-5 text-primary" />
                 Select Billing Cycle
               </CardTitle>
             </CardHeader>
@@ -179,9 +179,9 @@ export default function CheckoutForm({
                     }
                   }}
                 >
-                  <SelectTrigger className="w-full h-12 bg-background border-primary/20">
+                  <SelectTrigger className="h-12 w-full border-primary/20 bg-background">
                     <div className="flex items-center gap-2">
-                      <span className="capitalize font-semibold">
+                      <span className="font-semibold capitalize">
                         {currentPlan.billingCycle}
                       </span>
                       <span className="text-muted-foreground text-sm">
@@ -192,11 +192,11 @@ export default function CheckoutForm({
                   <SelectContent>
                     {availablePlans.map((p) => (
                       <SelectItem key={p.id} value={p.id}>
-                        <div className="flex items-center justify-between w-full gap-8">
-                          <span className="capitalize font-medium">
+                        <div className="flex w-full items-center justify-between gap-8">
+                          <span className="font-medium capitalize">
                             {p.billingCycle} billing
                           </span>
-                          <span className="text-muted-foreground ml-auto font-mono">
+                          <span className="ml-auto font-mono text-muted-foreground">
                             {formatCurrency(p.amount)}
                           </span>
                         </div>
@@ -204,7 +204,7 @@ export default function CheckoutForm({
                     ))}
                   </SelectContent>
                 </Select>
-                <p className="text-xs text-muted-foreground px-1">
+                <p className="px-1 text-muted-foreground text-xs">
                   Choose the plan that best fits your career goals. Yearly plans
                   offer the best value!
                 </p>
@@ -219,9 +219,9 @@ export default function CheckoutForm({
           </CardHeader>
           <CardContent>
             {appliedCoupon ? (
-              <div className="flex items-center justify-between p-3 border rounded-md bg-emerald-50/50 border-emerald-200">
+              <div className="flex items-center justify-between rounded-md border border-emerald-200 bg-emerald-50/50 p-3">
                 <div className="flex items-center text-emerald-700">
-                  <CheckCircle2 className="w-4 h-4 mr-2" />
+                  <CheckCircle2 className="mr-2 h-4 w-4" />
                   <span className="font-semibold">{appliedCoupon}</span>
                   <span className="ml-2 text-sm">applied</span>
                 </div>
@@ -238,7 +238,7 @@ export default function CheckoutForm({
               <div className="space-y-3">
                 <div className="flex space-x-2">
                   <div className="relative flex-1">
-                    <Tag className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Tag className="absolute top-2.5 left-3 h-4 w-4 text-muted-foreground" />
                     <Input
                       placeholder="Enter coupon code"
                       className="pl-9"
@@ -254,20 +254,20 @@ export default function CheckoutForm({
                     disabled={!couponCode.trim() || isValidating}
                   >
                     {isValidating && (
-                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     )}
                     Apply
                   </Button>
                 </div>
                 {couponError && (
-                  <div className="flex items-center text-sm text-destructive mt-2">
-                    <AlertCircle className="w-4 h-4 mr-1" />
+                  <div className="mt-2 flex items-center text-destructive text-sm">
+                    <AlertCircle className="mr-1 h-4 w-4" />
                     {couponError}
                   </div>
                 )}
                 {availableCoupons.length > 0 && (
-                  <div className="pt-3 mt-4 border-t border-border/50">
-                    <p className="text-sm text-muted-foreground mb-2">
+                  <div className="mt-4 border-border/50 border-t pt-3">
+                    <p className="mb-2 text-muted-foreground text-sm">
                       Available Coupons:
                     </p>
                     <div className="flex flex-wrap gap-2">
@@ -275,9 +275,9 @@ export default function CheckoutForm({
                         <button
                           key={coupon.id}
                           onClick={() => handleApplyCoupon(coupon.code)}
-                          className="flex items-center px-3 py-1.5 text-xs font-medium rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 transition-colors"
+                          className="flex items-center rounded-md border border-emerald-200 bg-emerald-50 px-3 py-1.5 font-medium text-emerald-700 text-xs transition-colors hover:bg-emerald-100"
                         >
-                          <Tag className="w-3 h-3 mr-1" />
+                          <Tag className="mr-1 h-3 w-3" />
                           {coupon.code}
                           <span className="ml-1 opacity-75">
                             (
@@ -303,11 +303,11 @@ export default function CheckoutForm({
           <CardHeader className="bg-muted/30 pb-4">
             <CardTitle>Order Summary</CardTitle>
           </CardHeader>
-          <CardContent className="pt-6 space-y-4">
-            <div className="flex justify-between items-start">
+          <CardContent className="space-y-4 pt-6">
+            <div className="flex items-start justify-between">
               <div>
                 <p className="font-bold text-lg">{currentPlan.name}</p>
-                <p className="text-sm text-muted-foreground capitalize font-medium">
+                <p className="font-medium text-muted-foreground text-sm capitalize">
                   {currentPlan.billingCycle} billing
                 </p>
               </div>
@@ -315,24 +315,24 @@ export default function CheckoutForm({
             </div>
 
             {discount > 0 && (
-              <div className="flex justify-between items-center text-emerald-600">
+              <div className="flex items-center justify-between text-emerald-600">
                 <p className="text-sm">Discount ({appliedCoupon})</p>
-                <p className="text-sm font-medium">
+                <p className="font-medium text-sm">
                   -{formatCurrency(discount)}
                 </p>
               </div>
             )}
 
             {currentPlan.isGstEnabled && (
-              <div className="flex justify-between items-center pt-4 border-t border-border/50">
-                <p className="text-sm text-muted-foreground">
+              <div className="flex items-center justify-between border-border/50 border-t pt-4">
+                <p className="text-muted-foreground text-sm">
                   Taxes ({currentPlan.gstPercentage}% GST)
                 </p>
                 <p className="text-sm">{formatCurrency(taxAmount)}</p>
               </div>
             )}
 
-            <div className="flex justify-between items-center pt-4 border-t font-semibold text-lg">
+            <div className="flex items-center justify-between border-t pt-4 font-semibold text-lg">
               <p>Total</p>
               <p>{formatCurrency(totalAmount)}</p>
             </div>
@@ -345,14 +345,14 @@ export default function CheckoutForm({
               disabled={isProcessing}
             >
               {isProcessing && (
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               )}
               {totalAmount === 0 ? "Activate Free Plan" : "Proceed to Pay"}
             </Button>
           </CardFooter>
         </Card>
 
-        <p className="text-xs text-center text-muted-foreground mt-4 px-4">
+        <p className="mt-4 px-4 text-center text-muted-foreground text-xs">
           By proceeding, you agree to our Terms of Service and Privacy Policy.
           Payments are securely processed by Cashfree.
         </p>

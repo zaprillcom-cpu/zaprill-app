@@ -1,4 +1,4 @@
-import { User } from "better-auth/types";
+import type { User } from "better-auth/types";
 
 import { sendMail } from "./sendMail";
 

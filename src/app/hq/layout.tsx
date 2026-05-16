@@ -35,7 +35,7 @@ export default async function AdminLayout({
       <AdminSidebar />
       <SidebarInset>
         <AdminHeader user={session.user} />
-        <main className="flex flex-1 flex-col gap-4 p-4 lg:p-8 bg-muted/30 min-w-0">
+        <main className="flex min-w-0 flex-1 flex-col gap-4 bg-muted/30 p-4 lg:p-8">
           {children}
         </main>
       </SidebarInset>

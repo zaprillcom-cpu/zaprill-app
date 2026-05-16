@@ -60,7 +60,7 @@ export default function CreativePortfolioTemplate({
       sectionVisibility?.summary && basics?.summary ? (
         <section key="summary" className="mb-12">
           <div
-            className="text-2xl font-medium leading-relaxed tracking-tight text-foreground"
+            className="font-medium text-2xl text-foreground leading-relaxed tracking-tight"
             dangerouslySetInnerHTML={{ __html: basics.summary }}
           />
         </section>
@@ -69,21 +69,21 @@ export default function CreativePortfolioTemplate({
     work: () =>
       sectionVisibility?.work && (work || []).length > 0 ? (
         <section key="work" className="mb-12">
-          <h2 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-8">
+          <h2 className="mb-8 font-black text-primary text-xs uppercase tracking-[0.2em]">
             Experience
           </h2>
           <div className="space-y-12">
             {(work || []).map((item) => (
               <div
                 key={item.id}
-                className="grid grid-cols-1 md:grid-cols-4 gap-4"
+                className="grid grid-cols-1 gap-4 md:grid-cols-4"
               >
-                <div className="text-sm font-bold text-muted-foreground tabular-nums">
+                <div className="font-bold text-muted-foreground text-sm tabular-nums">
                   {item.startDate} — {item.endDate || "Present"}
                 </div>
                 <div className="md:col-span-3">
-                  <h3 className="text-xl font-bold mb-1">{item.position}</h3>
-                  <p className="text-primary font-medium mb-4">
+                  <h3 className="mb-1 font-bold text-xl">{item.position}</h3>
+                  <p className="mb-4 font-medium text-primary">
                     {item.company}
                   </p>
                   {item.highlights && (item.highlights || []).length > 0 && (
@@ -91,9 +91,9 @@ export default function CreativePortfolioTemplate({
                       {(item.highlights || []).map((h, i) => (
                         <li
                           key={i}
-                          className="text-muted-foreground leading-relaxed flex gap-4"
+                          className="flex gap-4 text-muted-foreground leading-relaxed"
                         >
-                          <span className="text-primary/40 shrink-0">—</span>
+                          <span className="shrink-0 text-primary/40">—</span>
                           <span>{h}</span>
                         </li>
                       ))}
@@ -109,18 +109,18 @@ export default function CreativePortfolioTemplate({
     education: () =>
       sectionVisibility?.education && (education || []).length > 0 ? (
         <section key="education" className="mb-12">
-          <h2 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-8">
+          <h2 className="mb-8 font-black text-primary text-xs uppercase tracking-[0.2em]">
             Education
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             {(education || []).map((item) => (
               <div key={item.id}>
-                <h3 className="text-lg font-bold">{item.institution}</h3>
-                <p className="text-muted-foreground mb-1">
+                <h3 className="font-bold text-lg">{item.institution}</h3>
+                <p className="mb-1 text-muted-foreground">
                   {item.studyType}
                   {item.area ? ` in ${item.area}` : ""}
                 </p>
-                <p className="text-sm font-medium text-primary">
+                <p className="font-medium text-primary text-sm">
                   {item.startDate} — {item.endDate || "Present"}
                   {item.score ? ` · GPA: ${item.score}` : ""}
                 </p>
@@ -133,20 +133,20 @@ export default function CreativePortfolioTemplate({
     skills: () =>
       sectionVisibility?.skills && (skills || []).length > 0 ? (
         <section key="skills" className="mb-12">
-          <h2 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-8">
+          <h2 className="mb-8 font-black text-primary text-xs uppercase tracking-[0.2em]">
             Expertise
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
             {(skills || []).map((group) => (
               <div key={group.id}>
-                <h3 className="text-sm font-bold mb-3">{group.name}</h3>
+                <h3 className="mb-3 font-bold text-sm">{group.name}</h3>
                 <ul className="space-y-1">
                   {(group.keywords || []).map((skill, i) => (
                     <li
                       key={i}
-                      className="text-muted-foreground text-sm flex items-center gap-2"
+                      className="flex items-center gap-2 text-muted-foreground text-sm"
                     >
-                      <span className="w-1 h-1 rounded-full bg-primary/30" />
+                      <span className="h-1 w-1 rounded-full bg-primary/30" />
                       {skill}
                     </li>
                   ))}
@@ -160,32 +160,32 @@ export default function CreativePortfolioTemplate({
     projects: () =>
       sectionVisibility?.projects && (projects || []).length > 0 ? (
         <section key="projects" className="mb-12">
-          <h2 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-8">
+          <h2 className="mb-8 font-black text-primary text-xs uppercase tracking-[0.2em]">
             Featured Projects
           </h2>
           <div className="space-y-12">
             {(projects || []).map((item) => (
               <div key={item.id} className="group">
-                <div className="flex justify-between items-baseline mb-4">
-                  <h3 className="text-2xl font-bold flex items-center gap-3">
+                <div className="mb-4 flex items-baseline justify-between">
+                  <h3 className="flex items-center gap-3 font-bold text-2xl">
                     {item.name}
                     {item.url && (
                       <a
                         href={item.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-primary opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="text-primary opacity-0 transition-opacity group-hover:opacity-100"
                       >
                         <ExternalLink size={18} />
                       </a>
                     )}
                   </h3>
-                  <span className="text-sm font-medium text-muted-foreground">
+                  <span className="font-medium text-muted-foreground text-sm">
                     {item.startDate} — {item.endDate}
                   </span>
                 </div>
                 {item.description && (
-                  <p className="text-muted-foreground leading-relaxed mb-4 max-w-2xl">
+                  <p className="mb-4 max-w-2xl text-muted-foreground leading-relaxed">
                     {item.description}
                   </p>
                 )}
@@ -194,7 +194,7 @@ export default function CreativePortfolioTemplate({
                     {(item.highlights || []).map((h, i) => (
                       <span
                         key={i}
-                        className="px-3 py-1 bg-secondary text-secondary-foreground rounded-full text-xs font-medium"
+                        className="rounded-full bg-secondary px-3 py-1 font-medium text-secondary-foreground text-xs"
                       >
                         {h}
                       </span>
@@ -210,17 +210,17 @@ export default function CreativePortfolioTemplate({
     certifications: () =>
       sectionVisibility?.certifications && (certifications || []).length > 0 ? (
         <section key="certifications" className="mb-12">
-          <h2 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-6">
+          <h2 className="mb-6 font-black text-primary text-xs uppercase tracking-[0.2em]">
             Certifications
           </h2>
           <div className="flex flex-wrap gap-4">
             {(certifications || []).map((item) => (
               <div
                 key={item.id}
-                className="p-4 border-2 border-border rounded-2xl hover:border-primary transition-colors"
+                className="rounded-2xl border-2 border-border p-4 transition-colors hover:border-primary"
               >
-                <h3 className="font-bold text-sm mb-1">{item.name}</h3>
-                <p className="text-xs text-muted-foreground">
+                <h3 className="mb-1 font-bold text-sm">{item.name}</h3>
+                <p className="text-muted-foreground text-xs">
                   {item.issuer} · {item.date}
                 </p>
               </div>
@@ -232,14 +232,14 @@ export default function CreativePortfolioTemplate({
     languages: () =>
       sectionVisibility?.languages && (languages || []).length > 0 ? (
         <section key="languages" className="mb-12">
-          <h2 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-6">
+          <h2 className="mb-6 font-black text-primary text-xs uppercase tracking-[0.2em]">
             Languages
           </h2>
           <div className="flex flex-wrap gap-8">
             {(languages || []).map((item) => (
               <div key={item.id} className="flex flex-col">
-                <span className="text-lg font-bold">{item.language}</span>
-                <span className="text-xs font-black uppercase tracking-widest text-primary/60">
+                <span className="font-bold text-lg">{item.language}</span>
+                <span className="font-black text-primary/60 text-xs uppercase tracking-widest">
                   {item.fluency}
                 </span>
               </div>
@@ -267,17 +267,17 @@ export default function CreativePortfolioTemplate({
         ["--muted-foreground" as string]: theme?.accent || "#000000",
       }}
     >
-      <header className="mb-20 flex flex-col md:flex-row md:items-end justify-between gap-8">
+      <header className="mb-20 flex flex-col justify-between gap-8 md:flex-row md:items-end">
         <div>
-          <h1 className="text-7xl font-black tracking-tighter leading-none mb-4 uppercase">
+          <h1 className="mb-4 font-black text-7xl uppercase leading-none tracking-tighter">
             {basics.name || "Your Name"}
           </h1>
-          <p className="text-2xl font-bold text-primary tracking-tight">
+          <p className="font-bold text-2xl text-primary tracking-tight">
             {basics.label}
           </p>
         </div>
 
-        <div className="flex flex-col gap-2 items-start md:items-end text-sm font-medium">
+        <div className="flex flex-col items-start gap-2 font-medium text-sm md:items-end">
           <ContactItem
             icon={IconMail}
             text={basics.email}
@@ -309,7 +309,7 @@ export default function CreativePortfolioTemplate({
       </main>
 
       {(basics.profiles || []).length > 0 && (
-        <footer className="mt-20 pt-12 border-t-4 border-foreground">
+        <footer className="mt-20 border-foreground border-t-4 pt-12">
           <div className="flex flex-wrap gap-8">
             {(basics.profiles || []).map((p) => (
               <a
@@ -317,19 +317,19 @@ export default function CreativePortfolioTemplate({
                 href={p.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 group"
+                className="group flex items-center gap-3"
               >
-                <div className="w-10 h-10 rounded-full bg-foreground text-background flex items-center justify-center group-hover:bg-primary transition-colors">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-foreground text-background transition-colors group-hover:bg-primary">
                   {(() => {
                     const Icon = getProfileIcon(p.network);
-                    return <Icon className="w-5 h-5" />;
+                    return <Icon className="h-5 w-5" />;
                   })()}
                 </div>
                 <div>
-                  <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">
+                  <div className="font-black text-[10px] text-muted-foreground uppercase tracking-widest">
                     {p.network}
                   </div>
-                  <div className="text-sm font-bold">
+                  <div className="font-bold text-sm">
                     {p.username || "View Profile"}
                   </div>
                 </div>

@@ -66,8 +66,8 @@ export default function CareerInsightsPage() {
 
   if (isPending || isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <Loader2 className="h-8 w-8 animate-spin text-primary mr-3" />
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <Loader2 className="mr-3 h-8 w-8 animate-spin text-primary" />
         <span className="font-bold text-lg tracking-tight">
           Loading insights...
         </span>
@@ -81,7 +81,7 @@ export default function CareerInsightsPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
+    <div className="flex min-h-screen flex-col bg-background font-sans text-foreground">
       <Navbar
         showBack
         backHref="/"
@@ -97,25 +97,25 @@ export default function CareerInsightsPage() {
         }
       />
 
-      <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-10">
+      <main className="mx-auto w-full max-w-7xl flex-1 px-6 py-10">
         {/* ── Hero Section ── */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+        <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
-            <div className="flex items-center gap-2 mb-2">
+            <div className="mb-2 flex items-center gap-2">
               <Badge
                 variant="outline"
-                className="bg-primary/5 text-primary border-primary/20 font-black uppercase tracking-widest text-[10px] px-2 py-0.5"
+                className="border-primary/20 bg-primary/5 px-2 py-0.5 font-black text-[10px] text-primary uppercase tracking-widest"
               >
                 Beta
               </Badge>
-              <span className="text-muted-foreground font-bold text-xs uppercase tracking-widest">
+              <span className="font-bold text-muted-foreground text-xs uppercase tracking-widest">
                 Dashboard
               </span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-black tracking-tighter mb-3 bg-clip-text text-transparent bg-linear-to-r from-foreground to-foreground/70">
+            <h1 className="mb-3 bg-linear-to-r from-foreground to-foreground/70 bg-clip-text font-black text-4xl text-transparent tracking-tighter md:text-5xl">
               Career Insights
             </h1>
-            <p className="text-muted-foreground font-medium text-lg max-w-xl leading-relaxed">
+            <p className="max-w-xl font-medium text-lg text-muted-foreground leading-relaxed">
               Actionable intelligence from your latest analysis and tracked
               applications.
             </p>
@@ -123,39 +123,39 @@ export default function CareerInsightsPage() {
         </div>
 
         {!lastAnalysis && recentVisits.length === 0 ? (
-          <div className="text-center py-24 border-2 border-dashed border-border/60 rounded-3xl bg-card/50 backdrop-blur-sm">
-            <div className="w-20 h-20 bg-primary/10 rounded-3xl flex items-center justify-center mx-auto mb-6">
+          <div className="rounded-3xl border-2 border-border/60 border-dashed bg-card/50 py-24 text-center backdrop-blur-sm">
+            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl bg-primary/10">
               <Target className="h-10 w-10 text-primary" />
             </div>
-            <h2 className="text-3xl font-black mb-3 tracking-tight">
+            <h2 className="mb-3 font-black text-3xl tracking-tight">
               Ready to boost your career?
             </h2>
-            <p className="text-muted-foreground mb-8 font-semibold text-lg max-w-md mx-auto">
+            <p className="mx-auto mb-8 max-w-md font-semibold text-lg text-muted-foreground">
               Upload your resume and search for jobs to unlock your personalized
               roadmap and track your applications.
             </p>
             <Button
               size="lg"
               onClick={() => router.push("/")}
-              className="font-bold px-8"
+              className="px-8 font-bold"
             >
               Get Started Now
             </Button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
             {/* ── Left Column: Analysis Stats & Roadmap ── */}
-            <div className="lg:col-span-8 space-y-8">
+            <div className="space-y-8 lg:col-span-8">
               {/* Learning Roadmap */}
               {lastAnalysis && (
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-2xl font-black tracking-tight flex items-center gap-2">
+                    <h3 className="flex items-center gap-2 font-black text-2xl tracking-tight">
                       <TrendingUp className="h-6 w-6 text-primary" />
                       Growth Roadmap
                     </h3>
                   </div>
-                  <div className="bg-card rounded-3xl border border-border/40 shadow-sm overflow-hidden">
+                  <div className="overflow-hidden rounded-3xl border border-border/40 bg-card shadow-sm">
                     <LearningRoadmap
                       roadmap={lastAnalysis.roadmap as RoadmapItem[]}
                       advice={lastAnalysis.advice}
@@ -166,18 +166,18 @@ export default function CareerInsightsPage() {
             </div>
 
             {/* ── Right Column: Skill Gaps & Activity ── */}
-            <div className="lg:col-span-4 space-y-8">
+            <div className="space-y-8 lg:col-span-4">
               {/* Critical Skill Gaps */}
               {lastAnalysis && (
                 <div className="space-y-6">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-2xl font-black tracking-tight flex items-center gap-2">
+                    <h3 className="flex items-center gap-2 font-black text-2xl tracking-tight">
                       <Sparkles className="h-6 w-6 text-amber-500" />
                       Priority Gaps
                     </h3>
                     <Badge
                       variant="outline"
-                      className="font-bold border-amber-200 bg-amber-50 text-amber-700 dark:bg-amber-900/20 dark:border-amber-800 dark:text-amber-400"
+                      className="border-amber-200 bg-amber-50 font-bold text-amber-700 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-400"
                     >
                       Top{" "}
                       {Math.min(
@@ -194,50 +194,48 @@ export default function CareerInsightsPage() {
                       .map((gap, idx) => (
                         <div
                           key={gap.skill}
-                          className="group relative bg-card p-4 rounded-2xl border border-border/40 shadow-sm hover:border-primary/20 transition-all"
+                          className="group relative rounded-2xl border border-border/40 bg-card p-4 shadow-sm transition-all hover:border-primary/20"
                         >
                           <div className="flex items-center justify-between gap-4">
                             <div className="flex items-center gap-4">
-                              <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-muted font-black text-muted-foreground text-xs border border-border/50">
+                              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-border/50 bg-muted font-black text-muted-foreground text-xs">
                                 0{idx + 1}
                               </div>
                               <div>
-                                <h4 className="font-black text-sm tracking-tight text-foreground">
+                                <h4 className="font-black text-foreground text-sm tracking-tight">
                                   {gap.skill}
                                 </h4>
-                                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                                <p className="font-bold text-[10px] text-muted-foreground uppercase tracking-wider">
                                   {gap.category}
                                 </p>
                               </div>
                             </div>
 
                             <div className="flex items-center gap-3">
-                              <div className="hidden sm:flex flex-col items-end">
-                                <div className="flex gap-1 h-1 w-12 rounded-full overflow-hidden bg-muted">
+                              <div className="hidden flex-col items-end sm:flex">
+                                <div className="flex h-1 w-12 gap-1 overflow-hidden rounded-full bg-muted">
                                   <div
                                     className={`h-full rounded-full ${
                                       gap.priority === "high"
-                                        ? "bg-primary w-full"
+                                        ? "w-full bg-primary"
                                         : gap.priority === "medium"
-                                          ? "bg-primary/60 w-2/3"
-                                          : "bg-primary/30 w-1/3"
+                                          ? "w-2/3 bg-primary/60"
+                                          : "w-1/3 bg-primary/30"
                                     }`}
                                   />
                                 </div>
-                                <span className="text-[9px] font-black uppercase text-muted-foreground mt-1 tracking-tighter">
+                                <span className="mt-1 font-black text-[9px] text-muted-foreground uppercase tracking-tighter">
                                   Market Demand
                                 </span>
                               </div>
                               <Badge
-                                className={`
-                              text-[10px] font-black px-2 py-0.5 rounded-lg border-none uppercase tracking-wider
-                              ${
-                                gap.priority === "high"
-                                  ? "bg-red-50 text-red-600 dark:bg-red-900/20 dark:text-red-400"
-                                  : gap.priority === "medium"
-                                    ? "bg-orange-50 text-orange-600 dark:bg-orange-900/20 dark:text-orange-400"
-                                    : "bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400"
-                              }
+                                className={`rounded-lg border-none px-2 py-0.5 font-black text-[10px] uppercase tracking-wider ${
+                                  gap.priority === "high"
+                                    ? "bg-red-50 text-red-600 dark:bg-red-900/20 dark:text-red-400"
+                                    : gap.priority === "medium"
+                                      ? "bg-orange-50 text-orange-600 dark:bg-orange-900/20 dark:text-orange-400"
+                                      : "bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400"
+                                }
                             `}
                               >
                                 {gap.priority}
@@ -250,20 +248,20 @@ export default function CareerInsightsPage() {
 
                   {/* Subtle Skills Inventory */}
                   <div className="pt-2">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-3 px-1">
+                    <p className="mb-3 px-1 font-black text-[10px] text-muted-foreground uppercase tracking-widest">
                       Validated Inventory ({lastAnalysis.resumeSkills.length})
                     </p>
-                    <div className="flex flex-wrap gap-1.5 opacity-60 hover:opacity-100 transition-opacity">
+                    <div className="flex flex-wrap gap-1.5 opacity-60 transition-opacity hover:opacity-100">
                       {lastAnalysis.resumeSkills.slice(0, 10).map((skill) => (
                         <span
                           key={skill}
-                          className="text-[10px] font-bold px-2 py-1 rounded-lg bg-secondary text-secondary-foreground border border-border/50"
+                          className="rounded-lg border border-border/50 bg-secondary px-2 py-1 font-bold text-[10px] text-secondary-foreground"
                         >
                           {skill}
                         </span>
                       ))}
                       {lastAnalysis.resumeSkills.length > 10 && (
-                        <span className="text-[10px] font-bold px-2 py-1 text-muted-foreground">
+                        <span className="px-2 py-1 font-bold text-[10px] text-muted-foreground">
                           +{lastAnalysis.resumeSkills.length - 10} more
                         </span>
                       )}
@@ -274,25 +272,25 @@ export default function CareerInsightsPage() {
 
               {/* Job Tracking CTA */}
               <div className="space-y-4">
-                <h3 className="text-2xl font-black tracking-tight flex items-center gap-2">
+                <h3 className="flex items-center gap-2 font-black text-2xl tracking-tight">
                   <MousePointer2 className="h-6 w-6 text-blue-500" />
                   Job Tracking
                 </h3>
-                <Card className="bg-linear-to-br from-primary/5 to-primary/10 border-primary/10 shadow-sm overflow-hidden group hover:shadow-md transition-all">
+                <Card className="group overflow-hidden border-primary/10 bg-linear-to-br from-primary/5 to-primary/10 shadow-sm transition-all hover:shadow-md">
                   <CardContent className="p-6">
-                    <div className="flex items-center justify-center w-12 h-12 bg-primary rounded-2xl mb-4 group-hover:scale-110 transition-transform">
+                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary transition-transform group-hover:scale-110">
                       <Target className="h-6 w-6 text-primary-foreground" />
                     </div>
-                    <h4 className="text-lg font-black mb-2">
+                    <h4 className="mb-2 font-black text-lg">
                       Track Applications
                     </h4>
-                    <p className="text-sm text-muted-foreground font-medium mb-6 leading-relaxed">
+                    <p className="mb-6 font-medium text-muted-foreground text-sm leading-relaxed">
                       Monitor all your applied jobs and saved bookmarks in one
                       central dashboard.
                     </p>
                     <Button
                       onClick={() => router.push("/jobs")}
-                      className="w-full font-black rounded-xl gap-2 shadow-sm"
+                      className="w-full gap-2 rounded-xl font-black shadow-sm"
                     >
                       View My Jobs
                       <ChevronRight className="h-4 w-4" />

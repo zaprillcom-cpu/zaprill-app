@@ -63,7 +63,7 @@ export function AdminHeader({ user }: { user: any }) {
 
       <div className="flex items-center gap-4">
         <div className="relative hidden w-full max-w-sm items-center sm:flex">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Search className="absolute top-2.5 left-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             type="search"
             placeholder="Search commands..."
@@ -73,7 +73,7 @@ export function AdminHeader({ user }: { user: any }) {
 
         <Button variant="ghost" size="icon" className="relative">
           <Bell className="h-5 w-5" />
-          <span className="absolute right-2 top-2 flex h-2 w-2 rounded-full bg-primary" />
+          <span className="absolute top-2 right-2 flex h-2 w-2 rounded-full bg-primary" />
         </Button>
 
         <DropdownMenu>
@@ -94,8 +94,8 @@ export function AdminHeader({ user }: { user: any }) {
           <DropdownMenuContent className="w-56" align="end">
             <DropdownMenuLabel className="font-normal">
               <div className="flex flex-col space-y-1">
-                <p className="text-sm font-medium leading-none">{user?.name}</p>
-                <p className="text-xs leading-none text-muted-foreground">
+                <p className="font-medium text-sm leading-none">{user?.name}</p>
+                <p className="text-muted-foreground text-xs leading-none">
                   {user?.email}
                 </p>
               </div>
@@ -113,7 +113,7 @@ export function AdminHeader({ user }: { user: any }) {
             <DropdownMenuSeparator />
             <DropdownMenuItem
               data-variant="destructive"
-              className="text-destructive focus:text-destructive cursor-pointer"
+              className="cursor-pointer text-destructive focus:text-destructive"
             >
               <LogOut className="mr-2 h-4 w-4" />
               <span>Log out</span>

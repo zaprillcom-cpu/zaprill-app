@@ -260,10 +260,10 @@ export default function SettingsForm({
     <div className="space-y-8">
       {/* Template Selection */}
       <section>
-        <h3 className="text-sm font-black uppercase tracking-widest text-muted-foreground mb-4">
+        <h3 className="mb-4 font-black text-muted-foreground text-sm uppercase tracking-widest">
           Template
         </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {TEMPLATE_REGISTRY.map((tmpl) => {
             const locked = tmpl.isPremium && !isPro;
             return (
@@ -271,16 +271,16 @@ export default function SettingsForm({
                 type="button"
                 key={tmpl.slug}
                 onClick={() => !locked && setTemplate(tmpl.slug)}
-                className={`relative text-left p-4 rounded-xl border-2 transition-all duration-200 ${
+                className={`relative rounded-xl border-2 p-4 text-left transition-all duration-200 ${
                   templateSlug === tmpl.slug
                     ? "border-primary bg-primary/5"
                     : locked
-                      ? "border-border bg-muted/20 opacity-60 cursor-not-allowed"
-                      : "border-border bg-card hover:border-muted-foreground/30 cursor-pointer"
+                      ? "cursor-not-allowed border-border bg-muted/20 opacity-60"
+                      : "cursor-pointer border-border bg-card hover:border-muted-foreground/30"
                 }`}
               >
                 {templateSlug === tmpl.slug && (
-                  <div className="absolute top-3 right-3 w-5 h-5 rounded-full bg-primary flex items-center justify-center">
+                  <div className="absolute top-3 right-3 flex h-5 w-5 items-center justify-center rounded-full bg-primary">
                     <Check className="h-3 w-3 text-primary-foreground" />
                   </div>
                 )}
@@ -290,26 +290,26 @@ export default function SettingsForm({
                   </div>
                 )}
                 <h4 className="font-bold text-sm">{tmpl.name}</h4>
-                <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                <p className="mt-1 line-clamp-2 text-muted-foreground text-xs">
                   {tmpl.description}
                 </p>
-                <div className="flex items-center gap-2 mt-2">
+                <div className="mt-2 flex items-center gap-2">
                   <Badge
                     variant="outline"
-                    className="text-[10px] font-bold uppercase"
+                    className="font-bold text-[10px] uppercase"
                   >
                     {tmpl.layout}
                   </Badge>
                   <Badge
                     variant="outline"
-                    className="text-[10px] font-bold uppercase"
+                    className="font-bold text-[10px] uppercase"
                   >
                     ATS {tmpl.atsScore}%
                   </Badge>
                   {locked && (
                     <Badge
                       variant="secondary"
-                      className="text-[10px] font-bold uppercase"
+                      className="font-bold text-[10px] uppercase"
                     >
                       Pro
                     </Badge>
@@ -323,7 +323,7 @@ export default function SettingsForm({
 
       {/* Colors */}
       <section>
-        <h3 className="text-sm font-black uppercase tracking-widest text-muted-foreground mb-4 flex items-center gap-2">
+        <h3 className="mb-4 flex items-center gap-2 font-black text-muted-foreground text-sm uppercase tracking-widest">
           <Palette className="h-4 w-4" /> Colors
         </h3>
         <div className="grid grid-cols-2 gap-4">
@@ -336,7 +336,7 @@ export default function SettingsForm({
             ] as const
           ).map(({ key, label }) => (
             <div key={key} className="space-y-2">
-              <Label className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+              <Label className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                 {label}
               </Label>
               <div className="flex items-center gap-2">
@@ -344,7 +344,7 @@ export default function SettingsForm({
                   type="color"
                   value={theme[key] ?? "#000000"}
                   onChange={(e) => setThemeColor(key, e.target.value)}
-                  className="w-10 h-10 rounded-lg border border-border cursor-pointer"
+                  className="h-10 w-10 cursor-pointer rounded-lg border border-border"
                 />
                 <Input
                   value={themeInputs[key]}
@@ -362,7 +362,7 @@ export default function SettingsForm({
                       [key]: theme[key] ?? "",
                     }));
                   }}
-                  className="h-10 text-xs font-mono"
+                  className="h-10 font-mono text-xs"
                   maxLength={7}
                 />
               </div>
@@ -373,13 +373,13 @@ export default function SettingsForm({
 
       {/* Typography */}
       <section>
-        <h3 className="text-sm font-black uppercase tracking-widest text-muted-foreground mb-4 flex items-center gap-2">
+        <h3 className="mb-4 flex items-center gap-2 font-black text-muted-foreground text-sm uppercase tracking-widest">
           <Type className="h-4 w-4" /> Typography
         </h3>
         <Card className="border-border">
-          <CardContent className="p-5 space-y-5">
+          <CardContent className="space-y-5 p-5">
             <div className="space-y-2">
-              <Label className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+              <Label className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                 Font Family
               </Label>
               <Select
@@ -403,10 +403,10 @@ export default function SettingsForm({
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+                <Label className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                   Font Size
                 </Label>
-                <span className="text-sm font-bold">
+                <span className="font-bold text-sm">
                   {typography.font.size}pt
                 </span>
               </div>
@@ -421,10 +421,10 @@ export default function SettingsForm({
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+                <Label className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                   Line Height
                 </Label>
-                <span className="text-sm font-bold">
+                <span className="font-bold text-sm">
                   {typography.lineHeight}
                 </span>
               </div>
@@ -444,13 +444,13 @@ export default function SettingsForm({
 
       {/* Page Settings */}
       <section>
-        <h3 className="text-sm font-black uppercase tracking-widest text-muted-foreground mb-4">
+        <h3 className="mb-4 font-black text-muted-foreground text-sm uppercase tracking-widest">
           Page Layout
         </h3>
         <Card className="border-border">
-          <CardContent className="p-5 space-y-5">
+          <CardContent className="space-y-5 p-5">
             <div className="space-y-2">
-              <Label className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+              <Label className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                 Page Format
               </Label>
               <Select
@@ -474,10 +474,10 @@ export default function SettingsForm({
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+                <Label className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                   Margin
                 </Label>
-                <span className="text-sm font-bold">{page.margin}mm</span>
+                <span className="font-bold text-sm">{page.margin}mm</span>
               </div>
               <Slider
                 value={[page.margin]}
@@ -493,17 +493,17 @@ export default function SettingsForm({
 
       {/* Section Visibility */}
       <section>
-        <h3 className="text-sm font-black uppercase tracking-widest text-muted-foreground mb-4">
+        <h3 className="mb-4 font-black text-muted-foreground text-sm uppercase tracking-widest">
           Section Visibility
         </h3>
         <Card className="border-border">
-          <CardContent className="p-4 space-y-1">
+          <CardContent className="space-y-1 p-4">
             {Object.entries(SECTION_LABELS).map(([key, label]) => (
               <div
                 key={key}
-                className="flex items-center justify-between py-2.5 px-2 rounded-lg hover:bg-muted/50 transition-colors"
+                className="flex items-center justify-between rounded-lg px-2 py-2.5 transition-colors hover:bg-muted/50"
               >
-                <span className="text-sm font-medium">{label}</span>
+                <span className="font-medium text-sm">{label}</span>
                 <Switch
                   checked={
                     (sectionVisibility as unknown as Record<string, boolean>)[
@@ -520,10 +520,10 @@ export default function SettingsForm({
 
       {/* Section Order */}
       <section>
-        <h3 className="text-sm font-black uppercase tracking-widest text-muted-foreground mb-4">
+        <h3 className="mb-4 font-black text-muted-foreground text-sm uppercase tracking-widest">
           Section Order
         </h3>
-        <p className="text-xs text-muted-foreground mb-3">
+        <p className="mb-3 text-muted-foreground text-xs">
           Drag sections to reorder them on your resume
         </p>
         <Card className="border-border">
@@ -538,8 +538,8 @@ export default function SettingsForm({
               >
                 {orderableSections.map((key: string) => (
                   <SortableItem key={key} id={key}>
-                    <div className="flex items-center gap-2 py-2.5 px-2 rounded-lg hover:bg-muted/50 transition-colors">
-                      <span className="text-sm font-medium pl-6">
+                    <div className="flex items-center gap-2 rounded-lg px-2 py-2.5 transition-colors hover:bg-muted/50">
+                      <span className="pl-6 font-medium text-sm">
                         {SECTION_LABELS[key] || key}
                       </span>
                     </div>

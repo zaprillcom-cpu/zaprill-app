@@ -20,33 +20,33 @@ export function ResultsHeader({ resume, summary }: ResultsHeaderProps) {
   return (
     <>
       {/* Profile header */}
-      <Card className="mb-8 shadow-sm border-border rounded-2xl">
+      <Card className="mb-8 rounded-2xl border-border shadow-sm">
         <CardContent className="p-8">
-          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-            <div className="w-20 h-20 rounded-xl bg-muted/80 border border-border flex items-center justify-center shrink-0">
+          <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
+            <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl border border-border bg-muted/80">
               <User className="h-10 w-10 text-foreground" />
             </div>
             <div className="flex-1 text-center sm:text-left">
-              <h1 className="text-3xl font-black text-foreground mb-2 tracking-tight">
+              <h1 className="mb-2 font-black text-3xl text-foreground tracking-tight">
                 {resume.basics.name}
               </h1>
-              <p className="text-base font-semibold text-muted-foreground mb-5 pb-5 border-b border-border/50">
+              <p className="mb-5 border-border/50 border-b pb-5 font-semibold text-base text-muted-foreground">
                 {resume.basics.email}{" "}
                 {resume.basics.location.city && (
                   <>
-                    <span className="opacity-50 mx-2">·</span>{" "}
+                    <span className="mx-2 opacity-50">·</span>{" "}
                     {resume.basics.location.city}
                   </>
                 )}{" "}
-                <span className="opacity-50 mx-2">·</span> Target:{" "}
+                <span className="mx-2 opacity-50">·</span> Target:{" "}
                 {resume.inferredJobTitles?.slice(0, 3).join(", ")}
               </p>
-              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+              <div className="flex flex-wrap items-center justify-center gap-2 sm:justify-start">
                 {skills.slice(0, 15).map((s) => (
                   <SkillBadge key={s} skill={s} variant="neutral" size="md" />
                 ))}
                 {skills.length > 15 && (
-                  <span className="text-sm font-black text-muted-foreground ml-2">
+                  <span className="ml-2 font-black text-muted-foreground text-sm">
                     +{skills.length - 15}
                   </span>
                 )}
@@ -57,7 +57,7 @@ export function ResultsHeader({ resume, summary }: ResultsHeaderProps) {
       </Card>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-10">
+      <div className="mb-10 grid grid-cols-2 gap-5 md:grid-cols-4">
         <StatCard value={`${summary.topMatch}%`} label="Best match" />
         <StatCard value={`${summary.avg}%`} label="Avg match" />
         <StatCard value={summary.strongMatches} label="Strong fits" />

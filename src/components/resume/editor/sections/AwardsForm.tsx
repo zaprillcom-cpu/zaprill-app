@@ -96,8 +96,8 @@ export default function AwardsForm({ serverErrors }: { serverErrors?: any }) {
   return (
     <div className="space-y-5">
       {fields.length === 0 && (
-        <div className="text-center py-12 border-2 border-dashed border-border rounded-xl">
-          <p className="text-muted-foreground font-medium mb-4">
+        <div className="rounded-xl border-2 border-border border-dashed py-12 text-center">
+          <p className="mb-4 font-medium text-muted-foreground">
             No awards added yet
           </p>
           <Button variant="outline" onClick={addItem} className="gap-2">
@@ -108,7 +108,7 @@ export default function AwardsForm({ serverErrors }: { serverErrors?: any }) {
 
       {fields.map((field, idx) => (
         <Card key={field.id} className="border-border">
-          <CardContent className="p-5 space-y-4">
+          <CardContent className="space-y-4 p-5">
             <div className="flex items-center justify-between">
               <span className="font-bold text-foreground text-sm">
                 Award {idx + 1}
@@ -124,9 +124,9 @@ export default function AwardsForm({ serverErrors }: { serverErrors?: any }) {
               </Button>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <Field>
-                <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+                <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                   Award Title *
                 </FieldLabel>
                 <FieldContent>
@@ -139,7 +139,7 @@ export default function AwardsForm({ serverErrors }: { serverErrors?: any }) {
                 </FieldContent>
               </Field>
               <Field>
-                <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+                <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                   Awarded By
                 </FieldLabel>
                 <FieldContent>
@@ -156,7 +156,7 @@ export default function AwardsForm({ serverErrors }: { serverErrors?: any }) {
             </div>
 
             <Field>
-              <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+              <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                 Date
               </FieldLabel>
               <FieldContent>
@@ -170,7 +170,7 @@ export default function AwardsForm({ serverErrors }: { serverErrors?: any }) {
             </Field>
 
             <Field>
-              <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+              <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                 Summary
               </FieldLabel>
               <FieldContent>

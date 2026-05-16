@@ -140,9 +140,9 @@ export function PlansContent({ plans, loading, onMutate, onRefresh }: Props) {
 
   return (
     <>
-      <div className="flex items-center justify-between mb-4">
+      <div className="mb-4 flex items-center justify-between">
         <div>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             {plans.length} plan{plans.length !== 1 ? "s" : ""} configured
           </p>
         </div>
@@ -171,21 +171,21 @@ export function PlansContent({ plans, loading, onMutate, onRefresh }: Props) {
                 <div className="flex items-start justify-between gap-2">
                   <div>
                     <CardTitle className="text-base">{plan.name}</CardTitle>
-                    <CardDescription className="text-xs mt-0.5">
+                    <CardDescription className="mt-0.5 text-xs">
                       {plan.slug}
                     </CardDescription>
                   </div>
-                  <div className="flex gap-1 shrink-0">
-                    <Badge variant="outline" className="capitalize text-xs">
+                  <div className="flex shrink-0 gap-1">
+                    <Badge variant="outline" className="text-xs capitalize">
                       {plan.category}
                     </Badge>
-                    <Badge variant="outline" className="capitalize text-xs">
+                    <Badge variant="outline" className="text-xs capitalize">
                       {plan.billingCycle}
                     </Badge>
                     {plan.isGstEnabled && (
                       <Badge
                         variant="secondary"
-                        className="text-xs bg-emerald-500/10 text-emerald-500 border-emerald-500/20"
+                        className="border-emerald-500/20 bg-emerald-500/10 text-emerald-500 text-xs"
                       >
                         GST {plan.gstPercentage}%
                       </Badge>
@@ -199,36 +199,36 @@ export function PlansContent({ plans, loading, onMutate, onRefresh }: Props) {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="flex flex-col mb-3">
+                <div className="mb-3 flex flex-col">
                   <div className="flex items-baseline gap-1">
                     <IndianRupee className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-2xl font-bold">
+                    <span className="font-bold text-2xl">
                       {Number(plan.amount).toLocaleString("en-IN")}
                     </span>
-                    <span className="text-sm text-muted-foreground">
+                    <span className="text-muted-foreground text-sm">
                       / {plan.billingCycle}
                     </span>
                   </div>
                   {plan.originalAmount &&
                     Number(plan.originalAmount) > Number(plan.amount) && (
-                      <div className="flex items-center gap-1.5 text-xs text-muted-foreground line-through ml-5">
+                      <div className="ml-5 flex items-center gap-1.5 text-muted-foreground text-xs line-through">
                         <IndianRupee className="h-3 w-3" />
                         {Number(plan.originalAmount).toLocaleString("en-IN")}
                       </div>
                     )}
                 </div>
                 {Array.isArray(plan.features) && plan.features.length > 0 && (
-                  <ul className="text-xs text-muted-foreground space-y-1 mb-4">
+                  <ul className="mb-4 space-y-1 text-muted-foreground text-xs">
                     {plan.features.slice(0, 3).map((f: any, i) => (
                       <li key={i} className="flex items-center gap-1.5">
-                        <span className="h-1 w-1 rounded-full bg-primary shrink-0" />
+                        <span className="h-1 w-1 shrink-0 rounded-full bg-primary" />
                         <span className="truncate">
                           {typeof f === "string" ? f : f.text}
                         </span>
                       </li>
                     ))}
                     {plan.features.length > 3 && (
-                      <li className="text-xs text-muted-foreground">
+                      <li className="text-muted-foreground text-xs">
                         +{plan.features.length - 3} more
                       </li>
                     )}
@@ -264,9 +264,9 @@ export function PlansContent({ plans, loading, onMutate, onRefresh }: Props) {
       )}
 
       {/* Preview Section */}
-      <div className="mt-12 pt-8 border-t border-border">
-        <h3 className="text-lg font-semibold mb-6">User Preview</h3>
-        <div className="rounded-xl border bg-muted/10 overflow-x-auto">
+      <div className="mt-12 border-border border-t pt-8">
+        <h3 className="mb-6 font-semibold text-lg">User Preview</h3>
+        <div className="overflow-x-auto rounded-xl border bg-muted/10">
           <PricingPlans plans={plans as any} />
         </div>
       </div>
@@ -443,9 +443,9 @@ export function PlansContent({ plans, loading, onMutate, onRefresh }: Props) {
                   <Plus className="mr-1 h-3 w-3" /> Add Feature
                 </Button>
               </div>
-              <div className="space-y-2 max-h-[200px] overflow-y-auto pr-1">
+              <div className="max-h-[200px] space-y-2 overflow-y-auto pr-1">
                 {form.features.map((feat, index) => (
-                  <div key={index} className="flex gap-2 items-start group">
+                  <div key={index} className="group flex items-start gap-2">
                     <div className="grid flex-1 gap-1.5">
                       <Input
                         placeholder="Feature name"
@@ -472,7 +472,7 @@ export function PlansContent({ plans, loading, onMutate, onRefresh }: Props) {
                       type="button"
                       variant="ghost"
                       size="icon"
-                      className="h-8 w-8 text-destructive opacity-0 group-hover:opacity-100 transition-opacity"
+                      className="h-8 w-8 text-destructive opacity-0 transition-opacity group-hover:opacity-100"
                       onClick={() => {
                         const newFeats = [...form.features];
                         newFeats.splice(index, 1);
@@ -484,7 +484,7 @@ export function PlansContent({ plans, loading, onMutate, onRefresh }: Props) {
                   </div>
                 ))}
                 {form.features.length === 0 && (
-                  <p className="text-[10px] text-muted-foreground text-center py-4 border border-dashed rounded-lg">
+                  <p className="rounded-lg border border-dashed py-4 text-center text-[10px] text-muted-foreground">
                     No features added.
                   </p>
                 )}

@@ -8,7 +8,7 @@ export default function AnalyticsPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Analytics</h1>
+        <h1 className="font-bold text-3xl tracking-tight">Analytics</h1>
         <p className="text-muted-foreground">
           Website performance and user behavior tracking via GA4.
         </p>
@@ -22,7 +22,7 @@ export default function AnalyticsPage() {
                 <Skeleton key={i} className="h-[110px] w-full rounded-xl" />
               ))}
             </div>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7 mt-4">
+            <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-7">
               <Skeleton className="col-span-4 h-[380px] rounded-xl" />
               <Skeleton className="col-span-3 h-[380px] rounded-xl" />
             </div>

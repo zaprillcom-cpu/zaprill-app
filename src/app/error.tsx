@@ -17,17 +17,17 @@ export default function ErrorPage({
   }, [error]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-background text-foreground animate-in fade-in zoom-in-95 duration-500">
-      <div className="max-w-md w-full text-center space-y-8">
-        <div className="mx-auto w-24 h-24 bg-destructive/10 rounded-full flex items-center justify-center mb-6">
+    <div className="fade-in zoom-in-95 flex min-h-screen animate-in flex-col items-center justify-center bg-background p-6 text-foreground duration-500">
+      <div className="w-full max-w-md space-y-8 text-center">
+        <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-destructive/10">
           <AlertTriangle className="h-12 w-12 text-destructive" />
         </div>
 
         <div className="space-y-3">
-          <h1 className="text-4xl font-black tracking-tight">
+          <h1 className="font-black text-4xl tracking-tight">
             Something went wrong!
           </h1>
-          <p className="text-muted-foreground font-medium text-lg leading-relaxed">
+          <p className="font-medium text-lg text-muted-foreground leading-relaxed">
             We hit an unexpected error while preparing this page. Our servers
             might be feeling a bit overwhelmed, or there's a glitch in the
             matrix.
@@ -35,16 +35,16 @@ export default function ErrorPage({
         </div>
 
         {process.env.NODE_ENV === "development" && (
-          <div className="bg-muted/50 border border-border p-4 rounded-lg text-left text-sm font-mono text-muted-foreground overflow-x-auto max-h-[150px]">
+          <div className="max-h-[150px] overflow-x-auto rounded-lg border border-border bg-muted/50 p-4 text-left font-mono text-muted-foreground text-sm">
             {error.message || "Unknown Application Error"}
           </div>
         )}
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+        <div className="flex flex-col items-center justify-center gap-4 pt-4 sm:flex-row">
           <Button
             onClick={() => reset()}
             size="lg"
-            className="w-full sm:w-auto font-bold h-12"
+            className="h-12 w-full font-bold sm:w-auto"
           >
             <RefreshCw className="mr-2 h-5 w-5" />
             Try Again
@@ -53,7 +53,7 @@ export default function ErrorPage({
             onClick={() => (window.location.href = "/")}
             variant="outline"
             size="lg"
-            className="w-full sm:w-auto font-bold h-12"
+            className="h-12 w-full font-bold sm:w-auto"
           >
             <Home className="mr-2 h-5 w-5" />
             Go to Homepage

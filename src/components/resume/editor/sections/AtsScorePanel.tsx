@@ -390,21 +390,21 @@ export default function AtsScorePanel() {
     <div className="space-y-6">
       {/* Job Description Input */}
       <div className="space-y-2">
-        <Label className="font-bold text-[10px] uppercase tracking-widest text-muted-foreground/70">
+        <Label className="font-bold text-[10px] text-muted-foreground/70 uppercase tracking-widest">
           Target Job Description
         </Label>
         <Textarea
           value={jobDescription}
           onChange={(e) => setJobDescription(e.target.value)}
           placeholder="Paste the job description here for a tailored ATS analysis..."
-          className="min-h-[100px] resize-none text-sm bg-muted/20 border-border/50 focus:border-primary/50 transition-all rounded-xl"
+          className="min-h-[100px] resize-none rounded-xl border-border/50 bg-muted/20 text-sm transition-all focus:border-primary/50"
         />
       </div>
 
       <Button
         onClick={analyze}
         disabled={isAnalyzing || !resumeId}
-        className="w-full h-12 gap-2 text-sm font-bold shadow-lg shadow-primary/10 hover:shadow-primary/20 transition-all rounded-xl"
+        className="h-12 w-full gap-2 rounded-xl font-bold text-sm shadow-lg shadow-primary/10 transition-all hover:shadow-primary/20"
       >
         {isAnalyzing ? (
           <Loader2 className="h-4 w-4 animate-spin" />
@@ -415,31 +415,31 @@ export default function AtsScorePanel() {
       </Button>
 
       {error && (
-        <div className="p-4 rounded-xl bg-rose-500/5 border border-rose-500/10 text-sm text-rose-500 text-center animate-in fade-in zoom-in-95">
+        <div className="fade-in zoom-in-95 animate-in rounded-xl border border-rose-500/10 bg-rose-500/5 p-4 text-center text-rose-500 text-sm">
           {error}
         </div>
       )}
 
       {/* Results */}
       {result && (
-        <div className="space-y-5 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="fade-in slide-in-from-bottom-4 animate-in space-y-5 duration-500">
           {/* Overall Score & Perfect Resume CTA */}
-          <Card className="border-border/50 overflow-hidden bg-gradient-to-br from-background to-muted/30 rounded-2xl shadow-sm">
+          <Card className="overflow-hidden rounded-2xl border-border/50 bg-gradient-to-br from-background to-muted/30 shadow-sm">
             <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-6">
+              <div className="mb-6 flex items-center justify-between">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
                     <Shield className="h-4 w-4 text-primary" />
-                    <span className="font-bold text-xs uppercase tracking-widest text-muted-foreground">
+                    <span className="font-bold text-muted-foreground text-xs uppercase tracking-widest">
                       ATS Intelligence
                     </span>
                   </div>
-                  <h3 className="text-xl font-black tracking-tight">
+                  <h3 className="font-black text-xl tracking-tight">
                     {getScoreLabel(result.score)}
                   </h3>
                 </div>
                 <div className="relative flex items-center justify-center">
-                  <svg className="h-20 w-20 transform -rotate-90">
+                  <svg className="-rotate-90 h-20 w-20 transform">
                     <circle
                       cx="40"
                       cy="40"
@@ -465,7 +465,7 @@ export default function AtsScorePanel() {
                     />
                   </svg>
                   <span
-                    className={`absolute text-xl font-black ${getScoreColor(result.score)}`}
+                    className={`absolute font-black text-xl ${getScoreColor(result.score)}`}
                   >
                     {result.score}
                   </span>
@@ -473,16 +473,16 @@ export default function AtsScorePanel() {
               </div>
 
               {totalFixes > 0 && !allApplied && (
-                <div className="p-4 rounded-xl bg-primary/5 border border-primary/10 space-y-3 animate-in fade-in zoom-in-95 delay-300">
+                <div className="fade-in zoom-in-95 animate-in space-y-3 rounded-xl border border-primary/10 bg-primary/5 p-4 delay-300">
                   <div className="flex items-center gap-3">
-                    <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
                       <Zap className="h-4 w-4 text-primary" />
                     </div>
                     <div>
-                      <p className="text-sm font-bold">
+                      <p className="font-bold text-sm">
                         One-Click Optimization
                       </p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-muted-foreground text-xs">
                         Apply all {totalFixes - appliedCountLabel} remaining
                         fixes to reach peak compatibility.
                       </p>
@@ -490,7 +490,7 @@ export default function AtsScorePanel() {
                   </div>
                   <Button
                     onClick={handleApplyAll}
-                    className="w-full h-10 gap-2 font-bold text-xs uppercase tracking-wider rounded-lg"
+                    className="h-10 w-full gap-2 rounded-lg font-bold text-xs uppercase tracking-wider"
                   >
                     <Wand2 className="h-3 w-3" />
                     Fix All Issues Now
@@ -499,11 +499,11 @@ export default function AtsScorePanel() {
               )}
 
               {allApplied && (
-                <div className="p-4 rounded-xl bg-emerald-500/5 border border-emerald-500/10 flex items-center gap-3 animate-in fade-in zoom-in-95">
-                  <div className="h-8 w-8 rounded-full bg-emerald-500/10 flex items-center justify-center">
+                <div className="fade-in zoom-in-95 flex animate-in items-center gap-3 rounded-xl border border-emerald-500/10 bg-emerald-500/5 p-4">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500/10">
                     <CheckCircle2 className="h-4 w-4 text-emerald-500" />
                   </div>
-                  <p className="text-sm font-bold text-emerald-600">
+                  <p className="font-bold text-emerald-600 text-sm">
                     All fixes applied! Scan again to verify.
                   </p>
                 </div>
@@ -516,19 +516,19 @@ export default function AtsScorePanel() {
             {Object.entries(result.sectionScores).map(([section, score]) => (
               <div
                 key={section}
-                className={`p-3 rounded-xl border border-border/40 ${getScoreBg(score)} space-y-1`}
+                className={`rounded-xl border border-border/40 p-3 ${getScoreBg(score)} space-y-1`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                  <span className="font-bold text-[10px] text-muted-foreground uppercase tracking-widest">
                     {section}
                   </span>
                   <span
-                    className={`text-xs font-black ${getScoreColor(score)}`}
+                    className={`font-black text-xs ${getScoreColor(score)}`}
                   >
                     {score}%
                   </span>
                 </div>
-                <div className="h-1 w-full bg-muted/20 rounded-full overflow-hidden">
+                <div className="h-1 w-full overflow-hidden rounded-full bg-muted/20">
                   <div
                     className={`h-full ${getScoreColor(score).replace("text-", "bg-")} transition-all duration-1000`}
                     style={{ width: `${score}%` }}
@@ -541,10 +541,10 @@ export default function AtsScorePanel() {
           {/* Keywords */}
           {(result.keywordMatches.length > 0 ||
             result.missingKeywords.length > 0) && (
-            <Card className="border-border/50 rounded-2xl">
-              <CardContent className="p-5 space-y-4">
+            <Card className="rounded-2xl border-border/50">
+              <CardContent className="space-y-4 p-5">
                 <div className="flex items-center gap-2">
-                  <div className="h-6 w-6 rounded-lg bg-sky-500/10 flex items-center justify-center">
+                  <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-sky-500/10">
                     <Search className="h-3 w-3 text-sky-500" />
                   </div>
                   <h3 className="font-bold text-sm tracking-tight">
@@ -555,7 +555,7 @@ export default function AtsScorePanel() {
                 <div className="space-y-4">
                   {result.keywordMatches.length > 0 && (
                     <div className="space-y-2">
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-emerald-500 flex items-center gap-1.5">
+                      <p className="flex items-center gap-1.5 font-bold text-[10px] text-emerald-500 uppercase tracking-widest">
                         <CheckCircle2 className="h-3 w-3" /> Found
                       </p>
                       <div className="flex flex-wrap gap-1.5">
@@ -563,7 +563,7 @@ export default function AtsScorePanel() {
                           <Badge
                             key={kw}
                             variant="secondary"
-                            className="text-[10px] bg-emerald-500/5 text-emerald-600 border-emerald-500/10 hover:bg-emerald-500/10 transition-colors"
+                            className="border-emerald-500/10 bg-emerald-500/5 text-[10px] text-emerald-600 transition-colors hover:bg-emerald-500/10"
                           >
                             {kw}
                           </Badge>
@@ -574,7 +574,7 @@ export default function AtsScorePanel() {
 
                   {result.missingKeywords.length > 0 && (
                     <div className="space-y-2">
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-rose-500 flex items-center gap-1.5">
+                      <p className="flex items-center gap-1.5 font-bold text-[10px] text-rose-500 uppercase tracking-widest">
                         <XCircle className="h-3 w-3" /> Missing
                       </p>
                       <div className="flex flex-wrap gap-1.5">
@@ -582,7 +582,7 @@ export default function AtsScorePanel() {
                           <Badge
                             key={kw}
                             variant="secondary"
-                            className="text-[10px] bg-rose-500/5 text-rose-600 border-rose-500/10 hover:bg-rose-500/10 transition-colors"
+                            className="border-rose-500/10 bg-rose-500/5 text-[10px] text-rose-600 transition-colors hover:bg-rose-500/10"
                           >
                             {kw}
                           </Badge>
@@ -608,36 +608,36 @@ export default function AtsScorePanel() {
                   return (
                     <div
                       key={`suggestion-${i}`}
-                      className={`group p-4 rounded-2xl border transition-all duration-300 ${
+                      className={`group rounded-2xl border p-4 transition-all duration-300 ${
                         isApplied
-                          ? "bg-emerald-500/5 border-emerald-500/20 opacity-80"
-                          : "bg-muted/30 border-border/50 hover:border-primary/30 hover:bg-muted/50"
+                          ? "border-emerald-500/20 bg-emerald-500/5 opacity-80"
+                          : "border-border/50 bg-muted/30 hover:border-primary/30 hover:bg-muted/50"
                       }`}
                     >
                       <div className="flex items-start justify-between gap-4">
-                        <div className="space-y-2 flex-1">
+                        <div className="flex-1 space-y-2">
                           <div className="flex items-center gap-2">
                             <Badge
                               variant="outline"
-                              className={`text-[9px] uppercase font-bold tracking-widest h-5 ${isApplied ? "border-emerald-500/20 text-emerald-600" : ""}`}
+                              className={`h-5 font-bold text-[9px] uppercase tracking-widest ${isApplied ? "border-emerald-500/20 text-emerald-600" : ""}`}
                             >
                               {s.section}
                             </Badge>
                             {isApplied && (
-                              <span className="text-[10px] font-bold text-emerald-600 flex items-center gap-1 animate-in fade-in slide-in-from-left-2">
+                              <span className="fade-in slide-in-from-left-2 flex animate-in items-center gap-1 font-bold text-[10px] text-emerald-600">
                                 <CheckCircle2 className="h-3 w-3" /> Applied
                               </span>
                             )}
                           </div>
-                          <p className="text-sm font-semibold leading-snug">
+                          <p className="font-semibold text-sm leading-snug">
                             {s.issue}
                           </p>
-                          <div className="p-3 rounded-lg bg-background/50 border border-border/30">
-                            <p className="text-xs text-muted-foreground font-medium mb-1 flex items-center gap-1">
+                          <div className="rounded-lg border border-border/30 bg-background/50 p-3">
+                            <p className="mb-1 flex items-center gap-1 font-medium text-muted-foreground text-xs">
                               <Zap className="h-3 w-3 text-primary" /> Proposed
                               Fix:
                             </p>
-                            <p className="text-sm italic text-foreground/90 font-medium">
+                            <p className="font-medium text-foreground/90 text-sm italic">
                               "{s.fix}"
                             </p>
                           </div>
@@ -646,7 +646,7 @@ export default function AtsScorePanel() {
                         {s.action && !isApplied && (
                           <Button
                             size="sm"
-                            className="h-9 w-9 p-0 shrink-0 rounded-full shadow-sm"
+                            className="h-9 w-9 shrink-0 rounded-full p-0 shadow-sm"
                             onClick={() =>
                               s.action && handleApplyFix(s.action, i)
                             }

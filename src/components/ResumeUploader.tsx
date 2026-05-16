@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useCallback } from "react";
 import { AlertCircle } from "lucide-react";
+import { useCallback, useState } from "react";
 import { FileUpload } from "@/components/ui/file-upload";
 
 interface ResumeUploaderProps {
@@ -46,7 +46,7 @@ export default function ResumeUploader({
 
   return (
     <div
-      className={`w-full ${disabled ? "opacity-50 pointer-events-none" : ""}`}
+      className={`w-full ${disabled ? "pointer-events-none opacity-50" : ""}`}
     >
       <FileUpload
         onChange={(files) => {
@@ -56,11 +56,11 @@ export default function ResumeUploader({
         }}
         value={file ? [file] : undefined}
       />
-      <div className="mt-2 text-center text-[10px] uppercase tracking-widest text-neutral-500/60 dark:text-neutral-400/60 font-medium">
+      <div className="mt-2 text-center font-medium text-[10px] text-neutral-500/60 uppercase tracking-widest dark:text-neutral-400/60">
         Supports PDF, DOCX, DOC, TXT (Max 10MB)
       </div>
       {error && (
-        <div className="flex items-center gap-2 mt-3 p-3 bg-destructive/10 border border-destructive/25 rounded-md text-destructive text-sm font-medium">
+        <div className="mt-3 flex items-center gap-2 rounded-md border border-destructive/25 bg-destructive/10 p-3 font-medium text-destructive text-sm">
           <AlertCircle className="h-4 w-4 shrink-0" />
           {error}
         </div>

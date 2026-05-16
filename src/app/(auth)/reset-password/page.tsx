@@ -80,35 +80,35 @@ function ResetPasswordForm() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-background p-4 relative overflow-hidden">
+    <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-background p-4">
       <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02]" />
 
-      <div className="w-full max-w-sm relative z-10 flex flex-col items-center">
-        <Link href="/" className="flex items-center gap-2 mb-8 group">
-          <span className="font-bold tracking-tight text-2xl">Zaprill</span>
+      <div className="relative z-10 flex w-full max-w-sm flex-col items-center">
+        <Link href="/" className="group mb-8 flex items-center gap-2">
+          <span className="font-bold text-2xl tracking-tight">Zaprill</span>
         </Link>
 
-        <Card className="w-full shadow-lg border-border">
-          <CardHeader className="text-center pb-6">
-            <div className="mx-auto w-12 h-12 bg-primary/10 flex items-center justify-center rounded-full mb-4">
+        <Card className="w-full border-border shadow-lg">
+          <CardHeader className="pb-6 text-center">
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
               <KeyRound className="h-6 w-6 text-primary" />
             </div>
-            <CardTitle className="text-2xl font-black tracking-tight">
+            <CardTitle className="font-black text-2xl tracking-tight">
               Reset password
             </CardTitle>
-            <CardDescription className="text-sm font-medium mt-1">
+            <CardDescription className="mt-1 font-medium text-sm">
               Enter your new password below.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {error && (
-              <div className="p-3 text-sm font-medium text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
+              <div className="rounded-md border border-destructive/20 bg-destructive/10 p-3 font-medium text-destructive text-sm">
                 {error}
               </div>
             )}
 
             {success ? (
-              <div className="p-4 text-sm font-medium text-green-600 bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-900 rounded-md text-center">
+              <div className="rounded-md border border-green-200 bg-green-50 p-4 text-center font-medium text-green-600 text-sm dark:border-green-900 dark:bg-green-950/30">
                 Your password has been reset successfully! Redirecting to
                 login...
               </div>
@@ -117,7 +117,7 @@ function ResetPasswordForm() {
                 <div className="space-y-2">
                   <label
                     htmlFor="otp"
-                    className="text-xs font-bold text-muted-foreground uppercase tracking-wider"
+                    className="font-bold text-muted-foreground text-xs uppercase tracking-wider"
                   >
                     Verification Code
                   </label>
@@ -129,13 +129,13 @@ function ResetPasswordForm() {
                     onChange={(e) => setOtp(e.target.value)}
                     disabled={loading}
                     required
-                    className="h-11 font-medium bg-background tracking-widest"
+                    className="h-11 bg-background font-medium tracking-widest"
                   />
                 </div>
                 <div className="space-y-2">
                   <label
                     htmlFor="password"
-                    className="text-xs font-bold text-muted-foreground uppercase tracking-wider"
+                    className="font-bold text-muted-foreground text-xs uppercase tracking-wider"
                   >
                     New Password
                   </label>
@@ -145,13 +145,13 @@ function ResetPasswordForm() {
                     onChange={(e) => setPassword(e.target.value)}
                     disabled={loading}
                     required
-                    className="h-11 font-medium bg-background"
+                    className="h-11 bg-background font-medium"
                   />
                 </div>
                 <div className="space-y-2">
                   <label
                     htmlFor="confirmPassword"
-                    className="text-xs font-bold text-muted-foreground uppercase tracking-wider"
+                    className="font-bold text-muted-foreground text-xs uppercase tracking-wider"
                   >
                     Confirm Password
                   </label>
@@ -161,12 +161,12 @@ function ResetPasswordForm() {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     disabled={loading}
                     required
-                    className="h-11 font-medium bg-background"
+                    className="h-11 bg-background font-medium"
                   />
                 </div>
                 <Button
                   type="submit"
-                  className="w-full font-bold h-11"
+                  className="h-11 w-full font-bold"
                   disabled={loading || !password || !confirmPassword}
                 >
                   {loading ? (
@@ -191,7 +191,7 @@ export default function ResetPasswordPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="flex min-h-screen items-center justify-center bg-background">
           <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
         </div>
       }

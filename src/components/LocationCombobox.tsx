@@ -1,8 +1,7 @@
 "use client";
 
-import * as React from "react";
 import { Check, ChevronsUpDown, MapPin } from "lucide-react";
-import { cn } from "@/lib/utils";
+import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -17,6 +16,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 
 // Major Indian cities with their common aliases / states
 export const INDIA_CITIES = [
@@ -168,7 +168,7 @@ export function LocationCombobox({
             role="combobox"
             aria-expanded={open}
             disabled={disabled}
-            className="w-full justify-between bg-background border-border font-medium h-10 px-3"
+            className="h-10 w-full justify-between border-border bg-background px-3 font-medium"
           />
         }
       >
@@ -178,7 +178,7 @@ export function LocationCombobox({
             <span className="truncate">
               {value}
               {selectedEntry && (
-                <span className="text-muted-foreground font-normal ml-1">
+                <span className="ml-1 font-normal text-muted-foreground">
                   · {selectedEntry.state}
                 </span>
               )}
@@ -228,7 +228,7 @@ export function LocationCombobox({
                     )}
                   />
                   <span className="flex-1">{entry.city}</span>
-                  <span className="text-xs text-muted-foreground ml-2 truncate">
+                  <span className="ml-2 truncate text-muted-foreground text-xs">
                     {entry.state}
                   </span>
                 </CommandItem>

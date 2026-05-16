@@ -55,15 +55,15 @@ export default function RoastDialog() {
           <Button
             variant="ghost"
             size="sm"
-            className="gap-1.5 text-orange-500 hover:text-orange-400 hover:bg-orange-500/10"
+            className="gap-1.5 text-orange-500 hover:bg-orange-500/10 hover:text-orange-400"
           />
         }
       >
         <Flame className="h-4 w-4" />
         <span className="hidden sm:inline">Roast</span>
       </SheetTrigger>
-      <SheetContent className="sm:max-w-lg w-full p-0 flex flex-col">
-        <SheetHeader className="p-6 pb-4 border-b border-border">
+      <SheetContent className="flex w-full flex-col p-0 sm:max-w-lg">
+        <SheetHeader className="border-border border-b p-6 pb-4">
           <SheetTitle className="flex items-center gap-2 text-lg">
             <Flame className="h-5 w-5 text-orange-500" />
             Resume Roast 🔥
@@ -73,18 +73,18 @@ export default function RoastDialog() {
           </SheetDescription>
         </SheetHeader>
 
-        <ScrollArea className="flex-1 min-h-0 overflow-y-auto px-6 py-4">
+        <ScrollArea className="min-h-0 flex-1 overflow-y-auto px-6 py-4">
           {!roast && !isRoasting && (
-            <div className="flex flex-col items-center justify-center py-16 text-center space-y-4">
+            <div className="flex flex-col items-center justify-center space-y-4 py-16 text-center">
               <div className="text-5xl">🔥</div>
-              <p className="text-muted-foreground text-sm max-w-xs">
+              <p className="max-w-xs text-muted-foreground text-sm">
                 Ready to get roasted? Click below and the AI will give you
                 brutally honest feedback — with a side of comedy.
               </p>
               <Button
                 onClick={handleRoast}
                 disabled={!resumeId}
-                className="gap-2 bg-orange-500 hover:bg-orange-600 text-white"
+                className="gap-2 bg-orange-500 text-white hover:bg-orange-600"
               >
                 <Flame className="h-4 w-4" />
                 Roast My Resume
@@ -93,25 +93,25 @@ export default function RoastDialog() {
           )}
 
           {isRoasting && (
-            <div className="flex flex-col items-center justify-center py-16 space-y-4">
+            <div className="flex flex-col items-center justify-center space-y-4 py-16">
               <Loader2 className="h-8 w-8 animate-spin text-orange-500" />
-              <p className="text-muted-foreground text-sm animate-pulse">
+              <p className="animate-pulse text-muted-foreground text-sm">
                 Preparing the burn... 🔥
               </p>
             </div>
           )}
 
           {roast && !isRoasting && (
-            <div className="space-y-4 animate-in fade-in-0 slide-in-from-bottom-3 duration-500">
+            <div className="fade-in-0 slide-in-from-bottom-3 animate-in space-y-4 duration-500">
               {/* Render each line as a chat bubble */}
-              <div className="bg-orange-500/10 border border-orange-500/20 rounded-2xl rounded-tl-sm p-4">
+              <div className="rounded-2xl rounded-tl-sm border border-orange-500/20 bg-orange-500/10 p-4">
                 <div className="prose prose-sm dark:prose-invert max-w-none">
                   {roast.split("\n").map((line, i) => {
                     if (!line.trim()) return null;
                     return (
                       <p
                         key={`roast-line-${i}`}
-                        className="mb-2 last:mb-0 text-sm leading-relaxed"
+                        className="mb-2 text-sm leading-relaxed last:mb-0"
                       >
                         {line}
                       </p>

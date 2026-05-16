@@ -57,9 +57,9 @@ export function JobFilters({
   };
 
   return (
-    <div className="mb-8 p-6 bg-card border border-border rounded-xl shadow-sm">
-      <div className="flex items-center justify-between mb-5">
-        <h3 className="text-base font-black uppercase tracking-wider text-foreground">
+    <div className="mb-8 rounded-xl border border-border bg-card p-6 shadow-sm">
+      <div className="mb-5 flex items-center justify-between">
+        <h3 className="font-black text-base text-foreground uppercase tracking-wider">
           Advanced Filters
         </h3>
         <Button
@@ -77,11 +77,11 @@ export function JobFilters({
       </div>
 
       {showFilters && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in pt-2 border-t border-border/50">
+        <div className="grid animate-fade-in grid-cols-1 gap-6 border-border/50 border-t pt-2 md:grid-cols-2 lg:grid-cols-3">
           {/* Text Filters */}
           <div className="space-y-4">
             <div className="space-y-2">
-              <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+              <label className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                 Search Title
               </label>
               <Input
@@ -96,11 +96,11 @@ export function JobFilters({
                     });
                   }
                 }}
-                className="bg-background border-border font-medium"
+                className="border-border bg-background font-medium"
               />
             </div>
             <div className="space-y-2">
-              <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+              <label className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                 City (India)
               </label>
               <LocationCombobox
@@ -131,7 +131,7 @@ export function JobFilters({
                 <Button
                   variant="secondary"
                   size="sm"
-                  className="w-full font-bold h-9"
+                  className="h-9 w-full font-bold"
                   disabled={isSearchingLocation}
                   onClick={() => {
                     if (resume) {
@@ -156,7 +156,7 @@ export function JobFilters({
           {/* Dropdown Filters */}
           <div className="space-y-4">
             <div className="space-y-2">
-              <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+              <label className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                 Workspace
               </label>
               <Select
@@ -169,7 +169,7 @@ export function JobFilters({
                   });
                 }}
               >
-                <SelectTrigger className="bg-background border-border font-bold">
+                <SelectTrigger className="border-border bg-background font-bold">
                   <SelectValue placeholder="Any Workspace" />
                 </SelectTrigger>
                 <SelectContent className="font-bold">
@@ -181,7 +181,7 @@ export function JobFilters({
               </Select>
             </div>
             <div className="space-y-2">
-              <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+              <label className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                 Employment Type
               </label>
               <Select
@@ -194,7 +194,7 @@ export function JobFilters({
                   });
                 }}
               >
-                <SelectTrigger className="bg-background border-border font-bold">
+                <SelectTrigger className="border-border bg-background font-bold">
                   <SelectValue placeholder="Any Type" />
                 </SelectTrigger>
                 <SelectContent className="font-bold">
@@ -211,10 +211,10 @@ export function JobFilters({
           <div className="space-y-6 pt-1">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+                <label className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                   Min Match Score
                 </label>
-                <span className="text-sm font-black text-foreground">
+                <span className="font-black text-foreground text-sm">
                   {minMatch[0]}%
                 </span>
               </div>
@@ -234,8 +234,8 @@ export function JobFilters({
                 className="my-4"
               />
             </div>
-            <div className="flex items-center justify-between bg-background p-3 rounded border border-border">
-              <label className="text-sm font-bold text-foreground">
+            <div className="flex items-center justify-between rounded border border-border bg-background p-3">
+              <label className="font-bold text-foreground text-sm">
                 Require Salary Details
               </label>
               <Switch
@@ -261,14 +261,14 @@ export function JobFilters({
         minMatch[0] > 0 ||
         requireSalary) &&
         showFilters && (
-          <div className="flex flex-wrap gap-2 mt-5 pt-5 border-t border-border/50 items-center">
-            <span className="text-xs font-bold text-muted-foreground mr-2">
+          <div className="mt-5 flex flex-wrap items-center gap-2 border-border/50 border-t pt-5">
+            <span className="mr-2 font-bold text-muted-foreground text-xs">
               Active:
             </span>
             {searchTitle && (
               <Badge
                 variant="secondary"
-                className="font-bold flex gap-1 items-center px-2 py-1"
+                className="flex items-center gap-1 px-2 py-1 font-bold"
               >
                 Title: &apos;{searchTitle}&apos;{" "}
                 <X
@@ -280,7 +280,7 @@ export function JobFilters({
             {searchLoc && (
               <Badge
                 variant="secondary"
-                className="font-bold flex gap-1 items-center px-2 py-1"
+                className="flex items-center gap-1 px-2 py-1 font-bold"
               >
                 Location: &apos;{searchLoc}&apos;{" "}
                 <X
@@ -292,7 +292,7 @@ export function JobFilters({
             {workType !== "any" && (
               <Badge
                 variant="secondary"
-                className="font-bold flex gap-1 items-center px-2 py-1 capitalize"
+                className="flex items-center gap-1 px-2 py-1 font-bold capitalize"
               >
                 {workType}{" "}
                 <X
@@ -304,7 +304,7 @@ export function JobFilters({
             {empType !== "any" && (
               <Badge
                 variant="secondary"
-                className="font-bold flex gap-1 items-center px-2 py-1 capitalize"
+                className="flex items-center gap-1 px-2 py-1 font-bold capitalize"
               >
                 {empType.replace("time", "-time")}{" "}
                 <X
@@ -316,7 +316,7 @@ export function JobFilters({
             {minMatch[0] > 0 && (
               <Badge
                 variant="secondary"
-                className="font-bold flex gap-1 items-center px-2 py-1"
+                className="flex items-center gap-1 px-2 py-1 font-bold"
               >
                 &gt;{minMatch[0]}% Match{" "}
                 <X
@@ -328,7 +328,7 @@ export function JobFilters({
             {requireSalary && (
               <Badge
                 variant="secondary"
-                className="font-bold flex gap-1 items-center px-2 py-1"
+                className="flex items-center gap-1 px-2 py-1 font-bold"
               >
                 Has Salary{" "}
                 <X
@@ -340,7 +340,7 @@ export function JobFilters({
             <Button
               variant="ghost"
               size="sm"
-              className="h-6 text-xs font-bold ml-auto"
+              className="ml-auto h-6 font-bold text-xs"
               onClick={() => {
                 setFilterState({
                   searchTitle: "",

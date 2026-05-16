@@ -2,15 +2,15 @@ import { Loader2 } from "lucide-react";
 
 export default function Loading() {
   return (
-    <div className="min-h-[80vh] flex flex-col items-center justify-center bg-background text-foreground animate-in fade-in duration-500 w-full">
-      <div className="w-16 h-16 rounded-xl bg-muted/80 border border-border flex items-center justify-center shadow-sm mb-6 relative overflow-hidden">
-        <Loader2 className="h-8 w-8 text-primary animate-spin" />
-        <div className="absolute inset-0 border-t-2 border-foreground rounded-xl animate-pulse" />
+    <div className="fade-in flex min-h-[80vh] w-full animate-in flex-col items-center justify-center bg-background text-foreground duration-500">
+      <div className="relative mb-6 flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl border border-border bg-muted/80 shadow-sm">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <div className="absolute inset-0 animate-pulse rounded-xl border-foreground border-t-2" />
       </div>
-      <h2 className="text-2xl font-black mb-2 text-foreground tracking-tight">
+      <h2 className="mb-2 font-black text-2xl text-foreground tracking-tight">
         Loading...
       </h2>
-      <p className="text-sm text-muted-foreground font-semibold">
+      <p className="font-semibold text-muted-foreground text-sm">
         Preparing your experience
       </p>
     </div>

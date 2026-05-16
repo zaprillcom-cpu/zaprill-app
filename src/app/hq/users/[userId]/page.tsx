@@ -63,7 +63,7 @@ export default async function UserDetailPage({
           <ArrowLeft className="h-5 w-5" />
         </Button>
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">User Details</h1>
+          <h1 className="font-bold text-3xl tracking-tight">User Details</h1>
           <p className="text-muted-foreground text-sm">
             Managing{" "}
             <span className="font-medium text-foreground">{user.name}</span>
@@ -74,7 +74,7 @@ export default async function UserDetailPage({
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Profile Info */}
         <Card className="lg:col-span-1">
-          <CardHeader className="flex flex-col items-center gap-4 text-center pb-8">
+          <CardHeader className="flex flex-col items-center gap-4 pb-8 text-center">
             <Avatar className="h-24 w-24 border-4 border-muted">
               {/* @ts-ignore - image is not defined in user type*/}
               <AvatarImage src={user?.image || undefined} alt={user.name} />
@@ -111,21 +111,21 @@ export default async function UserDetailPage({
             <Separator />
             <div className="grid gap-4">
               <div className="flex items-center justify-between text-sm">
-                <div className="flex items-center text-muted-foreground gap-2">
+                <div className="flex items-center gap-2 text-muted-foreground">
                   <Calendar className="h-4 w-4" /> Joined
                 </div>
                 <span>{format(new Date(user.createdAt), "MMM d, yyyy")}</span>
               </div>
               <div className="flex items-center justify-between text-sm">
-                <div className="flex items-center text-muted-foreground gap-2">
+                <div className="flex items-center gap-2 text-muted-foreground">
                   <Shield className="h-4 w-4" /> User ID
                 </div>
-                <code className="bg-muted px-1 rounded text-[10px]">
+                <code className="rounded bg-muted px-1 text-[10px]">
                   {user.id}
                 </code>
               </div>
               <div className="flex items-center justify-between text-sm">
-                <div className="flex items-center text-muted-foreground gap-2">
+                <div className="flex items-center gap-2 text-muted-foreground">
                   <Globe className="h-4 w-4" /> Provider
                 </div>
                 <span className="capitalize">Email/Password</span>
@@ -135,7 +135,7 @@ export default async function UserDetailPage({
         </Card>
 
         {/* Actions & Activity */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="space-y-6 lg:col-span-2">
           <Card>
             <CardHeader>
               <CardTitle>Administrative Actions</CardTitle>
@@ -167,35 +167,35 @@ export default async function UserDetailPage({
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="flex items-start gap-4 border-l-2 border-muted pl-4 pb-4">
+                <div className="flex items-start gap-4 border-muted border-l-2 pb-4 pl-4">
                   <div className="mt-1 h-2 w-2 rounded-full bg-primary" />
                   <div className="grid gap-0.5">
-                    <p className="text-sm font-medium">
+                    <p className="font-medium text-sm">
                       Resume Analysis Started
                     </p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-muted-foreground text-xs">
                       Today at 2:34 PM
                     </p>
                   </div>
                 </div>
-                <div className="flex items-start gap-4 border-l-2 border-muted pl-4 pb-4 text-muted-foreground/60">
+                <div className="flex items-start gap-4 border-muted border-l-2 pb-4 pl-4 text-muted-foreground/60">
                   <div className="mt-1 h-2 w-2 rounded-full bg-muted" />
                   <div className="grid gap-0.5">
-                    <p className="text-sm font-medium">
+                    <p className="font-medium text-sm">
                       Signed in from New Device
                     </p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-muted-foreground text-xs">
                       Yesterday at 11:05 AM
                     </p>
                   </div>
                 </div>
-                <div className="flex items-start gap-4 border-l-2 border-transparent pl-4">
+                <div className="flex items-start gap-4 border-transparent border-l-2 pl-4">
                   <div className="mt-1 h-2 w-2 rounded-full bg-muted" />
                   <div className="grid gap-0.5">
-                    <p className="text-sm font-medium">
+                    <p className="font-medium text-sm">
                       Subscription Started (Pro Plan)
                     </p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-muted-foreground text-xs">
                       Apr 22, 2026
                     </p>
                   </div>

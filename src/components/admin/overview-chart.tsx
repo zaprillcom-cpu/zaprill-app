@@ -49,7 +49,7 @@ export function OverviewChart({ data }: OverviewChartProps) {
                 <div className="rounded-lg border bg-background p-2 shadow-sm">
                   <div className="grid grid-cols-2 gap-2">
                     <div className="flex flex-col">
-                      <span className="text-[0.70rem] uppercase text-muted-foreground">
+                      <span className="text-[0.70rem] text-muted-foreground uppercase">
                         Users
                       </span>
                       <span className="font-bold text-muted-foreground">
@@ -57,7 +57,7 @@ export function OverviewChart({ data }: OverviewChartProps) {
                       </span>
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-[0.70rem] uppercase text-muted-foreground">
+                      <span className="text-[0.70rem] text-muted-foreground uppercase">
                         Sessions
                       </span>
                       <span className="font-bold">{payload[1].value}</span>

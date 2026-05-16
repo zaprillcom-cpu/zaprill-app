@@ -121,7 +121,7 @@ export default function DatabasePage() {
             const value = row.getValue(key);
             if (value === null || value === undefined)
               return (
-                <span className="text-muted-foreground italic text-xs">
+                <span className="text-muted-foreground text-xs italic">
                   null
                 </span>
               );
@@ -139,7 +139,7 @@ export default function DatabasePage() {
             if (typeof value === "boolean") return value ? "True" : "False";
             const str = String(value);
             return (
-              <span className="truncate max-w-[200px]" title={str}>
+              <span className="max-w-[200px] truncate" title={str}>
                 {str}
               </span>
             );
@@ -148,10 +148,10 @@ export default function DatabasePage() {
       : [];
 
   return (
-    <div className="flex flex-col gap-6 min-w-0 w-full">
+    <div className="flex w-full min-w-0 flex-col gap-6">
       {/* Page title — no right-side controls, no justify-between */}
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Database Explorer</h1>
+        <h1 className="font-bold text-3xl tracking-tight">Database Explorer</h1>
         <p className="text-muted-foreground">
           Introspect and manage your database records.
         </p>
@@ -159,7 +159,7 @@ export default function DatabasePage() {
 
       <Card className="min-w-0">
         {/* All controls live in the CardHeader — always visible, never scrolled away */}
-        <CardHeader className="flex flex-row items-center justify-between gap-4 flex-wrap py-3">
+        <CardHeader className="flex flex-row flex-wrap items-center justify-between gap-4 py-3">
           <div>
             <CardTitle className="capitalize">
               {selectedTable || "No table selected"}
@@ -168,7 +168,7 @@ export default function DatabasePage() {
               Displaying {data.length} of {total} records.
             </CardDescription>
           </div>
-          <div className="flex items-center gap-2 flex-shrink-0">
+          <div className="flex flex-shrink-0 items-center gap-2">
             <Select
               value={selectedTable || ""}
               onValueChange={(val) => {
@@ -249,7 +249,7 @@ export default function DatabasePage() {
 
             return totalPages > 1 ? (
               <div className="flex items-center justify-between border-t px-4 py-3">
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   Page {page} of {totalPages} &middot; {total} total records
                 </p>
                 <Pagination className="mx-0 w-auto">
@@ -311,8 +311,8 @@ export default function DatabasePage() {
               Full JSON representation of the selected record.
             </SheetDescription>
           </SheetHeader>
-          <ScrollArea className="h-[calc(100vh-120px)] mt-4 rounded-md border bg-muted p-4">
-            <pre className="text-xs font-mono whitespace-pre-wrap">
+          <ScrollArea className="mt-4 h-[calc(100vh-120px)] rounded-md border bg-muted p-4">
+            <pre className="whitespace-pre-wrap font-mono text-xs">
               {JSON.stringify(selectedRow, null, 2)}
             </pre>
           </ScrollArea>

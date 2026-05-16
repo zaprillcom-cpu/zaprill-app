@@ -28,7 +28,7 @@ function PriorityDot({ priority }: { priority: SkillGap["priority"] }) {
   };
   return (
     <span
-      className={`w-2 h-2 rounded shrink-0 inline-block ${colorMap[priority]}`}
+      className={`inline-block h-2 w-2 shrink-0 rounded ${colorMap[priority]}`}
     />
   );
 }
@@ -51,25 +51,25 @@ export default function SkillGapPanel({
   const displayedHave = showAllHave ? allSkills : allSkills.slice(0, LIMIT);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
       {/* LEFT: Skills You Have */}
-      <Card className="rounded-xl overflow-hidden shadow-sm border-border">
-        <CardContent className="p-6 flex flex-col h-full bg-card">
-          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border">
-            <div className="w-8 h-8 rounded shrink-0 bg-muted/50 flex items-center justify-center border border-border">
+      <Card className="overflow-hidden rounded-xl border-border shadow-sm">
+        <CardContent className="flex h-full flex-col bg-card p-6">
+          <div className="mb-6 flex items-center gap-3 border-border border-b pb-4">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded border border-border bg-muted/50">
               <CheckCircle2 className="h-4 w-4 text-foreground" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-foreground">
+              <h3 className="font-bold text-foreground text-sm">
                 Skills You Have
               </h3>
-              <p className="text-xs text-muted-foreground font-medium">
+              <p className="font-medium text-muted-foreground text-xs">
                 {allSkills.length} skills detected
               </p>
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-2 mb-4 flex-1 content-start">
+          <div className="mb-4 flex flex-1 flex-wrap content-start gap-2">
             {displayedHave.map((skill) => (
               <SkillBadge
                 key={skill}
@@ -86,7 +86,7 @@ export default function SkillGapPanel({
               size="sm"
               id="toggle-have-skills-btn"
               onClick={() => setShowAllHave(!showAllHave)}
-              className="text-xs h-8 w-full mt-auto font-medium"
+              className="mt-auto h-8 w-full font-medium text-xs"
             >
               {showAllHave ? (
                 <>
@@ -104,17 +104,17 @@ export default function SkillGapPanel({
       </Card>
 
       {/* RIGHT: Skills You're Missing */}
-      <Card className="rounded-xl overflow-hidden shadow-sm border-border">
-        <CardContent className="p-6 flex flex-col h-full bg-card">
-          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border">
-            <div className="w-8 h-8 rounded shrink-0 bg-muted/50 flex items-center justify-center border border-border">
+      <Card className="overflow-hidden rounded-xl border-border shadow-sm">
+        <CardContent className="flex h-full flex-col bg-card p-6">
+          <div className="mb-6 flex items-center gap-3 border-border border-b pb-4">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded border border-border bg-muted/50">
               <AlertCircle className="h-4 w-4 text-foreground" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-foreground">
+              <h3 className="font-bold text-foreground text-sm">
                 Skills to Learn
               </h3>
-              <p className="text-xs text-muted-foreground font-medium">
+              <p className="font-medium text-muted-foreground text-xs">
                 {skillGaps.length} gaps across {totalJobs} jobs
               </p>
             </div>
@@ -124,7 +124,7 @@ export default function SkillGapPanel({
           <div className="flex-1 space-y-5">
             {highPriority.length > 0 && (
               <div>
-                <p className="text-xs font-semibold text-foreground uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+                <p className="mb-2.5 flex items-center gap-1.5 font-semibold text-foreground text-xs uppercase tracking-wider">
                   <PriorityDot priority="high" /> High priority
                 </p>
                 <div className="flex flex-wrap gap-2">
@@ -133,10 +133,10 @@ export default function SkillGapPanel({
                     .map((g) => (
                       <span
                         key={g.skill}
-                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-bold border border-primary bg-primary text-primary-foreground"
+                        className="inline-flex items-center gap-1.5 rounded-md border border-primary bg-primary px-2.5 py-1 font-bold text-[11px] text-primary-foreground"
                       >
                         {g.skill}
-                        <span className="opacity-70 text-[10px] pl-1 font-medium border-l border-primary-foreground/20">
+                        <span className="border-primary-foreground/20 border-l pl-1 font-medium text-[10px] opacity-70">
                           {g.frequency}
                         </span>
                       </span>
@@ -147,7 +147,7 @@ export default function SkillGapPanel({
 
             {mediumPriority.length > 0 && (
               <div>
-                <p className="text-xs font-semibold text-foreground uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+                <p className="mb-2.5 flex items-center gap-1.5 font-semibold text-foreground text-xs uppercase tracking-wider">
                   <PriorityDot priority="medium" /> Medium priority
                 </p>
                 <div className="flex flex-wrap gap-2">
@@ -156,10 +156,10 @@ export default function SkillGapPanel({
                     .map((g) => (
                       <span
                         key={g.skill}
-                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-bold border border-border bg-muted text-foreground"
+                        className="inline-flex items-center gap-1.5 rounded-md border border-border bg-muted px-2.5 py-1 font-bold text-[11px] text-foreground"
                       >
                         {g.skill}
-                        <span className="opacity-60 text-[10px] pl-1 font-medium border-l border-border">
+                        <span className="border-border border-l pl-1 font-medium text-[10px] opacity-60">
                           {g.frequency}
                         </span>
                       </span>
@@ -170,7 +170,7 @@ export default function SkillGapPanel({
 
             {lowPriority.length > 0 && (
               <div>
-                <p className="text-xs font-semibold text-foreground uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+                <p className="mb-2.5 flex items-center gap-1.5 font-semibold text-foreground text-xs uppercase tracking-wider">
                   <PriorityDot priority="low" /> Nice to have
                 </p>
                 <div className="flex flex-wrap gap-2">
@@ -179,7 +179,7 @@ export default function SkillGapPanel({
                     .map((g) => (
                       <span
                         key={g.skill}
-                        className="inline-flex px-2.5 py-1 rounded-md text-[11px] font-semibold border border-transparent bg-muted/50 text-muted-foreground"
+                        className="inline-flex rounded-md border border-transparent bg-muted/50 px-2.5 py-1 font-semibold text-[11px] text-muted-foreground"
                       >
                         {g.skill}
                       </span>
@@ -190,8 +190,8 @@ export default function SkillGapPanel({
           </div>
 
           {highPriority.length > 0 && (
-            <div className="flex items-start gap-2.5 mt-6 p-3 bg-muted rounded border border-border text-xs text-foreground font-medium">
-              <TrendingUp className="h-4 w-4 shrink-0 mt-0.5 text-muted-foreground" />
+            <div className="mt-6 flex items-start gap-2.5 rounded border border-border bg-muted p-3 font-medium text-foreground text-xs">
+              <TrendingUp className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
               <span className="leading-relaxed">
                 Focus on high-priority skills first — these appear most
                 frequently across all sampled job listings for your target

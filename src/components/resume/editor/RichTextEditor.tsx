@@ -65,7 +65,7 @@ export default function RichTextEditor({
   if (minimal) {
     return (
       <div
-        className={`border border-input rounded-lg overflow-hidden bg-background ${className}`}
+        className={`overflow-hidden rounded-lg border border-input bg-background ${className}`}
       >
         <EditorContent editor={editor} />
       </div>
@@ -74,10 +74,10 @@ export default function RichTextEditor({
 
   return (
     <div
-      className={`border border-input rounded-lg overflow-hidden bg-background ${className}`}
+      className={`overflow-hidden rounded-lg border border-input bg-background ${className}`}
     >
       {/* Toolbar */}
-      <div className="flex items-center gap-0.5 px-2 py-1 border-b border-border bg-muted/30">
+      <div className="flex items-center gap-0.5 border-border border-b bg-muted/30 px-2 py-1">
         <Button
           type="button"
           variant="ghost"
@@ -105,7 +105,7 @@ export default function RichTextEditor({
         >
           <Strikethrough className="h-3.5 w-3.5" />
         </Button>
-        <div className="w-px h-4 bg-border mx-1" />
+        <div className="mx-1 h-4 w-px bg-border" />
         <Button
           type="button"
           variant="ghost"
@@ -115,7 +115,7 @@ export default function RichTextEditor({
         >
           <List className="h-3.5 w-3.5" />
         </Button>
-        <div className="w-px h-4 bg-border mx-1" />
+        <div className="mx-1 h-4 w-px bg-border" />
         <Button
           type="button"
           variant="ghost"

@@ -71,7 +71,7 @@ function buildColumns(
                 <AvatarFallback>{user.name[0]}</AvatarFallback>
               </Avatar>
               {user.isPro && (
-                <div className="absolute -right-1 -top-1 flex h-3 w-3 items-center justify-center rounded-full bg-primary border-2 border-background">
+                <div className="-right-1 -top-1 absolute flex h-3 w-3 items-center justify-center rounded-full border-2 border-background bg-primary">
                   <div className="h-1 w-1 rounded-full bg-white" />
                 </div>
               )}
@@ -82,13 +82,13 @@ function buildColumns(
                 {user.isPro && (
                   <Badge
                     variant="default"
-                    className="h-4 px-1 text-[10px] font-bold uppercase tracking-wider bg-gradient-to-r from-yellow-400 to-orange-500 border-none text-white"
+                    className="h-4 border-none bg-gradient-to-r from-yellow-400 to-orange-500 px-1 font-bold text-[10px] text-white uppercase tracking-wider"
                   >
                     Pro
                   </Badge>
                 )}
               </div>
-              <span className="text-xs text-muted-foreground">
+              <span className="text-muted-foreground text-xs">
                 {user.email}
               </span>
             </div>
@@ -149,7 +149,7 @@ function buildColumns(
       accessorKey: "createdAt",
       header: "Joined",
       cell: ({ row }) => (
-        <span className="text-sm text-muted-foreground">
+        <span className="text-muted-foreground text-sm">
           {format(new Date(row.getValue("createdAt")), "MMM d, yyyy")}
         </span>
       ),
@@ -212,7 +212,7 @@ export function UsersTable() {
 
   if (error) {
     return (
-      <p className="text-sm text-destructive text-center py-12">{error}</p>
+      <p className="py-12 text-center text-destructive text-sm">{error}</p>
     );
   }
 

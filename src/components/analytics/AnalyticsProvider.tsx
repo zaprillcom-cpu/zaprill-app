@@ -12,16 +12,16 @@
  * Mount this ONCE in the root layout, as a sibling/wrapper of <Providers>.
  */
 
-import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { useSession } from "@/lib/auth-client";
+import { useEffect, useRef } from "react";
 import {
-  setUserId,
   clearUserId,
-  trackPageView,
+  setUserId,
   startHeartbeat,
   trackException,
+  trackPageView,
 } from "@/lib/analytics";
+import { useSession } from "@/lib/auth-client";
 
 export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();

@@ -62,9 +62,9 @@ function ResumeThumbnail({ resume }: { resume: ResumeListItem }) {
   const resumeMetadata = resume.metadata || DEFAULT_RESUME_METADATA;
 
   return (
-    <div className="w-[320px] h-[452px] relative overflow-hidden rounded-md border border-border/10 shadow-2xl bg-white group-hover:shadow-primary/20 transition-all duration-500">
-      <div className="w-[800px] h-[1130px] absolute top-0 left-0 origin-top-left scale-[0.4] pointer-events-none">
-        <div className="w-full h-full p-10">
+    <div className="relative h-[452px] w-[320px] overflow-hidden rounded-md border border-border/10 bg-white shadow-2xl transition-all duration-500 group-hover:shadow-primary/20">
+      <div className="pointer-events-none absolute top-0 left-0 h-[1130px] w-[800px] origin-top-left scale-[0.4]">
+        <div className="h-full w-full p-10">
           <TemplateComponent data={resumeData} metadata={resumeMetadata} />
         </div>
       </div>
@@ -152,7 +152,7 @@ export default function ResumesPage() {
     TEMPLATE_REGISTRY.find((t) => t.slug === slug)?.name ?? slug;
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
+    <div className="flex min-h-screen flex-col bg-background font-sans text-foreground">
       <Navbar
         showBack
         backHref="/"
@@ -164,7 +164,7 @@ export default function ResumesPage() {
         }
         pageTitle={
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
               <IconFileText className="h-4 w-4 text-primary-foreground" />
             </div>
             <span className="font-extrabold text-lg tracking-tight">
@@ -174,7 +174,7 @@ export default function ResumesPage() {
         }
       />
 
-      <div className="max-w-6xl mx-auto px-6 py-10 w-full flex-1">
+      <div className="mx-auto w-full max-w-6xl flex-1 px-6 py-10">
         {/* Loading */}
         {isLoading && (
           <div className="flex items-center justify-center py-20">
@@ -184,14 +184,14 @@ export default function ResumesPage() {
 
         {/* Empty state */}
         {!isLoading && !activeResume && (
-          <div className="text-center py-20">
-            <div className="w-24 h-24 rounded-3xl bg-primary/10 flex items-center justify-center mx-auto mb-8 shadow-xl shadow-primary/5">
+          <div className="py-20 text-center">
+            <div className="mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-3xl bg-primary/10 shadow-primary/5 shadow-xl">
               <IconSparkles className="h-12 w-12 text-primary" />
             </div>
-            <h2 className="text-4xl font-black tracking-tight mb-4">
+            <h2 className="mb-4 font-black text-4xl tracking-tight">
               Build your professional identity
             </h2>
-            <p className="text-lg text-muted-foreground font-medium max-w-lg mx-auto mb-10 leading-relaxed">
+            <p className="mx-auto mb-10 max-w-lg font-medium text-lg text-muted-foreground leading-relaxed">
               Create a stunning, ATS-optimized resume that gets you noticed by
               top companies. Our AI handles the complexity while you focus on
               your career.
@@ -201,7 +201,7 @@ export default function ResumesPage() {
               disabled={isCreating}
               variant="gradient"
               size="lg"
-              className="gap-2 h-14 px-10 font-black text-lg rounded-full transition-all"
+              className="h-14 gap-2 rounded-full px-10 font-black text-lg transition-all"
             >
               {isCreating ? (
                 <IconLoader2 className="h-6 w-6 animate-spin" />
@@ -215,13 +215,13 @@ export default function ResumesPage() {
 
         {/* Dashboard Content */}
         {!isLoading && activeResume && (
-          <div className="animate-in fade-in slide-in-from-bottom-8 duration-700">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div className="fade-in slide-in-from-bottom-8 animate-in duration-700">
+            <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
               <div>
-                <h1 className="text-5xl font-black tracking-tighter text-foreground">
+                <h1 className="font-black text-5xl text-foreground tracking-tighter">
                   Your Resume
                 </h1>
-                <p className="text-lg text-muted-foreground font-bold mt-2">
+                <p className="mt-2 font-bold text-lg text-muted-foreground">
                   Optimized for {activeResume.industry} • Last updated{" "}
                   {new Date(activeResume.updatedAt).toLocaleDateString()}
                 </p>
@@ -241,68 +241,68 @@ export default function ResumesPage() {
                     <DropdownMenuItem
                       onClick={() => handleDuplicate(activeResume.id)}
                     >
-                      <IconCopy className="h-4 w-4 mr-2" /> Duplicate
+                      <IconCopy className="mr-2 h-4 w-4" /> Duplicate
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       className="text-destructive focus:text-destructive"
                       onClick={() => handleDelete(activeResume.id)}
                     >
-                      <IconTrash className="h-4 w-4 mr-2" /> Delete Resume
+                      <IconTrash className="mr-2 h-4 w-4" /> Delete Resume
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
               {/* Featured Preview */}
-              <div className="lg:col-span-2 group">
+              <div className="group lg:col-span-2">
                 <Card
-                  className="overflow-hidden border-2 border-border/50 hover:border-primary/30 transition-all duration-500 cursor-pointer shadow-sm hover:shadow-2xl hover:shadow-primary/5 rounded-3xl"
+                  className="cursor-pointer overflow-hidden rounded-3xl border-2 border-border/50 shadow-sm transition-all duration-500 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5"
                   onClick={() => router.push(`/resumes/${activeResume.id}`)}
                 >
-                  <div className="aspect-4/3 bg-linear-to-br from-muted/30 to-muted/80 flex items-center justify-center relative overflow-hidden">
+                  <div className="relative flex aspect-4/3 items-center justify-center overflow-hidden bg-linear-to-br from-muted/30 to-muted/80">
                     <div className="absolute inset-0 bg-grid-white/10" />
 
-                    <div className="mt-12 transition-all duration-700 group-hover:scale-105 group-hover:-translate-y-2">
+                    <div className="group-hover:-translate-y-2 mt-12 transition-all duration-700 group-hover:scale-105">
                       <ResumeThumbnail resume={activeResume} />
                     </div>
 
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />
+                    <div className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/5" />
 
-                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                      <Button className="font-black h-12 px-8 rounded-full shadow-xl">
+                    <div className="-translate-x-1/2 absolute bottom-6 left-1/2 translate-y-4 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                      <Button className="h-12 rounded-full px-8 font-black shadow-xl">
                         Open Resume Editor
                       </Button>
                     </div>
                   </div>
-                  <CardContent className="p-8 border-t border-border/50">
+                  <CardContent className="border-border/50 border-t p-8">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h2 className="text-2xl font-black tracking-tight">
+                        <h2 className="font-black text-2xl tracking-tight">
                           {activeResume.title}
                         </h2>
-                        <div className="flex items-center gap-3 mt-2">
+                        <div className="mt-2 flex items-center gap-3">
                           <Badge
                             variant="secondary"
-                            className="font-bold uppercase tracking-widest text-[10px]"
+                            className="font-bold text-[10px] uppercase tracking-widest"
                           >
                             {getTemplateName(activeResume.templateSlug)}
                           </Badge>
-                          <span className="text-muted-foreground text-xs font-bold">
+                          <span className="font-bold text-muted-foreground text-xs">
                             •
                           </span>
-                          <span className="text-xs text-muted-foreground font-bold flex items-center gap-1">
+                          <span className="flex items-center gap-1 font-bold text-muted-foreground text-xs">
                             <IconActivity className="h-3 w-3" />
                             {activeResume.status}
                           </span>
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground mb-1">
+                        <div className="mb-1 font-black text-[10px] text-muted-foreground uppercase tracking-[0.2em]">
                           Created
                         </div>
-                        <div className="text-xs font-bold">
+                        <div className="font-bold text-xs">
                           {new Date(
                             activeResume.createdAt,
                           ).toLocaleDateString()}
@@ -316,13 +316,13 @@ export default function ResumesPage() {
               {/* Stats & Actions */}
               <div className="space-y-6">
                 {/* ATS Score Card */}
-                <Card className="p-8 rounded-3xl border-2 border-primary/5 bg-primary/2 shadow-sm">
-                  <h3 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-6">
+                <Card className="rounded-3xl border-2 border-primary/5 bg-primary/2 p-8 shadow-sm">
+                  <h3 className="mb-6 font-black text-primary text-xs uppercase tracking-[0.2em]">
                     ATS Intelligence
                   </h3>
                   <div className="flex items-center gap-6">
-                    <div className="relative h-20 w-20 flex items-center justify-center">
-                      <svg className="h-full w-full -rotate-90">
+                    <div className="relative flex h-20 w-20 items-center justify-center">
+                      <svg className="-rotate-90 h-full w-full">
                         <circle
                           cx="40"
                           cy="40"
@@ -347,16 +347,16 @@ export default function ResumesPage() {
                         />
                       </svg>
                       <div className="absolute inset-0 flex flex-col items-center justify-center">
-                        <span className="text-2xl font-black tracking-tighter">
+                        <span className="font-black text-2xl tracking-tighter">
                           {activeResume.lastAtsScore ?? 0}%
                         </span>
                       </div>
                     </div>
                     <div className="flex-1">
-                      <div className="text-sm font-bold text-foreground mb-1">
+                      <div className="mb-1 font-bold text-foreground text-sm">
                         Global Score
                       </div>
-                      <p className="text-xs text-muted-foreground font-medium leading-relaxed">
+                      <p className="font-medium text-muted-foreground text-xs leading-relaxed">
                         Your resume is {activeResume.lastAtsScore ?? 0}%
                         optimized for search algorithms.
                       </p>
@@ -366,19 +366,19 @@ export default function ResumesPage() {
 
                 {/* Quick Stats */}
                 <div className="grid grid-cols-2 gap-4">
-                  <Card className="p-5 rounded-2xl border-border/50 text-center">
-                    <div className="text-sm font-black text-muted-foreground uppercase tracking-widest text-[9px] mb-2">
+                  <Card className="rounded-2xl border-border/50 p-5 text-center">
+                    <div className="mb-2 font-black text-[9px] text-muted-foreground text-sm uppercase tracking-widest">
                       Views
                     </div>
-                    <div className="text-2xl font-black">
+                    <div className="font-black text-2xl">
                       {activeResume.viewCount}
                     </div>
                   </Card>
-                  <Card className="p-5 rounded-2xl border-border/50 text-center">
-                    <div className="text-sm font-black text-muted-foreground uppercase tracking-widest text-[9px] mb-2">
+                  <Card className="rounded-2xl border-border/50 p-5 text-center">
+                    <div className="mb-2 font-black text-[9px] text-muted-foreground text-sm uppercase tracking-widest">
                       Downloads
                     </div>
-                    <div className="text-2xl font-black">
+                    <div className="font-black text-2xl">
                       {activeResume.downloadCount}
                     </div>
                   </Card>
@@ -387,14 +387,14 @@ export default function ResumesPage() {
                 {/* Main Actions */}
                 <div className="space-y-3 pt-2">
                   <Button
-                    className="w-full h-14 font-black text-lg gap-3 rounded-2xl shadow-lg"
+                    className="h-14 w-full gap-3 rounded-2xl font-black text-lg shadow-lg"
                     onClick={() => router.push(`/resumes/${activeResume.id}`)}
                   >
                     <IconEdit className="h-5 w-5" /> Edit Content
                   </Button>
                   <Button
                     variant="outline"
-                    className="w-full h-14 font-black text-lg gap-3 rounded-2xl border-2 hover:bg-primary/5 hover:border-primary/30 transition-all"
+                    className="h-14 w-full gap-3 rounded-2xl border-2 font-black text-lg transition-all hover:border-primary/30 hover:bg-primary/5"
                     onClick={() => {
                       sessionStorage.setItem(
                         "ai_job_god_resume",
@@ -410,7 +410,7 @@ export default function ResumesPage() {
                   <div className="grid grid-cols-2 gap-3 pt-2">
                     <Button
                       variant="ghost"
-                      className="h-12 font-bold gap-2 rounded-xl text-muted-foreground hover:text-foreground"
+                      className="h-12 gap-2 rounded-xl font-bold text-muted-foreground hover:text-foreground"
                       onClick={() =>
                         window.open(
                           `/resumes/${activeResume.id}/export`,
@@ -422,7 +422,7 @@ export default function ResumesPage() {
                     </Button>
                     <Button
                       variant="ghost"
-                      className="h-12 font-bold gap-2 rounded-xl text-muted-foreground hover:text-foreground"
+                      className="h-12 gap-2 rounded-xl font-bold text-muted-foreground hover:text-foreground"
                       onClick={() =>
                         window.open(
                           `/resumes/${activeResume.id}/export?preview=true`,

@@ -217,8 +217,8 @@ export function DataTable<TData, TValue>({
       </div>
 
       {/* Footer: rows info + page size + pagination */}
-      <div className="flex items-center justify-between gap-4 flex-wrap">
-        <p className="text-sm text-muted-foreground shrink-0">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <p className="shrink-0 text-muted-foreground text-sm">
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected
           {" · "}
@@ -227,7 +227,7 @@ export function DataTable<TData, TValue>({
 
         <div className="flex items-center gap-4">
           {/* Rows per page */}
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2 text-muted-foreground text-sm">
             <span className="shrink-0">Rows per page</span>
             <Select
               value={String(pageSize)}

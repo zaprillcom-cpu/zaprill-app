@@ -8,12 +8,12 @@ export function StatCard({
   label: string;
 }) {
   return (
-    <Card className="text-center shadow-sm border-border bg-card">
+    <Card className="border-border bg-card text-center shadow-sm">
       <CardContent className="pt-8 pb-6">
-        <div className="text-5xl font-black tracking-tighter text-foreground mb-2">
+        <div className="mb-2 font-black text-5xl text-foreground tracking-tighter">
           {value}
         </div>
-        <div className="text-sm font-bold uppercase tracking-widest text-muted-foreground">
+        <div className="font-bold text-muted-foreground text-sm uppercase tracking-widest">
           {label}
         </div>
       </CardContent>

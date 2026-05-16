@@ -21,7 +21,7 @@ function StatSkeleton() {
         <Skeleton className="h-4 w-4 rounded" />
       </CardHeader>
       <CardContent>
-        <Skeleton className="h-8 w-[80px] mb-2" />
+        <Skeleton className="mb-2 h-8 w-[80px]" />
         <Skeleton className="h-3 w-[100px]" />
       </CardContent>
     </Card>
@@ -40,7 +40,7 @@ export function StatsCards() {
   }, []);
 
   if (error) {
-    return <div className="col-span-4 text-sm text-destructive">{error}</div>;
+    return <div className="col-span-4 text-destructive text-sm">{error}</div>;
   }
 
   if (!stats) {
@@ -90,12 +90,12 @@ export function StatsCards() {
       {items.map((stat) => (
         <Card key={stat.title}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
+            <CardTitle className="font-medium text-sm">{stat.title}</CardTitle>
             <stat.icon className={cn("h-4 w-4", stat.color)} />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stat.value}</div>
-            <p className="text-xs text-muted-foreground pt-1">
+            <div className="font-bold text-2xl">{stat.value}</div>
+            <p className="pt-1 text-muted-foreground text-xs">
               {stat.description}
             </p>
           </CardContent>

@@ -108,7 +108,7 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
   return (
     <Card
       ref={cardRef}
-      className="animate-slide-up hover:shadow-xl transition-all duration-300 hover:border-primary/40 bg-card rounded-2xl overflow-hidden border border-border/50 group"
+      className="group animate-slide-up overflow-hidden rounded-2xl border border-border/50 bg-card transition-all duration-300 hover:border-primary/40 hover:shadow-xl"
       style={{
         animationDelay: `${rank * 50}ms`,
         animationFillMode: "both",
@@ -116,24 +116,24 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
       id={`job-card-${job.id}`}
     >
       <CardContent className="p-0">
-        <div className="flex flex-col lg:flex-row lg:items-center min-h-[140px]">
+        <div className="flex min-h-[140px] flex-col lg:flex-row lg:items-center">
           {/* Main Info Section - Column 1 */}
-          <div className="lg:w-[380px] lg:shrink-0 p-6 flex items-start gap-4">
-            <div className="hidden sm:flex shrink-0 w-10 h-10 rounded-xl items-center justify-center text-xs font-black bg-muted text-muted-foreground border border-border/50 group-hover:bg-primary/5 group-hover:text-primary group-hover:border-primary/20 transition-colors">
+          <div className="flex items-start gap-4 p-6 lg:w-[380px] lg:shrink-0">
+            <div className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border/50 bg-muted font-black text-muted-foreground text-xs transition-colors group-hover:border-primary/20 group-hover:bg-primary/5 group-hover:text-primary sm:flex">
               {rank + 1}
             </div>
 
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-2">
+            <div className="min-w-0 flex-1">
+              <div className="mb-2 flex items-center gap-2">
                 <h3
-                  className="text-xl font-black text-foreground tracking-tight truncate leading-tight group-hover:text-primary transition-colors"
+                  className="truncate font-black text-foreground text-xl leading-tight tracking-tight transition-colors group-hover:text-primary"
                   title={job.title}
                 >
                   {job.title}
                 </h3>
               </div>
 
-              <div className="flex flex-col gap-2 text-muted-foreground text-sm font-semibold">
+              <div className="flex flex-col gap-2 font-semibold text-muted-foreground text-sm">
                 <div className="flex items-center gap-2 text-foreground/90">
                   <Building2 className="h-4 w-4 shrink-0 opacity-60" />
                   <span className="truncate">{job.company}</span>
@@ -144,7 +144,7 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
                     <span className="truncate">{job.location}</span>
                   </div>
                   {postedText && (
-                    <div className="flex items-center gap-1.5 shrink-0 px-2 py-0.5 rounded bg-muted/50 text-[11px] font-bold uppercase tracking-wider">
+                    <div className="flex shrink-0 items-center gap-1.5 rounded bg-muted/50 px-2 py-0.5 font-bold text-[11px] uppercase tracking-wider">
                       <Clock className="h-3.5 w-3.5" />
                       <span>{postedText}</span>
                     </div>
@@ -152,7 +152,7 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
                   {job.isRemote && (
                     <Badge
                       variant="secondary"
-                      className="shrink-0 h-6 px-2 text-[10px] font-black uppercase tracking-wider bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
+                      className="h-6 shrink-0 border-emerald-500/20 bg-emerald-500/10 px-2 font-black text-[10px] text-emerald-600 uppercase tracking-wider"
                     >
                       Remote
                     </Badge>
@@ -163,14 +163,14 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
           </div>
 
           {/* Skills Section - Column 2 (Flexible Middle) */}
-          <div className="flex-1 min-w-0 px-8 py-6 lg:py-0 border-t lg:border-t-0 lg:border-x border-border/40 flex flex-col justify-center bg-muted/5 lg:bg-transparent self-stretch">
+          <div className="flex min-w-0 flex-1 flex-col justify-center self-stretch border-border/40 border-t bg-muted/5 px-8 py-6 lg:border-x lg:border-t-0 lg:bg-transparent lg:py-0">
             <div className="space-y-4">
               {showMatched.length > 0 && (
-                <div className="flex gap-4 items-center">
-                  <span className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] w-16 shrink-0 opacity-60">
+                <div className="flex items-center gap-4">
+                  <span className="w-16 shrink-0 font-black text-[10px] text-muted-foreground uppercase tracking-[0.2em] opacity-60">
                     Matched
                   </span>
-                  <div className="flex flex-wrap gap-1.5 min-w-0">
+                  <div className="flex min-w-0 flex-wrap gap-1.5">
                     {showMatched.map((s) => (
                       <SkillBadge
                         key={s}
@@ -180,7 +180,7 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
                       />
                     ))}
                     {job.matchedSkills.length > showMatched.length && (
-                      <span className="text-[10px] text-muted-foreground font-black shrink-0 px-2 py-1 rounded-md bg-muted/50">
+                      <span className="shrink-0 rounded-md bg-muted/50 px-2 py-1 font-black text-[10px] text-muted-foreground">
                         +{job.matchedSkills.length - showMatched.length}
                       </span>
                     )}
@@ -188,11 +188,11 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
                 </div>
               )}
               {showMissing.length > 0 && (
-                <div className="flex gap-4 items-center">
-                  <span className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] w-16 shrink-0 opacity-60">
+                <div className="flex items-center gap-4">
+                  <span className="w-16 shrink-0 font-black text-[10px] text-muted-foreground uppercase tracking-[0.2em] opacity-60">
                     Missing
                   </span>
-                  <div className="flex flex-wrap gap-1.5 min-w-0">
+                  <div className="flex min-w-0 flex-wrap gap-1.5">
                     {showMissing.map((s) => (
                       <SkillBadge
                         key={s}
@@ -202,7 +202,7 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
                       />
                     ))}
                     {job.missingSkills.length > showMissing.length && (
-                      <span className="text-[10px] text-muted-foreground font-black shrink-0 px-2 py-1 rounded-md bg-muted/50">
+                      <span className="shrink-0 rounded-md bg-muted/50 px-2 py-1 font-black text-[10px] text-muted-foreground">
                         +{job.missingSkills.length - showMissing.length}
                       </span>
                     )}
@@ -213,7 +213,7 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
           </div>
 
           {/* Action/Match Section - Column 3 */}
-          <div className="lg:w-[320px] lg:shrink-0 p-6 flex items-center justify-between lg:justify-end gap-6">
+          <div className="flex items-center justify-between gap-6 p-6 lg:w-[320px] lg:shrink-0 lg:justify-end">
             <div className="flex flex-col items-center gap-1">
               <MatchRing
                 percentage={job.matchPercentage}
@@ -227,10 +227,10 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
                 variant="outline"
                 size="icon"
                 onClick={handleToggleSave}
-                className={`w-12 h-12 rounded-2xl transition-all active:scale-90 border-border/60 shrink-0 ${
+                className={`h-12 w-12 shrink-0 rounded-2xl border-border/60 transition-all active:scale-90 ${
                   isSavedState
-                    ? "bg-primary/5 text-primary border-primary/20 hover:bg-primary/10 hover:text-primary"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                    ? "border-primary/20 bg-primary/5 text-primary hover:bg-primary/10 hover:text-primary"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
                 }`}
                 title={isSavedState ? "Remove bookmark" : "Save job"}
               >
@@ -247,7 +247,7 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
                 rel="noopener noreferrer"
                 className={
                   buttonVariants({ variant: "default", size: "lg" }) +
-                  " font-black px-8 shadow-xl shadow-primary/10 hover:shadow-primary/20 transition-all active:scale-95 h-12 rounded-2xl flex items-center shrink-0 text-base group/apply"
+                  "group/apply flex h-12 shrink-0 items-center rounded-2xl px-8 font-black text-base shadow-primary/10 shadow-xl transition-all hover:shadow-primary/20 active:scale-95"
                 }
                 id={`apply-btn-${job.id}`}
                 onClick={() => {
@@ -277,7 +277,7 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
                 }}
               >
                 Apply
-                <ExternalLink className="ml-2.5 h-4 w-4 transition-transform group-hover/apply:translate-x-0.5 group-hover/apply:-translate-y-0.5" />
+                <ExternalLink className="group-hover/apply:-translate-y-0.5 ml-2.5 h-4 w-4 transition-transform group-hover/apply:translate-x-0.5" />
               </a>
             </div>
           </div>

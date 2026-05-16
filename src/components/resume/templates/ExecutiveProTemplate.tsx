@@ -59,11 +59,11 @@ export default function ExecutiveProTemplate({
     summary: () =>
       sectionVisibility?.summary && basics?.summary ? (
         <section key="summary" className="mb-8">
-          <h2 className="text-lg font-bold text-primary uppercase tracking-wider border-b-2 border-primary mb-3">
+          <h2 className="mb-3 border-primary border-b-2 font-bold text-lg text-primary uppercase tracking-wider">
             Executive Summary
           </h2>
           <div
-            className="text-muted-foreground leading-relaxed italic"
+            className="text-muted-foreground italic leading-relaxed"
             dangerouslySetInnerHTML={{ __html: basics.summary }}
           />
         </section>
@@ -72,34 +72,34 @@ export default function ExecutiveProTemplate({
     work: () =>
       sectionVisibility?.work && (work || []).length > 0 ? (
         <section key="work" className="mb-8">
-          <h2 className="text-lg font-bold text-primary uppercase tracking-wider border-b-2 border-primary mb-4">
+          <h2 className="mb-4 border-primary border-b-2 font-bold text-lg text-primary uppercase tracking-wider">
             Professional Experience
           </h2>
           <div className="space-y-6">
             {(work || []).map((item) => (
               <div key={item.id}>
-                <div className="flex justify-between items-baseline mb-1">
-                  <h3 className="text-md font-bold text-foreground">
+                <div className="mb-1 flex items-baseline justify-between">
+                  <h3 className="font-bold text-foreground text-md">
                     {item.position}
                   </h3>
-                  <span className="text-sm font-semibold text-muted-foreground">
+                  <span className="font-semibold text-muted-foreground text-sm">
                     {item.startDate} – {item.endDate || "Present"}
                   </span>
                 </div>
-                <div className="flex justify-between items-baseline mb-2">
-                  <span className="text-primary font-bold tracking-tight">
+                <div className="mb-2 flex items-baseline justify-between">
+                  <span className="font-bold text-primary tracking-tight">
                     {item.company}
                   </span>
-                  <span className="text-sm text-muted-foreground italic">
+                  <span className="text-muted-foreground text-sm italic">
                     {item.location}
                   </span>
                 </div>
                 {item.highlights && (item.highlights || []).length > 0 && (
-                  <ul className="space-y-1.5 ml-4">
+                  <ul className="ml-4 space-y-1.5">
                     {(item.highlights || []).map((h, i) => (
                       <li
                         key={i}
-                        className="text-muted-foreground text-sm list-disc pl-1 leading-snug"
+                        className="list-disc pl-1 text-muted-foreground text-sm leading-snug"
                       >
                         {h}
                       </li>
@@ -115,26 +115,26 @@ export default function ExecutiveProTemplate({
     education: () =>
       sectionVisibility?.education && (education || []).length > 0 ? (
         <section key="education" className="mb-8">
-          <h2 className="text-lg font-bold text-primary uppercase tracking-wider border-b-2 border-primary mb-4">
+          <h2 className="mb-4 border-primary border-b-2 font-bold text-lg text-primary uppercase tracking-wider">
             Education
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {(education || []).map((item) => (
               <div key={item.id}>
-                <div className="flex justify-between items-baseline mb-1">
+                <div className="mb-1 flex items-baseline justify-between">
                   <h3 className="font-bold text-foreground">
                     {item.institution}
                   </h3>
-                  <span className="text-xs text-muted-foreground font-mono">
+                  <span className="font-mono text-muted-foreground text-xs">
                     {item.startDate} – {item.endDate || "Present"}
                   </span>
                 </div>
-                <div className="text-sm text-primary font-medium">
+                <div className="font-medium text-primary text-sm">
                   {item.studyType}
                   {item.area ? ` in ${item.area}` : ""}
                 </div>
                 {item.score && (
-                  <div className="text-xs text-muted-foreground mt-1">
+                  <div className="mt-1 text-muted-foreground text-xs">
                     Academic Standing: {item.score}
                   </div>
                 )}
@@ -147,20 +147,20 @@ export default function ExecutiveProTemplate({
     skills: () =>
       sectionVisibility?.skills && (skills || []).length > 0 ? (
         <section key="skills" className="mb-8">
-          <h2 className="text-lg font-bold text-primary uppercase tracking-wider border-b-2 border-primary mb-4">
+          <h2 className="mb-4 border-primary border-b-2 font-bold text-lg text-primary uppercase tracking-wider">
             Core Competencies
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-8">
+          <div className="grid grid-cols-2 gap-x-8 gap-y-4 md:grid-cols-3">
             {(skills || []).map((group) => (
               <div key={group.id}>
-                <h3 className="text-xs font-bold text-primary uppercase mb-2">
+                <h3 className="mb-2 font-bold text-primary text-xs uppercase">
                   {group.name}
                 </h3>
                 <div className="flex flex-wrap gap-1.5">
                   {(group.keywords || []).map((skill, i) => (
                     <span
                       key={i}
-                      className="text-xs text-muted-foreground border-l-2 border-primary/30 pl-2"
+                      className="border-primary/30 border-l-2 pl-2 text-muted-foreground text-xs"
                     >
                       {skill}
                     </span>
@@ -175,41 +175,41 @@ export default function ExecutiveProTemplate({
     projects: () =>
       sectionVisibility?.projects && (projects || []).length > 0 ? (
         <section key="projects" className="mb-8">
-          <h2 className="text-lg font-bold text-primary uppercase tracking-wider border-b-2 border-primary mb-4">
+          <h2 className="mb-4 border-primary border-b-2 font-bold text-lg text-primary uppercase tracking-wider">
             Selected Projects
           </h2>
           <div className="space-y-6">
             {(projects || []).map((item) => (
               <div key={item.id}>
-                <div className="flex justify-between items-baseline mb-1">
-                  <h3 className="text-md font-bold text-foreground flex items-center gap-2">
+                <div className="mb-1 flex items-baseline justify-between">
+                  <h3 className="flex items-center gap-2 font-bold text-foreground text-md">
                     {item.name}
                     {item.url && (
                       <a
                         href={item.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-primary hover:text-primary/80 transition-colors"
+                        className="text-primary transition-colors hover:text-primary/80"
                       >
                         <ExternalLink size={14} />
                       </a>
                     )}
                   </h3>
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     {item.startDate} – {item.endDate || ""}
                   </span>
                 </div>
                 {item.description && (
-                  <p className="text-muted-foreground text-sm mb-2 italic">
+                  <p className="mb-2 text-muted-foreground text-sm italic">
                     {item.description}
                   </p>
                 )}
                 {item.highlights && (item.highlights || []).length > 0 && (
-                  <ul className="space-y-1 ml-4">
+                  <ul className="ml-4 space-y-1">
                     {(item.highlights || []).map((h, i) => (
                       <li
                         key={i}
-                        className="text-muted-foreground text-sm list-square pl-1"
+                        className="list-square pl-1 text-muted-foreground text-sm"
                       >
                         {h}
                       </li>
@@ -225,20 +225,20 @@ export default function ExecutiveProTemplate({
     certifications: () =>
       sectionVisibility?.certifications && (certifications || []).length > 0 ? (
         <section key="certifications" className="mb-8">
-          <h2 className="text-lg font-bold text-primary uppercase tracking-wider border-b-2 border-primary mb-4">
+          <h2 className="mb-4 border-primary border-b-2 font-bold text-lg text-primary uppercase tracking-wider">
             Certifications & Licenses
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {(certifications || []).map((item) => (
               <div
                 key={item.id}
-                className="flex justify-between items-center p-3 bg-secondary/10 rounded border-l-4 border-primary"
+                className="flex items-center justify-between rounded border-primary border-l-4 bg-secondary/10 p-3"
               >
                 <div>
                   <h3 className="font-bold text-sm">{item.name}</h3>
-                  <p className="text-xs text-muted-foreground">{item.issuer}</p>
+                  <p className="text-muted-foreground text-xs">{item.issuer}</p>
                 </div>
-                <span className="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded">
+                <span className="rounded bg-primary/10 px-2 py-1 font-bold text-primary text-xs">
                   {item.date}
                 </span>
               </div>
@@ -250,16 +250,16 @@ export default function ExecutiveProTemplate({
     languages: () =>
       sectionVisibility?.languages && (languages || []).length > 0 ? (
         <section key="languages" className="mb-8">
-          <h2 className="text-lg font-bold text-primary uppercase tracking-wider border-b-2 border-primary mb-4">
+          <h2 className="mb-4 border-primary border-b-2 font-bold text-lg text-primary uppercase tracking-wider">
             Languages
           </h2>
           <div className="flex flex-wrap gap-8">
             {(languages || []).map((item) => (
-              <div key={item.id} className="flex gap-2 items-center">
-                <span className="font-bold text-sm text-foreground">
+              <div key={item.id} className="flex items-center gap-2">
+                <span className="font-bold text-foreground text-sm">
                   {item.language}
                 </span>
-                <span className="text-xs text-primary font-medium bg-primary/5 px-2 py-0.5 rounded-full border border-primary/20">
+                <span className="rounded-full border border-primary/20 bg-primary/5 px-2 py-0.5 font-medium text-primary text-xs">
                   {item.fluency}
                 </span>
               </div>
@@ -271,23 +271,23 @@ export default function ExecutiveProTemplate({
     volunteer: () =>
       sectionVisibility?.volunteer && (volunteer || []).length > 0 ? (
         <section key="volunteer" className="mb-8">
-          <h2 className="text-lg font-bold text-primary uppercase tracking-wider border-b-2 border-primary mb-4">
+          <h2 className="mb-4 border-primary border-b-2 font-bold text-lg text-primary uppercase tracking-wider">
             Community Leadership
           </h2>
           <div className="space-y-4">
             {(volunteer || []).map((item) => (
               <div key={item.id}>
-                <div className="flex justify-between items-baseline">
+                <div className="flex items-baseline justify-between">
                   <h3 className="font-bold text-foreground">{item.position}</h3>
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     {item.startDate} – {item.endDate || ""}
                   </span>
                 </div>
-                <div className="text-primary font-medium">
+                <div className="font-medium text-primary">
                   {item.organization}
                 </div>
                 {item.summary && (
-                  <p className="text-muted-foreground text-sm mt-1">
+                  <p className="mt-1 text-muted-foreground text-sm">
                     {item.summary}
                   </p>
                 )}
@@ -300,21 +300,21 @@ export default function ExecutiveProTemplate({
     awards: () =>
       sectionVisibility?.awards && (awards || []).length > 0 ? (
         <section key="awards" className="mb-8">
-          <h2 className="text-lg font-bold text-primary uppercase tracking-wider border-b-2 border-primary mb-4">
+          <h2 className="mb-4 border-primary border-b-2 font-bold text-lg text-primary uppercase tracking-wider">
             Honors & Awards
           </h2>
           <div className="space-y-4">
             {(awards || []).map((item) => (
               <div key={item.id}>
-                <div className="flex justify-between items-baseline">
+                <div className="flex items-baseline justify-between">
                   <h3 className="font-bold text-foreground">{item.title}</h3>
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     {item.date}
                   </span>
                 </div>
-                <div className="text-primary font-medium">{item.awarder}</div>
+                <div className="font-medium text-primary">{item.awarder}</div>
                 {item.summary && (
-                  <p className="text-muted-foreground text-sm mt-1">
+                  <p className="mt-1 text-muted-foreground text-sm">
                     {item.summary}
                   </p>
                 )}
@@ -327,21 +327,21 @@ export default function ExecutiveProTemplate({
     publications: () =>
       sectionVisibility?.publications && (publications || []).length > 0 ? (
         <section key="publications" className="mb-8">
-          <h2 className="text-lg font-bold text-primary uppercase tracking-wider border-b-2 border-primary mb-4">
+          <h2 className="mb-4 border-primary border-b-2 font-bold text-lg text-primary uppercase tracking-wider">
             Publications
           </h2>
           <div className="space-y-4">
             {(publications || []).map((item) => (
               <div key={item.id}>
-                <div className="flex justify-between items-baseline">
+                <div className="flex items-baseline justify-between">
                   <h3 className="font-bold text-foreground">{item.name}</h3>
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     {item.releaseDate}
                   </span>
                 </div>
-                <div className="text-primary font-medium">{item.publisher}</div>
+                <div className="font-medium text-primary">{item.publisher}</div>
                 {item.summary && (
-                  <p className="text-muted-foreground text-sm mt-1">
+                  <p className="mt-1 text-muted-foreground text-sm">
                     {item.summary}
                   </p>
                 )}
@@ -354,19 +354,19 @@ export default function ExecutiveProTemplate({
     references: () =>
       sectionVisibility?.references && (references || []).length > 0 ? (
         <section key="references" className="mb-8">
-          <h2 className="text-lg font-bold text-primary uppercase tracking-wider border-b-2 border-primary mb-4">
+          <h2 className="mb-4 border-primary border-b-2 font-bold text-lg text-primary uppercase tracking-wider">
             References
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {(references || []).map((item) => (
               <div
                 key={item.id}
-                className="p-4 bg-secondary/5 rounded border border-border italic"
+                className="rounded border border-border bg-secondary/5 p-4 italic"
               >
-                <p className="text-sm text-muted-foreground mb-2">
+                <p className="mb-2 text-muted-foreground text-sm">
                   &quot;{item.reference}&quot;
                 </p>
-                <p className="text-md font-bold text-foreground">
+                <p className="font-bold text-foreground text-md">
                   — {item.name}
                 </p>
               </div>
@@ -395,14 +395,14 @@ export default function ExecutiveProTemplate({
       }}
     >
       <header className="mb-10 text-center">
-        <h1 className="text-4xl font-black uppercase tracking-tighter text-foreground mb-2">
+        <h1 className="mb-2 font-black text-4xl text-foreground uppercase tracking-tighter">
           {basics.name || "Your Name"}
         </h1>
-        <p className="text-lg font-bold text-primary uppercase tracking-widest mb-6">
+        <p className="mb-6 font-bold text-lg text-primary uppercase tracking-widest">
           {basics.label}
         </p>
 
-        <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 border-y border-border py-4">
+        <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 border-border border-y py-4">
           <ContactItem
             icon={IconMail}
             text={basics.email}
@@ -429,7 +429,7 @@ export default function ExecutiveProTemplate({
         </div>
 
         {(basics.profiles || []).length > 0 && (
-          <div className="flex justify-center gap-6 mt-4">
+          <div className="mt-4 flex justify-center gap-6">
             {(basics.profiles || []).map((p) => (
               <ContactItem
                 key={p.network}

@@ -10,16 +10,16 @@ export function AnalysisError({ error }: AnalysisErrorProps) {
   const router = useRouter();
 
   return (
-    <div className="max-w-xl mx-auto my-32 text-center border p-12 rounded-2xl bg-card shadow-sm">
-      <div className="w-16 h-16 rounded-xl bg-muted/80 border border-border flex items-center justify-center mx-auto mb-6">
+    <div className="mx-auto my-32 max-w-xl rounded-2xl border bg-card p-12 text-center shadow-sm">
+      <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-xl border border-border bg-muted/80">
         <AlertCircle className="h-8 w-8 text-foreground" />
       </div>
-      <h2 className="text-3xl font-black mb-3 text-foreground tracking-tight">
+      <h2 className="mb-3 font-black text-3xl text-foreground tracking-tight">
         {error === "LIMIT_REACHED"
           ? "Monthly Limit Reached"
           : "Analysis Paused"}
       </h2>
-      <p className="text-base text-muted-foreground mb-8 font-semibold leading-relaxed">
+      <p className="mb-8 font-semibold text-base text-muted-foreground leading-relaxed">
         {error === "LIMIT_REACHED"
           ? "You have reached your limit of 2 free job searches for this month. Upgrade to Pro to get unlimited job searches and unlock all features."
           : error}
@@ -29,7 +29,7 @@ export function AnalysisError({ error }: AnalysisErrorProps) {
           onClick={() => router.push("/billing")}
           variant="default"
           size="lg"
-          className="w-full text-base font-bold h-14"
+          className="h-14 w-full font-bold text-base"
         >
           <Zap className="mr-2 h-5 w-5 fill-current" /> Upgrade to Pro
         </Button>
@@ -38,7 +38,7 @@ export function AnalysisError({ error }: AnalysisErrorProps) {
           onClick={() => router.push("/")}
           variant="default"
           size="lg"
-          className="w-full text-base font-bold h-14"
+          className="h-14 w-full font-bold text-base"
         >
           <RefreshCw className="mr-2 h-5 w-5" /> Try Again
         </Button>

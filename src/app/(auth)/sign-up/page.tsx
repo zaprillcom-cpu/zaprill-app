@@ -125,12 +125,12 @@ function SignUpForm() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-background p-4 relative overflow-hidden">
+    <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-background p-4">
       {/* Background pattern */}
       <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02]" />
 
-      <div className="w-full max-w-sm relative z-10 flex flex-col items-center">
-        <Link href="/" className="flex items-center gap-2 mb-8 group">
+      <div className="relative z-10 flex w-full max-w-sm flex-col items-center">
+        <Link href="/" className="group mb-8 flex items-center gap-2">
           <span>
             <Image
               src={"/logo.png"}
@@ -143,11 +143,11 @@ function SignUpForm() {
         </Link>
 
         {emailSent ? (
-          <Card className="w-full shadow-lg border-border">
-            <CardHeader className="text-center pb-6">
-              <div className="mx-auto w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+          <Card className="w-full border-border shadow-lg">
+            <CardHeader className="pb-6 text-center">
+              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                 <svg
-                  className="w-6 h-6 text-primary"
+                  className="h-6 w-6 text-primary"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -161,19 +161,19 @@ function SignUpForm() {
                   />
                 </svg>
               </div>
-              <CardTitle className="text-2xl font-black tracking-tight">
+              <CardTitle className="font-black text-2xl tracking-tight">
                 Check your email
               </CardTitle>
-              <CardDescription className="text-sm font-medium mt-2">
+              <CardDescription className="mt-2 font-medium text-sm">
                 We sent a verification link to{" "}
                 <span className="font-bold text-foreground">{email}</span>.
                 Click the link to activate your account.
               </CardDescription>
             </CardHeader>
-            <CardFooter className="flex flex-col border-t border-border pt-6 pb-6 bg-muted/20">
+            <CardFooter className="flex flex-col border-border border-t bg-muted/20 pt-6 pb-6">
               <Button
                 variant="outline"
-                className="w-full font-bold h-11"
+                className="h-11 w-full font-bold"
                 onClick={() => router.push("/sign-in")}
               >
                 Return to sign in
@@ -181,21 +181,21 @@ function SignUpForm() {
             </CardFooter>
           </Card>
         ) : (
-          <Card className="w-full shadow-lg border-border">
-            <CardHeader className="text-center pb-6">
-              <CardTitle className="text-2xl font-black tracking-tight">
+          <Card className="w-full border-border shadow-lg">
+            <CardHeader className="pb-6 text-center">
+              <CardTitle className="font-black text-2xl tracking-tight">
                 Create an account
               </CardTitle>
-              <CardDescription className="text-sm font-medium mt-1">
+              <CardDescription className="mt-1 font-medium text-sm">
                 Join Zaprill and accelerate your career
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {/* Referral banner */}
               {referralCode && (
-                <div className="flex items-center gap-2 p-3 rounded-md bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 text-sm">
-                  <Gift size={14} className="text-emerald-600 shrink-0" />
-                  <span className="text-emerald-700 dark:text-emerald-300 font-medium">
+                <div className="flex items-center gap-2 rounded-md border border-emerald-200 bg-emerald-50 p-3 text-sm dark:border-emerald-800 dark:bg-emerald-950/30">
+                  <Gift size={14} className="shrink-0 text-emerald-600" />
+                  <span className="font-medium text-emerald-700 dark:text-emerald-300">
                     {referralDiscount
                       ? `You were referred! Get ${referralDiscount}% off your first subscription.`
                       : `Referral code applied: ${referralCode}`}
@@ -203,14 +203,14 @@ function SignUpForm() {
                 </div>
               )}
               {error && (
-                <div className="p-3 text-sm font-medium text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
+                <div className="rounded-md border border-destructive/20 bg-destructive/10 p-3 font-medium text-destructive text-sm">
                   {error}
                 </div>
               )}
 
               <Button
                 variant="outline"
-                className="w-full font-bold h-11"
+                className="h-11 w-full font-bold"
                 onClick={() => handleOAuthLogin("github")}
                 disabled={loading || githubLoading}
               >
@@ -224,7 +224,7 @@ function SignUpForm() {
 
               <Button
                 variant="outline"
-                className="w-full font-bold h-11"
+                className="h-11 w-full font-bold"
                 onClick={() => handleOAuthLogin("google")}
                 disabled={loading || googleLoading}
               >
@@ -238,10 +238,10 @@ function SignUpForm() {
 
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t border-border" />
+                  <span className="w-full border-border border-t" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-card px-2 text-muted-foreground font-bold tracking-wider">
+                  <span className="bg-card px-2 font-bold text-muted-foreground tracking-wider">
                     Or register with email
                   </span>
                 </div>
@@ -249,7 +249,7 @@ function SignUpForm() {
 
               <form onSubmit={handleCredentialsSignUp} className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+                  <label className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                     Name
                   </label>
                   <Input
@@ -259,11 +259,11 @@ function SignUpForm() {
                     onChange={(e) => setName(e.target.value)}
                     disabled={loading || githubLoading}
                     required
-                    className="h-11 font-medium bg-background"
+                    className="h-11 bg-background font-medium"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+                  <label className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                     Email
                   </label>
                   <Input
@@ -273,11 +273,11 @@ function SignUpForm() {
                     onChange={(e) => setEmail(e.target.value)}
                     disabled={loading || githubLoading}
                     required
-                    className="h-11 font-medium bg-background"
+                    className="h-11 bg-background font-medium"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+                  <label className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                     Password (min 8 chars)
                   </label>
                   <PasswordInput
@@ -286,12 +286,12 @@ function SignUpForm() {
                     disabled={loading || githubLoading}
                     required
                     minLength={8}
-                    className="h-11 font-medium bg-background"
+                    className="h-11 bg-background font-medium"
                   />
                 </div>
                 <Button
                   type="submit"
-                  className="w-full font-bold h-11"
+                  className="h-11 w-full font-bold"
                   disabled={loading || githubLoading}
                 >
                   {loading ? (
@@ -305,12 +305,12 @@ function SignUpForm() {
                 </Button>
               </form>
             </CardContent>
-            <CardFooter className="flex flex-col border-t border-border pt-6 pb-6 bg-muted/20">
-              <p className="text-sm text-center text-muted-foreground font-medium">
+            <CardFooter className="flex flex-col border-border border-t bg-muted/20 pt-6 pb-6">
+              <p className="text-center font-medium text-muted-foreground text-sm">
                 Already have an account?{" "}
                 <Link
                   href="/sign-in"
-                  className="text-foreground font-bold hover:underline"
+                  className="font-bold text-foreground hover:underline"
                 >
                   Sign in
                 </Link>
@@ -327,7 +327,7 @@ export default function SignUpPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="flex min-h-screen items-center justify-center bg-background">
           <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
         </div>
       }

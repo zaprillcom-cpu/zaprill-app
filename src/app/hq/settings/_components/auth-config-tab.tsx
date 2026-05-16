@@ -72,7 +72,7 @@ export function AuthConfigTab() {
   return (
     <div className="space-y-6">
       {/* Read-only notice */}
-      <div className="flex items-start gap-3 rounded-lg border bg-muted/40 px-4 py-3 text-sm text-muted-foreground">
+      <div className="flex items-start gap-3 rounded-lg border bg-muted/40 px-4 py-3 text-muted-foreground text-sm">
         <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
         <p>
           Auth configuration is defined in{" "}
@@ -86,7 +86,7 @@ export function AuthConfigTab() {
 
       {/* Active Features */}
       <div>
-        <h3 className="text-sm font-semibold text-foreground mb-3">
+        <h3 className="mb-3 font-semibold text-foreground text-sm">
           Active Auth Features
         </h3>
         <div className="grid gap-3 md:grid-cols-2">
@@ -97,17 +97,17 @@ export function AuthConfigTab() {
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10">
                     <feature.icon className="h-4 w-4 text-primary" />
                   </div>
-                  <div className="flex-1 min-w-0">
+                  <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
                       <CardTitle className="text-sm">{feature.title}</CardTitle>
                       <Badge
                         variant={feature.enabled ? "default" : "secondary"}
-                        className="text-xs shrink-0"
+                        className="shrink-0 text-xs"
                       >
                         {feature.enabled ? "On" : "Off"}
                       </Badge>
                     </div>
-                    <CardDescription className="text-xs mt-0.5">
+                    <CardDescription className="mt-0.5 text-xs">
                       {feature.description}
                     </CardDescription>
                   </div>
@@ -120,7 +120,7 @@ export function AuthConfigTab() {
 
       {/* Trusted Origins */}
       <div>
-        <h3 className="text-sm font-semibold text-foreground mb-3">
+        <h3 className="mb-3 font-semibold text-foreground text-sm">
           Trusted Origins
         </h3>
         <Card>
@@ -131,7 +131,7 @@ export function AuthConfigTab() {
                   key={origin}
                   className="flex items-center gap-3 rounded-md bg-muted/50 px-3 py-2"
                 >
-                  <span className="h-2 w-2 rounded-full bg-emerald-500 shrink-0" />
+                  <span className="h-2 w-2 shrink-0 rounded-full bg-emerald-500" />
                   <code className="font-mono text-xs">{origin}</code>
                 </div>
               ))}
@@ -142,7 +142,7 @@ export function AuthConfigTab() {
 
       {/* Session Config */}
       <div>
-        <h3 className="text-sm font-semibold text-foreground mb-3">
+        <h3 className="mb-3 font-semibold text-foreground text-sm">
           Session Config
         </h3>
         <Card>
@@ -150,7 +150,7 @@ export function AuthConfigTab() {
             <dl className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
               <div>
                 <dt className="text-muted-foreground">Cookie Domain</dt>
-                <dd className="font-medium font-mono text-xs mt-0.5">
+                <dd className="mt-0.5 font-medium font-mono text-xs">
                   .zaprill.com (prod) / localhost (dev)
                 </dd>
               </div>
@@ -158,7 +158,7 @@ export function AuthConfigTab() {
                 <dt className="text-muted-foreground">
                   Cross-subdomain Cookies
                 </dt>
-                <dd className="font-medium mt-0.5">
+                <dd className="mt-0.5 font-medium">
                   <Badge variant="default" className="text-xs">
                     Enabled
                   </Badge>
@@ -166,13 +166,13 @@ export function AuthConfigTab() {
               </div>
               <div>
                 <dt className="text-muted-foreground">Email Verification</dt>
-                <dd className="font-medium mt-0.5">
+                <dd className="mt-0.5 font-medium">
                   Required · Auto sign-in after verify
                 </dd>
               </div>
               <div>
                 <dt className="text-muted-foreground">Password Length</dt>
-                <dd className="font-medium mt-0.5">8 – 30 characters</dd>
+                <dd className="mt-0.5 font-medium">8 – 30 characters</dd>
               </div>
             </dl>
           </CardContent>

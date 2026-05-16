@@ -1,7 +1,7 @@
-import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
-import { AuthState } from "@/types/auth";
+import { useSelector } from "react-redux";
+import type { AuthState } from "@/types/auth";
 
 export default function useAuth() {
   const router = useRouter();

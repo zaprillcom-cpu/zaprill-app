@@ -526,7 +526,7 @@ function AnalyzePageContent() {
   const isLoading = !isDone && !isError;
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground selection:bg-foreground selection:text-background font-sans">
+    <div className="flex min-h-screen flex-col bg-background font-sans text-foreground selection:bg-foreground selection:text-background">
       <Navbar
         showBack
         backHref="/"
@@ -537,19 +537,19 @@ function AnalyzePageContent() {
             : null
         }
         pageTitle={
-          <div className="flex items-center gap-3 min-w-0">
-            <div className="w-9 h-9 rounded-lg shrink-0 bg-primary flex items-center justify-center">
+          <div className="flex min-w-0 items-center gap-3">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary">
               <Zap className="h-4 w-4 text-primary-foreground" />
             </div>
-            <span className="font-extrabold text-lg tracking-tight text-foreground truncate">
+            <span className="truncate font-extrabold text-foreground text-lg tracking-tight">
               {resume?.basics.name
                 ? `${resume.basics.name}'s Setup`
                 : "Career Setup"}
             </span>
             {analysisId && (
-              <span className="text-[10px] uppercase font-bold text-muted-foreground flex items-center gap-1.5 px-2 py-0.5 rounded-sm bg-muted/50 border border-border/50 animate-in fade-in zoom-in duration-300">
+              <span className="fade-in zoom-in flex animate-in items-center gap-1.5 rounded-sm border border-border/50 bg-muted/50 px-2 py-0.5 font-bold text-[10px] text-muted-foreground uppercase duration-300">
                 <svg
-                  className="w-3 h-3 text-primary"
+                  className="h-3 w-3 text-primary"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -568,15 +568,15 @@ function AnalyzePageContent() {
         }
         centreBadge={
           isDone ? (
-            <span className="text-[11px] uppercase font-bold text-foreground flex items-center gap-2 tracking-widest border border-border px-3 py-1.5 rounded-md bg-muted/50">
-              <div className="w-2 h-2 rounded-full bg-primary" />
+            <span className="flex items-center gap-2 rounded-md border border-border bg-muted/50 px-3 py-1.5 font-bold text-[11px] text-foreground uppercase tracking-widest">
+              <div className="h-2 w-2 rounded-full bg-primary" />
               Complete
             </span>
           ) : undefined
         }
       />
 
-      <div className="max-w-7xl mx-auto px-6 py-10 w-full flex-1">
+      <div className="mx-auto w-full max-w-7xl flex-1 px-6 py-10">
         {/* Review Stage */}
         {step === "reviewing" && resume && (
           <ProfileReview
@@ -620,19 +620,19 @@ function AnalyzePageContent() {
               }}
               className="w-full"
             >
-              <TabsList className="flex w-full mb-8 bg-muted p-1 rounded-full border border-border shadow-sm h-12">
+              <TabsList className="mb-8 flex h-12 w-full rounded-full border border-border bg-muted p-1 shadow-sm">
                 {TABS.map((tab) => (
                   <TabsTrigger
                     key={tab.id}
                     value={tab.id}
-                    className="flex-1 rounded-full h-full text-sm font-bold tracking-wide data-active:bg-background data-active:text-foreground data-active:shadow-md transition-all"
+                    className="h-full flex-1 rounded-full font-bold text-sm tracking-wide transition-all data-active:bg-background data-active:text-foreground data-active:shadow-md"
                   >
-                    <tab.icon className="h-5 w-5 mr-2.5 hidden sm:inline" />
+                    <tab.icon className="mr-2.5 hidden h-5 w-5 sm:inline" />
                     {tab.label}
                     {tab.id === "jobs" && (
                       <Badge
                         variant="secondary"
-                        className="ml-2.5 px-2 py-0.5 text-xs font-black shadow-none border-border group-data-active:bg-primary group-data-active:text-primary-foreground"
+                        className="ml-2.5 border-border px-2 py-0.5 font-black text-xs shadow-none group-data-active:bg-primary group-data-active:text-primary-foreground"
                       >
                         {jobs.length}
                       </Badge>
@@ -653,15 +653,15 @@ function AnalyzePageContent() {
                   runAnalysis={runAnalysis}
                 />
 
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-lg font-black text-foreground">
+                <div className="mb-6 flex items-center justify-between">
+                  <h3 className="font-black text-foreground text-lg">
                     Showing {displayedJobs.length} Results
                   </h3>
                   <DropdownMenu>
                     <DropdownMenuTrigger
                       className={
                         buttonVariants({ variant: "outline", size: "sm" }) +
-                        " h-9 text-xs font-bold"
+                        "h-9 font-bold text-xs"
                       }
                     >
                       Sort:{" "}
@@ -670,7 +670,7 @@ function AnalyzePageContent() {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
                       align="end"
-                      className="text-sm font-bold w-48"
+                      className="w-48 font-bold text-sm"
                     >
                       <DropdownMenuItem
                         onClick={() => {
@@ -710,9 +710,9 @@ function AnalyzePageContent() {
                 </div>
 
                 {displayedJobs.length === 0 && (
-                  <div className="text-center py-24 text-muted-foreground bg-muted/30 rounded-2xl border border-border shadow-sm">
-                    <p className="text-lg font-black mb-2">No matches found</p>
-                    <p className="text-sm font-medium">
+                  <div className="rounded-2xl border border-border bg-muted/30 py-24 text-center text-muted-foreground shadow-sm">
+                    <p className="mb-2 font-black text-lg">No matches found</p>
+                    <p className="font-medium text-sm">
                       Try loosening your filter criteria above.
                     </p>
                     <Button
@@ -740,23 +740,23 @@ function AnalyzePageContent() {
                 className="mt-0 animate-fade-in focus-visible:outline-none"
               >
                 <div className="mb-8">
-                  <h2 className="text-2xl font-black mb-2 tracking-tight text-foreground">
+                  <h2 className="mb-2 font-black text-2xl text-foreground tracking-tight">
                     Skill Gap Analysis
                   </h2>
-                  <p className="text-base font-semibold text-muted-foreground pb-6 border-b border-border">
+                  <p className="border-border border-b pb-6 font-semibold text-base text-muted-foreground">
                     Aggregated across {jobs.length} verified listings
                   </p>
                 </div>
 
                 {advice && (
-                  <div className="mb-8 p-6 bg-accent/10 rounded-xl border border-accent/20 text-accent-foreground shadow-sm">
-                    <div className="flex items-center gap-2 mb-3">
+                  <div className="mb-8 rounded-xl border border-accent/20 bg-accent/10 p-6 text-accent-foreground shadow-sm">
+                    <div className="mb-3 flex items-center gap-2">
                       <Zap className="h-5 w-5 text-accent-foreground/80" />
-                      <h3 className="text-lg font-black tracking-tight">
+                      <h3 className="font-black text-lg tracking-tight">
                         Career Advice
                       </h3>
                     </div>
-                    <p className="text-sm font-medium leading-relaxed opacity-90">
+                    <p className="font-medium text-sm leading-relaxed opacity-90">
                       {advice}
                     </p>
                   </div>
@@ -774,10 +774,10 @@ function AnalyzePageContent() {
                 className="mt-0 animate-fade-in focus-visible:outline-none"
               >
                 <div className="mb-8">
-                  <h2 className="text-2xl font-black mb-2 tracking-tight text-foreground">
+                  <h2 className="mb-2 font-black text-2xl text-foreground tracking-tight">
                     Learning Roadmap
                   </h2>
-                  <p className="text-base font-semibold text-muted-foreground pb-6 border-b border-border">
+                  <p className="border-border border-b pb-6 font-semibold text-base text-muted-foreground">
                     Sequential, impact-ordered resources to address your missing
                     skills
                   </p>
@@ -785,11 +785,11 @@ function AnalyzePageContent() {
                 {roadmap.length > 0 ? (
                   <LearningRoadmap roadmap={roadmap} />
                 ) : (
-                  <div className="text-center py-20 text-foreground bg-accent/20 rounded-2xl border border-border shadow-sm">
-                    <p className="text-lg font-black mb-2">
+                  <div className="rounded-2xl border border-border bg-accent/20 py-20 text-center text-foreground shadow-sm">
+                    <p className="mb-2 font-black text-lg">
                       You are fully equipped.
                     </p>
-                    <p className="text-sm font-bold text-muted-foreground">
+                    <p className="font-bold text-muted-foreground text-sm">
                       You currently have all required skills for standard job
                       listings in this demographic.
                     </p>

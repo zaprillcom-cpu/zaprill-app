@@ -242,17 +242,17 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col bg-background">
+      <div className="flex min-h-screen flex-col bg-background">
         <Navbar user={user} showBack backLabel="Dashboard" backHref="/" />
-        <div className="flex-1 flex items-center justify-center">
-          <Loader2 className="h-10 w-10 text-primary animate-spin" />
+        <div className="flex flex-1 items-center justify-center">
+          <Loader2 className="h-10 w-10 animate-spin text-primary" />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
+    <div className="flex min-h-screen flex-col bg-background font-sans text-foreground">
       <Navbar
         user={
           user
@@ -264,23 +264,23 @@ export default function ProfilePage() {
         backHref="/"
         pageTitle={
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-foreground flex items-center justify-center">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-foreground">
               <User className="h-4 w-4 text-background" />
             </div>
-            <span className="font-extrabold text-lg tracking-tight text-foreground truncate">
+            <span className="truncate font-extrabold text-foreground text-lg tracking-tight">
               Edit Profile
             </span>
           </div>
         }
       />
 
-      <div className="max-w-5xl mx-auto px-6 py-10 w-full flex-1">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+      <div className="mx-auto w-full max-w-5xl flex-1 px-6 py-10">
+        <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-center">
           <div>
-            <h1 className="text-4xl font-black tracking-tight mb-2">
+            <h1 className="mb-2 font-black text-4xl tracking-tight">
               My Profile
             </h1>
-            <p className="text-muted-foreground font-semibold">
+            <p className="font-semibold text-muted-foreground">
               Manage your personal details and professional data for better job
               matches.
             </p>
@@ -289,7 +289,7 @@ export default function ProfilePage() {
             onClick={handleSave}
             disabled={saving}
             size="lg"
-            className="font-black h-14 px-8 shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
+            className="h-14 px-8 font-black shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
           >
             {saving ? (
               <Loader2 className="mr-2 h-5 w-5 animate-spin" />
@@ -301,24 +301,24 @@ export default function ProfilePage() {
         </div>
 
         <Tabs defaultValue="personal" className="w-full">
-          <TabsList className="w-full grid grid-cols-3 mb-8 bg-muted/50 p-1 rounded-xl h-14 border border-border/50">
+          <TabsList className="mb-8 grid h-14 w-full grid-cols-3 rounded-xl border border-border/50 bg-muted/50 p-1">
             <TabsTrigger
               value="personal"
-              className="font-bold data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg flex items-center gap-2"
+              className="flex items-center gap-2 rounded-lg font-bold data-[state=active]:bg-background data-[state=active]:shadow-sm"
             >
               <User className="h-4 w-4" />
               Personal Info
             </TabsTrigger>
             <TabsTrigger
               value="resume"
-              className="font-bold data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg flex items-center gap-2"
+              className="flex items-center gap-2 rounded-lg font-bold data-[state=active]:bg-background data-[state=active]:shadow-sm"
             >
               <Briefcase className="h-4 w-4" />
               Parsed Resume
             </TabsTrigger>
             <TabsTrigger
               value="experience"
-              className="font-bold data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg flex items-center gap-2"
+              className="flex items-center gap-2 rounded-lg font-bold data-[state=active]:bg-background data-[state=active]:shadow-sm"
             >
               <BookOpen className="h-4 w-4" />
               Experience
@@ -329,7 +329,7 @@ export default function ProfilePage() {
           <TabsContent value="personal" className="space-y-6">
             <Card className="border-border shadow-sm">
               <CardHeader>
-                <CardTitle className="text-2xl font-black flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 font-black text-2xl">
                   Account Details
                 </CardTitle>
                 <CardDescription className="font-medium">
@@ -340,7 +340,7 @@ export default function ProfilePage() {
                 <div className="grid gap-3">
                   <Label
                     htmlFor="name"
-                    className="text-sm font-bold uppercase tracking-widest text-muted-foreground"
+                    className="font-bold text-muted-foreground text-sm uppercase tracking-widest"
                   >
                     Full Name
                   </Label>
@@ -352,11 +352,11 @@ export default function ProfilePage() {
                     className="h-12 font-semibold text-lg"
                   />
                 </div>
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="grid gap-6 md:grid-cols-2">
                   <div className="grid gap-3">
                     <Label
                       htmlFor="phone"
-                      className="text-sm font-bold uppercase tracking-widest text-muted-foreground"
+                      className="font-bold text-muted-foreground text-sm uppercase tracking-widest"
                     >
                       Phone Number
                     </Label>
@@ -371,7 +371,7 @@ export default function ProfilePage() {
                   <div className="grid gap-3">
                     <Label
                       htmlFor="location"
-                      className="text-sm font-bold uppercase tracking-widest text-muted-foreground"
+                      className="font-bold text-muted-foreground text-sm uppercase tracking-widest"
                     >
                       Location
                     </Label>
@@ -394,7 +394,7 @@ export default function ProfilePage() {
 
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <Label className="text-sm font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                    <Label className="flex items-center gap-2 font-bold text-muted-foreground text-sm uppercase tracking-widest">
                       <Globe className="h-3.5 w-3.5" />
                       Social & Professional Profiles
                     </Label>
@@ -402,7 +402,7 @@ export default function ProfilePage() {
                       variant="outline"
                       size="sm"
                       onClick={addSocialProfile}
-                      className="h-8 text-xs font-bold border-2"
+                      className="h-8 border-2 font-bold text-xs"
                     >
                       <Plus className="mr-2 h-3 w-3" />
                       Add Profile
@@ -421,15 +421,15 @@ export default function ProfilePage() {
                       return (
                         <div
                           key={idx}
-                          className="flex flex-col md:flex-row gap-4 p-4 rounded-xl border-2 border-border bg-muted/30 group relative"
+                          className="group relative flex flex-col gap-4 rounded-xl border-2 border-border bg-muted/30 p-4 md:flex-row"
                         >
-                          <div className="flex-1 grid md:grid-cols-3 gap-4">
+                          <div className="grid flex-1 gap-4 md:grid-cols-3">
                             <div className="space-y-2">
-                              <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">
+                              <span className="font-black text-[10px] text-muted-foreground uppercase tracking-widest">
                                 Platform
                               </span>
                               <div className="relative">
-                                <div className="absolute left-3 top-1/2 -translate-y-1/2">
+                                <div className="-translate-y-1/2 absolute top-1/2 left-3">
                                   <Icon className="h-4 w-4 text-muted-foreground" />
                                 </div>
                                 <Input
@@ -440,12 +440,12 @@ export default function ProfilePage() {
                                     })
                                   }
                                   placeholder="LinkedIn, GitHub, etc."
-                                  className="h-10 pl-10 font-bold border-2"
+                                  className="h-10 border-2 pl-10 font-bold"
                                 />
                               </div>
                             </div>
-                            <div className="md:col-span-2 space-y-2">
-                              <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">
+                            <div className="space-y-2 md:col-span-2">
+                              <Label className="font-black text-[10px] text-muted-foreground uppercase tracking-widest">
                                 URL
                               </Label>
                               <div className="relative">
@@ -457,13 +457,13 @@ export default function ProfilePage() {
                                     })
                                   }
                                   placeholder="https://..."
-                                  className="h-10 font-bold border-2 pr-10"
+                                  className="h-10 border-2 pr-10 font-bold"
                                 />
                                 {social.url && (
                                   <Button
                                     variant="ghost"
                                     size="icon"
-                                    className="absolute right-1 top-1 h-8 w-8 text-muted-foreground hover:text-primary transition-colors"
+                                    className="absolute top-1 right-1 h-8 w-8 text-muted-foreground transition-colors hover:text-primary"
                                     onClick={() => {
                                       const url = social.url.startsWith("http")
                                         ? social.url
@@ -482,7 +482,7 @@ export default function ProfilePage() {
                             variant="ghost"
                             size="icon"
                             onClick={() => removeSocialProfile(idx)}
-                            className="absolute -top-2 -right-2 h-8 w-8 rounded-full bg-background border-2 border-border opacity-0 group-hover:opacity-100 transition-opacity text-destructive hover:text-destructive hover:bg-destructive/10"
+                            className="-top-2 -right-2 absolute h-8 w-8 rounded-full border-2 border-border bg-background text-destructive opacity-0 transition-opacity hover:bg-destructive/10 hover:text-destructive group-hover:opacity-100"
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
@@ -492,8 +492,8 @@ export default function ProfilePage() {
 
                     {(!resumeData.basics.profiles ||
                       resumeData.basics.profiles.length === 0) && (
-                      <div className="text-center py-8 border-2 border-dashed border-border rounded-xl">
-                        <p className="text-sm text-muted-foreground font-medium">
+                      <div className="rounded-xl border-2 border-border border-dashed py-8 text-center">
+                        <p className="font-medium text-muted-foreground text-sm">
                           No social profiles added.
                         </p>
                       </div>
@@ -501,10 +501,10 @@ export default function ProfilePage() {
                   </div>
                 </div>
 
-                <div className="grid gap-3 opacity-60 cursor-not-allowed">
+                <div className="grid cursor-not-allowed gap-3 opacity-60">
                   <Label
                     htmlFor="email"
-                    className="text-sm font-bold uppercase tracking-widest text-muted-foreground"
+                    className="font-bold text-muted-foreground text-sm uppercase tracking-widest"
                   >
                     Email Address
                   </Label>
@@ -512,9 +512,9 @@ export default function ProfilePage() {
                     id="email"
                     value={user?.email || ""}
                     disabled
-                    className="h-12 font-semibold text-lg bg-muted"
+                    className="h-12 bg-muted font-semibold text-lg"
                   />
-                  <p className="text-xs font-bold text-muted-foreground flex items-center gap-2">
+                  <p className="flex items-center gap-2 font-bold text-muted-foreground text-xs">
                     <AlertCircle className="h-3 w-3" />
                     Email cannot be changed currently.
                   </p>
@@ -526,7 +526,7 @@ export default function ProfilePage() {
           {/* ── Parsed Resume Tab ────────────────────────────────────────────────── */}
           <TabsContent value="resume" className="space-y-6">
             {!resumeData ? (
-              <Card className="border-dashed border-2 p-12 text-center">
+              <Card className="border-2 border-dashed p-12 text-center">
                 <p className="font-bold text-muted-foreground">
                   No parsed resume found. Please analyze a resume first.
                 </p>
@@ -543,22 +543,22 @@ export default function ProfilePage() {
                 {/* Summary & Roles */}
                 <Card className="border-border shadow-sm">
                   <CardHeader className="flex flex-row items-center justify-between">
-                    <CardTitle className="text-2xl font-black">
+                    <CardTitle className="font-black text-2xl">
                       Professional Summary
                     </CardTitle>
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => setIsUpdatingResume(!isUpdatingResume)}
-                      className="font-bold border-2"
+                      className="border-2 font-bold"
                     >
                       {isUpdatingResume ? "Cancel" : "Update from File"}
                     </Button>
                   </CardHeader>
                   <CardContent className="space-y-8">
                     {isUpdatingResume && (
-                      <div className="mb-10 p-6 border-2 border-dashed border-primary/20 rounded-2xl bg-primary/5 animate-in fade-in slide-in-from-top-4 duration-500">
-                        <h4 className="text-sm font-black uppercase tracking-widest text-primary mb-4">
+                      <div className="fade-in slide-in-from-top-4 mb-10 animate-in rounded-2xl border-2 border-primary/20 border-dashed bg-primary/5 p-6 duration-500">
+                        <h4 className="mb-4 font-black text-primary text-sm uppercase tracking-widest">
                           Upload New Resume
                         </h4>
                         <ResumeUploader
@@ -566,16 +566,16 @@ export default function ProfilePage() {
                           disabled={isParsing}
                         />
                         {isParsing && (
-                          <div className="flex items-center justify-center gap-3 mt-4 text-primary font-bold">
+                          <div className="mt-4 flex items-center justify-center gap-3 font-bold text-primary">
                             <Loader2 className="h-5 w-5 animate-spin" />
                             Parsing your experience...
                           </div>
                         )}
                       </div>
                     )}
-                    <div className="grid md:grid-cols-2 gap-8">
+                    <div className="grid gap-8 md:grid-cols-2">
                       <div className="grid gap-3">
-                        <Label className="text-sm font-bold uppercase tracking-widest text-muted-foreground">
+                        <Label className="font-bold text-muted-foreground text-sm uppercase tracking-widest">
                           Career Summary
                         </Label>
                         <Textarea
@@ -589,11 +589,11 @@ export default function ProfilePage() {
                       </div>
 
                       <div className="grid gap-3">
-                        <Label className="text-sm font-bold uppercase tracking-widest text-muted-foreground">
+                        <Label className="font-bold text-muted-foreground text-sm uppercase tracking-widest">
                           Years of Experience
                         </Label>
-                        <div className="flex items-center gap-4 bg-muted/30 p-4 rounded-xl border border-border/50">
-                          <span className="text-4xl font-black text-foreground w-16">
+                        <div className="flex items-center gap-4 rounded-xl border border-border/50 bg-muted/30 p-4">
+                          <span className="w-16 font-black text-4xl text-foreground">
                             {resumeData.totalYearsOfExperience || 0}
                           </span>
                           <Input
@@ -611,7 +611,7 @@ export default function ProfilePage() {
                             className="flex-1 accent-foreground"
                           />
                         </div>
-                        <p className="text-xs font-bold text-muted-foreground italic">
+                        <p className="font-bold text-muted-foreground text-xs italic">
                           Slide to adjust your total professional experience.
                         </p>
                       </div>
@@ -620,14 +620,14 @@ export default function ProfilePage() {
                     <Separator className="bg-border/50" />
 
                     <div className="grid gap-3">
-                      <Label className="text-sm font-bold uppercase tracking-widest text-muted-foreground">
+                      <Label className="font-bold text-muted-foreground text-sm uppercase tracking-widest">
                         Target Job Titles
                       </Label>
-                      <div className="flex flex-wrap gap-2 mb-3">
+                      <div className="mb-3 flex flex-wrap gap-2">
                         {(resumeData.inferredJobTitles || []).map((role) => (
                           <Badge
                             key={role}
-                            className="h-9 px-4 text-sm font-black bg-foreground text-background flex items-center gap-2 rounded-lg"
+                            className="flex h-9 items-center gap-2 rounded-lg bg-foreground px-4 font-black text-background text-sm"
                           >
                             {role}
                             <button
@@ -636,9 +636,9 @@ export default function ProfilePage() {
                                 e.stopPropagation();
                                 removeRole(role);
                               }}
-                              className="inline-flex items-center justify-center p-0.5 hover:bg-muted/20 rounded-md transition-colors"
+                              className="inline-flex items-center justify-center rounded-md p-0.5 transition-colors hover:bg-muted/20"
                             >
-                              <Trash2 className="h-3.5 w-3.5 cursor-pointer hover:text-red-400 transition-colors" />
+                              <Trash2 className="h-3.5 w-3.5 cursor-pointer transition-colors hover:text-red-400" />
                             </button>
                           </Badge>
                         ))}
@@ -668,7 +668,7 @@ export default function ProfilePage() {
                 {/* Skills */}
                 <Card className="border-border shadow-sm">
                   <CardHeader>
-                    <CardTitle className="text-2xl font-black">
+                    <CardTitle className="font-black text-2xl">
                       Top Skills
                     </CardTitle>
                     <CardDescription className="font-medium">
@@ -676,7 +676,7 @@ export default function ProfilePage() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="flex flex-wrap gap-2 mb-6">
+                    <div className="mb-6 flex flex-wrap gap-2">
                       {(resumeData.skills || [])
                         .flatMap((group) =>
                           group.keywords.map((skill) => ({
@@ -688,7 +688,7 @@ export default function ProfilePage() {
                           <Badge
                             key={`${skill.groupId}-${skill.name}-${idx}`}
                             variant="outline"
-                            className="h-9 px-4 text-sm font-bold border-2 flex items-center gap-2 rounded-lg group hover:border-foreground transition-all"
+                            className="group flex h-9 items-center gap-2 rounded-lg border-2 px-4 font-bold text-sm transition-all hover:border-foreground"
                           >
                             {skill.name}
                             <button
@@ -697,9 +697,9 @@ export default function ProfilePage() {
                                 e.stopPropagation();
                                 removeSkill(skill.groupId, skill.name);
                               }}
-                              className="inline-flex items-center justify-center p-0.5 hover:bg-muted rounded-md transition-colors"
+                              className="inline-flex items-center justify-center rounded-md p-0.5 transition-colors hover:bg-muted"
                             >
-                              <Trash2 className="h-3.5 w-3.5 cursor-pointer text-muted-foreground group-hover:text-red-500 transition-colors" />
+                              <Trash2 className="h-3.5 w-3.5 cursor-pointer text-muted-foreground transition-colors group-hover:text-red-500" />
                             </button>
                           </Badge>
                         ))}
@@ -734,7 +734,7 @@ export default function ProfilePage() {
                 <Card className="border-border shadow-sm">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0">
                     <div>
-                      <CardTitle className="text-2xl font-black">
+                      <CardTitle className="font-black text-2xl">
                         Work Experience
                       </CardTitle>
                       <CardDescription className="font-medium">
@@ -762,21 +762,21 @@ export default function ProfilePage() {
                           ],
                         })
                       }
-                      className="font-black border-2"
+                      className="border-2 font-black"
                     >
-                      <Plus className="h-4 w-4 mr-2" /> Add
+                      <Plus className="mr-2 h-4 w-4" /> Add
                     </Button>
                   </CardHeader>
                   <CardContent className="space-y-6">
                     {(resumeData.work || []).map((exp, idx) => (
                       <div
                         key={idx}
-                        className="group relative border-b border-border/50 pb-8 last:border-0 last:pb-0"
+                        className="group relative border-border/50 border-b pb-8 last:border-0 last:pb-0"
                       >
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="absolute -right-2 top-0 opacity-0 group-hover:opacity-100 text-destructive transition-all"
+                          className="-right-2 absolute top-0 text-destructive opacity-0 transition-all group-hover:opacity-100"
                           onClick={() => {
                             const newWork = [...(resumeData.work || [])];
                             newWork.splice(idx, 1);
@@ -785,9 +785,9 @@ export default function ProfilePage() {
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
-                        <div className="grid md:grid-cols-3 gap-4 mb-4">
+                        <div className="mb-4 grid gap-4 md:grid-cols-3">
                           <div className="space-y-2">
-                            <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+                            <Label className="font-black text-muted-foreground text-xs uppercase tracking-widest">
                               Role
                             </Label>
                             <Input
@@ -797,11 +797,11 @@ export default function ProfilePage() {
                                 newWork[idx].position = e.target.value;
                                 updResume({ work: newWork });
                               }}
-                              className="font-bold border-2"
+                              className="border-2 font-bold"
                             />
                           </div>
                           <div className="space-y-2">
-                            <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+                            <Label className="font-black text-muted-foreground text-xs uppercase tracking-widest">
                               Company
                             </Label>
                             <Input
@@ -811,11 +811,11 @@ export default function ProfilePage() {
                                 newWork[idx].company = e.target.value;
                                 updResume({ work: newWork });
                               }}
-                              className="font-bold border-2"
+                              className="border-2 font-bold"
                             />
                           </div>
                           <div className="space-y-2">
-                            <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+                            <Label className="font-black text-muted-foreground text-xs uppercase tracking-widest">
                               Duration
                             </Label>
                             <Input
@@ -829,12 +829,12 @@ export default function ProfilePage() {
                                 updResume({ work: newWork });
                               }}
                               placeholder="e.g. Jan 2020 - Present"
-                              className="font-bold border-2"
+                              className="border-2 font-bold"
                             />
                           </div>
                         </div>
                         <div className="space-y-2">
-                          <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+                          <Label className="font-black text-muted-foreground text-xs uppercase tracking-widest">
                             Description
                           </Label>
                           <Textarea
@@ -856,7 +856,7 @@ export default function ProfilePage() {
                 <Card className="border-border shadow-sm">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0">
                     <div>
-                      <CardTitle className="text-2xl font-black">
+                      <CardTitle className="font-black text-2xl">
                         Projects
                       </CardTitle>
                       <CardDescription className="font-medium">
@@ -884,21 +884,21 @@ export default function ProfilePage() {
                           ],
                         })
                       }
-                      className="font-black border-2"
+                      className="border-2 font-black"
                     >
-                      <Plus className="h-4 w-4 mr-2" /> Add
+                      <Plus className="mr-2 h-4 w-4" /> Add
                     </Button>
                   </CardHeader>
                   <CardContent className="space-y-6">
                     {(resumeData.projects || []).map((proj, idx) => (
                       <div
                         key={idx}
-                        className="group relative border-b border-border/50 pb-8 last:border-0 last:pb-0"
+                        className="group relative border-border/50 border-b pb-8 last:border-0 last:pb-0"
                       >
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="absolute -right-2 top-0 opacity-0 group-hover:opacity-100 text-destructive transition-all"
+                          className="-right-2 absolute top-0 text-destructive opacity-0 transition-all group-hover:opacity-100"
                           onClick={() => {
                             const newProj = [...(resumeData.projects || [])];
                             newProj.splice(idx, 1);
@@ -908,9 +908,9 @@ export default function ProfilePage() {
                           <Trash2 className="h-4 w-4" />
                         </Button>
                         <div className="space-y-4">
-                          <div className="grid md:grid-cols-2 gap-4 mb-4">
+                          <div className="mb-4 grid gap-4 md:grid-cols-2">
                             <div className="space-y-2">
-                              <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+                              <Label className="font-black text-muted-foreground text-xs uppercase tracking-widest">
                                 Project Name
                               </Label>
                               <Input
@@ -922,11 +922,11 @@ export default function ProfilePage() {
                                   newProj[idx].name = e.target.value;
                                   updResume({ projects: newProj });
                                 }}
-                                className="font-bold border-2"
+                                className="border-2 font-bold"
                               />
                             </div>
                             <div className="space-y-2">
-                              <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+                              <Label className="font-black text-muted-foreground text-xs uppercase tracking-widest">
                                 Project URL
                               </Label>
                               <Input
@@ -939,13 +939,13 @@ export default function ProfilePage() {
                                   updResume({ projects: newProj });
                                 }}
                                 placeholder="e.g. GitHub: my-project"
-                                className="font-bold border-2"
+                                className="border-2 font-bold"
                               />
                             </div>
                           </div>
 
                           <div className="space-y-2">
-                            <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+                            <Label className="font-black text-muted-foreground text-xs uppercase tracking-widest">
                               Technologies (comma separated)
                             </Label>
                             <Input
@@ -960,12 +960,12 @@ export default function ProfilePage() {
                                 updResume({ projects: newProj });
                               }}
                               placeholder="React, Node.js, ..."
-                              className="font-bold border-2"
+                              className="border-2 font-bold"
                             />
                           </div>
 
                           <div className="space-y-2">
-                            <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+                            <Label className="font-black text-muted-foreground text-xs uppercase tracking-widest">
                               Description
                             </Label>
                             <Textarea
@@ -990,7 +990,7 @@ export default function ProfilePage() {
                 <Card className="border-border shadow-sm">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0">
                     <div>
-                      <CardTitle className="text-2xl font-black">
+                      <CardTitle className="font-black text-2xl">
                         Education
                       </CardTitle>
                       <CardDescription className="font-medium">
@@ -1018,21 +1018,21 @@ export default function ProfilePage() {
                           ],
                         })
                       }
-                      className="font-black border-2"
+                      className="border-2 font-black"
                     >
-                      <Plus className="h-4 w-4 mr-2" /> Add
+                      <Plus className="mr-2 h-4 w-4" /> Add
                     </Button>
                   </CardHeader>
                   <CardContent className="space-y-6">
                     {(resumeData.education || []).map((edu, idx) => (
                       <div
                         key={idx}
-                        className="group relative border-b border-border/50 pb-8 last:border-0 last:pb-0"
+                        className="group relative border-border/50 border-b pb-8 last:border-0 last:pb-0"
                       >
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="absolute -right-2 top-0 opacity-0 group-hover:opacity-100 text-destructive transition-all"
+                          className="-right-2 absolute top-0 text-destructive opacity-0 transition-all group-hover:opacity-100"
                           onClick={() => {
                             const newEdu = [...(resumeData.education || [])];
                             newEdu.splice(idx, 1);
@@ -1041,9 +1041,9 @@ export default function ProfilePage() {
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
-                        <div className="grid md:grid-cols-3 gap-4 mb-4">
+                        <div className="mb-4 grid gap-4 md:grid-cols-3">
                           <div className="space-y-2">
-                            <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+                            <Label className="font-black text-muted-foreground text-xs uppercase tracking-widest">
                               Degree / Certificate
                             </Label>
                             <Input
@@ -1055,11 +1055,11 @@ export default function ProfilePage() {
                                 newEdu[idx].studyType = e.target.value;
                                 updResume({ education: newEdu });
                               }}
-                              className="font-bold border-2"
+                              className="border-2 font-bold"
                             />
                           </div>
                           <div className="space-y-2">
-                            <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+                            <Label className="font-black text-muted-foreground text-xs uppercase tracking-widest">
                               Institution
                             </Label>
                             <Input
@@ -1071,11 +1071,11 @@ export default function ProfilePage() {
                                 newEdu[idx].institution = e.target.value;
                                 updResume({ education: newEdu });
                               }}
-                              className="font-bold border-2"
+                              className="border-2 font-bold"
                             />
                           </div>
                           <div className="space-y-2">
-                            <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+                            <Label className="font-black text-muted-foreground text-xs uppercase tracking-widest">
                               Field of Study
                             </Label>
                             <Input
@@ -1088,11 +1088,11 @@ export default function ProfilePage() {
                                 updResume({ education: newEdu });
                               }}
                               placeholder="e.g. Information Technology"
-                              className="font-bold border-2"
+                              className="border-2 font-bold"
                             />
                           </div>
                           <div className="space-y-2">
-                            <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+                            <Label className="font-black text-muted-foreground text-xs uppercase tracking-widest">
                               Graduation Year
                             </Label>
                             <Input
@@ -1106,7 +1106,7 @@ export default function ProfilePage() {
                                 updResume({ education: newEdu });
                               }}
                               placeholder="e.g. 2025"
-                              className="font-bold border-2"
+                              className="border-2 font-bold"
                             />
                           </div>
                         </div>
@@ -1120,9 +1120,9 @@ export default function ProfilePage() {
         </Tabs>
       </div>
 
-      <footer className="py-10 border-t border-border/50 bg-muted/20">
-        <div className="max-w-5xl mx-auto px-6 text-center">
-          <p className="text-sm font-bold text-muted-foreground">
+      <footer className="border-border/50 border-t bg-muted/20 py-10">
+        <div className="mx-auto max-w-5xl px-6 text-center">
+          <p className="font-bold text-muted-foreground text-sm">
             AI Job Analyzer &copy; {new Date().getFullYear()} • Customised for{" "}
             {user?.name || "Professional"}
           </p>

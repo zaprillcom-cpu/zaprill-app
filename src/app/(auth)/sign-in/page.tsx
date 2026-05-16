@@ -92,12 +92,12 @@ function SignInForm() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-background p-4 relative overflow-hidden">
+    <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-background p-4">
       {/* Background pattern */}
       <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02]" />
 
-      <div className="w-full max-w-sm relative z-10 flex flex-col items-center">
-        <Link href="/" className="flex items-center gap-2 mb-8 group">
+      <div className="relative z-10 flex w-full max-w-sm flex-col items-center">
+        <Link href="/" className="group mb-8 flex items-center gap-2">
           <span>
             <Image
               src={"/logo.png"}
@@ -109,25 +109,25 @@ function SignInForm() {
           </span>
         </Link>
 
-        <Card className="w-full shadow-lg border-border">
-          <CardHeader className="text-center pb-6">
-            <CardTitle className="text-2xl font-black tracking-tight">
+        <Card className="w-full border-border shadow-lg">
+          <CardHeader className="pb-6 text-center">
+            <CardTitle className="font-black text-2xl tracking-tight">
               Welcome back
             </CardTitle>
-            <CardDescription className="text-sm font-medium mt-1">
+            <CardDescription className="mt-1 font-medium text-sm">
               Sign in to your account to continue
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {error && (
-              <div className="p-3 text-sm font-medium text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
+              <div className="rounded-md border border-destructive/20 bg-destructive/10 p-3 font-medium text-destructive text-sm">
                 {error}
               </div>
             )}
 
             <Button
               variant="outline"
-              className="w-full font-bold h-11"
+              className="h-11 w-full font-bold"
               onClick={() => handleOAuthLogin("github")}
               disabled={loading || githubLoading}
             >
@@ -141,7 +141,7 @@ function SignInForm() {
 
             <Button
               variant="outline"
-              className="w-full font-bold h-11"
+              className="h-11 w-full font-bold"
               onClick={() => handleOAuthLogin("google")}
               disabled={loading || googleLoading}
             >
@@ -155,10 +155,10 @@ function SignInForm() {
 
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t border-border" />
+                <span className="w-full border-border border-t" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-card px-2 text-muted-foreground font-bold tracking-wider">
+                <span className="bg-card px-2 font-bold text-muted-foreground tracking-wider">
                   Or continue with
                 </span>
               </div>
@@ -166,7 +166,7 @@ function SignInForm() {
 
             <form onSubmit={handleCredentialsSignIn} className="space-y-4">
               <div className="space-y-2">
-                <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+                <label className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                   Email
                 </label>
                 <Input
@@ -176,17 +176,17 @@ function SignInForm() {
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={loading || githubLoading}
                   required
-                  className="h-11 font-medium bg-background"
+                  className="h-11 bg-background font-medium"
                 />
               </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+                  <label className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                     Password
                   </label>
                   <Link
                     href="/forgot-password"
-                    className="text-xs font-bold text-foreground hover:underline"
+                    className="font-bold text-foreground text-xs hover:underline"
                   >
                     Forgot password?
                   </Link>
@@ -196,12 +196,12 @@ function SignInForm() {
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={loading || githubLoading}
                   required
-                  className="h-11 font-medium bg-background"
+                  className="h-11 bg-background font-medium"
                 />
               </div>
               <Button
                 type="submit"
-                className="w-full font-bold h-11"
+                className="h-11 w-full font-bold"
                 disabled={loading || githubLoading}
               >
                 {loading ? (
@@ -215,12 +215,12 @@ function SignInForm() {
               </Button>
             </form>
           </CardContent>
-          <CardFooter className="flex flex-col border-t border-border pt-6 pb-6 bg-muted/20">
-            <p className="text-sm text-center text-muted-foreground font-medium">
+          <CardFooter className="flex flex-col border-border border-t bg-muted/20 pt-6 pb-6">
+            <p className="text-center font-medium text-muted-foreground text-sm">
               Don't have an account?{" "}
               <Link
                 href="/sign-up"
-                className="text-foreground font-bold hover:underline"
+                className="font-bold text-foreground hover:underline"
               >
                 Sign up
               </Link>
@@ -236,7 +236,7 @@ export default function SignInPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="flex min-h-screen items-center justify-center bg-background">
           <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
         </div>
       }

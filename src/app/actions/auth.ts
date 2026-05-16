@@ -1,8 +1,8 @@
 "use server";
 
+import { eq } from "drizzle-orm";
 import db from "@/db";
 import { user } from "@/db/schema";
-import { eq } from "drizzle-orm";
 
 /**
  * Checks if a user already exists in the database with the given email.

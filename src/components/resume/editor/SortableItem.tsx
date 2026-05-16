@@ -35,7 +35,7 @@ export default function SortableItem({ id, children }: SortableItemProps) {
     <div ref={setNodeRef} style={style}>
       {/* Drag handle overlay — positioned over the existing GripVertical */}
       <div
-        className="absolute top-4 left-4 z-10 cursor-grab active:cursor-grabbing p-1 -m-1"
+        className="-m-1 absolute top-4 left-4 z-10 cursor-grab p-1 active:cursor-grabbing"
         {...attributes}
         {...listeners}
       >

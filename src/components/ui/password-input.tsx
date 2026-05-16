@@ -23,7 +23,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
     const [showPassword, setShowPassword] = React.useState(false);
 
     return (
-      <InputGroup className={cn("bg-background rounded-3xl", className)}>
+      <InputGroup className={cn("rounded-3xl bg-background", className)}>
         <InputGroupInput
           {...props}
           ref={ref}

@@ -149,8 +149,8 @@ export default function VolunteerForm({
   return (
     <div className="space-y-5">
       {fields.length === 0 && (
-        <div className="text-center py-12 border-2 border-dashed border-border rounded-xl">
-          <p className="text-muted-foreground font-medium mb-4">
+        <div className="rounded-xl border-2 border-border border-dashed py-12 text-center">
+          <p className="mb-4 font-medium text-muted-foreground">
             No volunteer experience added yet
           </p>
           <Button variant="outline" onClick={addItem} className="gap-2">
@@ -161,7 +161,7 @@ export default function VolunteerForm({
 
       {fields.map((field, idx) => (
         <Card key={field.id} className="border-border">
-          <CardContent className="p-5 space-y-4">
+          <CardContent className="space-y-4 p-5">
             <div className="flex items-center justify-between">
               <span className="font-bold text-foreground text-sm">
                 Volunteer {idx + 1}
@@ -177,9 +177,9 @@ export default function VolunteerForm({
               </Button>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <Field>
-                <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+                <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                   Organization *
                 </FieldLabel>
                 <FieldContent>
@@ -194,7 +194,7 @@ export default function VolunteerForm({
                 </FieldContent>
               </Field>
               <Field>
-                <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+                <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                   Position
                 </FieldLabel>
                 <FieldContent>
@@ -210,9 +210,9 @@ export default function VolunteerForm({
               </Field>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <Field>
-                <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+                <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                   Start Date
                 </FieldLabel>
                 <FieldContent>
@@ -227,7 +227,7 @@ export default function VolunteerForm({
                 </FieldContent>
               </Field>
               <Field>
-                <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+                <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                   End Date
                 </FieldLabel>
                 <FieldContent>
@@ -244,7 +244,7 @@ export default function VolunteerForm({
             </div>
 
             <Field>
-              <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+              <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                 Website URL
               </FieldLabel>
               <FieldContent>
@@ -258,7 +258,7 @@ export default function VolunteerForm({
             </Field>
 
             <Field>
-              <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+              <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                 Summary
               </FieldLabel>
               <FieldContent>
@@ -277,7 +277,7 @@ export default function VolunteerForm({
             {/* Highlights */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+                <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                   Key Achievements
                 </FieldLabel>
                 <Button
@@ -290,7 +290,7 @@ export default function VolunteerForm({
                       shouldValidate: true,
                     });
                   }}
-                  className="h-7 text-xs gap-1"
+                  className="h-7 gap-1 text-xs"
                 >
                   <Plus className="h-3 w-3" /> Add
                 </Button>
@@ -301,7 +301,7 @@ export default function VolunteerForm({
                   return (
                     <div key={hIdx} className="space-y-1">
                       <div className="flex items-start gap-2">
-                        <span className="text-muted-foreground text-xs w-4 shrink-0 mt-2.5">
+                        <span className="mt-2.5 w-4 shrink-0 text-muted-foreground text-xs">
                           •
                         </span>
                         <Textarea
@@ -323,7 +323,7 @@ export default function VolunteerForm({
                             })
                           }
                           disabled={isEnhancing || !highlight.trim()}
-                          className="h-8 w-8 p-0 shrink-0 text-amber-500 hover:text-amber-400 hover:bg-amber-500/10"
+                          className="h-8 w-8 shrink-0 p-0 text-amber-500 hover:bg-amber-500/10 hover:text-amber-400"
                           title="Enhance with AI"
                         >
                           {isEnhancing ? (
@@ -345,7 +345,7 @@ export default function VolunteerForm({
                               { shouldValidate: true },
                             );
                           }}
-                          className="h-8 w-8 p-0 shrink-0 text-muted-foreground hover:text-destructive"
+                          className="h-8 w-8 shrink-0 p-0 text-muted-foreground hover:text-destructive"
                         >
                           <Trash2 className="h-3 w-3" />
                         </Button>

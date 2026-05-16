@@ -87,53 +87,53 @@ function fmt(d: string | null) {
 
 function SummaryCards({ summary }: { summary: AdminSummary }) {
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5 mb-8">
-      <div className="flex flex-col p-4 rounded-xl border bg-card shadow-sm">
-        <div className="flex items-center gap-2 text-muted-foreground mb-2">
+    <div className="mb-8 grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+      <div className="flex flex-col rounded-xl border bg-card p-4 shadow-sm">
+        <div className="mb-2 flex items-center gap-2 text-muted-foreground">
           <Users size={16} />
-          <span className="text-xs font-medium uppercase tracking-wider">
+          <span className="font-medium text-xs uppercase tracking-wider">
             Total Referrals
           </span>
         </div>
-        <div className="text-2xl font-bold">{summary.total}</div>
+        <div className="font-bold text-2xl">{summary.total}</div>
       </div>
-      <div className="flex flex-col p-4 rounded-xl border bg-card shadow-sm border-emerald-500/20 bg-emerald-500/5">
-        <div className="flex items-center gap-2 text-emerald-600 mb-2">
+      <div className="flex flex-col rounded-xl border border-emerald-500/20 bg-card bg-emerald-500/5 p-4 shadow-sm">
+        <div className="mb-2 flex items-center gap-2 text-emerald-600">
           <CheckCircle size={16} />
-          <span className="text-xs font-medium uppercase tracking-wider">
+          <span className="font-medium text-xs uppercase tracking-wider">
             Converted
           </span>
         </div>
-        <div className="text-2xl font-bold text-emerald-700">
+        <div className="font-bold text-2xl text-emerald-700">
           {summary.converted}
         </div>
       </div>
-      <div className="flex flex-col p-4 rounded-xl border bg-card shadow-sm">
-        <div className="flex items-center gap-2 text-muted-foreground mb-2">
+      <div className="flex flex-col rounded-xl border bg-card p-4 shadow-sm">
+        <div className="mb-2 flex items-center gap-2 text-muted-foreground">
           <TrendingUp size={16} />
-          <span className="text-xs font-medium uppercase tracking-wider">
+          <span className="font-medium text-xs uppercase tracking-wider">
             Conversion Rate
           </span>
         </div>
-        <div className="text-2xl font-bold">{summary.conversionRate}%</div>
+        <div className="font-bold text-2xl">{summary.conversionRate}%</div>
       </div>
-      <div className="flex flex-col p-4 rounded-xl border bg-card shadow-sm">
-        <div className="flex items-center gap-2 text-muted-foreground mb-2">
+      <div className="flex flex-col rounded-xl border bg-card p-4 shadow-sm">
+        <div className="mb-2 flex items-center gap-2 text-muted-foreground">
           <Clock size={16} />
-          <span className="text-xs font-medium uppercase tracking-wider">
+          <span className="font-medium text-xs uppercase tracking-wider">
             Pending
           </span>
         </div>
-        <div className="text-2xl font-bold">{summary.pending}</div>
+        <div className="font-bold text-2xl">{summary.pending}</div>
       </div>
-      <div className="flex flex-col p-4 rounded-xl border bg-card shadow-sm border-amber-500/20 bg-amber-500/5">
-        <div className="flex items-center gap-2 text-amber-600 mb-2">
+      <div className="flex flex-col rounded-xl border border-amber-500/20 bg-amber-500/5 bg-card p-4 shadow-sm">
+        <div className="mb-2 flex items-center gap-2 text-amber-600">
           <Wallet size={16} />
-          <span className="text-xs font-medium uppercase tracking-wider">
+          <span className="font-medium text-xs uppercase tracking-wider">
             Pending Comm.
           </span>
         </div>
-        <div className="text-2xl font-bold text-amber-700">
+        <div className="font-bold text-2xl text-amber-700">
           ₹{summary.pendingCommissions.toLocaleString("en-IN")}
         </div>
       </div>
@@ -290,7 +290,7 @@ export default function ReferralsPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Referrals</h1>
+        <h1 className="font-bold text-3xl tracking-tight">Referrals</h1>
         <p className="text-muted-foreground">
           Manage referral program, influencer codes and commissions.
         </p>
@@ -301,17 +301,17 @@ export default function ReferralsPage() {
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Settings Panel */}
         <div className="rounded-xl border bg-card p-6 shadow-sm">
-          <div className="flex items-center gap-2 font-semibold mb-6">
+          <div className="mb-6 flex items-center gap-2 font-semibold">
             <Settings size={18} className="text-primary" />
             <span>Program Configuration</span>
           </div>
 
           {settingsForm && (
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-3 rounded-lg bg-muted/30 border">
+              <div className="flex items-center justify-between rounded-lg border bg-muted/30 p-3">
                 <div className="space-y-0.5">
-                  <div className="text-sm font-medium">Program Enabled</div>
-                  <div className="text-xs text-muted-foreground">
+                  <div className="font-medium text-sm">Program Enabled</div>
+                  <div className="text-muted-foreground text-xs">
                     Allow users to generate referral codes
                   </div>
                 </div>
@@ -330,7 +330,7 @@ export default function ReferralsPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-muted-foreground uppercase">
+                  <label className="font-medium text-muted-foreground text-xs uppercase">
                     Referrer Reward %
                   </label>
                   <input
@@ -348,7 +348,7 @@ export default function ReferralsPage() {
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-muted-foreground uppercase">
+                  <label className="font-medium text-muted-foreground text-xs uppercase">
                     Referee Reward %
                   </label>
                   <input
@@ -367,7 +367,7 @@ export default function ReferralsPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-muted-foreground uppercase">
+                  <label className="font-medium text-muted-foreground text-xs uppercase">
                     Expiry (Days)
                   </label>
                   <input
@@ -383,7 +383,7 @@ export default function ReferralsPage() {
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-muted-foreground uppercase">
+                  <label className="font-medium text-muted-foreground text-xs uppercase">
                     Max Referrals / User
                   </label>
                   <input
@@ -404,7 +404,7 @@ export default function ReferralsPage() {
               </div>
 
               <button
-                className="w-full flex items-center justify-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90 disabled:opacity-50"
+                className="flex w-full items-center justify-center gap-2 rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground text-sm shadow hover:bg-primary/90 disabled:opacity-50"
                 onClick={saveSettings}
                 disabled={savingSettings}
               >
@@ -419,14 +419,14 @@ export default function ReferralsPage() {
 
         {/* Influencer Code Creator */}
         <div className="rounded-xl border bg-card p-6 shadow-sm">
-          <div className="flex items-center justify-between mb-6">
+          <div className="mb-6 flex items-center justify-between">
             <div className="flex items-center gap-2 font-semibold">
               <Award size={18} className="text-primary" />
               <span>Influencer Codes</span>
             </div>
             {!showInfluencerForm && (
               <button
-                className="text-xs font-medium text-primary hover:underline flex items-center gap-1"
+                className="flex items-center gap-1 font-medium text-primary text-xs hover:underline"
                 onClick={() => setShowInfluencerForm(true)}
               >
                 <Plus size={14} /> Create New
@@ -438,7 +438,7 @@ export default function ReferralsPage() {
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-muted-foreground uppercase">
+                  <label className="font-medium text-muted-foreground text-xs uppercase">
                     User ID
                   </label>
                   <input
@@ -455,7 +455,7 @@ export default function ReferralsPage() {
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-muted-foreground uppercase">
+                  <label className="font-medium text-muted-foreground text-xs uppercase">
                     Custom Code
                   </label>
                   <input
@@ -475,7 +475,7 @@ export default function ReferralsPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-muted-foreground uppercase">
+                  <label className="font-medium text-muted-foreground text-xs uppercase">
                     Commission Type
                   </label>
                   <select
@@ -494,7 +494,7 @@ export default function ReferralsPage() {
                   </select>
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-muted-foreground uppercase">
+                  <label className="font-medium text-muted-foreground text-xs uppercase">
                     Value
                   </label>
                   <input
@@ -513,14 +513,14 @@ export default function ReferralsPage() {
 
               <div className="flex gap-2 pt-2">
                 <button
-                  className="flex-1 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90"
+                  className="flex-1 rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground text-sm shadow hover:bg-primary/90"
                   onClick={createInfluencerCode}
                   disabled={submittingInfluencer}
                 >
                   Create Code
                 </button>
                 <button
-                  className="rounded-md border border-input bg-transparent px-4 py-2 text-sm font-medium shadow-sm hover:bg-accent"
+                  className="rounded-md border border-input bg-transparent px-4 py-2 font-medium text-sm shadow-sm hover:bg-accent"
                   onClick={() => setShowInfluencerForm(false)}
                 >
                   Cancel
@@ -528,9 +528,9 @@ export default function ReferralsPage() {
               </div>
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center py-8 text-center bg-muted/20 rounded-lg border border-dashed">
-              <Award size={32} className="text-muted-foreground/30 mb-2" />
-              <p className="text-sm text-muted-foreground">
+            <div className="flex flex-col items-center justify-center rounded-lg border border-dashed bg-muted/20 py-8 text-center">
+              <Award size={32} className="mb-2 text-muted-foreground/30" />
+              <p className="text-muted-foreground text-sm">
                 No active influencers being tracked here.
                 <br />
                 Create a code to get started.
@@ -541,8 +541,8 @@ export default function ReferralsPage() {
       </div>
 
       {/* Referrals Table */}
-      <div className="rounded-xl border bg-card shadow-sm overflow-hidden">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between p-6 gap-4 border-b">
+      <div className="overflow-hidden rounded-xl border bg-card shadow-sm">
+        <div className="flex flex-col justify-between gap-4 border-b p-6 sm:flex-row sm:items-center">
           <div className="flex items-center gap-2 font-semibold">
             <Users size={18} className="text-primary" />
             <span>Activity Log</span>
@@ -560,7 +560,7 @@ export default function ReferralsPage() {
               <option value="fraudulent">Fraudulent</option>
             </select>
             <button
-              className="p-1.5 rounded-md border hover:bg-accent"
+              className="rounded-md border p-1.5 hover:bg-accent"
               onClick={fetchData}
             >
               <RefreshCw size={14} className={loading ? "animate-spin" : ""} />
@@ -570,27 +570,27 @@ export default function ReferralsPage() {
 
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-muted/50 border-b">
+            <thead className="border-b bg-muted/50">
               <tr>
-                <th className="px-6 py-3 text-left font-medium text-muted-foreground uppercase tracking-wider text-[10px]">
+                <th className="px-6 py-3 text-left font-medium text-[10px] text-muted-foreground uppercase tracking-wider">
                   Referrer
                 </th>
-                <th className="px-6 py-3 text-left font-medium text-muted-foreground uppercase tracking-wider text-[10px]">
+                <th className="px-6 py-3 text-left font-medium text-[10px] text-muted-foreground uppercase tracking-wider">
                   Code
                 </th>
-                <th className="px-6 py-3 text-left font-medium text-muted-foreground uppercase tracking-wider text-[10px]">
+                <th className="px-6 py-3 text-left font-medium text-[10px] text-muted-foreground uppercase tracking-wider">
                   Referred
                 </th>
-                <th className="px-6 py-3 text-left font-medium text-muted-foreground uppercase tracking-wider text-[10px]">
+                <th className="px-6 py-3 text-left font-medium text-[10px] text-muted-foreground uppercase tracking-wider">
                   Type
                 </th>
-                <th className="px-6 py-3 text-left font-medium text-muted-foreground uppercase tracking-wider text-[10px]">
+                <th className="px-6 py-3 text-left font-medium text-[10px] text-muted-foreground uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-6 py-3 text-left font-medium text-muted-foreground uppercase tracking-wider text-[10px]">
+                <th className="px-6 py-3 text-left font-medium text-[10px] text-muted-foreground uppercase tracking-wider">
                   Date
                 </th>
-                <th className="px-6 py-3 text-right font-medium text-muted-foreground uppercase tracking-wider text-[10px]">
+                <th className="px-6 py-3 text-right font-medium text-[10px] text-muted-foreground uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
@@ -602,7 +602,7 @@ export default function ReferralsPage() {
                     colSpan={7}
                     className="px-6 py-12 text-center text-muted-foreground"
                   >
-                    <Loader2 size={24} className="animate-spin mx-auto mb-2" />
+                    <Loader2 size={24} className="mx-auto mb-2 animate-spin" />
                     Loading referrals...
                   </td>
                 </tr>
@@ -619,16 +619,16 @@ export default function ReferralsPage() {
                 referrals.map(({ referral, referrerName, referrerEmail }) => (
                   <tr
                     key={referral.id}
-                    className="hover:bg-muted/5 transition-colors"
+                    className="transition-colors hover:bg-muted/5"
                   >
                     <td className="px-6 py-4">
                       <div className="font-medium">{referrerName ?? "—"}</div>
-                      <div className="text-xs text-muted-foreground">
+                      <div className="text-muted-foreground text-xs">
                         {referrerEmail ?? "—"}
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <code className="px-1.5 py-0.5 rounded bg-muted text-xs font-mono">
+                      <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">
                         {referral.referralCode}
                       </code>
                     </td>
@@ -636,13 +636,13 @@ export default function ReferralsPage() {
                       {referral.referredEmail ?? "—"}
                     </td>
                     <td className="px-6 py-4">
-                      <span className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium bg-blue-100 text-blue-700 capitalize">
+                      <span className="inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 font-medium text-[10px] text-blue-700 capitalize">
                         {referral.type}
                       </span>
                     </td>
                     <td className="px-6 py-4">
                       <span
-                        className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${
+                        className={`inline-flex items-center rounded-full px-2 py-0.5 font-medium text-[10px] ${
                           referral.status === "converted"
                             ? "bg-emerald-100 text-emerald-700"
                             : referral.status === "fraudulent"
@@ -653,13 +653,13 @@ export default function ReferralsPage() {
                         {referral.status.replace("_", " ")}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-xs text-muted-foreground">
+                    <td className="px-6 py-4 text-muted-foreground text-xs">
                       {fmt(referral.createdAt)}
                     </td>
                     <td className="px-6 py-4 text-right">
                       {referral.status !== "fraudulent" && (
                         <button
-                          className="p-1.5 rounded-md text-destructive hover:bg-destructive/10"
+                          className="rounded-md p-1.5 text-destructive hover:bg-destructive/10"
                           onClick={() => flagFraud(referral.id)}
                           title="Flag Fraud"
                         >

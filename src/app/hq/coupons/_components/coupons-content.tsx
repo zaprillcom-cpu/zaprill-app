@@ -164,7 +164,7 @@ export function CouponsContent({
 
   return (
     <>
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+      <div className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <Tabs
           value={currentFilter}
           onValueChange={setCurrentFilter}
@@ -177,7 +177,7 @@ export function CouponsContent({
           </TabsList>
         </Tabs>
         <div className="flex items-center gap-4">
-          <p className="text-sm text-muted-foreground hidden md:block">
+          <p className="hidden text-muted-foreground text-sm md:block">
             {filteredCoupons.length} coupon
             {filteredCoupons.length !== 1 ? "s" : ""}
           </p>
@@ -192,7 +192,7 @@ export function CouponsContent({
       ) : filteredCoupons.length === 0 ? (
         <div className="flex h-48 items-center justify-center rounded-xl border border-dashed">
           <div className="text-center">
-            <Tag className="mx-auto h-8 w-8 text-muted-foreground opacity-30 mb-2" />
+            <Tag className="mx-auto mb-2 h-8 w-8 text-muted-foreground opacity-30" />
             <p className="text-muted-foreground text-sm">
               {currentFilter === "active"
                 ? "No active coupons."
@@ -219,7 +219,7 @@ export function CouponsContent({
               <TableBody>
                 {filteredCoupons.map((c) => (
                   <TableRow key={c.id}>
-                    <TableCell className="font-mono font-medium">
+                    <TableCell className="font-medium font-mono">
                       {c.code}
                     </TableCell>
                     <TableCell className="capitalize">{c.type}</TableCell>
@@ -228,7 +228,7 @@ export function CouponsContent({
                         ? `${c.value}%`
                         : `₹${Number(c.value).toLocaleString("en-IN")}`}
                       {c.maxDiscount && (
-                        <span className="text-xs text-muted-foreground ml-1">
+                        <span className="ml-1 text-muted-foreground text-xs">
                           (max ₹{c.maxDiscount})
                         </span>
                       )}
@@ -247,14 +247,14 @@ export function CouponsContent({
                     </TableCell>
                     <TableCell>
                       {c.isPublic ? (
-                        <div className="flex items-center text-emerald-600 gap-1.5">
+                        <div className="flex items-center gap-1.5 text-emerald-600">
                           <Eye className="h-3.5 w-3.5" />
-                          <span className="text-xs font-medium">Public</span>
+                          <span className="font-medium text-xs">Public</span>
                         </div>
                       ) : (
-                        <div className="flex items-center text-muted-foreground gap-1.5">
+                        <div className="flex items-center gap-1.5 text-muted-foreground">
                           <EyeOff className="h-3.5 w-3.5" />
-                          <span className="text-xs font-medium">Private</span>
+                          <span className="font-medium text-xs">Private</span>
                         </div>
                       )}
                     </TableCell>
@@ -299,9 +299,9 @@ export function CouponsContent({
       )}
 
       {/* Preview Section */}
-      <div className="mt-12 pt-8 border-t border-border">
-        <h3 className="text-lg font-semibold mb-6">User Preview (Checkout)</h3>
-        <div className="rounded-xl border bg-muted/10 p-6 max-w-md">
+      <div className="mt-12 border-border border-t pt-8">
+        <h3 className="mb-6 font-semibold text-lg">User Preview (Checkout)</h3>
+        <div className="max-w-md rounded-xl border bg-muted/10 p-6">
           <Card>
             <CardHeader>
               <CardTitle>Discount Code</CardTitle>
@@ -310,7 +310,7 @@ export function CouponsContent({
               <div className="space-y-3">
                 <div className="flex space-x-2">
                   <div className="relative flex-1">
-                    <Tag className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Tag className="absolute top-2.5 left-3 h-4 w-4 text-muted-foreground" />
                     <Input
                       placeholder="Enter coupon code"
                       className="pl-9"
@@ -323,8 +323,8 @@ export function CouponsContent({
                 </div>
                 {coupons.filter((c) => c.isPublic && c.status === "active")
                   .length > 0 && (
-                  <div className="pt-3 mt-4 border-t border-border/50">
-                    <p className="text-sm text-muted-foreground mb-2">
+                  <div className="mt-4 border-border/50 border-t pt-3">
+                    <p className="mb-2 text-muted-foreground text-sm">
                       Available Coupons:
                     </p>
                     <div className="flex flex-wrap gap-2">
@@ -333,9 +333,9 @@ export function CouponsContent({
                         .map((coupon) => (
                           <div
                             key={coupon.id}
-                            className="flex items-center px-3 py-1.5 text-xs font-medium rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200"
+                            className="flex items-center rounded-md border border-emerald-200 bg-emerald-50 px-3 py-1.5 font-medium text-emerald-700 text-xs"
                           >
-                            <Tag className="w-3 h-3 mr-1" />
+                            <Tag className="mr-1 h-3 w-3" />
                             {coupon.code}
                             <span className="ml-1 opacity-75">
                               (
@@ -518,7 +518,7 @@ export function CouponsContent({
               />
               <div className="space-y-0.5">
                 <Label>Publicly Visible</Label>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-muted-foreground text-xs">
                   If enabled, this coupon will be shown in the "Available
                   Coupons" list during checkout.
                 </p>

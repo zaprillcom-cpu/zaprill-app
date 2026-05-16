@@ -115,8 +115,8 @@ export default function LanguagesForm({
   return (
     <div className="space-y-5">
       {fields.length === 0 && (
-        <div className="text-center py-12 border-2 border-dashed border-border rounded-xl">
-          <p className="text-muted-foreground font-medium mb-4">
+        <div className="rounded-xl border-2 border-border border-dashed py-12 text-center">
+          <p className="mb-4 font-medium text-muted-foreground">
             No languages added yet
           </p>
           <Button variant="outline" onClick={addItem} className="gap-2">
@@ -131,7 +131,7 @@ export default function LanguagesForm({
             <div className="flex items-end gap-4">
               <div className="flex-1 space-y-2">
                 <Field>
-                  <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+                  <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                     Language {idx + 1}
                   </FieldLabel>
                   <FieldContent>
@@ -148,7 +148,7 @@ export default function LanguagesForm({
               </div>
               <div className="w-40 space-y-2">
                 <Field>
-                  <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+                  <FieldLabel className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                     Fluency
                   </FieldLabel>
                   <FieldContent>
@@ -183,7 +183,7 @@ export default function LanguagesForm({
                 size="sm"
                 type="button"
                 onClick={() => remove(idx)}
-                className="h-11 w-11 p-0 text-muted-foreground hover:text-destructive shrink-0"
+                className="h-11 w-11 shrink-0 p-0 text-muted-foreground hover:text-destructive"
               >
                 <Trash2 className="h-4 w-4" />
               </Button>

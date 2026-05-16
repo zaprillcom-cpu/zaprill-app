@@ -1,10 +1,9 @@
 "use client";
-import { cn } from "@/lib/utils";
-import React, { useRef, useState, useEffect } from "react";
-
-import { motion } from "motion/react";
 import { IconUpload } from "@tabler/icons-react";
+import { motion } from "motion/react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { cn } from "@/lib/utils";
 
 const mainVariant = {
   initial: {
@@ -80,10 +79,10 @@ export const FileUpload = ({
           <GridPattern />
         </div>
         <div className="flex flex-col items-center justify-center">
-          <p className="relative z-20 font-sans text-base font-bold text-neutral-700 dark:text-neutral-300">
+          <p className="relative z-20 font-bold font-sans text-base text-neutral-700 dark:text-neutral-300">
             Upload file
           </p>
-          <p className="relative z-20 mt-2 font-sans text-base font-normal text-neutral-400 dark:text-neutral-400">
+          <p className="relative z-20 mt-2 font-normal font-sans text-base text-neutral-400 dark:text-neutral-400">
             Drag or drop your files here or click to upload
           </p>
           <div className="relative mx-auto mt-10 w-full max-w-xl">
@@ -110,13 +109,13 @@ export const FileUpload = ({
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       layout
-                      className="shadow-input w-fit shrink-0 rounded-lg px-2 py-1 text-sm text-neutral-600 dark:bg-neutral-800 dark:text-white"
+                      className="w-fit shrink-0 rounded-lg px-2 py-1 text-neutral-600 text-sm shadow-input dark:bg-neutral-800 dark:text-white"
                     >
                       {(file.size / (1024 * 1024)).toFixed(2)} MB
                     </motion.p>
                   </div>
 
-                  <div className="mt-2 flex w-full flex-col items-start justify-between text-sm text-neutral-600 md:flex-row md:items-center dark:text-neutral-400">
+                  <div className="mt-2 flex w-full flex-col items-start justify-between text-neutral-600 text-sm md:flex-row md:items-center dark:text-neutral-400">
                     <motion.p
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
@@ -169,7 +168,7 @@ export const FileUpload = ({
             {!files.length && (
               <motion.div
                 variants={secondaryVariant}
-                className="absolute inset-0 z-30 mx-auto mt-4 flex h-32 w-full max-w-[8rem] items-center justify-center rounded-md border border-dashed border-sky-400 bg-transparent opacity-0"
+                className="absolute inset-0 z-30 mx-auto mt-4 flex h-32 w-full max-w-[8rem] items-center justify-center rounded-md border border-sky-400 border-dashed bg-transparent opacity-0"
               ></motion.div>
             )}
           </div>
