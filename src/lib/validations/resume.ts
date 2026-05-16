@@ -83,13 +83,9 @@ export const educationItemSchema = z.object({
 export const skillItemSchema = z.object({
   id: z.string(),
   name: z.string().min(1, "Skill group name is required").max(100),
-  level: z
-    .enum(["Beginner", "Intermediate", "Advanced", "Expert", ""])
-    .default(""),
+  level: z.string().max(50).default(""),
   keywords: z.array(z.string().max(50)).max(30).default([]),
-  category: z
-    .enum(["technical", "soft", "domain", "tool", ""])
-    .default("technical"),
+  category: z.string().max(50).default("technical"),
 });
 
 export const projectItemSchema = z.object({

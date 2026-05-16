@@ -43,6 +43,15 @@ import SkillsForm from "@/components/resume/editor/sections/SkillsForm";
 import VolunteerForm from "@/components/resume/editor/sections/VolunteerForm";
 import WorkForm from "@/components/resume/editor/sections/WorkForm";
 import TailorDialog from "@/components/resume/editor/TailorDialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -95,6 +104,7 @@ export default function ResumeEditorPage({
   const [loadError, setLoadError] = useState<string | null>(null);
   const [showPreview, setShowPreview] = useState(true);
   const [validationErrors, setValidationErrors] = useState<any>(null);
+  const [showErrorDialog, setShowErrorDialog] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
 
   // ─── Fetch resume on mount ──────────────────────
@@ -210,6 +220,7 @@ export default function ResumeEditorPage({
         }
 
         setValidationErrors(errorsBySection);
+        setShowErrorDialog(true);
         dispatch(resumeActions.markSaveFailed());
       } else {
         dispatch(resumeActions.markSaveFailed());
@@ -520,6 +531,53 @@ export default function ResumeEditorPage({
           </div>
         )}
       </div>
+
+      {/* Validation Error Dialog */}
+      <AlertDialog open={showErrorDialog} onOpenChange={setShowErrorDialog}>
+        <AlertDialogContent className="max-w-md">
+          <AlertDialogHeader>
+            <div className="flex items-center gap-2 text-destructive mb-2">
+              <AlertCircle className="h-5 w-5" />
+              <AlertDialogTitle>Validation Failed</AlertDialogTitle>
+            </div>
+            <AlertDialogDescription className="space-y-4">
+              <p>
+                We found some issues that need your attention before we can
+                save. Please check the following sections:
+              </p>
+              <div className="space-y-3 max-h-[40vh] overflow-y-auto pr-2">
+                {validationErrors &&
+                  Object.entries(validationErrors).map(([section, errors]) => {
+                    const sectionLabel =
+                      SECTIONS.find((s) => s.key === section)?.label || section;
+                    return (
+                      <div
+                        key={section}
+                        className="p-3 rounded-lg border border-destructive/20 bg-destructive/5"
+                      >
+                        <p className="font-bold text-sm text-destructive capitalize mb-1">
+                          {sectionLabel}
+                        </p>
+                        <ul className="list-disc list-inside text-xs text-muted-foreground space-y-1">
+                          {Object.values(errors as any)
+                            .flat()
+                            .map((msg: any, i) => (
+                              <li key={i}>{msg}</li>
+                            ))}
+                        </ul>
+                      </div>
+                    );
+                  })}
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction onClick={() => setShowErrorDialog(false)}>
+              Got it, I'll fix it
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

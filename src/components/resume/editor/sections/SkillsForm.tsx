@@ -23,10 +23,25 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { skillItemSchema } from "@/lib/validations/resume";
 import { resumeActions } from "@/store/resumeSlice";
 import type { AppDispatch, RootState } from "@/store/store";
 import type { ResumeSkillItem } from "@/types/resume";
+
+const SKILL_LEVELS = ["Beginner", "Intermediate", "Advanced", "Expert"];
+const SKILL_CATEGORIES = [
+  { label: "Technical", value: "technical" },
+  { label: "Soft Skills", value: "soft" },
+  { label: "Domain Knowledge", value: "domain" },
+  { label: "Tools", value: "tool" },
+];
 
 const skillsFormSchema = z.object({
   skills: z.array(skillItemSchema),
@@ -157,8 +172,8 @@ export default function SkillsForm({ serverErrors }: { serverErrors?: any }) {
             <SortableItem key={field.id} id={field.id}>
               <Card className="border-border">
                 <CardContent className="p-5 pl-10 space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="space-y-2 flex-1 mr-4">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 flex-1">
                       <Field>
                         <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
                           Group Name *
@@ -167,19 +182,97 @@ export default function SkillsForm({ serverErrors }: { serverErrors?: any }) {
                           <Input
                             {...register(`skills.${idx}.name`)}
                             placeholder="Frontend Development"
-                            className="h-11"
+                            className="h-10"
                           />
                           <FieldError
                             errors={[(errors.skills?.[idx] as any)?.name]}
                           />
                         </FieldContent>
                       </Field>
+
+                      <Field>
+                        <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+                          Category
+                        </FieldLabel>
+                        <FieldContent>
+                          <Select
+                            value={watch(`skills.${idx}.category`)}
+                            onValueChange={(val) =>
+                              setValue(`skills.${idx}.category`, val, {
+                                shouldValidate: true,
+                              })
+                            }
+                          >
+                            <SelectTrigger className="h-10">
+                              <SelectValue placeholder="Select Category" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {SKILL_CATEGORIES.map((cat) => (
+                                <SelectItem key={cat.value} value={cat.value}>
+                                  {cat.label}
+                                </SelectItem>
+                              ))}
+                              {/* Handle legacy or custom categories */}
+                              {watch(`skills.${idx}.category`) &&
+                                !SKILL_CATEGORIES.some(
+                                  (c) =>
+                                    c.value === watch(`skills.${idx}.category`),
+                                ) && (
+                                  <SelectItem
+                                    value={watch(`skills.${idx}.category`)}
+                                  >
+                                    {watch(`skills.${idx}.category`)}
+                                  </SelectItem>
+                                )}
+                            </SelectContent>
+                          </Select>
+                          <FieldError
+                            errors={[(errors.skills?.[idx] as any)?.category]}
+                          />
+                        </FieldContent>
+                      </Field>
+
+                      <Field>
+                        <FieldLabel className="font-bold text-xs uppercase tracking-wider text-muted-foreground">
+                          Proficiency
+                        </FieldLabel>
+                        <FieldContent>
+                          <Select
+                            value={watch(`skills.${idx}.level`) || "none"}
+                            onValueChange={(val) =>
+                              setValue(
+                                `skills.${idx}.level`,
+                                val === "none" ? "" : val,
+                                {
+                                  shouldValidate: true,
+                                },
+                              )
+                            }
+                          >
+                            <SelectTrigger className="h-10">
+                              <SelectValue placeholder="Select Level" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="none">None</SelectItem>
+                              {SKILL_LEVELS.map((level) => (
+                                <SelectItem key={level} value={level}>
+                                  {level}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FieldError
+                            errors={[(errors.skills?.[idx] as any)?.level]}
+                          />
+                        </FieldContent>
+                      </Field>
                     </div>
+
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => remove(idx)}
-                      className="h-8 w-8 p-0 text-muted-foreground hover:text-destructive mt-6"
+                      className="h-8 w-8 p-0 text-muted-foreground hover:text-destructive mt-7"
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
