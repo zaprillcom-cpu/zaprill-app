@@ -110,8 +110,7 @@ function AnalyzePageContent() {
 
   const [resume, setResume] = useState<ParsedResume | null>(null);
   const [jobs, setJobs] = useState<JobMatch[]>([]);
-  const { user } = useAuth();
-  const [isPro, setIsPro] = useState(user?.isPro || false);
+  const [isPro, setIsPro] = useState(false);
   const [skillGaps, setSkillGaps] = useState<SkillGap[]>([]);
   const [roadmap, setRoadmap] = useState<RoadmapItem[]>([]);
   const [advice, setAdvice] = useState<string>("");
@@ -146,6 +145,8 @@ function AnalyzePageContent() {
     editingTitleValue: "",
     experienceYears: 0,
   });
+
+  const { user } = useAuth();
 
   const runAnalysis = useCallback(
     async (parsedResume: ParsedResume, locationOverride?: string) => {
@@ -334,7 +335,6 @@ function AnalyzePageContent() {
             setRoadmap(analysis.roadmap || []);
             setAdvice(analysis.advice || "");
             setAnalysisId(analysis.id);
-            setIsPro(!!user.isPro);
 
             // Extract search location correctly back for filters
             if (analysis.searchLocation) {
