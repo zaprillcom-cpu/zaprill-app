@@ -330,6 +330,7 @@ Be precise and thorough. Do not make up information that isn't in the resume.`,
     };
 
     // Save to user profile and resume table
+    let savedResumeId: string | null = null;
     try {
       if (session?.user) {
         const userId = session.user.id;
@@ -397,12 +398,18 @@ Be precise and thorough. Do not make up information that isn't in the resume.`,
               updatedAt: new Date(),
             },
           });
+
+        savedResumeId = resumeId;
       }
     } catch (saveErr) {
       console.error("Failed to save user profile and resume:", saveErr);
     }
 
-    return NextResponse.json(normalizeResumeData(finalResumeData));
+    const responseData = normalizeResumeData(finalResumeData);
+    return NextResponse.json({
+      ...responseData,
+      resumeId: savedResumeId,
+    });
   } catch (error) {
     console.error("Resume parsing error:", error);
     return NextResponse.json(

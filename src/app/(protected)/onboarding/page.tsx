@@ -2,7 +2,6 @@
 
 import {
   IconArrowRight,
-  IconCheck,
   IconFileText,
   IconLoader2,
   IconWand,
@@ -11,48 +10,93 @@ import { AnimatePresence, motion } from "motion/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import ResumeScannerLoader from "@/components/resume/scanner/ResumeScannerLoader";
+import ResumeScanResults from "@/components/resume/scanner/ResumeScanResults";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { FileUpload } from "@/components/ui/file-upload";
 import { WordFadeIn } from "@/components/ui/word-fade-in";
 import { cn } from "@/lib/utils";
 
-type Step = "welcome" | "choice" | "upload" | "success";
+type Step = "welcome" | "choice" | "upload" | "scanning" | "results";
+
+interface AtsResult {
+  score: number;
+  keywordMatches: string[];
+  missingKeywords: string[];
+  suggestions: Array<{
+    section: string;
+    issue: string;
+    fix: string;
+    action?: {
+      type: string;
+      id?: string;
+      content?: string;
+      keywords?: string[];
+      highlights?: string[];
+      data?: Record<string, unknown>;
+    };
+  }>;
+  sectionScores: Record<string, number>;
+}
 
 export default function OnboardingPage() {
   const [step, setStep] = useState<Step>("welcome");
-  const [isUploading, setIsUploading] = useState(false);
   const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
+  const [atsResult, setAtsResult] = useState<AtsResult | null>(null);
+  const [resumeId, setResumeId] = useState<string | null>(null);
+  const [resumeData, setResumeData] = useState<unknown>(null);
+  const [scannedFile, setScannedFile] = useState<File | null>(null);
   const router = useRouter();
 
   const handleFileUpload = async (files: File[]) => {
     if (files.length === 0) return;
 
-    setIsUploading(true);
-    const formData = new FormData();
-    formData.append("resume", files[0]);
+    setScannedFile(files[0]);
+    setStep("scanning");
 
     try {
-      const response = await fetch("/api/parse-resume", {
+      const formData = new FormData();
+      formData.append("resume", files[0]);
+
+      const parseRes = await fetch("/api/parse-resume", {
         method: "POST",
         body: formData,
       });
 
-      if (!response.ok) {
-        const error = await response.json();
+      if (!parseRes.ok) {
+        const error = await parseRes.json();
         throw new Error(error.error || "Failed to parse resume");
       }
 
-      setStep("success");
-      toast.success("Resume parsed successfully!");
+      const parsedData = await parseRes.json();
+      setResumeData(parsedData);
 
-      // Short delay for the success animation
-      setTimeout(() => {
-        router.push("/analyze");
-      }, 2000);
-    } catch (error: any) {
-      toast.error(error.message);
-      setIsUploading(false);
+      const id = parsedData.resumeId as string;
+      if (!id) {
+        throw new Error("Resume was parsed but no ID was returned");
+      }
+      setResumeId(id);
+
+      const atsRes = await fetch(`/api/resumes/${id}/ai/ats-score`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: parsedData }),
+      });
+
+      if (!atsRes.ok) {
+        const err = await atsRes.json();
+        throw new Error(err.error || "Failed to analyze resume");
+      }
+
+      const atsData = await atsRes.json();
+      setAtsResult(atsData);
+      setStep("results");
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : "Something went wrong";
+      toast.error(message);
+      setStep("upload");
     }
   };
 
@@ -64,7 +108,7 @@ export default function OnboardingPage() {
         body: JSON.stringify({ onboardingStatus: "in_progress" }),
       });
       setStep("choice");
-    } catch (error) {
+    } catch {
       toast.error("Failed to start onboarding");
     } finally {
       setIsUpdatingStatus(false);
@@ -79,7 +123,6 @@ export default function OnboardingPage() {
         body: JSON.stringify({ onboardingStatus: "in_progress" }),
       });
 
-      // Create initial resume
       const res = await fetch("/api/resumes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -92,7 +135,7 @@ export default function OnboardingPage() {
       } else {
         router.push("/resumes");
       }
-    } catch (error) {
+    } catch {
       toast.error("Something went wrong");
     } finally {
       setIsUpdatingStatus(false);
@@ -106,6 +149,7 @@ export default function OnboardingPage() {
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px]" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[120px]" />
       </div>
+
       <AnimatePresence mode="wait">
         {step === "welcome" && (
           <motion.div
@@ -173,7 +217,7 @@ export default function OnboardingPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <ChoiceCard
                 title="I have a resume"
-                description="Upload your existing PDF or Word document. We'll parse it instantly."
+                description="Upload your existing PDF or Word document. We'll scan it for ATS compatibility and give you instant feedback."
                 icon={<IconFileText className="h-8 w-8 text-primary" />}
                 onClick={() => setStep("upload")}
               />
@@ -207,61 +251,46 @@ export default function OnboardingPage() {
             <Card
               className={cn(
                 "p-1 border-2 border-dashed border-border bg-card transition-colors",
-                isUploading && "opacity-50 pointer-events-none",
               )}
             >
               <FileUpload onChange={handleFileUpload} />
             </Card>
 
-            {isUploading && (
-              <div className="mt-8 flex flex-col items-center gap-4">
-                <IconLoader2 className="h-10 w-10 text-primary animate-spin" />
-                <p className="text-muted-foreground font-medium animate-pulse">
-                  Our AI is analyzing your career history...
-                </p>
-              </div>
-            )}
-
-            {!isUploading && (
-              <Button
-                variant="ghost"
-                onClick={() => setStep("choice")}
-                className="mt-6 mx-auto flex items-center text-muted-foreground hover:text-foreground"
-              >
-                Go back
-              </Button>
-            )}
+            <Button
+              variant="ghost"
+              onClick={() => setStep("choice")}
+              className="mt-6 mx-auto flex items-center text-muted-foreground hover:text-foreground"
+            >
+              Go back
+            </Button>
           </motion.div>
         )}
 
-        {step === "success" && (
+        {step === "scanning" && (
           <motion.div
-            key="success"
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="text-center"
+            key="scanning"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="w-full max-w-2xl"
           >
-            <div className="h-24 w-24 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-8 shadow-[var(--shadow-glow)]">
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 200,
-                  damping: 10,
-                  delay: 0.2,
-                }}
-              >
-                <IconCheck className="h-12 w-12 text-primary" />
-              </motion.div>
-            </div>
-            <h2 className="text-3xl font-bold text-foreground mb-4">
-              Profile Ready!
-            </h2>
-            <p className="text-muted-foreground text-lg">
-              We&apos;ve analyzed your resume. Redirecting you to your career
-              insights...
-            </p>
+            <ResumeScannerLoader file={scannedFile} />
+          </motion.div>
+        )}
+
+        {step === "results" && atsResult && resumeId && (
+          <motion.div
+            key="results"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="w-full"
+          >
+            <ResumeScanResults
+              result={atsResult}
+              resumeId={resumeId}
+              resumeData={resumeData}
+            />
           </motion.div>
         )}
       </AnimatePresence>
