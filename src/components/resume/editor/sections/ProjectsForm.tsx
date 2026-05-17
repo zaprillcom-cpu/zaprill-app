@@ -226,7 +226,7 @@ export default function ProjectsForm({ serverErrors }: { serverErrors?: any }) {
                     <FieldContent>
                       <Input
                         {...register(`projects.${idx}.name`)}
-                        placeholder="AI Resume Builder"
+                        placeholder="AI Resume Architect"
                         className="h-11"
                       />
                       <FieldError

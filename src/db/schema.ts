@@ -521,7 +521,8 @@ export const payment = pgTable(
 );
 
 // ─────────────────────────────────────────────────
-// Resume Builder Enums
+// Resume Architect
+Enums;
 // ─────────────────────────────────────────────────
 
 export const resumeStatusEnum = pgEnum("resume_status", [
@@ -531,7 +532,7 @@ export const resumeStatusEnum = pgEnum("resume_status", [
 ]);
 
 // ─────────────────────────────────────────────────
-// Resume Builder Tables
+// Resume Architect Tables
 // ─────────────────────────────────────────────────
 
 /**

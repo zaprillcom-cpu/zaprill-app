@@ -464,7 +464,7 @@ export default function ResumeScanResults({
                 className="h-14 flex-1 gap-2 rounded-xl border-2 font-bold text-base transition-all hover:border-primary/30 hover:bg-primary/5"
               >
                 <Wrench className="h-5 w-5" />
-                Fix in Resume Builder
+                Fix in Resume Architect
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </div>

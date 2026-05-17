@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────
-// Resume Builder — Core Type Definitions
+// Resume Architect — Core Type Definitions
 // Follows JSON Resume standard, extended for multi-industry support
 // ─────────────────────────────────────────────────
 

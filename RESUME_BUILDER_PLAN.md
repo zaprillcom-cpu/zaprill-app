@@ -1,6 +1,6 @@
-# Resume Builder — Implementation Plan
+# Resume Architect — Implementation Plan
 
-> Production-grade resume builder integrated into the Zaprill platform.
+> Production-grade resume architect integrated into the Zaprill platform.
 > Branch: `feat/resume-builder`
 
 ---
@@ -9,7 +9,7 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                        Resume Builder                          │
+│                        Resume Architect                          │
 ├──────────┬──────────────────┬──────────────┬───────────────────┤
 │ Dashboard│   3-Panel Editor │  Live Preview│   PDF Export      │
 │ /resumes │   /resumes/[id]  │  (Template)  │   /resumes/[id]/  │
@@ -318,4 +318,5 @@ src/
 | `3497d55` | 6d | Template renderers for new sections |
 | `48297be` | 6e | Pro unlocking & Section-level reordering |
 | `adf56b4` | 6f | UI Polish (Roast scroll, Tiptap SSR fix) |
+
 

@@ -173,7 +173,7 @@ export default function Navbar({
                   size="sm"
                   className="hidden font-bold text-xs sm:inline-flex"
                 >
-                  Resume Builder
+                  Resume Architect
                 </Button>
               </Link>
 
@@ -219,7 +219,7 @@ export default function Navbar({
                     onClick={() => router.push("/resumes/primary")}
                     className="cursor-pointer font-semibold"
                   >
-                    Resume Builder
+                    Resume Architect
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() => router.push("/profile")}

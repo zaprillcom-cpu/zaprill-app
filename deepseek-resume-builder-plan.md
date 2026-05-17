@@ -1,4 +1,4 @@
-# 🌍 World-Class Multi-Industry Resume Builder — Complete Implementation Plan for Claude Opus 4.7
+# 🌍 World-Class Multi-Industry Resume Architect — Complete Implementation Plan for Claude Opus 4.7
 
 ## PHASE 0: PRE-IMPLEMENTATION PREPARATION
 
@@ -52,7 +52,7 @@ npm install next-intl
 
 ### 1.1 Core Tables
 
-Below you will find the complete, production-ready Drizzle schema for the Resume Builder. Every table is designed with data integrity and scalability in mind, including primary keys, default values, indexing, and constraints. You will place these definitions in a single file named `src/db/schema/resume.ts`.
+Below you will find the complete, production-ready Drizzle schema for the Resume Architect. Every table is designed with data integrity and scalability in mind, including primary keys, default values, indexing, and constraints. You will place these definitions in a single file named `src/db/schema/resume.ts`.
 
 ```typescript
 // src/db/schema/resume.ts
@@ -871,7 +871,7 @@ const industrySectionOrder: Record<string, string[]> = {
 
 ### 9.9 Empty State Handling
 
-**Problem**: New user opens resume builder, sees blank preview.
+**Problem**: New user opens resume architect, sees blank preview.
 
 **Solution**:
 
@@ -1240,7 +1240,7 @@ src/
 6. **The JSONB `data` column in Postgres is the single source of truth.** The Zod schema validates it on every API write.
 7. **Templates are pure functions:** `(data, metadata) → HTML`. No side effects, no data fetching.
 8. **ATS compatibility is not optional.** Every template must pass basic ATS checks (single-column text flow, standard headings, no images in content).
-9. **AI features are additive.** Core resume builder must work fully without AI.
+9. **AI features are additive.** Core resume architect must work fully without AI.
 10. **PDF generation must work offline-first.** Use client-side `window.print()` as fallback when server PDF generation fails.
 
 For any clarification or modifications before implementation, please let me know. Otherwise, you can hand this plan directly to your Antigravity IDE with Claude Opus 4.7 and expect a production-ready implementation. I look forward to seeing the results.
