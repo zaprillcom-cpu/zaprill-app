@@ -12,7 +12,8 @@ import {
   Zap,
 } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 import JobCard from "@/components/JobCard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -29,8 +30,19 @@ export default function UserDashboard({
   profile,
   session,
 }: UserDashboardProps) {
+  const router = useRouter();
   const [latestAnalysis, setLatestAnalysis] = useState<any>(null);
   const [isLoadingAnalysis, setIsLoadingAnalysis] = useState(true);
+
+  const handleStartNewAnalysis = useCallback(() => {
+    if (profile?.resumeRaw) {
+      sessionStorage.setItem(
+        "ai_job_god_resume",
+        JSON.stringify(profile.resumeRaw),
+      );
+    }
+    router.push("/analyze");
+  }, [profile, router]);
 
   useEffect(() => {
     fetch("/api/analysis-history")
@@ -70,12 +82,13 @@ export default function UserDashboard({
             Your career growth engine is fueled and ready.
           </p>
         </div>
-        <Link href="/analyze">
-          <Button className="group h-12 rounded-xl px-8 font-bold text-base shadow-primary/20 shadow-xl">
-            Start New Analysis
-            <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-          </Button>
-        </Link>
+        <Button
+          onClick={handleStartNewAnalysis}
+          className="group h-12 rounded-xl px-8 font-bold text-base shadow-primary/20 shadow-xl"
+        >
+          Start New Analysis
+          <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+        </Button>
       </header>
 
       {/* Metrics Row - Moved to Top */}
@@ -313,14 +326,13 @@ export default function UserDashboard({
               We need to decode your professional profile before we can suggest
               elite opportunities. Start your first analysis to begin.
             </p>
-            <Link href="/analyze">
-              <Button
-                size="lg"
-                className="h-14 rounded-xl px-10 font-bold text-base shadow-primary/10 shadow-xl"
-              >
-                Activate Job Match Engine
-              </Button>
-            </Link>
+            <Button
+              size="lg"
+              onClick={handleStartNewAnalysis}
+              className="h-14 rounded-xl px-10 font-bold text-base shadow-primary/10 shadow-xl"
+            >
+              Activate Job Match Engine
+            </Button>
           </div>
         )}
       </div>
