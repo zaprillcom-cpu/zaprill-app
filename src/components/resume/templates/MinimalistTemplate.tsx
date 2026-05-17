@@ -1,5 +1,6 @@
 "use client";
 
+import { ensureHttps } from "@/lib/utils";
 import {
   DEFAULT_RESUME_DATA,
   DEFAULT_RESUME_METADATA,
@@ -151,7 +152,7 @@ export default function MinimalistTemplate({
                   <h3 className="resume-entry-title">{item.name}</h3>
                   {item.url && (
                     <a
-                      href={item.url}
+                      href={ensureHttps(item.url)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="resume-entry-subtitle text-primary hover:underline"

@@ -1,6 +1,7 @@
 "use client";
 
 import { ExternalLink } from "lucide-react";
+import { ensureHttps } from "@/lib/utils";
 import {
   DEFAULT_RESUME_DATA,
   DEFAULT_RESUME_METADATA,
@@ -171,7 +172,7 @@ export default function CreativePortfolioTemplate({
                     {item.name}
                     {item.url && (
                       <a
-                        href={item.url}
+                        href={ensureHttps(item.url)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-primary opacity-0 transition-opacity group-hover:opacity-100"
@@ -314,7 +315,7 @@ export default function CreativePortfolioTemplate({
             {(basics.profiles || []).map((p) => (
               <a
                 key={p.network}
-                href={p.url}
+                href={ensureHttps(p.url)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center gap-3"

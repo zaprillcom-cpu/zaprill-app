@@ -1,5 +1,6 @@
 "use client";
 
+import { ensureHttps } from "@/lib/utils";
 import {
   DEFAULT_RESUME_DATA,
   DEFAULT_RESUME_METADATA,

@@ -1,4 +1,5 @@
 import { nanoid } from "nanoid";
+import { ensureHttps } from "@/lib/utils";
 import type {
   ResumeData,
   ResumeMetadata,
@@ -53,11 +54,17 @@ export function normalizeResumeData(raw: any): ResumeData {
   const basics = {
     ...DEFAULT_RESUME_DATA.basics,
     ...(raw.basics || {}),
+    url: ensureHttps(raw.basics?.url),
     location: {
       ...DEFAULT_RESUME_DATA.basics.location,
       ...(raw.basics?.location || {}),
     },
-    profiles: Array.isArray(raw.basics?.profiles) ? raw.basics.profiles : [],
+    profiles: Array.isArray(raw.basics?.profiles)
+      ? raw.basics.profiles.map((p: any) => ({
+          ...p,
+          url: ensureHttps(p.url),
+        }))
+      : [],
   };
 
   // 1. Normalize Skills to Grouped ResumeSkillItem[]
@@ -134,6 +141,7 @@ export function normalizeResumeData(raw: any): ResumeData {
   ).map((w: any) => ({
     ...w,
     id: w.id || nanoid(),
+    website: ensureHttps(w.website),
     highlights: Array.isArray(w.highlights) ? w.highlights : [],
   }));
 
@@ -142,6 +150,7 @@ export function normalizeResumeData(raw: any): ResumeData {
     (e: any) => ({
       ...e,
       id: e.id || nanoid(),
+      url: ensureHttps(e.url),
       courses: Array.isArray(e.courses) ? e.courses : [],
     }),
   );
@@ -151,6 +160,8 @@ export function normalizeResumeData(raw: any): ResumeData {
     (p: any) => ({
       ...p,
       id: p.id || nanoid(),
+      url: ensureHttps(p.url),
+      githubUrl: ensureHttps(p.githubUrl),
       keywords: Array.isArray(p.keywords) ? p.keywords : [],
       highlights: Array.isArray(p.highlights) ? p.highlights : [],
     }),
@@ -164,12 +175,19 @@ export function normalizeResumeData(raw: any): ResumeData {
     work,
     education,
     projects,
-    certifications: Array.isArray(raw.certifications) ? raw.certifications : [],
+    certifications: (Array.isArray(raw.certifications)
+      ? raw.certifications
+      : []
+    ).map((c: any) => ({ ...c, url: ensureHttps(c.url) })),
     languages: Array.isArray(raw.languages) ? raw.languages : [],
     awards: Array.isArray(raw.awards) ? raw.awards : [],
-    publications: Array.isArray(raw.publications) ? raw.publications : [],
+    publications: (Array.isArray(raw.publications) ? raw.publications : []).map(
+      (p: any) => ({ ...p, url: ensureHttps(p.url) }),
+    ),
     references: Array.isArray(raw.references) ? raw.references : [],
-    volunteer: Array.isArray(raw.volunteer) ? raw.volunteer : [],
+    volunteer: (Array.isArray(raw.volunteer) ? raw.volunteer : []).map(
+      (v: any) => ({ ...v, url: ensureHttps(v.url) }),
+    ),
     customSections: Array.isArray(raw.customSections) ? raw.customSections : [],
   };
 }

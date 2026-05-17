@@ -103,8 +103,9 @@ export async function PATCH(req: Request) {
 
     // 3. Update Resume Table if resumeRaw is provided and we have a primaryResumeId
     if (resumeRaw) {
-      // Enrich data with inferred metadata
-      const enrichedResume = enrichResumeMetadata(resumeRaw);
+      // Normalize and enrich data
+      const normalizedResume = normalizeResumeData(resumeRaw);
+      const enrichedResume = enrichResumeMetadata(normalizedResume);
       let targetResumeId = primaryResumeId;
 
       if (!targetResumeId) {

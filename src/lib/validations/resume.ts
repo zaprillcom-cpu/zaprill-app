@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ensureHttps } from "../utils";
 
 // ─────────────────────────────────────────────────
 // Shared helpers
@@ -6,14 +7,7 @@ import { z } from "zod";
 
 const optionalUrl = z
   .preprocess(
-    (val) => {
-      if (typeof val !== "string" || val === "") return val;
-      // If it doesn't start with http:// or https://, prepend https://
-      if (!/^https?:\/\//i.test(val)) {
-        return `https://${val}`;
-      }
-      return val;
-    },
+    (val) => ensureHttps(val as string),
     z.string().refine(
       (val) => val === "" || z.string().url().safeParse(val).success,
       (val) => ({

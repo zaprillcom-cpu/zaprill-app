@@ -36,6 +36,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import useAuth from "@/hooks/useAuth";
 import { normalizeResumeData } from "@/lib/resume";
+import { ensureHttps } from "@/lib/utils";
 import type { ResumeData, ResumeSkillItem } from "@/types/resume";
 import { DEFAULT_RESUME_DATA } from "@/types/resume";
 
@@ -465,9 +466,7 @@ export default function ProfilePage() {
                                     size="icon"
                                     className="absolute top-1 right-1 h-8 w-8 text-muted-foreground transition-colors hover:text-primary"
                                     onClick={() => {
-                                      const url = social.url.startsWith("http")
-                                        ? social.url
-                                        : `https://${social.url}`;
+                                      const url = ensureHttps(social.url);
                                       window.open(url, "_blank");
                                     }}
                                     title="Open link in new tab"

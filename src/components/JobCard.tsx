@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { trackJobApplied, trackJobCardImpression } from "@/lib/analytics";
+import { ensureHttps } from "@/lib/utils";
 import type { JobMatch } from "@/types";
 import MatchRing from "./MatchRing";
 import SkillBadge from "./SkillBadge";
@@ -242,7 +243,7 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
               </Button>
 
               <a
-                href={job.url}
+                href={ensureHttps(job.url)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={

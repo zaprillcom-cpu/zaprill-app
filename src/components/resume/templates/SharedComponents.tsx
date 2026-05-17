@@ -18,6 +18,7 @@ import {
   IconWorld,
 } from "@tabler/icons-react";
 import React from "react";
+import { ensureHttps } from "@/lib/utils";
 
 /**
  * Maps a profile network name to a Tabler icon.
@@ -79,11 +80,9 @@ export function ContactItem({
   if (href) {
     // Ensure URL has protocol
     const fullHref =
-      href.startsWith("http") ||
-      href.startsWith("mailto:") ||
-      href.startsWith("tel:")
+      href.startsWith("mailto:") || href.startsWith("tel:")
         ? href
-        : `https://${href}`;
+        : ensureHttps(href);
 
     return (
       <a

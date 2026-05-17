@@ -1,6 +1,7 @@
 "use client";
 
 import { Award, ExternalLink } from "lucide-react";
+import { ensureHttps } from "@/lib/utils";
 import {
   DEFAULT_RESUME_DATA,
   DEFAULT_RESUME_METADATA,
@@ -186,7 +187,7 @@ export default function ExecutiveProTemplate({
                     {item.name}
                     {item.url && (
                       <a
-                        href={item.url}
+                        href={ensureHttps(item.url)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-primary transition-colors hover:text-primary/80"
