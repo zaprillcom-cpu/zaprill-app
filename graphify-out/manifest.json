@@ -24,128 +24,128 @@
     "hash": "a7580ba71cf09add96c69e3a5eaa0117"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\error.tsx": {
-    "mtime": 1777309429.2909794,
-    "hash": "2e68fa324b9080fc136e71421b9c2581"
+    "mtime": 1778957207.1763535,
+    "hash": "d810b753ff76040d5dd94edcaaff4457"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\layout.tsx": {
     "mtime": 1778085010.3959036,
     "hash": "1e421bc0de806186a3d6472cde83d34f"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\loading.tsx": {
-    "mtime": 1775923584.6493924,
-    "hash": "15abdd0ec3a3c0bb54ec63f7e9c05c11"
+    "mtime": 1778957207.900036,
+    "hash": "2c13c33068919666c0081928657ad470"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\not-found.tsx": {
-    "mtime": 1776007838.7929444,
-    "hash": "0aae387131e02d518c38e22a9624c7b4"
+    "mtime": 1778958587.0237267,
+    "hash": "e2a198cf943886c0d8211e72a286652e"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\page.tsx": {
-    "mtime": 1777812555.4889128,
-    "hash": "f60cb8a58e23d06fc2ab022fb5a1eb8b"
+    "mtime": 1778958718.3154912,
+    "hash": "ebd8c87664dc006892a2d7e52c024a07"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\(auth)\\layout.tsx": {
     "mtime": 1777212979.1803837,
     "hash": "36c861eb8b91c246d362b773f76c8e1f"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\(auth)\\forgot-password\\page.tsx": {
-    "mtime": 1777705688.0624228,
-    "hash": "21ad6f3facc0b7832cfd1687e63e9c63"
+    "mtime": 1778957206.1264236,
+    "hash": "2a1020a9728ef733d6b30323cd58e41b"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\(auth)\\reset-password\\page.tsx": {
-    "mtime": 1777705688.0624228,
-    "hash": "4cb85d66101d754e5eec8f0b5ee610f7"
+    "mtime": 1778957206.1004224,
+    "hash": "e662e7625107eb9bae00dffbd4611db5"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\(auth)\\sign-in\\page.tsx": {
-    "mtime": 1777705688.0624228,
-    "hash": "3b1518940a98ebf7d8475d8a22314d02"
+    "mtime": 1778957206.1364224,
+    "hash": "333534d46f3f2e369712c656a17bf673"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\(auth)\\sign-up\\page.tsx": {
-    "mtime": 1778354608.0979974,
-    "hash": "66813d8cebd4899a6f277b45f622e31a"
+    "mtime": 1778957206.3387697,
+    "hash": "53c5e028730db67c33bf87e73f0730e2"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\(protected)\\layout.tsx": {
-    "mtime": 1776007838.782367,
-    "hash": "4f45e602b5ba2db9d04ba239a012a845"
+    "mtime": 1778957206.2039492,
+    "hash": "c29cb656db1d979d8aeb95314172fe69"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\(protected)\\loading.tsx": {
-    "mtime": 1776007838.784379,
-    "hash": "33fab3a8d9e5c2843558d887a63ddf58"
+    "mtime": 1778957206.2519488,
+    "hash": "3df056064fb3c8a6149c2938997615e6"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\(protected)\\analyze\\page.tsx": {
-    "mtime": 1778939820.4489875,
-    "hash": "6c5c88a6a4dfd2c9655d2abcd16a96ed"
+    "mtime": 1778957207.1933532,
+    "hash": "0dde8c8f23cb1592022bbcce8fbcf84c"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\(protected)\\billing\\cancel-button.tsx": {
-    "mtime": 1777705688.0659423,
-    "hash": "394c87e23b3451bba4b5f1ad00655d9d"
+    "mtime": 1778957206.041898,
+    "hash": "ef37c2f4aca65dc366fd4ccabda31d1e"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\(protected)\\billing\\page.tsx": {
-    "mtime": 1778354608.0990095,
-    "hash": "c1b0f09ac47380e885d9490cd755f7a8"
+    "mtime": 1778957206.1929486,
+    "hash": "db6b83b7b0c6c3a151c2cf22b01a64eb"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\(protected)\\billing\\_components\\billing-client-shell.tsx": {
     "mtime": 1778354608.080296,
     "hash": "16747c2d9ca47b67d1074d4f84337041"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\(protected)\\billing\\_components\\billing-invoice-table.tsx": {
-    "mtime": 1778329040.04071,
-    "hash": "01ed9eaab4481db4d4dd80053fa82f8d"
+    "mtime": 1778958587.0237267,
+    "hash": "f9f7aa144c8b226afa52f9a86f4c4f51"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\(protected)\\checkout\\checkout-form.tsx": {
-    "mtime": 1778325262.537237,
-    "hash": "d9755adc6a81bae136e28137dd0f02d2"
+    "mtime": 1778957206.6202047,
+    "hash": "70a12e351c1b88d3a68a1b9ed27e2969"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\(protected)\\checkout\\page.tsx": {
-    "mtime": 1778325307.7934773,
-    "hash": "04bd7b6f51c901f52b2e497b52ec8a9f"
+    "mtime": 1778957206.1414223,
+    "hash": "be97d0d266878998360ce2ad81799ccf"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\(protected)\\history\\page.tsx": {
-    "mtime": 1778334015.8987072,
-    "hash": "ccde0bbf7c2e4c2d8585a2603d4d5b56"
+    "mtime": 1778957206.611205,
+    "hash": "ae32c3a7f3f7e1a7828fdced113375bb"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\(protected)\\jobs\\page.tsx": {
-    "mtime": 1778334015.914989,
-    "hash": "35df47f79f9d011ad30f1e0597975522"
+    "mtime": 1778957206.5822058,
+    "hash": "3d47b4651ebbc5ed4d6b90dfa2ed2562"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\(protected)\\onboarding\\page.tsx": {
-    "mtime": 1778936058.163353,
-    "hash": "41dfecab8ac4db7f1f6281012917235b"
+    "mtime": 1778957206.4431527,
+    "hash": "5f6d35a201a81fb572532fc26c5f8db4"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\(protected)\\payment\\status\\page.tsx": {
-    "mtime": 1778329040.0094502,
-    "hash": "da6e04eaec39c7a14f2a523d103942b6"
+    "mtime": 1778957206.7117298,
+    "hash": "a5846e9fdc1ff732153e0b30c164300c"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\(protected)\\profile\\page.tsx": {
-    "mtime": 1778419019.9048045,
-    "hash": "0eceab323922967044007831c57419a5"
+    "mtime": 1779020457.6692238,
+    "hash": "8c69a397ca5b02ca30e42c4396bf5d89"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\(protected)\\referrals\\page.tsx": {
-    "mtime": 1778354608.1225252,
-    "hash": "711e6f82aedddc5a7086a6dddb623dda"
+    "mtime": 1778958587.0237267,
+    "hash": "a5cc5b1e405156f690c2646ec7849ade"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\(protected)\\resumes\\loading.tsx": {
-    "mtime": 1777812555.44963,
-    "hash": "d09589982be35c63b520713249f5f46f"
+    "mtime": 1778957206.638206,
+    "hash": "13d17eb37f8904ba3e103e72746bbfce"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\(protected)\\resumes\\page.tsx": {
-    "mtime": 1778935107.4543145,
-    "hash": "87223108af05c300fca1379373420bec"
+    "mtime": 1778957207.5529456,
+    "hash": "e8e89c13231a0a16c8b2f93227ead4b9"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\(protected)\\resumes\\primary\\page.tsx": {
-    "mtime": 1777812555.451627,
-    "hash": "eaef2ab1e9309cf7db2cc966977cc987"
+    "mtime": 1778957206.6767282,
+    "hash": "c0cd28403d1a4c33ee921e35965cd9fe"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\(protected)\\resumes\\[id]\\page.tsx": {
-    "mtime": 1778930584.028363,
-    "hash": "85f3ecb5c6a14af6a22cf350e5495855"
+    "mtime": 1778957207.2033546,
+    "hash": "b43c423787f2074ba1b08f963a4a8006"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\(protected)\\resumes\\[id]\\export\\page.tsx": {
-    "mtime": 1778357657.2755759,
-    "hash": "c6eef482b36d77501f3b2ea56da5390a"
+    "mtime": 1778957206.6262047,
+    "hash": "c68956e75fe8bc47f00f19535cbf60b5"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\actions\\auth.ts": {
-    "mtime": 1775908367.6431077,
-    "hash": "abe498e301b9871b0a5c81cb650334b4"
+    "mtime": 1778957206.680729,
+    "hash": "a7dfb1cc7a74f667d8107e57426e07d6"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\api\\admin\\analytics\\route.ts": {
     "mtime": 1777705688.0757947,
@@ -188,28 +188,28 @@
     "hash": "d326f0b0bda2152bd31f0118f429386a"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\api\\admin\\users\\route.ts": {
-    "mtime": 1778940070.4656982,
-    "hash": "2f643e9465a0e03ff39516c4439c8832"
+    "mtime": 1778942868.405656,
+    "hash": "bba04068a51ac750e24ed79220ad74c2"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\api\\analysis-history\\route.ts": {
-    "mtime": 1776007838.786378,
-    "hash": "c35699e110a34066b69cb42e0ab6385d"
+    "mtime": 1778957206.8172567,
+    "hash": "efd1040ea5ab9889b5e22ab7d2f32c93"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\api\\analysis-history\\[id]\\route.ts": {
-    "mtime": 1776007838.785378,
-    "hash": "90e0a58b2b63fe97e9040cefa14a2664"
+    "mtime": 1778957206.8552556,
+    "hash": "77454175552dca77f897b90b6185c6b3"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\api\\analyze-gaps\\route.ts": {
     "mtime": 1778335736.624317,
     "hash": "39e812caee74d317c379e8dfcd04b1a3"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\api\\auth\\[...all]\\route.ts": {
-    "mtime": 1775301881.942293,
-    "hash": "1904de94f5362beedc269759cad175f0"
+    "mtime": 1778957206.8622644,
+    "hash": "0c0cddf4693c86dc21f3dc733a5b8e5d"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\api\\billing\\checkout\\route.ts": {
-    "mtime": 1778329040.0129738,
-    "hash": "a05e4062104e7859dc9b3c56acc16305"
+    "mtime": 1778959860.1142876,
+    "hash": "38ca5b82b21029ee2f639ff483595105"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\api\\billing\\coupons\\validate\\route.ts": {
     "mtime": 1777705688.0952888,
@@ -224,12 +224,12 @@
     "hash": "b2b60c0dcd838dedf4fc57d87ce2ccd7"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\api\\billing\\payment-status\\route.ts": {
-    "mtime": 1778329040.0672362,
-    "hash": "09d26420843926f922df0965d7c02252"
+    "mtime": 1778959860.11329,
+    "hash": "d949acfd7040860d02c77a352af7dce1"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\api\\billing\\plans\\route.ts": {
-    "mtime": 1778929549.8914309,
-    "hash": "e72b5352b9e5f0509687c41ed090d9de"
+    "mtime": 1778957206.9167802,
+    "hash": "8f17b217c731f921a9026e64da32f8d2"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\api\\billing\\retry\\route.ts": {
     "mtime": 1777705688.0980074,
@@ -256,8 +256,8 @@
     "hash": "fc943b3e616fce121e692773ba8f378b"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\api\\profile\\route.ts": {
-    "mtime": 1777827240.018937,
-    "hash": "ad8baa776930cac085e749dd9646f7ab"
+    "mtime": 1779020438.3586433,
+    "hash": "99dbabf230b5926dd48bd60a1cbf2116"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\api\\r\\route.ts": {
     "mtime": 1778335736.6159573,
@@ -276,8 +276,8 @@
     "hash": "47d85f17868259990fd20644d879534d"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\api\\resumes\\route.ts": {
-    "mtime": 1777812555.4832313,
-    "hash": "5acb5c033b8ed832db01776031b9d85b"
+    "mtime": 1778957207.117827,
+    "hash": "f4b768b3c907a85984b7208287210f2b"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\api\\resumes\\[id]\\route.ts": {
     "mtime": 1777827240.0093524,
@@ -292,8 +292,8 @@
     "hash": "6cd9bcd30c44da948e3a976a72ccb703"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\api\\resumes\\[id]\\ai\\roast\\route.ts": {
-    "mtime": 1777812555.4706953,
-    "hash": "7401dd0ea77fd86a0bb9b23a0201dd28"
+    "mtime": 1778957207.0543022,
+    "hash": "47d4d37aea0b75b36840d3aa0659f7d3"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\api\\resumes\\[id]\\ai\\summary\\route.ts": {
     "mtime": 1778930738.2792766,
@@ -304,20 +304,20 @@
     "hash": "e0abc7048e146445378b8798f18286ba"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\api\\resumes\\[id]\\duplicate\\route.ts": {
-    "mtime": 1777812555.4757242,
-    "hash": "fc98514bf6230cf2d451d947875b2029"
+    "mtime": 1778957207.0483022,
+    "hash": "34f9a529c636f68f73944445fb0d28a7"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\api\\resumes\\[id]\\export\\route.ts": {
-    "mtime": 1777812555.4767265,
-    "hash": "3e21fc57b5ab12748bbcacae7772b5ff"
+    "mtime": 1778957207.0553045,
+    "hash": "8c6b176557f0da48c097993d7a96f2eb"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\api\\resumes\\[id]\\versions\\route.ts": {
-    "mtime": 1777812555.482725,
-    "hash": "d1536021bfa639fb7148ff811332f821"
+    "mtime": 1778957207.0998292,
+    "hash": "3893d73d9d442b98c2440fdfe7272e50"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\api\\resumes\\[id]\\versions\\[versionId]\\restore\\route.ts": {
-    "mtime": 1777812555.481725,
-    "hash": "9db498d8a082528313413147c449da8a"
+    "mtime": 1778957207.0978277,
+    "hash": "0c936d15ad73f610624d8ecfda6cd38a"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\api\\save-analysis\\route.ts": {
     "mtime": 1778939820.4049878,
@@ -344,92 +344,92 @@
     "hash": "d00d3f3c4e1d317d12387c7e905ba663"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\layout.tsx": {
-    "mtime": 1777705688.1318424,
-    "hash": "46ec6e17d81825d14d35e549c27f51ed"
+    "mtime": 1778957207.535944,
+    "hash": "3749a5516cb6c712202fdf1ad504adec"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\loading.tsx": {
-    "mtime": 1777705688.1328423,
-    "hash": "7b41c955e66a87881fb001ff83b4a6d3"
+    "mtime": 1778957207.5489438,
+    "hash": "a5ae63fc475eb4a254fb5ce8ea5abbbd"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\page.tsx": {
-    "mtime": 1777705688.1338432,
-    "hash": "bbc8a0ef5797d07a44e7810f8a03d594"
+    "mtime": 1778957207.5854692,
+    "hash": "60eac956b08ccd85a6a4658c81e2c2c6"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\analytics\\page.tsx": {
-    "mtime": 1777705688.1253276,
-    "hash": "c8e5ce4d7b1e6efe0a15f4e189cf9219"
+    "mtime": 1778957207.2643602,
+    "hash": "c101247f604f1facd6bdec8ba3021d13"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\analytics\\_components\\analytics-content.tsx": {
-    "mtime": 1777705688.1318424,
-    "hash": "2628f98bc2c05fc32b1b85e660a33628"
+    "mtime": 1778957207.4849448,
+    "hash": "d3b6706ebfeef0e9ef6507cc1ccea354"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\audit\\page.tsx": {
-    "mtime": 1777705688.1213267,
-    "hash": "cf8cf7aefc49278e73032b6ba24369d2"
+    "mtime": 1778957207.2573514,
+    "hash": "85afc85c0030f9da21aeca1581492b2a"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\audit\\_components\\audit-list.tsx": {
-    "mtime": 1777705688.1378424,
-    "hash": "ba2cea21e8ba4a766b90456fa4f5ad0a"
+    "mtime": 1778957207.3619006,
+    "hash": "0180398ad70420b13af87a4f2be7658b"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\billing\\page.tsx": {
-    "mtime": 1777705688.1253276,
-    "hash": "1214f5a4223c1c107d5e15357771a201"
+    "mtime": 1778957207.274876,
+    "hash": "4f222b71581580d44b49583dc04812f3"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\billing\\_components\\billing-content.tsx": {
-    "mtime": 1778339333.24013,
-    "hash": "0734fa32ded0d2e2251c966eb578df64"
+    "mtime": 1778957207.5904686,
+    "hash": "8c08cd796ea56862402a9b01dde46d7d"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\coupons\\page.tsx": {
-    "mtime": 1778940587.6258135,
-    "hash": "1929726d8d00affc73e976ac88a83cda"
+    "mtime": 1778957207.3298783,
+    "hash": "2afe6418f59f95521f9ffd6f43c2c3e3"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\coupons\\_components\\coupons-content.tsx": {
-    "mtime": 1778940580.3656476,
-    "hash": "accf4843535f495740c9e15dc551a16e"
+    "mtime": 1778957207.8075154,
+    "hash": "184ecfa54020c5b5fb5df1b3c009e1b2"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\database\\page.tsx": {
-    "mtime": 1777705688.1348424,
-    "hash": "b7f0adae6df2bc3a155b034e592a495a"
+    "mtime": 1778958587.0307267,
+    "hash": "47323de4c61ec472b8b328e55b9d1326"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\emails\\page.tsx": {
-    "mtime": 1777705688.130843,
-    "hash": "211d6fce57c57a21a07e9f4c4d186511"
+    "mtime": 1778957207.5319445,
+    "hash": "17c4ed975dd0c616c6fd1bb6ed7384c2"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\emails\\_components\\emails-content.tsx": {
-    "mtime": 1777705688.130843,
-    "hash": "a2014ecbe16733cd993bcefddfb9c509"
+    "mtime": 1778957207.6414711,
+    "hash": "5e92e3a9dbf043e72f9c673f719df615"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\plans\\page.tsx": {
-    "mtime": 1778940550.7819853,
-    "hash": "fb546bf6399929a0c1ef1e347bea3e9e"
+    "mtime": 1778957207.5814688,
+    "hash": "19539e521ef253ee8f3c7d03c78517a6"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\plans\\_components\\plans-content.tsx": {
-    "mtime": 1778940544.152609,
-    "hash": "d5c54e595294079bbea7209135d841fd"
+    "mtime": 1778957208.072567,
+    "hash": "aab17bb2b93d65dc1c502ac79e0fb5ce"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\referrals\\page.tsx": {
-    "mtime": 1778940707.10447,
-    "hash": "64a7a86614788322f54e48375317c9d2"
+    "mtime": 1778957209.170355,
+    "hash": "505d39903881388d2032ae91be78f11d"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\resources\\page.tsx": {
-    "mtime": 1778940741.288053,
-    "hash": "c0fe74b2586ce59e6b2d1b4fe1b095a1"
+    "mtime": 1778957207.6264699,
+    "hash": "92230fe46ef4b9e9cc8147a89745efc6"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\resources\\_components\\resources-content.tsx": {
-    "mtime": 1778940734.4096136,
-    "hash": "d143b80eb3b1a6f238a5fffa5e244069"
+    "mtime": 1778957207.9200351,
+    "hash": "5ee0b57b72e009ccd7e866b8843ca8df"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\settings\\page.tsx": {
-    "mtime": 1778940756.3391418,
-    "hash": "7673ac1801503a77815fa74044dd8bb8"
+    "mtime": 1778957207.7369905,
+    "hash": "398aa8a16b6cb8a2d019391d8a4c3605"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\settings\\_components\\auth-config-tab.tsx": {
-    "mtime": 1777705688.1348424,
-    "hash": "b0b06fd9b42e890233864fdb0077c609"
+    "mtime": 1778957207.7119915,
+    "hash": "7940bfb766f5bbcaa189421a92929cf6"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\settings\\_components\\company-tab.tsx": {
-    "mtime": 1778329040.077211,
-    "hash": "39dbb69c9f84521e28942746f414d3ca"
+    "mtime": 1778957207.73299,
+    "hash": "601489825e39cc802496abab32b12640"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\settings\\_components\\settings-content.tsx": {
     "mtime": 1778940776.4605587,
@@ -440,160 +440,160 @@
     "hash": "c5bf974029aa0d8a7309a8d04e0c1bd3"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\users\\page.tsx": {
-    "mtime": 1777705688.1418407,
-    "hash": "3d96e19ca59563ba18d81a3e92f88fd9"
+    "mtime": 1778957207.8585129,
+    "hash": "e34667f8b4ee209e29c17003577441df"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\users\\server-actions.ts": {
     "mtime": 1777705688.1428413,
     "hash": "61d4b5796357109d15cee4f5d3672dbc"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\users\\user-row-actions.tsx": {
-    "mtime": 1777705688.145105,
-    "hash": "7dd3c1bf02cdd87dd2fb6cc2356f7f8f"
+    "mtime": 1778957207.8790357,
+    "hash": "8b1ef5ffd931ec5f7db7ff599175b57b"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\users\\[userId]\\page.tsx": {
-    "mtime": 1777209087.656307,
-    "hash": "a510025321855123e99871bbc816b505"
+    "mtime": 1778957207.9130352,
+    "hash": "6af41577dec6fde763a1239ed0cf5916"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\users\\[userId]\\user-actions-client.tsx": {
-    "mtime": 1777705688.1408422,
-    "hash": "a89d29a0835ec2ca980d356280bc14f1"
+    "mtime": 1778957207.753991,
+    "hash": "472f092199d10b263a0a64b812b811b6"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\users\\_components\\users-table.tsx": {
-    "mtime": 1778940104.425285,
-    "hash": "a53efca71a0127f6eed2c35bb117cfca"
+    "mtime": 1778959919.313512,
+    "hash": "f51f399b55e60e1d6691401914e3f1be"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\_components\\growth-chart.tsx": {
-    "mtime": 1777705688.1112916,
-    "hash": "6904880b4eb08c4ac8affc336cd4d2aa"
+    "mtime": 1778957207.2103534,
+    "hash": "6a1c84f974b63a812f851719a27922eb"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\_components\\recent-logs.tsx": {
-    "mtime": 1777705688.1128008,
-    "hash": "5ed136799393752d3148a13b05dfe118"
+    "mtime": 1778957207.2283523,
+    "hash": "4fac3ed9fd8fcb8030a3230b75f9a620"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\_components\\stats-cards.tsx": {
-    "mtime": 1777705688.1148126,
-    "hash": "0cac09e9ca169fd563aaf3524664eed5"
+    "mtime": 1778957207.2303529,
+    "hash": "a66f842e7db73ec5d7624e5ab74a226f"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\app\\hq\\_types\\index.ts": {
-    "mtime": 1778940506.9842901,
-    "hash": "2fafd6ba78beb5ee9c69c71d698211c9"
+    "mtime": 1778942719.290616,
+    "hash": "fba263bc7246b0a324e4b361248c41ff"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ErrorBoundary.tsx": {
-    "mtime": 1776007838.7939453,
-    "hash": "c1cb79dcbe3d137bc8d82be56abe08f9"
+    "mtime": 1778957207.959046,
+    "hash": "7a68554b3919953e026b0a2c7c59ffcb"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\JobCard.tsx": {
-    "mtime": 1778936918.9969368,
-    "hash": "4563604b4203cb791beac3c9fa1821fa"
+    "mtime": 1779020611.0764487,
+    "hash": "d0daa26ca8028705c88cb3124d8968d5"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\JobTitleAutocomplete.tsx": {
-    "mtime": 1778324167.181881,
-    "hash": "8db5a96a6981d7d39bcaaec234b65847"
+    "mtime": 1778957208.5191834,
+    "hash": "ee79abc363036f8cc10c2161a64c9e3d"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\LearningRoadmap.tsx": {
-    "mtime": 1778334015.8970542,
-    "hash": "aa638e2235e60ff0e3e9ab7f347dbe1c"
+    "mtime": 1778957208.4076574,
+    "hash": "8eb196ebfaee334ac051595e931b0f85"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\LocationCombobox.tsx": {
-    "mtime": 1776007838.7999442,
-    "hash": "a231efcb479a669181e79752a3448741"
+    "mtime": 1778957208.362141,
+    "hash": "f53d0442e2bd5c78629c4a707273ccdc"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\LockedJobCard.tsx": {
-    "mtime": 1777705688.149046,
-    "hash": "ec857ded0eb19321c57178551cad8621"
+    "mtime": 1778957208.4296572,
+    "hash": "46b3bcccb32aec59e8844760d2a118a1"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\MatchRing.tsx": {
-    "mtime": 1778932586.5077157,
-    "hash": "3f4b9eee2d52861077c0ae79900429a4"
+    "mtime": 1778957208.3101337,
+    "hash": "f46f4fe1ed7fe8ee81819ac896c0ee91"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\Navbar.tsx": {
-    "mtime": 1778354341.2945795,
-    "hash": "2f0269c81f1a13e1ed35af17797cfc68"
+    "mtime": 1779034185.0142033,
+    "hash": "451940f0378c74ba6b025e01cace28a0"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\PricingPlans.tsx": {
-    "mtime": 1777995582.4852355,
-    "hash": "742670301a93e97de605a51d3ec70f94"
-  },
-  "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ProgressTimeline.tsx": {
-    "mtime": 1776517726.4244277,
-    "hash": "acfbbda7b640b3b24b61953660e1a427"
+    "mtime": 1778957208.8637693,
+    "hash": "aaae3eb3405f709557879c9b969b4f74"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ResumeUploader.tsx": {
-    "mtime": 1776007838.7999442,
-    "hash": "e7df0c3015eac95b5f09dcb7cb465242"
+    "mtime": 1778957208.4516575,
+    "hash": "395afb65c029b94fb5238fd644fc2d09"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\SkillBadge.tsx": {
     "mtime": 1776007838.8009474,
     "hash": "cf165f65d4613327eab569ccd7b9f04b"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\SkillGapPanel.tsx": {
-    "mtime": 1778939410.8306928,
-    "hash": "5076281362dbb509737779a34198f978"
+    "mtime": 1778957208.632711,
+    "hash": "5886c3998336383b8e3eeb49eb7dee28"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\theme-provider.tsx": {
-    "mtime": 1776007838.8024516,
-    "hash": "c00fa9d4a460ac4f9c808ad29d573581"
+    "mtime": 1778957210.565726,
+    "hash": "f0637989b236542db6c88c8e300c1952"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\theme-toggle.tsx": {
-    "mtime": 1776007838.8024516,
-    "hash": "fc701f053ab9a53dead3abfb2d813efc"
+    "mtime": 1778957210.5992465,
+    "hash": "fa0996cd4cfbb3f403e3b32cabb02ba4"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\admin\\admin-header.tsx": {
-    "mtime": 1777705688.1530988,
-    "hash": "8948ac6939ef0f380fa2c76ad44a9b60"
+    "mtime": 1778958587.0237267,
+    "hash": "9809d033c2179135ba2021af40d5caf7"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\admin\\admin-sidebar.tsx": {
-    "mtime": 1778940752.3236356,
-    "hash": "0eb59b543537fabbfb326c337952a4d8"
+    "mtime": 1778957208.5371833,
+    "hash": "210dc80d89393752837a6ce7ae96d778"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\admin\\data-table.tsx": {
-    "mtime": 1778940091.3608673,
-    "hash": "234ab5febc978f8a5ca9a7080242a9f1"
+    "mtime": 1778959919.3145084,
+    "hash": "603d30319f55531580d00d553edd190e"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\admin\\overview-chart.tsx": {
-    "mtime": 1777705688.1530988,
-    "hash": "b517d2796e354da8b1509668b8b90d03"
+    "mtime": 1778957208.5531845,
+    "hash": "2bc93625666cf08f2638936fb5f2efb8"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\analytics\\AnalyticsProvider.tsx": {
-    "mtime": 1776007838.8024516,
-    "hash": "4013bb359ecabb53cd1faa4733110e1e"
+    "mtime": 1778957208.5621934,
+    "hash": "aa6899ba6b163d116461216bb5807a52"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\analyze\\analysis-error.tsx": {
-    "mtime": 1778349702.530848,
-    "hash": "b51b59a33a14a785f46cdc8158cad89a"
+    "mtime": 1778957208.5787098,
+    "hash": "9d465c33fef64771a21721b9c32fe83d"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\analyze\\job-filters.tsx": {
-    "mtime": 1778939362.5196207,
-    "hash": "f055476066e9831b100e9f88759de707"
+    "mtime": 1778957208.8727715,
+    "hash": "8efa8c84c7e03d4b010e4aaddc4de7a5"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\analyze\\meme-loader.tsx": {
-    "mtime": 1778350725.6066892,
-    "hash": "3a3efe8ed0d3706791452ab30e5f88f6"
+    "mtime": 1778957208.6782362,
+    "hash": "15aee3a75d87a1a5ec4ce602b7ac67a9"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\analyze\\parsing-progress.tsx": {
-    "mtime": 1778939370.473868,
-    "hash": "171226f3219453e1aa313b5e491de6da"
+    "mtime": 1778957208.923288,
+    "hash": "19cc22f2c895b9826dd93dff225acbd5"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\analyze\\profile-review.tsx": {
-    "mtime": 1778939355.882509,
-    "hash": "a4fd23fdd2592d7ad327c30a5972f31b"
+    "mtime": 1778957209.206889,
+    "hash": "6b8d728551b4f86c8ce78fedc4436e66"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\analyze\\results-header.tsx": {
-    "mtime": 1778939379.671669,
-    "hash": "004d7f30e50aba7f22fcc65eb1924a16"
+    "mtime": 1778957208.8537626,
+    "hash": "732afb0632a7eb1aac7d01494a541ed6"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\analyze\\stat-card.tsx": {
-    "mtime": 1778350725.6041827,
-    "hash": "67f451ab735370e8f095b79f0cbd5d58"
+    "mtime": 1778957208.86477,
+    "hash": "c354cb99f7e7d409e93e6772cadb83b4"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\analyze\\types.ts": {
     "mtime": 1778939425.5400064,
     "hash": "e55a2cbf7c235cf6f92aa92eb988e3b3"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\billing\\ReferralPanel.tsx": {
-    "mtime": 1778354608.1455724,
-    "hash": "61194eee480e7242c19d100f7a07ea50"
+    "mtime": 1778957209.37042,
+    "hash": "55483fdd1ef14a912b2582f4698b3eff"
+  },
+  "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\dashboard\\UserDashboard.tsx": {
+    "mtime": 1779020012.4617968,
+    "hash": "5c8fd6c009066ff7a2935b0da71fd02a"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\icons\\github-svg.tsx": {
     "mtime": 1776007838.8024516,
@@ -603,249 +603,253 @@
     "mtime": 1776007838.8024516,
     "hash": "ec772e2b926269b3c1707691785d670c"
   },
+  "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\loading\\PageLoaders.tsx": {
+    "mtime": 1778957209.006816,
+    "hash": "f2dec1d6237e352dd75486039e35af2d"
+  },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\pdf\\InvoicePdf.tsx": {
     "mtime": 1778329040.0707593,
     "hash": "777ce71562c24019e7237bc5521180b0"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\editor\\PreviewPanel.tsx": {
-    "mtime": 1777812555.4924312,
-    "hash": "fcbff5427e246e4a22bb6a5f79a6a5dd"
+    "mtime": 1778957209.001817,
+    "hash": "27535d21eb80c95449e828d567cd98f3"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\editor\\RichTextEditor.tsx": {
-    "mtime": 1777812555.4954307,
-    "hash": "c46ed6a3fcdcb5836c4c3af7d50c2dd1"
+    "mtime": 1778957209.040818,
+    "hash": "8d9722594bb7ae4f37608311d9d6d1d0"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\editor\\RoastDialog.tsx": {
-    "mtime": 1777812555.4974308,
-    "hash": "9a0271a20f84636ee0bcc27086460e3f"
+    "mtime": 1778957209.076344,
+    "hash": "8e5e6661827f6975eb7275937ae2f7e4"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\editor\\SortableItem.tsx": {
-    "mtime": 1777812555.4979384,
-    "hash": "e1929bc966db31794e718f8af68d96bd"
+    "mtime": 1778957209.051816,
+    "hash": "c14aeb76324ec6f5b68bc94b62de2a46"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\editor\\TailorDialog.tsx": {
-    "mtime": 1777812555.4989471,
-    "hash": "0a1993b6c3cf6465238d28af1dbf04f1"
+    "mtime": 1778957209.6995125,
+    "hash": "d05807ef7e3a6cd6a9a4b85917ce26f7"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\editor\\sections\\AtsScorePanel.tsx": {
-    "mtime": 1777820378.2286112,
-    "hash": "1b3daa7d9a221dbdc7afd2b810c522bc"
+    "mtime": 1778958587.0307267,
+    "hash": "10d9b8cf937085e9be04505447a84be2"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\editor\\sections\\AwardsForm.tsx": {
-    "mtime": 1777812555.5029464,
-    "hash": "91c17aae3cabfd0a6911ec6965128e2b"
+    "mtime": 1778957209.3759358,
+    "hash": "a7a1f480d7688f4147d6761edd43902d"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\editor\\sections\\BasicsForm.tsx": {
-    "mtime": 1777812555.5049484,
-    "hash": "0d716477ebaa6f3ab1d2b3c6c6958ecf"
+    "mtime": 1778957209.8220425,
+    "hash": "d4e5860b336458e0ec5c9091b0ea4e15"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\editor\\sections\\CertificationsForm.tsx": {
-    "mtime": 1777812555.5059483,
-    "hash": "92fc7c0ecf730ff282467b6cf7259440"
+    "mtime": 1778957209.5969875,
+    "hash": "ff2e7ba22e3e98b54ab2dcd28f5e30fb"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\editor\\sections\\EducationForm.tsx": {
-    "mtime": 1777812555.507949,
-    "hash": "a52f9047380fb869d09344ff4dcc88f6"
+    "mtime": 1778957210.0140939,
+    "hash": "a85d27e0500e0ccb3172de320a5fac73"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\editor\\sections\\LanguagesForm.tsx": {
-    "mtime": 1777812555.5249102,
-    "hash": "0f2ca495634724abcac6621bc72c89ac"
+    "mtime": 1778957209.6925137,
+    "hash": "4a97a0320150ed4b2f99f8671ec8d02d"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\editor\\sections\\ProjectsForm.tsx": {
-    "mtime": 1777812555.531428,
-    "hash": "4e7c3212c85e8a388d9354bb0572054c"
+    "mtime": 1779034185.0142033,
+    "hash": "846cdfa66f70ba9bfdef711a8f8832c7"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\editor\\sections\\PublicationsForm.tsx": {
-    "mtime": 1777812555.5459826,
-    "hash": "66ad0e69c35a91f06ea38b52e8f4a84e"
+    "mtime": 1778957209.8935697,
+    "hash": "47ff261eea6b60ed52e9ad72284559ff"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\editor\\sections\\ReferencesForm.tsx": {
-    "mtime": 1777812555.5469847,
-    "hash": "b46f84c2a76c05c7c92eec2b862be740"
+    "mtime": 1778957209.8720508,
+    "hash": "0886866706fdb920f4ab1600a3646c32"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\editor\\sections\\SettingsForm.tsx": {
-    "mtime": 1778427567.7610204,
-    "hash": "6a2a878a3eb48450e0056fcef274b59f"
+    "mtime": 1778957210.4001946,
+    "hash": "1068a82edad887882f18405d08ac0b30"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\editor\\sections\\SkillsForm.tsx": {
-    "mtime": 1778930584.0573652,
-    "hash": "8e13cffc396c46627a6185fb3a2ac894"
+    "mtime": 1778957967.8006437,
+    "hash": "d7a950bd56edd4e2a368404b31a09b40"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\editor\\sections\\VolunteerForm.tsx": {
-    "mtime": 1777812555.551499,
-    "hash": "ed6c854877a817d54fa343cbe01244a0"
+    "mtime": 1778957210.3921952,
+    "hash": "179bc907b80f3a0657fa40596031200c"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\editor\\sections\\WorkForm.tsx": {
-    "mtime": 1777812555.5524988,
-    "hash": "35519624c65484012bb81a7ebbfc0125"
+    "mtime": 1778957210.3276663,
+    "hash": "0f30baa6cca56ae0249add1f13ec0fc9"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\scanner\\ResumeScannerLoader.tsx": {
-    "mtime": 1778936328.0166593,
-    "hash": "8578a8e0c77af4c6ea56028a43193802"
+    "mtime": 1778957211.0523448,
+    "hash": "61d88a4421f3b94764ab837072931264"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\scanner\\ResumeScanResults.tsx": {
-    "mtime": 1778934346.2485204,
-    "hash": "f5cbcb4d8621fb53d31db7237f89fbb7"
+    "mtime": 1779034185.0142033,
+    "hash": "569f358c87457a2c9571632c4ef6c140"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\templates\\CreativePortfolioTemplate.tsx": {
-    "mtime": 1778428301.470498,
-    "hash": "a0c45cea227f1851ad6a13eaa455e788"
+    "mtime": 1779020502.7006989,
+    "hash": "f5c7222ac478d05128862906f5df8183"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\templates\\ExecutiveProTemplate.tsx": {
-    "mtime": 1778428314.9935558,
-    "hash": "ffb6ba759c003c0dd632a29383bc35fc"
+    "mtime": 1779020529.5902421,
+    "hash": "48d2f0bdbbed4634589c923c8f8dd68a"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\templates\\MinimalistTemplate.tsx": {
-    "mtime": 1778422886.633059,
-    "hash": "756790b0ee32340e51020400339e0b71"
+    "mtime": 1779022928.0843365,
+    "hash": "00ee6116f547d9d025a962ab2891d499"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\templates\\ModernSplitTemplate.tsx": {
-    "mtime": 1778357657.288262,
-    "hash": "ebc217a87ac7965a2cb2fd7b2022c2e3"
+    "mtime": 1779022928.0773368,
+    "hash": "88231069f5c533202e220ad9ef5d8af6"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\templates\\registry.ts": {
-    "mtime": 1777812555.560438,
-    "hash": "7a84dfe5d47950d1fbe8f5eca3983ce4"
+    "mtime": 1778957210.5247166,
+    "hash": "c058975e88dc20d504a6510aeea62eb6"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\templates\\SharedComponents.tsx": {
-    "mtime": 1777812555.5584085,
-    "hash": "01cb90b438e92ab8ce1b92225a18b011"
+    "mtime": 1779020488.8150227,
+    "hash": "d47399f0443de201470d8817bf45e7e8"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\resume\\templates\\TechStackTemplate.tsx": {
     "mtime": 1778357657.3088255,
     "hash": "0694543ef8c5c118818a05023de83186"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\alert-dialog.tsx": {
-    "mtime": 1777705688.1886852,
-    "hash": "d68b694417be007f7b5e15d91249f0ad"
+    "mtime": 1778957210.6262467,
+    "hash": "6dab4a0c58a3279059025eb6db468fd2"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\avatar.tsx": {
-    "mtime": 1777205659.9142666,
-    "hash": "bdc3230508fc1652827329a9f53acc61"
+    "mtime": 1778957210.6572459,
+    "hash": "961713767e283b40bdaeb2df7db9c842"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\badge.tsx": {
-    "mtime": 1778418906.5750268,
-    "hash": "ff0fafacbb3d18262962f03cd80c87ab"
+    "mtime": 1778957210.666256,
+    "hash": "ab2ee64d0887af3fa20bfe9c760a6242"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\breadcrumb.tsx": {
-    "mtime": 1777705688.1904092,
-    "hash": "7fb1b7b9a433155f476630e27599f8d1"
+    "mtime": 1778957210.666256,
+    "hash": "21fd7b135610aefe7c4ee3428b87d251"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\button.tsx": {
-    "mtime": 1777824914.9907587,
-    "hash": "060049d112bf1708a7aebdaa0a83eb17"
+    "mtime": 1778958587.0237267,
+    "hash": "7f5604d7898cf988094f77f784af22ff"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\card.tsx": {
-    "mtime": 1777205659.9238124,
-    "hash": "5a304848131d8d92e525f834f66c9b55"
+    "mtime": 1778957210.6052454,
+    "hash": "db23f8649eac8e7e8cd7c0cd72f9c99f"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\chart.tsx": {
-    "mtime": 1777705688.195418,
-    "hash": "4d4988341f41077bcf7fd7681da3ce2d"
+    "mtime": 1778958587.0237267,
+    "hash": "cd6642883f2dc05c8a7449e04996b09f"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\checkbox.tsx": {
-    "mtime": 1778334015.910441,
-    "hash": "e7d36ad58edfe6b62553e4bdc5040e77"
+    "mtime": 1778957210.4672012,
+    "hash": "c6003f23130238f0e3e2aa79f54d1d62"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\command.tsx": {
-    "mtime": 1776498895.2517865,
-    "hash": "afc169dd1d866fcc44412321d4ce1891"
+    "mtime": 1778957210.4191947,
+    "hash": "effc77fccac8f4de5e3333fadd2d9137"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\dialog.tsx": {
-    "mtime": 1777205659.9865131,
-    "hash": "97cee14e0c77fe8bb94be17f6328b884"
+    "mtime": 1778957210.349666,
+    "hash": "4b01fb89023b433d3765db759eca5f24"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\dropdown-menu.tsx": {
-    "mtime": 1778085636.0339637,
-    "hash": "9c4abfb82549a7c1a587521cadeb83ad"
+    "mtime": 1778958587.0307267,
+    "hash": "43784bc7abd0969f56fd95c1fe29e0fc"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\field.tsx": {
-    "mtime": 1777812555.5624504,
-    "hash": "88b09a36e6ba614778efe097d51d3490"
+    "mtime": 1778957210.1991422,
+    "hash": "b1a18323ac9333cf4a43125585e84c56"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\file-upload.tsx": {
-    "mtime": 1776004414.7557943,
-    "hash": "c6c97ec076a92f02f50d19e1f9bf3708"
+    "mtime": 1778958718.3340063,
+    "hash": "f520996c94b3a045f5a463cd15353a43"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\input-group.tsx": {
-    "mtime": 1776498895.3022487,
-    "hash": "cd41a7954c2251ef1c7c30dd62354f7c"
+    "mtime": 1778957209.8885684,
+    "hash": "a9f182790379eb7aae8349922ca56f41"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\input.tsx": {
-    "mtime": 1777205659.981485,
-    "hash": "e72e99775a4eccf5b9b5e7bea4ac9712"
+    "mtime": 1778957209.7970438,
+    "hash": "c9695ce15e2cdaa201585206a61ebfa4"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\label.tsx": {
-    "mtime": 1777205659.955194,
-    "hash": "c564363abcf3aa46c8a84ac5896bbd9a"
+    "mtime": 1778957209.7830408,
+    "hash": "18b39c30e8957c4db235471116309384"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\pagination.tsx": {
     "mtime": 1777705688.1974175,
     "hash": "93cada23312768a1769f4bd29b53f86d"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\popover.tsx": {
-    "mtime": 1776498895.266789,
-    "hash": "dcb58f47e527a4946db7633f38b40997"
+    "mtime": 1778957209.704515,
+    "hash": "871011c3ac79c70179e071e94da37112"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\progress.tsx": {
-    "mtime": 1776498895.2587895,
-    "hash": "ad141c3785801e616019748523498f8c"
+    "mtime": 1778957209.6915145,
+    "hash": "181328182f08fcb1ff3d74b0e0e33170"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\scroll-area.tsx": {
-    "mtime": 1777705688.1984174,
-    "hash": "ab4d23862eddc65fe7428802b570e681"
+    "mtime": 1778957209.621989,
+    "hash": "7b2cf44d2ee5a10738d4b916de0248e5"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\select.tsx": {
-    "mtime": 1777205659.962738,
-    "hash": "e70f154b78790d18014f0e032197428b"
+    "mtime": 1778957209.532462,
+    "hash": "161ee19c41a2a4313299ebe6a3aff589"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\separator.tsx": {
     "mtime": 1777205659.9607284,
     "hash": "e8ef94f701bb63a3f95866d5a4329bfd"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\sheet.tsx": {
-    "mtime": 1777705688.2004173,
-    "hash": "fc8cde828c6cca74dde907f86bd96b52"
+    "mtime": 1778958718.3370073,
+    "hash": "cfc146cd0d269754299c4fe92f76b435"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\sidebar.tsx": {
-    "mtime": 1777705688.230913,
-    "hash": "c92fe9b428cc363bf894705b778b81ad"
+    "mtime": 1778958718.3710074,
+    "hash": "a16c2881ff6a67e5c124f3aead81f418"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\skeleton.tsx": {
     "mtime": 1777205659.9885204,
     "hash": "667a0a0105e50af6020e529a05e4fd91"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\slider.tsx": {
-    "mtime": 1776498895.3107662,
-    "hash": "0053ce792fddd45592da3465f9a67a53"
+    "mtime": 1778957208.708235,
+    "hash": "4bd44644737aae2b13b975a2f2b2b71a"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\sonner.tsx": {
     "mtime": 1776498895.2751727,
     "hash": "5c5f6c3f357229cd7080cd22ef5d53da"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\switch.tsx": {
-    "mtime": 1776498895.2711625,
-    "hash": "0af058c7e320ccded4a358b6ba03aeff"
+    "mtime": 1778957208.5621934,
+    "hash": "ac2d011a89081dfd99b8b716c841bacf"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\table.tsx": {
-    "mtime": 1777205659.9885204,
-    "hash": "d42f0db10661a306458955b6c4b3bc47"
+    "mtime": 1778958587.0307267,
+    "hash": "a06953281e0edeb2eb476aeaa5a888c1"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\tabs.tsx": {
-    "mtime": 1777705688.2019365,
-    "hash": "ca62be01171c5b444a22e75a3409c31e"
+    "mtime": 1778957208.4296572,
+    "hash": "caf0b58cf90e04453656bac511da0700"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\textarea.tsx": {
-    "mtime": 1776498895.2886903,
-    "hash": "bcf8bba53541956280386a49721801a5"
+    "mtime": 1778957208.398657,
+    "hash": "9f19cc8b37476119bc41e04222a1469a"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\tooltip.tsx": {
-    "mtime": 1777205659.9506266,
-    "hash": "d4a8a6bcf2495467d7a384ccd402eb99"
+    "mtime": 1778957208.3896568,
+    "hash": "2904c64d723c7aea889482d302eb6748"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\components\\ui\\word-fade-in.tsx": {
-    "mtime": 1777824914.9897597,
-    "hash": "f6a3ca28fe29a51efddc0b71329a0d9c"
+    "mtime": 1778958587.0237267,
+    "hash": "b1f596eaf5504912547e3c25e42b4589"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\db\\index.ts": {
     "mtime": 1775300381.1224813,
@@ -860,8 +864,8 @@
     "hash": "67e847673ab586e4f5464554fd795bfc"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\db\\schema.ts": {
-    "mtime": 1778939430.5154767,
-    "hash": "ca1beacd9db6cb20b3150f191dc82a71"
+    "mtime": 1779034193.2398024,
+    "hash": "4094ce3f35bf706ea47ede76d20ee931"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\db\\migrations\\0000_real_husk.sql": {
     "mtime": 1775301140.9779942,
@@ -916,20 +920,20 @@
     "hash": "1e99a44b5dfd16fcad69a2c4bfc1d55d"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\hooks\\use-auto-save.ts": {
-    "mtime": 1777812555.5740097,
-    "hash": "c020970c481a007a292aa89c070e0943"
+    "mtime": 1778957207.318878,
+    "hash": "c1c86598b025c31d141ec15d17578d67"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\hooks\\use-mobile.ts": {
     "mtime": 1777705688.2677255,
     "hash": "21f0293b823c5298aa735fc013840cff"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\hooks\\useAnalytics.ts": {
-    "mtime": 1775920131.0800622,
-    "hash": "e9cef09278af94cdcd58cbebd28df4fc"
+    "mtime": 1778957207.2908778,
+    "hash": "4fe9d9c38bed596943697ff8767fedd7"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\hooks\\useAuth.ts": {
-    "mtime": 1776007838.8154628,
-    "hash": "7d65783fdbb3861fc96e1dc0cd2f377b"
+    "mtime": 1778957207.2798786,
+    "hash": "75bf71464419ead8bb5e85d2449fca20"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\hooks\\useReferralClaim.ts": {
     "mtime": 1778354608.1385274,
@@ -944,12 +948,12 @@
     "hash": "bec446f3a6f378cd67fa91005d2e0808"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\lib\\auth-client.ts": {
-    "mtime": 1777812555.5745175,
-    "hash": "bf1e99081557f6afc0b673128bc216db"
+    "mtime": 1778957207.0393019,
+    "hash": "91f677da3a2aa96bb52f3c83fc1805b4"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\lib\\auth.ts": {
-    "mtime": 1777812555.5755284,
-    "hash": "adfccfce980cae0852be5e881377583e"
+    "mtime": 1778957207.022302,
+    "hash": "63744617527cdb595c2f69fb2111c82d"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\lib\\billing-utils.ts": {
     "mtime": 1778086124.6962125,
@@ -980,8 +984,8 @@
     "hash": "70fd848de5327220a0ca9ff39b298733"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\lib\\resume.ts": {
-    "mtime": 1777812555.5785296,
-    "hash": "7ed656ed8fa6c1db5dfbca1c6acbef6d"
+    "mtime": 1779020421.1669548,
+    "hash": "deca7345d5368c35903d3bab09739cb6"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\lib\\skill-extractor.ts": {
     "mtime": 1778433960.1918826,
@@ -992,8 +996,8 @@
     "hash": "348efd20de5454fcd75489df12f95ad7"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\lib\\utils.ts": {
-    "mtime": 1778427969.2439494,
-    "hash": "b36b4471fa392f7fd52db5d67e6d22e8"
+    "mtime": 1779020596.3250854,
+    "hash": "01f78cc52fec0f11ba03301123600dc7"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\lib\\admin\\audit.ts": {
     "mtime": 1777705688.272256,
@@ -1028,12 +1032,12 @@
     "hash": "71b96605a704853deddfb5d91445ea2a"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\lib\\emails\\verification-email.ts": {
-    "mtime": 1776007838.8224466,
-    "hash": "55f18ac8c0fe189ae1813c83dde463f8"
+    "mtime": 1778957206.8322554,
+    "hash": "4dcb7a5f093ca0048cb5d639ff6d9252"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\lib\\validations\\resume.ts": {
-    "mtime": 1778930584.0573652,
-    "hash": "1b4138d3028329499a7e0afc389b5613"
+    "mtime": 1779020429.4036455,
+    "hash": "412ce685e2f9331162e290824b302ba3"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\providers\\ClientProvider.tsx": {
     "mtime": 1778354608.1616051,
@@ -1064,16 +1068,16 @@
     "hash": "336cd596b2e6d94805d71f42dd07db73"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\services\\ai\\usage.service.ts": {
-    "mtime": 1777812555.601838,
-    "hash": "1ee02590ce690ff1cf73edf631d89ded"
+    "mtime": 1778957206.411448,
+    "hash": "3b7370f631b387ae9f7eb6655911dce5"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\services\\billing\\coupon.service.ts": {
     "mtime": 1778326562.0156076,
     "hash": "18b5e4e5b34e4ff4967cf08cc9b84ffa"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\services\\billing\\invoice.service.ts": {
-    "mtime": 1777995513.4369555,
-    "hash": "f32760f328229df18a6af10049635764"
+    "mtime": 1778959386.7805555,
+    "hash": "4a4361f3c96308776a3e77ca1ea350a6"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\services\\billing\\payment.service.ts": {
     "mtime": 1777705688.1000056,
@@ -1088,36 +1092,36 @@
     "hash": "1d163476c5692b88c4f42ceac2fadecd"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\services\\billing\\webhook.service.ts": {
-    "mtime": 1778354608.1345253,
-    "hash": "39551578e457445c2f72b1cc465a962c"
+    "mtime": 1778959860.11129,
+    "hash": "8a48d8393b26784d47a0af00a3eb2901"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\store\\authSlice.ts": {
-    "mtime": 1776007838.8457153,
-    "hash": "8c4628f7a38ac6ff4719e6c44849bb46"
+    "mtime": 1778957206.1234243,
+    "hash": "eead857856d654e4685e9a1ee48f157b"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\store\\resumeSlice.ts": {
-    "mtime": 1777812555.6205273,
-    "hash": "5cdc8df315bf8413e684c221276f5414"
+    "mtime": 1778957206.1124227,
+    "hash": "9576eeb2be8752f5f493de87b1f60425"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\store\\store.ts": {
-    "mtime": 1777812555.6220343,
-    "hash": "2ef4476e4e3d75bf372b8219e4590bb2"
+    "mtime": 1778957206.0709064,
+    "hash": "dd4d5260345664274f698e3ee16ef816"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\types\\auth.ts": {
-    "mtime": 1776007838.8457153,
-    "hash": "47072c8219dfafd471539b0ec7a1a738"
+    "mtime": 1778957206.0558984,
+    "hash": "13ee0700b79bfc69624908628831f93d"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\types\\billing.ts": {
     "mtime": 1778354608.1060083,
     "hash": "68bdc275f0d9cfe59c317784e2668ba1"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\types\\index.ts": {
-    "mtime": 1778939263.0546708,
-    "hash": "6bbb03225e6fb5d419e24b23c1b4e499"
+    "mtime": 1778944028.3838246,
+    "hash": "03707e2d671a1cf3173ef1116f6509d5"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\src\\types\\resume.ts": {
-    "mtime": 1777812555.6245477,
-    "hash": "d21b15fd38b0a453001281cc6df8eb52"
+    "mtime": 1779034185.016222,
+    "hash": "21d465aadf9371d1f5d1d784225dcbb6"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\AGENTS.md": {
     "mtime": 1778942323.7430286,
@@ -1128,8 +1132,8 @@
     "hash": "5c27369b226fcf2be8a6cfe52224e767"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\deepseek-resume-builder-plan.md": {
-    "mtime": 1777812555.430416,
-    "hash": "b713fb1ef91b19cfb97c894c5cf90d2c"
+    "mtime": 1779034210.3816073,
+    "hash": "9421404c33cc1fcdbf244cdba27d4479"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\diff.txt": {
     "mtime": 1775203271.4693353,
@@ -1148,8 +1152,8 @@
     "hash": "f15aaa42d5d299d091b1171097ea56ad"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\RESUME_BUILDER_PLAN.md": {
-    "mtime": 1777812555.4284184,
-    "hash": "9c65e1dc1b74bc09b4b1f9bb18a23b89"
+    "mtime": 1779034210.3800435,
+    "hash": "8186362cbcfc51362aea5fe14204511d"
   },
   "C:\\Users\\sahil\\OneDrive\\Documents\\Web Development\\AI Job analyzer\\ai-job-god\\public\\file.svg": {
     "mtime": 1763960215.866483,
