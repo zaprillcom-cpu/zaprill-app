@@ -329,17 +329,24 @@ export default function AtsScorePanel() {
   };
 
   const getScoreColor = (score: number) => {
-    if (score >= 90) return "text-emerald-500";
-    if (score >= 75) return "text-sky-500";
-    if (score >= 60) return "text-amber-500";
-    return "text-rose-500";
+    if (score >= 90) return "text-score-high-fg";
+    if (score >= 75) return "text-score-mid-fg";
+    if (score >= 60) return "text-score-low-fg";
+    return "text-score-critical-fg";
   };
 
   const getScoreBg = (score: number) => {
-    if (score >= 90) return "bg-emerald-500/10";
-    if (score >= 75) return "bg-sky-500/10";
-    if (score >= 60) return "bg-amber-500/10";
-    return "bg-rose-500/10";
+    if (score >= 90) return "bg-score-high/60";
+    if (score >= 75) return "bg-score-mid/60";
+    if (score >= 60) return "bg-score-low/60";
+    return "bg-score-critical/60";
+  };
+
+  const getScoreBarBg = (score: number) => {
+    if (score >= 90) return "bg-score-high-fg";
+    if (score >= 75) return "bg-score-mid-fg";
+    if (score >= 60) return "bg-score-low-fg";
+    return "bg-score-critical-fg";
   };
 
   const getScoreLabel = (score: number) => {
@@ -361,7 +368,7 @@ export default function AtsScorePanel() {
     <div className="space-y-6">
       {/* Job Description Input */}
       <div className="space-y-2">
-        <Label className="font-bold text-[10px] text-muted-foreground/70 uppercase tracking-widest">
+        <Label className="font-bold text-muted-foreground/70 text-xs uppercase tracking-widest">
           Target Job Description
         </Label>
         <Textarea
@@ -386,7 +393,7 @@ export default function AtsScorePanel() {
       </Button>
 
       {error && (
-        <div className="fade-in zoom-in-95 animate-in rounded-xl border border-rose-500/10 bg-rose-500/5 p-4 text-center text-rose-500 text-sm">
+        <div className="fade-in zoom-in-95 animate-in rounded-xl border border-destructive/20 bg-destructive/5 p-4 text-center text-destructive text-sm">
           {error}
         </div>
       )}
@@ -470,11 +477,11 @@ export default function AtsScorePanel() {
               )}
 
               {allApplied && (
-                <div className="fade-in zoom-in-95 flex animate-in items-center gap-3 rounded-xl border border-emerald-500/10 bg-emerald-500/5 p-4">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500/10">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                <div className="fade-in zoom-in-95 flex animate-in items-center gap-3 rounded-xl border border-score-high/20 bg-score-high/50 p-4">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-score-high">
+                    <CheckCircle2 className="h-4 w-4 text-score-high-fg" />
                   </div>
-                  <p className="font-bold text-emerald-600 text-sm">
+                  <p className="font-bold text-score-high-fg text-sm">
                     All fixes applied! Scan again to verify.
                   </p>
                 </div>
@@ -490,7 +497,7 @@ export default function AtsScorePanel() {
                 className={`rounded-xl border border-border/40 p-3 ${getScoreBg(score)} space-y-1`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-[10px] text-muted-foreground uppercase tracking-widest">
+                  <span className="font-bold text-muted-foreground text-xs uppercase tracking-widest">
                     {section}
                   </span>
                   <span
@@ -501,7 +508,7 @@ export default function AtsScorePanel() {
                 </div>
                 <div className="h-1 w-full overflow-hidden rounded-full bg-muted/20">
                   <div
-                    className={`h-full ${getScoreColor(score).replace("text-", "bg-")} transition-all duration-1000`}
+                    className={`h-full ${getScoreBarBg(score)} transition-all duration-1000`}
                     style={{ width: `${score}%` }}
                   />
                 </div>
@@ -515,8 +522,8 @@ export default function AtsScorePanel() {
             <Card className="rounded-2xl border-border/50">
               <CardContent className="space-y-4 p-5">
                 <div className="flex items-center gap-2">
-                  <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-sky-500/10">
-                    <Search className="h-3 w-3 text-sky-500" />
+                  <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-primary/10">
+                    <Search className="h-3 w-3 text-primary" />
                   </div>
                   <h3 className="font-bold text-sm tracking-tight">
                     Keyword Analysis
@@ -526,7 +533,7 @@ export default function AtsScorePanel() {
                 <div className="space-y-4">
                   {result.keywordMatches.length > 0 && (
                     <div className="space-y-2">
-                      <p className="flex items-center gap-1.5 font-bold text-[10px] text-emerald-500 uppercase tracking-widest">
+                      <p className="flex items-center gap-1.5 font-bold text-score-high-fg text-xs uppercase tracking-widest">
                         <CheckCircle2 className="h-3 w-3" /> Found
                       </p>
                       <div className="flex flex-wrap gap-1.5">
@@ -534,7 +541,7 @@ export default function AtsScorePanel() {
                           <Badge
                             key={kw}
                             variant="secondary"
-                            className="border-emerald-500/10 bg-emerald-500/5 text-[10px] text-emerald-600 transition-colors hover:bg-emerald-500/10"
+                            className="border-score-high/20 bg-score-high/60 text-score-high-fg text-xs transition-colors hover:bg-score-high"
                           >
                             {kw}
                           </Badge>
@@ -545,7 +552,7 @@ export default function AtsScorePanel() {
 
                   {result.missingKeywords.length > 0 && (
                     <div className="space-y-2">
-                      <p className="flex items-center gap-1.5 font-bold text-[10px] text-rose-500 uppercase tracking-widest">
+                      <p className="flex items-center gap-1.5 font-bold text-score-critical-fg text-xs uppercase tracking-widest">
                         <XCircle className="h-3 w-3" /> Missing
                       </p>
                       <div className="flex flex-wrap gap-1.5">
@@ -553,7 +560,7 @@ export default function AtsScorePanel() {
                           <Badge
                             key={kw}
                             variant="secondary"
-                            className="border-rose-500/10 bg-rose-500/5 text-[10px] text-rose-600 transition-colors hover:bg-rose-500/10"
+                            className="border-score-critical/20 bg-score-critical/60 text-score-critical-fg text-xs transition-colors hover:bg-score-critical"
                           >
                             {kw}
                           </Badge>
@@ -570,7 +577,7 @@ export default function AtsScorePanel() {
           {result.suggestions.length > 0 && (
             <div className="space-y-3">
               <div className="flex items-center gap-2 px-1">
-                <AlertTriangle className="h-4 w-4 text-amber-500" />
+                <AlertTriangle className="h-4 w-4 text-score-low-fg" />
                 <h3 className="font-bold text-sm">Strategic Improvements</h3>
               </div>
               <div className="space-y-3">
@@ -581,7 +588,7 @@ export default function AtsScorePanel() {
                       key={`suggestion-${i}`}
                       className={`group rounded-2xl border p-4 transition-all duration-300 ${
                         isApplied
-                          ? "border-emerald-500/20 bg-emerald-500/5 opacity-80"
+                          ? "border-score-high/20 bg-score-high/40 opacity-80"
                           : "border-border/50 bg-muted/30 hover:border-primary/30 hover:bg-muted/50"
                       }`}
                     >
@@ -590,12 +597,12 @@ export default function AtsScorePanel() {
                           <div className="flex items-center gap-2">
                             <Badge
                               variant="outline"
-                              className={`h-5 font-bold text-[9px] uppercase tracking-widest ${isApplied ? "border-emerald-500/20 text-emerald-600" : ""}`}
+                              className={`h-5 font-bold text-xs uppercase tracking-widest ${isApplied ? "border-score-high/20 text-score-high-fg" : ""}`}
                             >
                               {s.section}
                             </Badge>
                             {isApplied && (
-                              <span className="fade-in slide-in-from-left-2 flex animate-in items-center gap-1 font-bold text-[10px] text-emerald-600">
+                              <span className="fade-in slide-in-from-left-2 flex animate-in items-center gap-1 font-bold text-score-high-fg text-xs">
                                 <CheckCircle2 className="h-3 w-3" /> Applied
                               </span>
                             )}

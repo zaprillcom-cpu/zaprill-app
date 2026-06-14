@@ -5,7 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-heading: var(--font-sans);
+  /* Satoshi for display/headings — Inter for body/UI */
+  --font-heading: var(--font-satoshi);
   --font-sans: var(--font-sans);
 
   --color-border: var(--border);
@@ -26,6 +27,21 @@
   --color-destructive: var(--destructive);
   --color-input: var(--input);
   --color-ring: var(--ring);
+
+  /* Semantic score tokens — career status colors */
+  --color-score-high: var(--score-high);
+  --color-score-mid: var(--score-mid);
+  --color-score-low: var(--score-low);
+  --color-score-critical: var(--score-critical);
+  --color-score-high-fg: var(--score-high-fg);
+  --color-score-mid-fg: var(--score-mid-fg);
+  --color-score-low-fg: var(--score-low-fg);
+  --color-score-critical-fg: var(--score-critical-fg);
+
+  /* Achievement token — amber gold for career wins */
+  --color-achievement: var(--achievement);
+  --color-achievement-foreground: var(--achievement-foreground);
+  --color-achievement-muted: var(--achievement-muted);
 
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
@@ -50,89 +66,107 @@
 }
 
 :root {
-  /* Radius: more rounded to match the logo's soft geometry */
+  /* Radius: soft geometry */
   --radius: 1rem;
 
-  /* Base */
-  --background: oklch(0.985 0.004 286);
-  --foreground: oklch(0.22 0.03 286);
+  /* Base — cool near-white with a faint steel undertone */
+  --background: oklch(0.987 0.003 200);
+  --foreground: oklch(0.18 0.025 225);
 
   /* Cards / Popovers */
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.22 0.03 286);
+  --card-foreground: oklch(0.18 0.025 225);
 
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.22 0.03 286);
+  --popover-foreground: oklch(0.18 0.025 225);
 
-  /* Brand */
-  --primary: oklch(0.59 0.23 303);
-  --primary-foreground: oklch(0.985 0.01 286);
+  /* Brand — electric teal: the GPS signal, navigation precision */
+  --primary: oklch(0.58 0.19 192);
+  --primary-foreground: oklch(0.99 0.005 200);
 
   /* Secondary */
-  --secondary: oklch(0.95 0.015 286);
-  --secondary-foreground: oklch(0.26 0.03 286);
+  --secondary: oklch(0.95 0.012 200);
+  --secondary-foreground: oklch(0.25 0.025 220);
 
   /* Muted */
-  --muted: oklch(0.96 0.01 286);
-  --muted-foreground: oklch(0.48 0.02 286);
+  --muted: oklch(0.95 0.008 200);
+  --muted-foreground: oklch(0.50 0.018 210);
 
-  /* Accent */
-  --accent: oklch(0.93 0.03 303);
-  --accent-foreground: oklch(0.26 0.03 286);
+  /* Accent — warm teal-shifted tint for hover surfaces */
+  --accent: oklch(0.92 0.04 192);
+  --accent-foreground: oklch(0.22 0.03 210);
 
   /* Destructive */
   --destructive: oklch(0.62 0.22 27);
   --destructive-foreground: oklch(0.985 0 0);
 
   /* Borders / Inputs / Ring */
-  --border: oklch(0.9 0.01 286);
-  --input: oklch(0.9 0.01 286);
-  --ring: oklch(0.61 0.2 303);
+  --border: oklch(0.90 0.008 200);
+  --input: oklch(0.90 0.008 200);
+  --ring: oklch(0.60 0.17 192);
 
-  /* Charts — purple-led but varied */
-  --chart-1: oklch(0.62 0.22 303);
-  --chart-2: oklch(0.72 0.17 286);
-  --chart-3: oklch(0.66 0.16 330);
-  --chart-4: oklch(0.58 0.13 260);
-  --chart-5: oklch(0.8 0.08 305);
+  /* Achievement — amber gold: career destination, success */
+  --achievement: oklch(0.80 0.17 75);
+  --achievement-foreground: oklch(0.20 0.04 60);
+  --achievement-muted: oklch(0.95 0.06 80);
+
+  /* Semantic score tokens */
+  --score-high: oklch(0.90 0.08 145);
+  --score-high-fg: oklch(0.38 0.12 145);
+  --score-mid: oklch(0.91 0.09 200);
+  --score-mid-fg: oklch(0.42 0.12 200);
+  --score-low: oklch(0.94 0.08 80);
+  --score-low-fg: oklch(0.50 0.14 70);
+  --score-critical: oklch(0.94 0.06 20);
+  --score-critical-fg: oklch(0.52 0.18 22);
+
+  /* Charts — teal-led, varied for accessibility */
+  --chart-1: oklch(0.58 0.19 192);
+  --chart-2: oklch(0.72 0.16 160);
+  --chart-3: oklch(0.80 0.17 75);
+  --chart-4: oklch(0.55 0.18 255);
+  --chart-5: oklch(0.75 0.14 220);
 
   /* Sidebar */
-  --sidebar: oklch(0.99 0.003 286);
-  --sidebar-foreground: oklch(0.22 0.03 286);
+  --sidebar: oklch(0.99 0.003 200);
+  --sidebar-foreground: oklch(0.18 0.025 225);
 
-  --sidebar-primary: oklch(0.59 0.23 303);
-  --sidebar-primary-foreground: oklch(0.985 0.01 286);
+  --sidebar-primary: oklch(0.58 0.19 192);
+  --sidebar-primary-foreground: oklch(0.99 0.005 200);
 
-  --sidebar-accent: oklch(0.95 0.015 286);
-  --sidebar-accent-foreground: oklch(0.26 0.03 286);
+  --sidebar-accent: oklch(0.94 0.012 200);
+  --sidebar-accent-foreground: oklch(0.25 0.025 220);
 
-  --sidebar-border: oklch(0.9 0.01 286);
-  --sidebar-ring: oklch(0.61 0.2 303);
+  --sidebar-border: oklch(0.90 0.008 200);
+  --sidebar-ring: oklch(0.60 0.17 192);
 
-  /* Extra theme tokens */
-  --surface-1: oklch(0.995 0.002 286);
-  --surface-2: oklch(0.965 0.01 286);
-  --surface-3: oklch(0.94 0.015 286);
+  /* Surface layers */
+  --surface-1: oklch(0.995 0.002 200);
+  --surface-2: oklch(0.963 0.008 200);
+  --surface-3: oklch(0.94 0.012 200);
 
+  /* Gradients */
+  /* Directional: teal (present) → deep indigo (depth/AI) */
   --gradient-primary: linear-gradient(
     135deg,
-    oklch(0.68 0.22 303),
-    oklch(0.57 0.24 287)
+    oklch(0.65 0.20 192),
+    oklch(0.52 0.22 255)
   );
+  /* Achievement tint: subtle warm amber */
   --gradient-accent: linear-gradient(
     135deg,
-    oklch(0.94 0.03 303),
-    oklch(0.9 0.04 330)
+    oklch(0.94 0.05 192),
+    oklch(0.92 0.07 155)
   );
   --gradient-background: linear-gradient(
     180deg,
     oklch(1 0 0),
-    oklch(0.985 0.006 286)
+    oklch(0.985 0.005 200)
   );
 
   --shadow-glow:
-    0 0 0 1px oklch(0.59 0.23 303 / 0.12), 0 12px 40px
-    oklch(0.59 0.23 303 / 0.08);
+    0 0 0 1px oklch(0.58 0.19 192 / 0.12), 0 12px 40px
+    oklch(0.58 0.19 192 / 0.08);
 }
 
 @utility bg-gradient-primary {
@@ -144,80 +178,96 @@
 }
 
 .dark {
-  /* Dark mode: deep violet-charcoal, not black, not muddy */
-  --background: oklch(0.18 0.03 286);
-  --foreground: oklch(0.985 0.01 286);
+  /* Dark mode: deep ocean navy — not pure black, not muddy */
+  --background: oklch(0.16 0.035 230);
+  --foreground: oklch(0.97 0.008 200);
 
-  --card: oklch(0.22 0.03 286);
-  --card-foreground: oklch(0.985 0.01 286);
+  --card: oklch(0.20 0.03 228);
+  --card-foreground: oklch(0.97 0.008 200);
 
-  --popover: oklch(0.22 0.03 286);
-  --popover-foreground: oklch(0.985 0.01 286);
+  --popover: oklch(0.20 0.03 228);
+  --popover-foreground: oklch(0.97 0.008 200);
 
-  /* Keep brand purple vivid, but slightly richer in dark mode */
-  --primary: oklch(0.69 0.22 303);
-  --primary-foreground: oklch(0.14 0.02 286);
+  /* Brand teal — slightly brighter on dark to maintain 4.5:1 */
+  --primary: oklch(0.68 0.19 192);
+  --primary-foreground: oklch(0.12 0.025 225);
 
-  --secondary: oklch(0.26 0.03 286);
-  --secondary-foreground: oklch(0.985 0.01 286);
+  --secondary: oklch(0.24 0.03 225);
+  --secondary-foreground: oklch(0.97 0.008 200);
 
-  --muted: oklch(0.25 0.02 286);
-  --muted-foreground: oklch(0.73 0.02 286);
+  --muted: oklch(0.23 0.02 225);
+  --muted-foreground: oklch(0.70 0.02 210);
 
-  --accent: oklch(0.29 0.05 303);
-  --accent-foreground: oklch(0.985 0.01 286);
+  --accent: oklch(0.26 0.05 192);
+  --accent-foreground: oklch(0.97 0.008 200);
 
-  --destructive: oklch(0.7 0.2 22);
+  --destructive: oklch(0.70 0.20 22);
   --destructive-foreground: oklch(0.985 0 0);
 
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 14%);
-  --ring: oklch(0.71 0.19 303);
+  --ring: oklch(0.68 0.17 192);
 
-  /* Charts — brighter so they remain readable on dark surfaces */
-  --chart-1: oklch(0.72 0.22 303);
-  --chart-2: oklch(0.78 0.17 286);
-  --chart-3: oklch(0.75 0.16 330);
-  --chart-4: oklch(0.68 0.13 260);
-  --chart-5: oklch(0.84 0.09 305);
+  /* Achievement — amber remains warm on dark */
+  --achievement: oklch(0.82 0.16 75);
+  --achievement-foreground: oklch(0.18 0.04 60);
+  --achievement-muted: oklch(0.26 0.06 70);
+
+  /* Semantic score tokens — brighter for dark surfaces */
+  --score-high: oklch(0.26 0.07 145);
+  --score-high-fg: oklch(0.75 0.16 145);
+  --score-mid: oklch(0.25 0.07 192);
+  --score-mid-fg: oklch(0.72 0.15 192);
+  --score-low: oklch(0.28 0.07 75);
+  --score-low-fg: oklch(0.82 0.15 72);
+  --score-critical: oklch(0.26 0.06 22);
+  --score-critical-fg: oklch(0.80 0.18 22);
+
+  /* Charts — vivid on dark */
+  --chart-1: oklch(0.70 0.19 192);
+  --chart-2: oklch(0.78 0.16 160);
+  --chart-3: oklch(0.84 0.17 75);
+  --chart-4: oklch(0.65 0.18 255);
+  --chart-5: oklch(0.80 0.14 220);
 
   /* Sidebar */
-  --sidebar: oklch(0.21 0.03 286);
-  --sidebar-foreground: oklch(0.985 0.01 286);
+  --sidebar: oklch(0.19 0.03 228);
+  --sidebar-foreground: oklch(0.97 0.008 200);
 
-  --sidebar-primary: oklch(0.69 0.22 303);
-  --sidebar-primary-foreground: oklch(0.14 0.02 286);
+  --sidebar-primary: oklch(0.68 0.19 192);
+  --sidebar-primary-foreground: oklch(0.12 0.025 225);
 
-  --sidebar-accent: oklch(0.27 0.03 286);
-  --sidebar-accent-foreground: oklch(0.985 0.01 286);
+  --sidebar-accent: oklch(0.25 0.03 225);
+  --sidebar-accent-foreground: oklch(0.97 0.008 200);
 
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.71 0.19 303);
+  --sidebar-ring: oklch(0.68 0.17 192);
 
-  /* Extra theme tokens */
-  --surface-1: oklch(0.22 0.03 286);
-  --surface-2: oklch(0.25 0.03 286);
-  --surface-3: oklch(0.29 0.04 286);
+  /* Surface layers */
+  --surface-1: oklch(0.20 0.03 228);
+  --surface-2: oklch(0.23 0.03 228);
+  --surface-3: oklch(0.27 0.04 228);
 
+  /* Gradients */
   --gradient-primary: linear-gradient(
     135deg,
-    oklch(0.73 0.2 303),
-    oklch(0.62 0.23 288)
+    oklch(0.72 0.19 192),
+    oklch(0.58 0.22 255)
   );
   --gradient-accent: linear-gradient(
     135deg,
-    oklch(0.32 0.08 303),
-    oklch(0.24 0.04 286)
+    oklch(0.30 0.07 192),
+    oklch(0.22 0.04 225)
   );
   --gradient-background: linear-gradient(
     180deg,
-    oklch(0.2 0.03 286),
-    oklch(0.15 0.02 286)
+    oklch(0.18 0.035 230),
+    oklch(0.14 0.025 235)
   );
 
   --shadow-glow:
-    0 0 0 1px oklch(0.69 0.22 303 / 0.16), 0 16px 50px
-    oklch(0.69 0.22 303 / 0.12);
+    0 0 0 1px oklch(0.68 0.19 192 / 0.16), 0 16px 50px
+    oklch(0.68 0.19 192 / 0.12);
 }
 
 @layer base {
@@ -228,6 +278,11 @@
     @apply font-sans bg-background text-foreground;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-heading;
   }
   button,
   [role="button"],

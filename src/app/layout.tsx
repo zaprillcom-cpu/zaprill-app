@@ -1,4 +1,3 @@
-import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -9,8 +8,10 @@ import { AnalyticsProvider } from "@/components/analytics/AnalyticsProvider";
 import { cn } from "@/lib/utils";
 import { Providers } from "@/providers/Providers";
 
+/* Body/UI font — Inter: neutral, readable, widely hinted */
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
+/* Display/heading font — Satoshi: confident, geometric, distinctly Zaprill */
 const satoshi = localFont({
   src: [
     {
@@ -51,12 +52,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn(
-        GeistSans.variable,
-        satoshi.variable,
-        "font-sans",
-        inter.variable,
-      )}
+      className={cn(satoshi.variable, inter.variable, "font-sans")}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >

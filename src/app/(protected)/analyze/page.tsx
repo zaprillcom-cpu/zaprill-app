@@ -2,15 +2,18 @@
 
 import {
   AlertCircle,
+  ArrowUpDown,
   Briefcase,
   Check,
   ChevronDown,
+  Clock,
   Filter,
   Info,
   Loader2,
   Map,
   Plus,
   RefreshCw,
+  Target,
   Trash2,
   TrendingUp,
   User,
@@ -679,7 +682,8 @@ function AnalyzePageContent() {
                         }}
                         className="py-2"
                       >
-                        🎯 Highest Match Ranking
+                        <Target className="mr-2 h-4 w-4 text-muted-foreground" />
+                        Highest Match Ranking
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         onClick={() => {
@@ -688,7 +692,8 @@ function AnalyzePageContent() {
                         }}
                         className="py-2"
                       >
-                        🕐 Most Recent Posts
+                        <Clock className="mr-2 h-4 w-4 text-muted-foreground" />
+                        Most Recent Posts
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>

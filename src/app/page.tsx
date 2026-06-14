@@ -170,7 +170,7 @@ export default function HomePage() {
 
         <WordFadeIn
           words="Find the job you actually deserve."
-          className="mb-8 max-w-5xl font-black text-6xl text-foreground leading-[0.9] tracking-tighter md:text-8xl"
+          className="mb-8 max-w-5xl font-black font-heading text-6xl text-foreground leading-[0.9] tracking-tighter md:text-8xl"
         />
 
         <p className="fade-in slide-in-from-bottom-6 mb-12 max-w-2xl animate-in font-medium text-muted-foreground text-xl leading-relaxed delay-200 duration-1000 md:text-2xl">

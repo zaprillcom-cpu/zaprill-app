@@ -60,10 +60,10 @@ export default function UserDashboard({
   const lastAtsScore = profile?.lastAtsScore || 0;
 
   const getScoreColor = (score: number) => {
-    if (score >= 90) return "text-emerald-500";
-    if (score >= 75) return "text-sky-500";
-    if (score >= 60) return "text-amber-500";
-    return "text-rose-500";
+    if (score >= 90) return "text-score-high-fg";
+    if (score >= 75) return "text-score-mid-fg";
+    if (score >= 60) return "text-score-low-fg";
+    return "text-score-critical-fg";
   };
 
   return (
@@ -75,11 +75,11 @@ export default function UserDashboard({
             <Zap className="h-3 w-3 fill-current" />
             Personal Dashboard
           </div>
-          <h1 className="font-black text-4xl tracking-tighter md:text-5xl">
+          <h1 className="font-black font-heading text-4xl tracking-tighter md:text-5xl">
             Welcome back, {session.user.name.split(" ")[0]}
           </h1>
           <p className="font-medium text-lg text-muted-foreground">
-            Your career growth engine is fueled and ready.
+            Your career navigation engine is ready.
           </p>
         </div>
         <Button
@@ -96,7 +96,7 @@ export default function UserDashboard({
         {/* Profile Summary Card */}
         <Card className="flex flex-col justify-between overflow-hidden rounded-2xl border-border/50 shadow-sm">
           <CardHeader className="flex-row items-center justify-between space-y-0 bg-muted/30 pb-4">
-            <CardTitle className="flex items-center gap-2 font-bold text-[10px] text-muted-foreground uppercase tracking-widest">
+            <CardTitle className="flex items-center gap-2 font-bold text-muted-foreground text-xs uppercase tracking-widest">
               <Target className="h-3.5 w-3.5" />
               Career Profile
             </CardTitle>
@@ -104,7 +104,7 @@ export default function UserDashboard({
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-7 font-bold text-[10px] uppercase tracking-widest"
+                className="h-7 font-bold text-xs uppercase tracking-widest"
               >
                 Edit
               </Button>
@@ -128,7 +128,7 @@ export default function UserDashboard({
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
-                <p className="font-bold text-[9px] text-muted-foreground uppercase tracking-widest">
+                <p className="font-bold text-[11px] text-muted-foreground uppercase tracking-widest">
                   Experience
                 </p>
                 <p className="font-black text-sm">
@@ -136,7 +136,7 @@ export default function UserDashboard({
                 </p>
               </div>
               <div className="space-y-1 text-right">
-                <p className="font-bold text-[9px] text-muted-foreground uppercase tracking-widest">
+                <p className="font-bold text-[11px] text-muted-foreground uppercase tracking-widest">
                   Location
                 </p>
                 <p className="truncate font-black text-sm">
@@ -150,7 +150,7 @@ export default function UserDashboard({
         {/* ATS Score Card */}
         <Card className="flex flex-col justify-between overflow-hidden rounded-2xl border-border/50 bg-linear-to-br from-background to-muted/30 shadow-sm">
           <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2 font-bold text-[10px] text-muted-foreground uppercase tracking-widest">
+            <CardTitle className="flex items-center gap-2 font-bold text-muted-foreground text-xs uppercase tracking-widest">
               <Shield className="h-3.5 w-3.5" />
               ATS Score
             </CardTitle>
@@ -163,12 +163,19 @@ export default function UserDashboard({
                 >
                   {lastAtsScore || 0}%
                 </div>
-                <p className="font-bold text-[9px] text-muted-foreground uppercase tracking-widest">
-                  Compatibility
+                <p className="font-bold text-[11px] text-muted-foreground uppercase tracking-widest">
+                  ATS Compatibility
                 </p>
               </div>
-              <div className="relative flex h-12 w-12 items-center justify-center rounded-full border-2 border-muted">
-                <svg className="-rotate-90 h-full w-full transform">
+              <div
+                className="relative flex h-12 w-12 items-center justify-center rounded-full border-2 border-muted"
+                role="img"
+                aria-label={`ATS score: ${lastAtsScore || 0}%`}
+              >
+                <svg
+                  className="-rotate-90 h-full w-full transform"
+                  aria-hidden="true"
+                >
                   <circle
                     cx="24"
                     cy="24"
@@ -195,6 +202,7 @@ export default function UserDashboard({
                 </svg>
                 <Star
                   className={`absolute h-4 w-4 fill-current ${getScoreColor(lastAtsScore)} opacity-20`}
+                  aria-hidden="true"
                 />
               </div>
             </div>
@@ -202,7 +210,7 @@ export default function UserDashboard({
             <Link href="/resumes" className="block">
               <Button
                 variant="secondary"
-                className="h-9 w-full gap-2 rounded-lg font-bold text-[10px] uppercase tracking-widest"
+                className="h-9 w-full gap-2 rounded-lg font-bold text-xs uppercase tracking-widest"
               >
                 <Zap className="h-3 w-3" />
                 Boost Score
@@ -214,7 +222,7 @@ export default function UserDashboard({
         {/* Market Insights Card */}
         <Card className="flex flex-col justify-between overflow-hidden rounded-2xl border-border/50 shadow-sm">
           <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2 font-bold text-[10px] text-muted-foreground uppercase tracking-widest">
+            <CardTitle className="flex items-center gap-2 font-bold text-muted-foreground text-xs uppercase tracking-widest">
               <Briefcase className="h-3.5 w-3.5" />
               Market Standing
             </CardTitle>
@@ -225,15 +233,15 @@ export default function UserDashboard({
                 <div className="font-black text-xl">
                   {latestAnalysis?.jobs?.length || 0}
                 </div>
-                <div className="font-bold text-[9px] text-muted-foreground uppercase tracking-widest">
+                <div className="font-bold text-[11px] text-muted-foreground uppercase tracking-widest">
                   Jobs matched
                 </div>
               </div>
-              <div className="rounded-xl border border-emerald-500/10 bg-emerald-500/5 p-3">
-                <div className="font-black text-emerald-600 text-xl">
+              <div className="rounded-xl border border-score-high/10 bg-score-high/50 p-3">
+                <div className="font-black text-score-high-fg text-xl">
                   {latestAnalysis?.skillGaps?.length || 0}
                 </div>
-                <div className="font-bold text-[9px] text-muted-foreground uppercase tracking-widest">
+                <div className="font-bold text-[11px] text-muted-foreground uppercase tracking-widest">
                   Skill Gaps
                 </div>
               </div>
@@ -242,7 +250,7 @@ export default function UserDashboard({
               <Link href={`/analyze?id=${latestAnalysis.id}`} className="block">
                 <Button
                   variant="outline"
-                  className="h-9 w-full rounded-lg font-bold text-[10px] uppercase tracking-widest"
+                  className="h-9 w-full rounded-lg font-bold text-xs uppercase tracking-widest"
                 >
                   View Gap Analysis
                 </Button>
@@ -256,14 +264,14 @@ export default function UserDashboard({
       <div className="space-y-6">
         <div className="flex items-center justify-between px-2">
           <div className="space-y-1">
-            <h2 className="flex items-center gap-3 font-black text-2xl tracking-tight">
+            <h2 className="flex items-center gap-3 font-black font-heading text-2xl tracking-tight">
               <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
                 <Briefcase className="h-5 w-5 text-primary" />
               </span>
               Recommended for You
             </h2>
             <p className="font-medium text-muted-foreground text-sm">
-              Top opportunities based on your refined skill DNA.
+              Top opportunities based on your skill profile.
             </p>
           </div>
           {latestAnalysis && (
