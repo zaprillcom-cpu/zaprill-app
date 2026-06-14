@@ -1,5 +1,8 @@
+// biome-ignore-all lint/security/noDangerouslySetInnerHtml: template rendering rich-text HTML
 "use client";
 
+import { IconBrandGithub } from "@tabler/icons-react";
+import { ensureHttps } from "@/lib/utils";
 import {
   DEFAULT_RESUME_DATA,
   DEFAULT_RESUME_METADATA,
@@ -42,6 +45,7 @@ export default function TechStackTemplate({
   const awards = d.awards || [];
   const publications = d.publications || [];
   const references = d.references || [];
+  const customSections = d.customSections || [];
 
   const {
     theme = DEFAULT_RESUME_METADATA.theme,
@@ -86,8 +90,14 @@ export default function TechStackTemplate({
           <ContactItem
             icon={IconMapPin}
             text={
-              basics.location?.city
-                ? `${basics.location.city}${basics.location.region ? `, ${basics.location.region}` : ""}`
+              basics.location
+                ? [
+                    basics.location.city,
+                    basics.location.region,
+                    basics.location.countryCode,
+                  ]
+                    .filter(Boolean)
+                    .join(", ")
                 : ""
             }
           />
@@ -134,6 +144,17 @@ export default function TechStackTemplate({
                       <h3 className="resume-entry-title">{item.position}</h3>
                       <span className="resume-entry-subtitle">
                         {item.company}
+                        {item.website && (
+                          <a
+                            href={ensureHttps(item.website)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="ml-1.5 inline-flex items-center gap-0.5 font-normal text-[var(--resume-accent)] text-xs hover:underline"
+                          >
+                            <IconWorld className="inline h-3 w-3" />
+                            {formatProfileText(item.website, "Website")}
+                          </a>
+                        )}
                         {item.location ? ` · ${item.location}` : ""}
                       </span>
                     </div>
@@ -142,6 +163,12 @@ export default function TechStackTemplate({
                       {item.endDate ? ` – ${item.endDate}` : " – Present"}
                     </span>
                   </div>
+                  {item.summary && (
+                    <div
+                      className="resume-text mb-2"
+                      dangerouslySetInnerHTML={{ __html: item.summary }}
+                    />
+                  )}
                   {item.highlights && (item.highlights || []).length > 0 && (
                     <ul className="resume-bullets">
                       {(item.highlights || []).map((h, i) => (
@@ -161,7 +188,33 @@ export default function TechStackTemplate({
               {(projects || []).map((item) => (
                 <div key={item.id} className="resume-entry">
                   <div className="resume-entry-header">
-                    <h3 className="resume-entry-title">{item.name}</h3>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h3 className="resume-entry-title">
+                        {item.url ? (
+                          <a
+                            href={ensureHttps(item.url)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-bold text-[var(--resume-primary)] hover:underline"
+                          >
+                            {item.name}
+                          </a>
+                        ) : (
+                          item.name
+                        )}
+                      </h3>
+                      {item.githubUrl && (
+                        <a
+                          href={ensureHttps(item.githubUrl)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[var(--resume-text)] opacity-70 transition-opacity hover:text-[var(--resume-accent)] hover:opacity-100"
+                          title="View GitHub Repository"
+                        >
+                          <IconBrandGithub className="h-4 w-4" />
+                        </a>
+                      )}
+                    </div>
                     <span className="resume-entry-date">
                       {item.startDate}
                       {item.endDate ? ` – ${item.endDate}` : ""}
@@ -176,6 +229,18 @@ export default function TechStackTemplate({
                         <li key={`${item.id}-h-${i}`}>{h}</li>
                       ))}
                     </ul>
+                  )}
+                  {item.keywords && (item.keywords || []).length > 0 && (
+                    <div className="ts-tech-tags mt-2 flex flex-wrap gap-1.5">
+                      {(item.keywords || []).map((kw) => (
+                        <span
+                          key={kw}
+                          className="rounded-sm border border-[var(--resume-primary)]/20 px-2 py-0.5 font-medium text-[10px] text-[var(--resume-text)] opacity-90"
+                        >
+                          {kw}
+                        </span>
+                      ))}
+                    </div>
                   )}
                 </div>
               ))}
@@ -192,7 +257,19 @@ export default function TechStackTemplate({
                     <div>
                       <h3 className="resume-entry-title">{item.position}</h3>
                       <p className="resume-entry-subtitle">
-                        {item.organization}
+                        {item.url ? (
+                          <a
+                            href={ensureHttps(item.url)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-0.5 font-normal text-[var(--resume-accent)] hover:underline"
+                          >
+                            {item.organization}
+                            <IconWorld className="h-2.5 w-2.5" />
+                          </a>
+                        ) : (
+                          item.organization
+                        )}
                       </p>
                     </div>
                     <span className="resume-entry-date">
@@ -214,10 +291,58 @@ export default function TechStackTemplate({
               ))}
             </section>
           )}
+
+          {/* Custom Sections */}
+          {(customSections || []).map((section) => (
+            <section key={section.id} className="resume-section">
+              <h2 className="resume-section-title">{section.sectionName}</h2>
+              {(section.items || []).map((item) => (
+                <div key={item.id} className="resume-entry">
+                  <div className="resume-entry-header">
+                    <div>
+                      <h3 className="resume-entry-title">{item.title}</h3>
+                      {item.subtitle && (
+                        <span className="resume-entry-subtitle">
+                          {item.subtitle}
+                        </span>
+                      )}
+                    </div>
+                    {item.date && (
+                      <span className="resume-entry-date">{item.date}</span>
+                    )}
+                  </div>
+                  {item.description && (
+                    <div
+                      className="resume-text mb-2"
+                      dangerouslySetInnerHTML={{ __html: item.description }}
+                    />
+                  )}
+                  {item.highlights && (item.highlights || []).length > 0 && (
+                    <ul className="resume-bullets">
+                      {(item.highlights || []).map((h, i) => (
+                        <li key={`${item.id}-h-${i}`}>{h}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ))}
+            </section>
+          ))}
         </div>
 
         {/* Sidebar (right) */}
         <aside className="ts-sidebar">
+          {basics.picture && (
+            <div className="ts-picture-container mb-5 flex justify-center">
+              {/* biome-ignore lint/performance/noImgElement: standard image tag is preferred for printable PDF templates */}
+              <img
+                src={basics.picture}
+                alt={basics.name || "Profile Picture"}
+                className="h-24 w-24 rounded-full border-2 border-[var(--resume-primary)] object-cover shadow-sm"
+              />
+            </div>
+          )}
+
           {/* Skills */}
           {sectionVisibility?.skills && (skills || []).length > 0 && (
             <section className="resume-section">
@@ -229,6 +354,7 @@ export default function TechStackTemplate({
                     {(group.keywords || []).map((kw) => (
                       <span key={kw} className="ts-tag">
                         {kw}
+                        {group.level ? ` (${group.level})` : ""}
                       </span>
                     ))}
                   </div>
@@ -243,15 +369,39 @@ export default function TechStackTemplate({
               <h2 className="ts-sidebar-title">Education</h2>
               {(education || []).map((item) => (
                 <div key={item.id} className="ts-edu-block">
-                  <h4 className="ts-edu-title">{item.institution}</h4>
+                  <h4 className="ts-edu-title flex flex-wrap items-center gap-1.5">
+                    <span>{item.institution}</span>
+                    {item.url && (
+                      <a
+                        href={ensureHttps(item.url)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-0.5 font-normal text-[10px] text-[var(--resume-accent)] hover:underline"
+                      >
+                        <IconWorld className="h-2.5 w-2.5" />
+                        Link
+                      </a>
+                    )}
+                  </h4>
                   <p className="ts-edu-degree">
                     {item.studyType}
                     {item.area ? ` in ${item.area}` : ""}
                   </p>
+                  {item.score && (
+                    <p className="mt-0.5 font-medium text-[10px] text-[var(--resume-text)]">
+                      GPA: {item.score}
+                    </p>
+                  )}
                   <p className="ts-edu-date">
                     {item.startDate}
                     {item.endDate ? ` – ${item.endDate}` : " – Present"}
                   </p>
+                  {item.courses && item.courses.length > 0 && (
+                    <p className="mt-1 text-[10px] text-[var(--resume-text)] leading-normal opacity-75">
+                      <span className="font-semibold">Courses:</span>{" "}
+                      {item.courses.join(", ")}
+                    </p>
+                  )}
                 </div>
               ))}
             </section>
@@ -264,7 +414,23 @@ export default function TechStackTemplate({
                 <h2 className="ts-sidebar-title">Certifications</h2>
                 {(certifications || []).map((item) => (
                   <div key={item.id} className="ts-cert-block">
-                    <h4 className="ts-edu-title">{item.name}</h4>
+                    <h4 className="ts-edu-title flex flex-wrap items-center gap-1">
+                      {item.url ? (
+                        <a
+                          href={ensureHttps(item.url)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[var(--resume-primary)] hover:underline"
+                        >
+                          {item.name}
+                        </a>
+                      ) : (
+                        item.name
+                      )}
+                      {item.url && (
+                        <IconWorld className="h-2.5 w-2.5 flex-shrink-0 text-[var(--resume-accent)]" />
+                      )}
+                    </h4>
                     <p className="ts-edu-degree">{item.issuer}</p>
                     {item.date && <p className="ts-edu-date">{item.date}</p>}
                   </div>
@@ -294,6 +460,11 @@ export default function TechStackTemplate({
                   <h4 className="ts-edu-title">{item.title}</h4>
                   <p className="ts-edu-degree">{item.awarder}</p>
                   {item.date && <p className="ts-edu-date">{item.date}</p>}
+                  {item.summary && (
+                    <p className="mt-1 text-[10px] text-[var(--resume-text)] leading-snug opacity-85">
+                      {item.summary}
+                    </p>
+                  )}
                 </div>
               ))}
             </section>
@@ -306,10 +477,29 @@ export default function TechStackTemplate({
                 <h2 className="ts-sidebar-title">Publications</h2>
                 {(publications || []).map((item) => (
                   <div key={item.id} className="ts-cert-block">
-                    <h4 className="ts-edu-title">{item.name}</h4>
+                    <h4 className="ts-edu-title">
+                      {item.url ? (
+                        <a
+                          href={ensureHttps(item.url)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-between gap-1 text-[var(--resume-primary)] hover:underline"
+                        >
+                          <span>{item.name}</span>
+                          <IconWorld className="h-2.5 w-2.5 flex-shrink-0 text-[var(--resume-accent)]" />
+                        </a>
+                      ) : (
+                        item.name
+                      )}
+                    </h4>
                     <p className="ts-edu-degree">{item.publisher}</p>
                     {item.releaseDate && (
                       <p className="ts-edu-date">{item.releaseDate}</p>
+                    )}
+                    {item.summary && (
+                      <p className="mt-1 text-[10px] text-[var(--resume-text)] leading-snug opacity-85">
+                        {item.summary}
+                      </p>
                     )}
                   </div>
                 ))}

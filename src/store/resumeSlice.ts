@@ -218,6 +218,19 @@ const resumeSlice = createSlice({
         state.isDirty = true;
       }
     },
+    addWorkHighlight(
+      state,
+      action: PayloadAction<{ id: string; highlight: string }>,
+    ) {
+      const idx = state.data.work.findIndex((w) => w.id === action.payload.id);
+      if (idx !== -1) {
+        state.data.work[idx].highlights = [
+          ...(state.data.work[idx].highlights || []),
+          action.payload.highlight,
+        ];
+        state.isDirty = true;
+      }
+    },
     removeWorkItem(state, action: PayloadAction<string>) {
       state.data.work = state.data.work.filter((w) => w.id !== action.payload);
       state.isDirty = true;
@@ -303,6 +316,21 @@ const resumeSlice = createSlice({
         state.isDirty = true;
       }
     },
+    addSkillKeywords(
+      state,
+      action: PayloadAction<{ id: string; keywords: string[] }>,
+    ) {
+      const idx = state.data.skills.findIndex(
+        (s) => s.id === action.payload.id,
+      );
+      if (idx !== -1) {
+        const existing = state.data.skills[idx].keywords || [];
+        state.data.skills[idx].keywords = Array.from(
+          new Set([...existing, ...action.payload.keywords]),
+        );
+        state.isDirty = true;
+      }
+    },
     removeSkillItem(state, action: PayloadAction<string>) {
       state.data.skills = state.data.skills.filter(
         (s) => s.id !== action.payload,
@@ -345,6 +373,21 @@ const resumeSlice = createSlice({
           ...state.data.projects[idx],
           ...action.payload.data,
         };
+        state.isDirty = true;
+      }
+    },
+    addProjectHighlight(
+      state,
+      action: PayloadAction<{ id: string; highlight: string }>,
+    ) {
+      const idx = state.data.projects.findIndex(
+        (p) => p.id === action.payload.id,
+      );
+      if (idx !== -1) {
+        state.data.projects[idx].highlights = [
+          ...(state.data.projects[idx].highlights || []),
+          action.payload.highlight,
+        ];
         state.isDirty = true;
       }
     },

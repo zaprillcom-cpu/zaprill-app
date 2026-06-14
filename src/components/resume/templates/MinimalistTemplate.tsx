@@ -1,5 +1,6 @@
 "use client";
 
+import { IconBrandGithub } from "@tabler/icons-react";
 import { ensureHttps } from "@/lib/utils";
 import {
   DEFAULT_RESUME_DATA,
@@ -43,6 +44,7 @@ export default function MinimalistTemplate({
   const awards = d.awards || [];
   const publications = d.publications || [];
   const references = d.references || [];
+  const customSections = d.customSections || [];
 
   const {
     theme = DEFAULT_RESUME_METADATA.theme,
@@ -77,9 +79,22 @@ export default function MinimalistTemplate({
               <div className="resume-entry-header">
                 <div>
                   <h3 className="resume-entry-title">{item.position}</h3>
-                  <span className="resume-entry-subtitle">
-                    {item.company}
-                    {item.location ? ` · ${item.location}` : ""}
+                  <span className="resume-entry-subtitle flex flex-wrap items-center gap-1.5">
+                    <span>{item.company}</span>
+                    {item.location && <span>· {item.location}</span>}
+                    {item.website && (
+                      <a
+                        href={ensureHttps(item.website)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-[10px] text-primary hover:underline"
+                      >
+                        <IconWorld className="h-3 w-3" />
+                        <span className="opacity-75">
+                          {formatProfileText(item.website, "Website")}
+                        </span>
+                      </a>
+                    )}
                   </span>
                 </div>
                 <span className="resume-entry-date">
@@ -87,6 +102,12 @@ export default function MinimalistTemplate({
                   {item.endDate ? ` – ${item.endDate}` : " – Present"}
                 </span>
               </div>
+              {item.summary && (
+                <div
+                  className="resume-text mb-1.5"
+                  dangerouslySetInnerHTML={{ __html: item.summary }}
+                />
+              )}
               {item.highlights && (item.highlights || []).length > 0 && (
                 <ul className="resume-bullets">
                   {(item.highlights || []).map((h, i) => (
@@ -107,7 +128,22 @@ export default function MinimalistTemplate({
             <div key={item.id} className="resume-entry">
               <div className="resume-entry-header">
                 <div>
-                  <h3 className="resume-entry-title">{item.institution}</h3>
+                  <h3 className="resume-entry-title flex flex-wrap items-center gap-1.5">
+                    <span>{item.institution}</span>
+                    {item.url && (
+                      <a
+                        href={ensureHttps(item.url)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 font-normal text-[10px] text-primary hover:underline"
+                      >
+                        <IconWorld className="h-3 w-3" />
+                        <span className="opacity-75">
+                          {formatProfileText(item.url, "Website")}
+                        </span>
+                      </a>
+                    )}
+                  </h3>
                   <span className="resume-entry-subtitle">
                     {item.studyType}
                     {item.area ? ` in ${item.area}` : ""}
@@ -119,6 +155,12 @@ export default function MinimalistTemplate({
                   {item.endDate ? ` – ${item.endDate}` : " – Present"}
                 </span>
               </div>
+              {item.courses && item.courses.length > 0 && (
+                <p className="resume-text mt-1 text-[10px] opacity-80">
+                  <span className="font-semibold">Courses: </span>
+                  {item.courses.join(", ")}
+                </p>
+              )}
             </div>
           ))}
         </section>
@@ -131,7 +173,10 @@ export default function MinimalistTemplate({
           <div className="resume-skills-grid">
             {(skills || []).map((group) => (
               <div key={group.id} className="resume-skill-group">
-                <span className="resume-skill-label">{group.name}:</span>
+                <span className="resume-skill-label">
+                  {group.name}
+                  {group.level ? ` (${group.level})` : ""}:
+                </span>{" "}
                 <span className="resume-skill-keywords">
                   {(group.keywords || []).join(", ")}
                 </span>
@@ -149,17 +194,33 @@ export default function MinimalistTemplate({
             <div key={item.id} className="resume-entry">
               <div className="resume-entry-header">
                 <div>
-                  <h3 className="resume-entry-title">{item.name}</h3>
-                  {item.url && (
-                    <a
-                      href={ensureHttps(item.url)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="resume-entry-subtitle text-primary hover:underline"
-                    >
-                      {formatProfileText(item.url, "View Project")}
-                    </a>
-                  )}
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h3 className="resume-entry-title">{item.name}</h3>
+                    {item.url && (
+                      <a
+                        href={ensureHttps(item.url)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="resume-entry-subtitle flex items-center gap-0.5 text-primary text-xs hover:underline"
+                      >
+                        <IconWorld className="h-3 w-3" />
+                        <span>
+                          {formatProfileText(item.url, "View Project")}
+                        </span>
+                      </a>
+                    )}
+                    {item.githubUrl && (
+                      <a
+                        href={ensureHttps(item.githubUrl)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="resume-entry-subtitle flex items-center gap-0.5 text-primary text-xs hover:underline"
+                      >
+                        <IconBrandGithub className="h-3 w-3" />
+                        <span>GitHub</span>
+                      </a>
+                    )}
+                  </div>
                 </div>
                 <span className="resume-entry-date">
                   {item.startDate}
@@ -176,6 +237,18 @@ export default function MinimalistTemplate({
                   ))}
                 </ul>
               )}
+              {item.keywords && item.keywords.length > 0 && (
+                <div className="mt-1.5 flex flex-wrap gap-1">
+                  {item.keywords.map((k, idx) => (
+                    <span
+                      key={idx}
+                      className="rounded-sm bg-neutral-100 px-1.5 py-0.5 font-medium text-[9px] text-neutral-600 tracking-wide dark:bg-neutral-800 dark:text-neutral-300"
+                    >
+                      {k}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </section>
@@ -189,7 +262,20 @@ export default function MinimalistTemplate({
             <div key={item.id} className="resume-entry">
               <div className="resume-entry-header">
                 <div>
-                  <h3 className="resume-entry-title">{item.name}</h3>
+                  <h3 className="resume-entry-title">
+                    {item.url ? (
+                      <a
+                        href={ensureHttps(item.url)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary hover:underline"
+                      >
+                        {item.name}
+                      </a>
+                    ) : (
+                      item.name
+                    )}
+                  </h3>
                   <p className="resume-entry-subtitle">{item.issuer}</p>
                 </div>
                 <span className="resume-entry-date">{item.date}</span>
@@ -223,7 +309,22 @@ export default function MinimalistTemplate({
               <div className="resume-entry-header">
                 <div>
                   <h3 className="resume-entry-title">{item.position}</h3>
-                  <p className="resume-entry-subtitle">{item.organization}</p>
+                  <p className="resume-entry-subtitle flex flex-wrap items-center gap-1.5">
+                    <span>{item.organization}</span>
+                    {item.url && (
+                      <a
+                        href={ensureHttps(item.url)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-[10px] text-primary hover:underline"
+                      >
+                        <IconWorld className="h-3 w-3" />
+                        <span className="opacity-75">
+                          {formatProfileText(item.url, "Website")}
+                        </span>
+                      </a>
+                    )}
+                  </p>
                 </div>
                 <span className="resume-entry-date">
                   {item.startDate}
@@ -271,7 +372,22 @@ export default function MinimalistTemplate({
               <div className="resume-entry-header">
                 <div>
                   <h3 className="resume-entry-title">{item.name}</h3>
-                  <p className="resume-entry-subtitle">{item.publisher}</p>
+                  <p className="resume-entry-subtitle flex flex-wrap items-center gap-1.5">
+                    <span>{item.publisher}</span>
+                    {item.url && (
+                      <a
+                        href={ensureHttps(item.url)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-[10px] text-primary hover:underline"
+                      >
+                        <IconWorld className="h-3 w-3" />
+                        <span className="opacity-75">
+                          {formatProfileText(item.url, "Website")}
+                        </span>
+                      </a>
+                    )}
+                  </p>
                 </div>
                 <span className="resume-entry-date">{item.releaseDate}</span>
               </div>
@@ -314,8 +430,28 @@ export default function MinimalistTemplate({
       }}
     >
       <header className="resume-header-minimalist">
-        <h1 className="resume-name">{basics.name || "Your Name"}</h1>
-        <p className="resume-label">{basics.label}</p>
+        {basics.picture ? (
+          <div className="mb-2 flex items-center justify-center gap-4">
+            <img
+              src={basics.picture}
+              alt={basics.name || "Profile Picture"}
+              className="h-12 w-12 shrink-0 rounded-full border border-neutral-200 object-cover shadow-sm dark:border-neutral-700"
+            />
+            <div className="text-left">
+              <h1 className="resume-name leading-tight">
+                {basics.name || "Your Name"}
+              </h1>
+              {basics.label && (
+                <p className="resume-label mt-1">{basics.label}</p>
+              )}
+            </div>
+          </div>
+        ) : (
+          <>
+            <h1 className="resume-name">{basics.name || "Your Name"}</h1>
+            {basics.label && <p className="resume-label">{basics.label}</p>}
+          </>
+        )}
 
         <div className="resume-contact">
           <ContactItem
@@ -331,8 +467,14 @@ export default function MinimalistTemplate({
           <ContactItem
             icon={IconMapPin}
             text={
-              basics.location?.city
-                ? `${basics.location.city}${basics.location.region ? `, ${basics.location.region}` : ""}`
+              basics.location
+                ? [
+                    basics.location.city,
+                    basics.location.region,
+                    basics.location.countryCode,
+                  ]
+                    .filter(Boolean)
+                    .join(", ")
                 : ""
             }
           />
@@ -357,6 +499,44 @@ export default function MinimalistTemplate({
         {(sectionOrder || Object.keys(sectionRenderers)).map((key) =>
           sectionRenderers[key]?.(),
         )}
+
+        {/* Render Custom Sections at the bottom */}
+        {(customSections || []).map((section) => {
+          if (!section.items || section.items.length === 0) return null;
+          return (
+            <section key={section.id} className="resume-section">
+              <h2 className="resume-section-title">{section.sectionName}</h2>
+              {section.items.map((item) => (
+                <div key={item.id} className="resume-entry">
+                  <div className="resume-entry-header">
+                    <div>
+                      <h3 className="resume-entry-title">{item.title}</h3>
+                      {item.subtitle && (
+                        <p className="resume-entry-subtitle">{item.subtitle}</p>
+                      )}
+                    </div>
+                    {item.date && (
+                      <span className="resume-entry-date">{item.date}</span>
+                    )}
+                  </div>
+                  {item.description && (
+                    <div
+                      className="resume-text mb-1.5"
+                      dangerouslySetInnerHTML={{ __html: item.description }}
+                    />
+                  )}
+                  {item.highlights && (item.highlights || []).length > 0 && (
+                    <ul className="resume-bullets">
+                      {(item.highlights || []).map((h, i) => (
+                        <li key={i}>{h}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ))}
+            </section>
+          );
+        })}
       </main>
     </div>
   );

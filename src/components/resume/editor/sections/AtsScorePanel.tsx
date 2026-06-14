@@ -131,18 +131,12 @@ export default function AtsScorePanel() {
           if (typeof action.value === "string") {
             dispatch(
               resumeActions.setBasics({
-                ...resumeData.basics,
                 summary: action.value,
               }),
             );
             applied = true;
           } else if (sanitizedData) {
-            dispatch(
-              resumeActions.setBasics({
-                ...resumeData.basics,
-                ...sanitizedData,
-              }),
-            );
+            dispatch(resumeActions.setBasics(sanitizedData));
             applied = true;
           }
           break;
@@ -153,7 +147,6 @@ export default function AtsScorePanel() {
           if (summaryContent) {
             dispatch(
               resumeActions.setBasics({
-                ...resumeData.basics,
                 summary: summaryContent,
               }),
             );
@@ -244,21 +237,15 @@ export default function AtsScorePanel() {
           const keywordsToAdd = action.keywords || sanitizedData?.keywords;
 
           if (targetId && Array.isArray(keywordsToAdd)) {
-            const skillItem = resumeData.skills.find((s) => s.id === targetId);
-            if (skillItem) {
-              const newKeywords = Array.from(
-                new Set([...skillItem.keywords, ...keywordsToAdd]),
-              );
-              dispatch(
-                resumeActions.updateSkillItem({
-                  id: targetId,
-                  data: { keywords: newKeywords },
-                }),
-              );
-              applied = true;
-            } else {
-              toast.error("Could not find the skill category to update.");
-            }
+            dispatch(
+              resumeActions.addSkillKeywords({
+                id: targetId,
+                keywords: keywordsToAdd,
+              }),
+            );
+            applied = true;
+          } else {
+            toast.error("Could not find the skill category to update.");
           }
           break;
         }
@@ -278,41 +265,25 @@ export default function AtsScorePanel() {
 
         case "add_work_highlight":
           if (action.id && (action.content || action.value)) {
-            const workItem = resumeData.work.find((w) => w.id === action.id);
-            if (workItem) {
-              const newHighlights = [
-                ...workItem.highlights,
-                action.content || action.value,
-              ];
-              dispatch(
-                resumeActions.updateWorkItem({
-                  id: action.id,
-                  data: { highlights: newHighlights },
-                }),
-              );
-              applied = true;
-            }
+            dispatch(
+              resumeActions.addWorkHighlight({
+                id: action.id,
+                highlight: action.content || action.value,
+              }),
+            );
+            applied = true;
           }
           break;
 
         case "add_project_highlight":
           if (action.id && (action.content || action.value)) {
-            const projectItem = resumeData.projects.find(
-              (p) => p.id === action.id,
+            dispatch(
+              resumeActions.addProjectHighlight({
+                id: action.id,
+                highlight: action.content || action.value,
+              }),
             );
-            if (projectItem) {
-              const newHighlights = [
-                ...projectItem.highlights,
-                action.content || action.value,
-              ];
-              dispatch(
-                resumeActions.updateProjectItem({
-                  id: action.id,
-                  data: { highlights: newHighlights },
-                }),
-              );
-              applied = true;
-            }
+            applied = true;
           }
           break;
 

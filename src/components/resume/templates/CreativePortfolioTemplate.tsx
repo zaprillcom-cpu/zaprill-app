@@ -1,5 +1,6 @@
 "use client";
 
+import { IconBrandGithub } from "@tabler/icons-react";
 import { ExternalLink } from "lucide-react";
 import { ensureHttps } from "@/lib/utils";
 import {
@@ -84,9 +85,31 @@ export default function CreativePortfolioTemplate({
                 </div>
                 <div className="md:col-span-3">
                   <h3 className="mb-1 font-bold text-xl">{item.position}</h3>
-                  <p className="mb-4 font-medium text-primary">
-                    {item.company}
-                  </p>
+                  <div className="mb-4 flex flex-wrap items-center gap-2 font-medium text-primary">
+                    <span>{item.company}</span>
+                    {item.location && (
+                      <span className="font-normal text-muted-foreground text-sm">
+                        · {item.location}
+                      </span>
+                    )}
+                    {item.website && (
+                      <a
+                        href={ensureHttps(item.website)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 font-normal text-muted-foreground text-xs transition-colors hover:text-primary"
+                      >
+                        · <ExternalLink size={12} />
+                        <span>Website</span>
+                      </a>
+                    )}
+                  </div>
+                  {item.summary && (
+                    <div
+                      className="mb-4 text-muted-foreground leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: item.summary }}
+                    />
+                  )}
                   {item.highlights && (item.highlights || []).length > 0 && (
                     <ul className="space-y-3">
                       {(item.highlights || []).map((h, i) => (
@@ -116,7 +139,19 @@ export default function CreativePortfolioTemplate({
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             {(education || []).map((item) => (
               <div key={item.id}>
-                <h3 className="font-bold text-lg">{item.institution}</h3>
+                <h3 className="flex items-center gap-2 font-bold text-lg">
+                  <span>{item.institution}</span>
+                  {item.url && (
+                    <a
+                      href={ensureHttps(item.url)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary transition-colors hover:text-primary/80"
+                    >
+                      <ExternalLink size={14} />
+                    </a>
+                  )}
+                </h3>
                 <p className="mb-1 text-muted-foreground">
                   {item.studyType}
                   {item.area ? ` in ${item.area}` : ""}
@@ -125,6 +160,18 @@ export default function CreativePortfolioTemplate({
                   {item.startDate} — {item.endDate || "Present"}
                   {item.score ? ` · GPA: ${item.score}` : ""}
                 </p>
+                {item.courses && (item.courses || []).length > 0 && (
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {(item.courses || []).map((course, i) => (
+                      <span
+                        key={i}
+                        className="rounded-lg bg-secondary/60 px-2.5 py-1 font-medium text-[11px] text-muted-foreground"
+                      >
+                        {course}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -140,7 +187,14 @@ export default function CreativePortfolioTemplate({
           <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
             {(skills || []).map((group) => (
               <div key={group.id}>
-                <h3 className="mb-3 font-bold text-sm">{group.name}</h3>
+                <h3 className="mb-3 flex items-center justify-between gap-2 font-bold text-sm">
+                  <span>{group.name}</span>
+                  {group.level && (
+                    <span className="rounded-md bg-primary/10 px-2 py-0.5 font-black text-[10px] text-primary uppercase tracking-widest">
+                      {group.level}
+                    </span>
+                  )}
+                </h3>
                 <ul className="space-y-1">
                   {(group.keywords || []).map((skill, i) => (
                     <li
@@ -169,17 +223,29 @@ export default function CreativePortfolioTemplate({
               <div key={item.id} className="group">
                 <div className="mb-4 flex items-baseline justify-between">
                   <h3 className="flex items-center gap-3 font-bold text-2xl">
-                    {item.name}
-                    {item.url && (
-                      <a
-                        href={ensureHttps(item.url)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-primary opacity-0 transition-opacity group-hover:opacity-100"
-                      >
-                        <ExternalLink size={18} />
-                      </a>
-                    )}
+                    <span>{item.name}</span>
+                    <span className="flex items-center gap-2 opacity-0 transition-opacity group-hover:opacity-100">
+                      {item.url && (
+                        <a
+                          href={ensureHttps(item.url)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-primary transition-colors hover:text-primary/80"
+                        >
+                          <ExternalLink size={18} />
+                        </a>
+                      )}
+                      {item.githubUrl && (
+                        <a
+                          href={ensureHttps(item.githubUrl)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-muted-foreground transition-colors hover:text-primary"
+                        >
+                          <IconBrandGithub size={18} />
+                        </a>
+                      )}
+                    </span>
                   </h3>
                   <span className="font-medium text-muted-foreground text-sm">
                     {item.startDate} — {item.endDate}
@@ -202,6 +268,18 @@ export default function CreativePortfolioTemplate({
                     ))}
                   </div>
                 )}
+                {item.keywords && (item.keywords || []).length > 0 && (
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {(item.keywords || []).map((keyword, i) => (
+                      <span
+                        key={i}
+                        className="rounded-full border border-primary/30 bg-primary/5 px-2.5 py-0.5 font-semibold text-[10px] text-primary uppercase tracking-wider"
+                      >
+                        {keyword}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -220,7 +298,24 @@ export default function CreativePortfolioTemplate({
                 key={item.id}
                 className="rounded-2xl border-2 border-border p-4 transition-colors hover:border-primary"
               >
-                <h3 className="mb-1 font-bold text-sm">{item.name}</h3>
+                <h3 className="mb-1 flex items-center gap-1.5 font-bold text-sm">
+                  {item.url ? (
+                    <a
+                      href={ensureHttps(item.url)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1 transition-colors hover:text-primary"
+                    >
+                      <span>{item.name}</span>
+                      <ExternalLink
+                        size={12}
+                        className="inline text-muted-foreground"
+                      />
+                    </a>
+                  ) : (
+                    <span>{item.name}</span>
+                  )}
+                </h3>
                 <p className="text-muted-foreground text-xs">
                   {item.issuer} · {item.date}
                 </p>
@@ -248,6 +343,165 @@ export default function CreativePortfolioTemplate({
           </div>
         </section>
       ) : null,
+
+    volunteer: () =>
+      sectionVisibility?.volunteer && (volunteer || []).length > 0 ? (
+        <section key="volunteer" className="mb-12">
+          <h2 className="mb-8 font-black text-primary text-xs uppercase tracking-[0.2em]">
+            Volunteer
+          </h2>
+          <div className="space-y-12">
+            {(volunteer || []).map((item) => (
+              <div
+                key={item.id}
+                className="grid grid-cols-1 gap-4 md:grid-cols-4"
+              >
+                <div className="font-bold text-muted-foreground text-sm tabular-nums">
+                  {item.startDate} — {item.endDate || "Present"}
+                </div>
+                <div className="md:col-span-3">
+                  <h3 className="mb-1 font-bold text-xl">{item.position}</h3>
+                  <div className="mb-4 flex flex-wrap items-center gap-2 font-medium text-primary">
+                    <span>{item.organization}</span>
+                    {item.url && (
+                      <a
+                        href={ensureHttps(item.url)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 font-normal text-muted-foreground text-xs transition-colors hover:text-primary"
+                      >
+                        · <ExternalLink size={12} />
+                        <span>Website</span>
+                      </a>
+                    )}
+                  </div>
+                  {item.summary && (
+                    <div
+                      className="mb-4 text-muted-foreground leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: item.summary }}
+                    />
+                  )}
+                  {item.highlights && (item.highlights || []).length > 0 && (
+                    <ul className="space-y-3">
+                      {(item.highlights || []).map((h, i) => (
+                        <li
+                          key={i}
+                          className="flex gap-4 text-muted-foreground leading-relaxed"
+                        >
+                          <span className="shrink-0 text-primary/40">—</span>
+                          <span>{h}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null,
+
+    awards: () =>
+      sectionVisibility?.awards && (awards || []).length > 0 ? (
+        <section key="awards" className="mb-12">
+          <h2 className="mb-8 font-black text-primary text-xs uppercase tracking-[0.2em]">
+            Awards
+          </h2>
+          <div className="space-y-12">
+            {(awards || []).map((item) => (
+              <div
+                key={item.id}
+                className="grid grid-cols-1 gap-4 md:grid-cols-4"
+              >
+                <div className="font-bold text-muted-foreground text-sm tabular-nums">
+                  {item.date}
+                </div>
+                <div className="md:col-span-3">
+                  <h3 className="mb-1 font-bold text-xl">{item.title}</h3>
+                  <p className="mb-4 font-medium text-primary">
+                    {item.awarder}
+                  </p>
+                  {item.summary && (
+                    <div
+                      className="text-muted-foreground leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: item.summary }}
+                    />
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null,
+
+    publications: () =>
+      sectionVisibility?.publications && (publications || []).length > 0 ? (
+        <section key="publications" className="mb-12">
+          <h2 className="mb-8 font-black text-primary text-xs uppercase tracking-[0.2em]">
+            Publications
+          </h2>
+          <div className="space-y-12">
+            {(publications || []).map((item) => (
+              <div
+                key={item.id}
+                className="grid grid-cols-1 gap-4 md:grid-cols-4"
+              >
+                <div className="font-bold text-muted-foreground text-sm tabular-nums">
+                  {item.releaseDate}
+                </div>
+                <div className="md:col-span-3">
+                  <h3 className="mb-1 flex items-center gap-2 font-bold text-xl">
+                    <span>{item.name}</span>
+                    {item.url && (
+                      <a
+                        href={ensureHttps(item.url)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary transition-colors hover:text-primary/80"
+                      >
+                        <ExternalLink size={16} />
+                      </a>
+                    )}
+                  </h3>
+                  <p className="mb-4 font-medium text-primary">
+                    {item.publisher}
+                  </p>
+                  {item.summary && (
+                    <div
+                      className="text-muted-foreground leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: item.summary }}
+                    />
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null,
+
+    references: () =>
+      sectionVisibility?.references && (references || []).length > 0 ? (
+        <section key="references" className="mb-12">
+          <h2 className="mb-8 font-black text-primary text-xs uppercase tracking-[0.2em]">
+            References
+          </h2>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {(references || []).map((item) => (
+              <div
+                key={item.id}
+                className="rounded-2xl border-2 border-border p-6 italic transition-colors hover:border-primary"
+              >
+                <p className="mb-4 text-muted-foreground leading-relaxed">
+                  &quot;{item.reference}&quot;
+                </p>
+                <p className="font-bold text-foreground not-italic">
+                  — {item.name}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null,
   };
 
   return (
@@ -269,13 +523,22 @@ export default function CreativePortfolioTemplate({
       }}
     >
       <header className="mb-20 flex flex-col justify-between gap-8 md:flex-row md:items-end">
-        <div>
-          <h1 className="mb-4 font-black text-7xl uppercase leading-none tracking-tighter">
-            {basics.name || "Your Name"}
-          </h1>
-          <p className="font-bold text-2xl text-primary tracking-tight">
-            {basics.label}
-          </p>
+        <div className="flex flex-col gap-6 md:flex-row md:items-center">
+          {basics.picture && (
+            <img
+              src={basics.picture}
+              alt={basics.name}
+              className="h-24 w-24 shrink-0 rounded-2xl border-4 border-primary object-cover shadow-lg"
+            />
+          )}
+          <div>
+            <h1 className="mb-4 font-black text-7xl uppercase leading-none tracking-tighter">
+              {basics.name || "Your Name"}
+            </h1>
+            <p className="font-bold text-2xl text-primary tracking-tight">
+              {basics.label}
+            </p>
+          </div>
         </div>
 
         <div className="flex flex-col items-start gap-2 font-medium text-sm md:items-end">
@@ -291,11 +554,14 @@ export default function CreativePortfolioTemplate({
           />
           <ContactItem
             icon={IconMapPin}
-            text={
-              basics.location?.city
-                ? `${basics.location.city}${basics.location.region ? `, ${basics.location.region}` : ""}`
-                : ""
-            }
+            text={(() => {
+              const parts = [];
+              if (basics.location?.city) parts.push(basics.location.city);
+              if (basics.location?.region) parts.push(basics.location.region);
+              if (basics.location?.countryCode)
+                parts.push(basics.location.countryCode);
+              return parts.join(", ");
+            })()}
           />
           <ContactItem
             icon={IconWorld}
@@ -307,6 +573,60 @@ export default function CreativePortfolioTemplate({
 
       <main>
         {Object.keys(sectionRenderers).map((key) => sectionRenderers[key]())}
+
+        {/* Custom Sections */}
+        {(d.customSections || []).map((section) => {
+          if ((section.items || []).length === 0) return null;
+          return (
+            <section key={section.id} className="mb-12">
+              <h2 className="mb-8 font-black text-primary text-xs uppercase tracking-[0.2em]">
+                {section.sectionName}
+              </h2>
+              <div className="space-y-12">
+                {(section.items || []).map((item) => (
+                  <div
+                    key={item.id}
+                    className="grid grid-cols-1 gap-4 md:grid-cols-4"
+                  >
+                    <div className="font-bold text-muted-foreground text-sm tabular-nums">
+                      {item.date}
+                    </div>
+                    <div className="md:col-span-3">
+                      <h3 className="mb-1 font-bold text-xl">{item.title}</h3>
+                      {item.subtitle && (
+                        <p className="mb-4 font-medium text-primary">
+                          {item.subtitle}
+                        </p>
+                      )}
+                      {item.description && (
+                        <div
+                          className="prose prose-sm mb-4 max-w-none text-muted-foreground leading-relaxed"
+                          dangerouslySetInnerHTML={{ __html: item.description }}
+                        />
+                      )}
+                      {item.highlights &&
+                        (item.highlights || []).length > 0 && (
+                          <ul className="space-y-3">
+                            {(item.highlights || []).map((h, i) => (
+                              <li
+                                key={i}
+                                className="flex gap-4 text-muted-foreground leading-relaxed"
+                              >
+                                <span className="shrink-0 text-primary/40">
+                                  —
+                                </span>
+                                <span>{h}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          );
+        })}
       </main>
 
       {(basics.profiles || []).length > 0 && (

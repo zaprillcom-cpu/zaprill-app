@@ -521,8 +521,7 @@ export const payment = pgTable(
 );
 
 // ─────────────────────────────────────────────────
-// Resume Architect
-Enums;
+// Resume Architect Enums
 // ─────────────────────────────────────────────────
 
 export const resumeStatusEnum = pgEnum("resume_status", [
