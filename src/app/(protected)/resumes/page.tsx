@@ -285,7 +285,7 @@ export default function ResumesPage() {
                         <div className="mt-2 flex items-center gap-3">
                           <Badge
                             variant="secondary"
-                            className="font-bold text-[10px] uppercase tracking-widest"
+                            className="font-bold text-xs uppercase tracking-widest"
                           >
                             {getTemplateName(activeResume.templateSlug)}
                           </Badge>
@@ -299,7 +299,7 @@ export default function ResumesPage() {
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="mb-1 font-black text-[10px] text-muted-foreground uppercase tracking-[0.2em]">
+                        <div className="mb-1 font-bold text-muted-foreground text-xs uppercase tracking-[0.2em]">
                           Created
                         </div>
                         <div className="font-bold text-xs">
@@ -367,7 +367,7 @@ export default function ResumesPage() {
                 {/* Quick Stats */}
                 <div className="grid grid-cols-2 gap-4">
                   <Card className="rounded-2xl border-border/50 p-5 text-center">
-                    <div className="mb-2 font-black text-[9px] text-muted-foreground text-sm uppercase tracking-widest">
+                    <div className="mb-2 font-bold text-muted-foreground text-xs uppercase tracking-widest">
                       Views
                     </div>
                     <div className="font-black text-2xl">
@@ -375,7 +375,7 @@ export default function ResumesPage() {
                     </div>
                   </Card>
                   <Card className="rounded-2xl border-border/50 p-5 text-center">
-                    <div className="mb-2 font-black text-[9px] text-muted-foreground text-sm uppercase tracking-widest">
+                    <div className="mb-2 font-bold text-muted-foreground text-xs uppercase tracking-widest">
                       Downloads
                     </div>
                     <div className="font-black text-2xl">

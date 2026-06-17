@@ -62,7 +62,7 @@ function UserAvatar({ user }: { user: NavUser }) {
         </AvatarFallback>
       </Avatar>
       <div
-        className={`-bottom-1 -right-1 absolute rounded-sm border px-1.5 py-0.5 font-bold text-[9px] uppercase shadow-sm ${
+        className={`-bottom-1 -right-1 absolute rounded-sm border px-1.5 py-0.5 font-bold text-[11px] uppercase shadow-sm ${
           isPro
             ? "border-primary bg-primary text-primary-foreground"
             : "border-border bg-muted text-muted-foreground"

@@ -153,7 +153,7 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
                   {job.isRemote && (
                     <Badge
                       variant="secondary"
-                      className="h-6 shrink-0 border-emerald-500/20 bg-emerald-500/10 px-2 font-black text-[10px] text-emerald-600 uppercase tracking-wider"
+                      className="h-6 shrink-0 border-score-high/20 bg-score-high/50 px-2 font-black text-score-high-fg text-xs uppercase tracking-wider"
                     >
                       Remote
                     </Badge>
@@ -168,7 +168,7 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
             <div className="space-y-4">
               {showMatched.length > 0 && (
                 <div className="flex items-center gap-4">
-                  <span className="w-16 shrink-0 font-black text-[10px] text-muted-foreground uppercase tracking-[0.2em] opacity-60">
+                  <span className="w-16 shrink-0 font-black text-muted-foreground text-xs uppercase tracking-[0.2em] opacity-60">
                     Matched
                   </span>
                   <div className="flex min-w-0 flex-wrap gap-1.5">
@@ -181,7 +181,7 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
                       />
                     ))}
                     {job.matchedSkills.length > showMatched.length && (
-                      <span className="shrink-0 rounded-md bg-muted/50 px-2 py-1 font-black text-[10px] text-muted-foreground">
+                      <span className="shrink-0 rounded-md bg-muted/50 px-2 py-1 font-black text-muted-foreground text-xs">
                         +{job.matchedSkills.length - showMatched.length}
                       </span>
                     )}
@@ -190,7 +190,7 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
               )}
               {showMissing.length > 0 && (
                 <div className="flex items-center gap-4">
-                  <span className="w-16 shrink-0 font-black text-[10px] text-muted-foreground uppercase tracking-[0.2em] opacity-60">
+                  <span className="w-16 shrink-0 font-black text-muted-foreground text-xs uppercase tracking-[0.2em] opacity-60">
                     Missing
                   </span>
                   <div className="flex min-w-0 flex-wrap gap-1.5">
@@ -203,7 +203,7 @@ export default function JobCard({ job, rank, analysisId }: JobCardProps) {
                       />
                     ))}
                     {job.missingSkills.length > showMissing.length && (
-                      <span className="shrink-0 rounded-md bg-muted/50 px-2 py-1 font-black text-[10px] text-muted-foreground">
+                      <span className="shrink-0 rounded-md bg-muted/50 px-2 py-1 font-black text-muted-foreground text-xs">
                         +{job.missingSkills.length - showMissing.length}
                       </span>
                     )}

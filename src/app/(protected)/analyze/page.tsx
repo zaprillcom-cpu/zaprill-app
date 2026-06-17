@@ -551,7 +551,7 @@ function AnalyzePageContent() {
                 : "Career Setup"}
             </span>
             {analysisId && (
-              <span className="fade-in zoom-in flex animate-in items-center gap-1.5 rounded-sm border border-border/50 bg-muted/50 px-2 py-0.5 font-bold text-[10px] text-muted-foreground uppercase duration-300">
+              <span className="fade-in zoom-in flex animate-in items-center gap-1.5 rounded-sm border border-border/50 bg-muted/50 px-2 py-0.5 font-bold text-muted-foreground text-xs uppercase duration-300">
                 <svg
                   className="h-3 w-3 text-primary"
                   fill="none"

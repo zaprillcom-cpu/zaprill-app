@@ -162,7 +162,7 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col items-center px-6 pt-40 pb-32 text-center">
         <div className="fade-in slide-in-from-bottom-4 mb-8 animate-in duration-700">
-          <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 font-bold text-[10px] text-primary uppercase tracking-[0.2em]">
+          <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 font-bold text-primary text-xs uppercase tracking-[0.2em]">
             <Zap className="h-3 w-3 fill-current" />
             AI-Powered Career Intelligence
           </span>

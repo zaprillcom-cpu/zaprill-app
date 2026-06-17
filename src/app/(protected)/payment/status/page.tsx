@@ -158,16 +158,16 @@ export default function PaymentStatusPage({
           <div
             className={`mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full ${
               status === "paid"
-                ? "bg-emerald-50"
+                ? "bg-score-high/50"
                 : status === "failed" || status === "void"
-                  ? "bg-red-50"
+                  ? "bg-destructive/5"
                   : "bg-muted/50"
             }`}
           >
             {status === "loading" || status === "pending" ? (
               <Loader2 className="h-10 w-10 animate-spin text-primary" />
             ) : status === "paid" ? (
-              <CheckCircle2 className="h-10 w-10 text-emerald-500" />
+              <CheckCircle2 className="h-10 w-10 text-score-high-fg" />
             ) : (
               <XCircle className="h-10 w-10 text-destructive" />
             )}
@@ -222,7 +222,7 @@ export default function PaymentStatusPage({
 
                 {status === "paid" && (
                   <div className="flex items-center justify-between border-muted-foreground/10 border-t pt-3">
-                    <div className="flex items-center gap-1.5 text-emerald-600">
+                    <div className="flex items-center gap-1.5 text-score-high-fg">
                       <CheckCircle2 className="h-4 w-4" />
                       <span className="font-medium text-sm">Fully Paid</span>
                     </div>
@@ -298,7 +298,7 @@ export default function PaymentStatusPage({
             </Button>
           )}
 
-          <p className="mt-2 px-4 text-center text-[10px] text-muted-foreground">
+          <p className="mt-2 px-4 text-center text-muted-foreground text-xs">
             A copy of this receipt has been sent to your registered email
             address. For billing support, please contact help@zaprill.com
           </p>

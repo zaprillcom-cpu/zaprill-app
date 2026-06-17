@@ -136,7 +136,7 @@ export default function SkillGapPanel({
                         className="inline-flex items-center gap-1.5 rounded-md border border-primary bg-primary px-2.5 py-1 font-bold text-[11px] text-primary-foreground"
                       >
                         {g.skill}
-                        <span className="border-primary-foreground/20 border-l pl-1 font-medium text-[10px] opacity-70">
+                        <span className="border-primary-foreground/20 border-l pl-1 font-medium text-xs opacity-70">
                           {g.frequency}
                         </span>
                       </span>
@@ -159,7 +159,7 @@ export default function SkillGapPanel({
                         className="inline-flex items-center gap-1.5 rounded-md border border-border bg-muted px-2.5 py-1 font-bold text-[11px] text-foreground"
                       >
                         {g.skill}
-                        <span className="border-border border-l pl-1 font-medium text-[10px] opacity-60">
+                        <span className="border-border border-l pl-1 font-medium text-xs opacity-60">
                           {g.frequency}
                         </span>
                       </span>

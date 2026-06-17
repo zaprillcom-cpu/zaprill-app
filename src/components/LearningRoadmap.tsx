@@ -95,7 +95,7 @@ function RoadmapCard({ item, index }: { item: RoadmapItem; index: number }) {
               {item.skill}
             </span>
             <span
-              className={`rounded border px-2 py-0.5 font-bold text-[10px] uppercase tracking-widest ${style.bg} ${style.border} ${style.color}`}
+              className={`rounded border px-2 py-0.5 font-bold text-xs uppercase tracking-widest ${style.bg} ${style.border} ${style.color}`}
             >
               {style.label}
             </span>
@@ -154,7 +154,7 @@ function RoadmapCard({ item, index }: { item: RoadmapItem; index: number }) {
                         {res.free ? "Free" : "Paid"}
                       </span>
                       {isSearch && (
-                        <span className="flex items-center gap-1 font-bold text-[10px] text-accent-foreground uppercase tracking-tighter">
+                        <span className="flex items-center gap-1 font-bold text-accent-foreground text-xs uppercase tracking-tighter">
                           <Search className="h-2.5 w-2.5" /> Fallback
                         </span>
                       )}
@@ -220,7 +220,7 @@ export default function LearningRoadmap({
         <div className="rounded-xl border border-primary/10 bg-primary/5 p-5">
           <div className="mb-2 flex items-center gap-2">
             <TrendingUp className="h-4 w-4 text-primary" />
-            <span className="font-black text-[10px] text-primary uppercase tracking-widest">
+            <span className="font-black text-primary text-xs uppercase tracking-widest">
               Strategic Guidance
             </span>
           </div>
