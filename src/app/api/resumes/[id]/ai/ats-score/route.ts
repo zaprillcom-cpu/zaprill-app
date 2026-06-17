@@ -1,3 +1,4 @@
+import { openai } from "@ai-sdk/openai";
 import { generateText } from "ai";
 import { eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
@@ -7,13 +8,12 @@ import { z } from "zod";
 import db from "@/db";
 import { resume, resumeAtsAnalysis } from "@/db/schema";
 import { auth } from "@/lib/auth";
-import { hackclub } from "@/lib/hackClubClient";
 import { logAiUsage } from "@/services/ai/usage.service";
 import type { ResumeData } from "@/types/resume";
 
 export const maxDuration = 60;
 
-const MODEL = "google/gemini-2.5-flash" as const;
+const MODEL = "gpt-5-mini" as const;
 
 const RequestSchema = z.object({
   jobDescription: z.string().optional(),
@@ -120,7 +120,7 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
 
     const llmStart = Date.now();
     const { text, usage } = await generateText({
-      model: hackclub(MODEL),
+      model: openai(MODEL),
       temperature: 0,
       prompt: `You are an ELITE ATS (Applicant Tracking System) analyzer. Optimize this resume for high-impact professional standards and keyword compatibility.
 Current Date: ${currentDate}

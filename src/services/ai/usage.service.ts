@@ -12,7 +12,7 @@ import { aiUsageLog } from "@/db/schema";
 //   OpenAI        → https://openai.com/api/pricing
 //
 // HOW TO ADD A NEW MODEL:
-//   1. Add one entry below with the exact model string used in hackclub() / SDK call.
+//   1. Add one entry below with the exact model string used in the SDK call.
 //   2. No other file needs changing — cost is computed dynamically from this table.
 //
 // NOTE: Historical DB rows keep their computed cost_usd value at the time of the
@@ -30,7 +30,7 @@ interface ModelRate {
  * Canonical model identifier → pricing rate.
  *
  * Keys must exactly match the string passed to the Vercel AI SDK model call,
- * e.g. hackclub("google/gemini-2.5-flash") → key "google/gemini-2.5-flash".
+ * e.g. openai("gpt-5-mini") → key "gpt-5-mini".
  */
 export const MODEL_RATES: Record<string, ModelRate> = {
   // ── Google Gemini ─────────────────────────────────────────────────────────
@@ -78,6 +78,12 @@ export const MODEL_RATES: Record<string, ModelRate> = {
   // gpt-4.1-nano: $0.10/1M input, $0.40/1M output
   "gpt-4.1-nano": { inputPer1k: 0.0001, outputPer1k: 0.0004 },
   "openai/gpt-4.1-nano": { inputPer1k: 0.0001, outputPer1k: 0.0004 },
+
+  // ── GPT-5 series ──────────────────────────────────────────────────────────
+  // Verified June 2026: https://openai.com/api/pricing
+  //
+  // gpt-5-mini: $0.25/1M input, $2.00/1M output
+  "gpt-5-mini": { inputPer1k: 0.00025, outputPer1k: 0.002 },
 };
 
 /**
@@ -117,7 +123,7 @@ export interface LogUsageParams {
     | "resume_roast";
   /**
    * The exact model identifier string used when constructing the SDK call,
-   * e.g. `hackclub("google/gemini-2.5-flash")` → pass `"google/gemini-2.5-flash"`.
+   * e.g. `openai("gpt-5-mini")` → pass `"gpt-5-mini"`.
    * This is stored as-is in the DB — nothing is hardcoded.
    */
   model: string;
@@ -149,7 +155,7 @@ export interface LogUsageParams {
  * Usage:
  * ```ts
  * const t0 = Date.now();
- * const { text, usage } = await generateText({ model: hackclub(MODEL), ... });
+ * const { text, usage } = await generateText({ model: openai(MODEL), ... });
  *
  * logAiUsage({
  *   userId: session?.user?.id,

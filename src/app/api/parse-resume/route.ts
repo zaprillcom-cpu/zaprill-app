@@ -1,4 +1,5 @@
 import { google } from "@ai-sdk/google";
+import { openai } from "@ai-sdk/openai";
 import { type FilePart, generateText, Output, type TextPart } from "ai";
 import { and, eq, ne } from "drizzle-orm";
 import mammoth from "mammoth";
@@ -10,7 +11,6 @@ import { z } from "zod";
 import db from "@/db";
 import { resume, userProfile } from "@/db/schema";
 import { auth } from "@/lib/auth";
-import { hackclub } from "@/lib/hackClubClient";
 import { normalizeResumeData } from "@/lib/resume";
 import { normalizeSkillList } from "@/lib/skill-extractor";
 import { logAiUsage } from "@/services/ai/usage.service";
@@ -20,7 +20,7 @@ import { DEFAULT_RESUME_METADATA } from "@/types/resume";
 export const maxDuration = 60;
 
 /** Model identifier — single source of truth for this route. */
-const MODEL = "google/gemini-2.5-flash" as const;
+const MODEL = "gpt-5-mini" as const;
 
 const ResumeSchema = z.object({
   isResume: z
@@ -210,7 +210,7 @@ Be precise and thorough. Do not make up information that isn't in the resume.`,
 
     const llmStart = Date.now();
     const { output: parsed, usage } = await generateText({
-      model: hackclub(MODEL),
+      model: openai(MODEL),
       temperature: 0,
       output: Output.object({ schema: ResumeSchema }),
       messages: [

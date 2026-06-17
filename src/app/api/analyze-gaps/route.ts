@@ -1,3 +1,4 @@
+import { openai } from "@ai-sdk/openai";
 import { generateText } from "ai";
 import { and, desc, eq, gt } from "drizzle-orm";
 import { headers } from "next/headers";
@@ -6,7 +7,6 @@ import { z } from "zod";
 import db from "@/db";
 import { resumeAnalysis } from "@/db/schema";
 import { auth } from "@/lib/auth";
-import { hackclub } from "@/lib/hackClubClient";
 import { aggregateSkillGaps, matchJobsToResume } from "@/lib/match-engine";
 import { enhanceRoadmapResource } from "@/lib/reliable-resources";
 import { logAiUsage } from "@/services/ai/usage.service";
@@ -15,7 +15,7 @@ import type { JobListing, RoadmapItem } from "@/types";
 export const maxDuration = 60;
 
 /** Model identifier — single source of truth for this route. */
-const MODEL = "google/gemini-2.5-flash" as const;
+const MODEL = "gpt-5-mini" as const;
 
 const RoadmapItemSchema = z.object({
   skill: z.string(),
@@ -217,7 +217,7 @@ export async function POST(request: Request) {
 
       const llmStart = Date.now();
       const { text, usage } = await generateText({
-        model: hackclub(MODEL),
+        model: openai(MODEL),
         prompt: `You are a senior tech career coach. Respond ONLY with valid JSON — no markdown, no explanation, no code fences.
 
 A candidate has these skills: ${resumeSkills.join(", ")}

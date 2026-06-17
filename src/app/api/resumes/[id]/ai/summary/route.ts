@@ -1,3 +1,4 @@
+import { openai } from "@ai-sdk/openai";
 import { generateText } from "ai";
 import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
@@ -5,13 +6,12 @@ import { type NextRequest, NextResponse } from "next/server";
 import db from "@/db";
 import { resume } from "@/db/schema";
 import { auth } from "@/lib/auth";
-import { hackclub } from "@/lib/hackClubClient";
 import { logAiUsage } from "@/services/ai/usage.service";
 import type { ResumeData } from "@/types/resume";
 
 export const maxDuration = 30;
 
-const MODEL = "google/gemini-2.5-flash" as const;
+const MODEL = "gpt-5-mini" as const;
 
 type RouteParams = { params: Promise<{ id: string }> };
 
@@ -75,7 +75,7 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
 
     const llmStart = Date.now();
     const { text, usage } = await generateText({
-      model: hackclub(MODEL),
+      model: openai(MODEL),
       temperature: 0,
       prompt: `You are an expert resume writer. Generate a professional summary for this candidate.
 
