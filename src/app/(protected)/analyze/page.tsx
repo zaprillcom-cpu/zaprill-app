@@ -328,6 +328,7 @@ function AnalyzePageContent() {
             setRoadmap(analysis.roadmap || []);
             setAdvice(analysis.advice || "");
             setAnalysisId(analysis.id);
+            setIsPro(!!data.isPro);
 
             // Extract search location correctly back for filters
             if (analysis.searchLocation) {

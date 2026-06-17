@@ -35,7 +35,18 @@ export async function GET(
       );
     }
 
-    return NextResponse.json({ analysis });
+    let isPro = false;
+    try {
+      const { getActiveSubscription } = await import(
+        "@/services/billing/subscription.service"
+      );
+      const activeSub = await getActiveSubscription(session.user.id);
+      isPro = !!activeSub;
+    } catch {
+      // Default to free if subscription check fails
+    }
+
+    return NextResponse.json({ analysis, isPro });
   } catch (error: any) {
     console.error("Get specific analysis error:", error);
     return NextResponse.json(
