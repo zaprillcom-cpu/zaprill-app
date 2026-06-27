@@ -31,7 +31,7 @@ export function UserSidebar() {
             <SidebarMenuButton size="lg" render={<Link href="/" />}>
               <div className="flex aspect-square size-8 items-center justify-center overflow-hidden rounded-lg">
                 <Image
-                  src="/logo.png"
+                  src="/favicon.ico"
                   alt="Zaprill"
                   width={32}
                   height={32}
