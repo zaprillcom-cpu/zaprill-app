@@ -69,6 +69,28 @@ test.describe("Guest experience — first impressions", () => {
     ).toBeVisible();
   });
 
+  test("Google sign-in button has proper standalone styling", async ({
+    page,
+  }) => {
+    await page.goto("/sign-in");
+    const googleBtn = page.getByRole("button", {
+      name: /sign in with google/i,
+    });
+    await expect(googleBtn).toBeVisible();
+
+    const radii = await googleBtn.evaluate((el) => {
+      const s = getComputedStyle(el);
+      return {
+        topLeft: s.borderTopLeftRadius,
+        bottomLeft: s.borderBottomLeftRadius,
+      };
+    });
+
+    // Legacy bug: rounded-b-none on a solo button left a flat bottom + arc artifact
+    expect(radii.bottomLeft).not.toBe("0px");
+    expect(radii.topLeft).toBe(radii.bottomLeft);
+  });
+
   test("sign-up path is discoverable from sign-in", async ({ page }) => {
     await page.goto("/sign-in");
     const signUpLink = page.getByRole("link", { name: "Sign up" });

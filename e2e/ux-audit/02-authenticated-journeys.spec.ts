@@ -172,20 +172,20 @@ test.describe("Authenticated journeys — core workflows", () => {
     await page.goto("/");
     await waitForAuthenticatedHome(page);
 
-    const userMenu = page.getByRole("button", { name: "User menu" });
+    const userMenu = page.getByRole("button", { name: "Account menu" });
     await expect(userMenu).toBeVisible();
     await userMenu.click();
 
     const menuItems = await page.getByRole("menuitem").allTextContents();
     await captureScreen(page, "07-user-menu-open", "desktop");
 
-    const expectedItems = ["Profile", "Billing", "Insights", "My Jobs"];
+    const expectedItems = ["Account settings", "Log out"];
     for (const item of expectedItems) {
       if (!menuItems.some((m) => m.includes(item))) {
         recordFinding({
           severity: "P2",
           route: "/",
-          title: `User menu missing "${item}"`,
+          title: `Account menu missing "${item}"`,
           description: `Menu items found: ${menuItems.join(", ")}`,
           heuristic: "Consistency and standards",
           viewport: "desktop",

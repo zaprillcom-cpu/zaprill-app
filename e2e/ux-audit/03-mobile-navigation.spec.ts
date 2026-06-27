@@ -31,7 +31,7 @@ test.describe("Mobile navigation", () => {
       });
     }
 
-    const userMenu = page.getByRole("button", { name: "User menu" });
+    const userMenu = page.getByRole("button", { name: "Account menu" });
     if (await userMenu.isVisible()) {
       await userMenu.click();
       await captureScreen(page, "12-mobile-user-menu", "mobile");

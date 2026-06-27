@@ -11,7 +11,9 @@ test.describe("Navigation & information architecture", () => {
   test("top nav exposes core features on desktop", async ({ page }) => {
     await page.goto("/");
     await waitForAuthenticatedHome(page);
-    await expect(page.getByRole("button", { name: "User menu" })).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Account menu" }),
+    ).toBeVisible();
 
     const navLinks = await getVisibleNavLinks(page);
     await captureScreen(page, "08-nav-desktop", "desktop");
@@ -93,25 +95,28 @@ test.describe("Navigation & information architecture", () => {
   test("duplicate nav paths (nav bar vs user menu)", async ({ page }) => {
     await page.goto("/");
     await waitForAuthenticatedHome(page);
-    await expect(page.getByRole("button", { name: "User menu" })).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Account menu" }),
+    ).toBeVisible();
 
     const navLinks = await getVisibleNavLinks(page);
-    await page.getByRole("button", { name: "User menu" }).click();
+    await page.getByRole("button", { name: "Account menu" }).click();
     const menuItems = await page.getByRole("menuitem").allTextContents();
-    await captureScreen(page, "10-duplicate-nav", "desktop");
+    await captureScreen(page, "10-account-menu", "desktop");
 
-    const duplicates = ["Resume Architect", "Insights", "My Jobs"].filter(
+    const sidebarOnly = ["Profile", "Billing", "Referrals"];
+    const duplicated = sidebarOnly.filter(
       (label) =>
         navLinks.some((n) => n.includes(label)) &&
         menuItems.some((m) => m.includes(label)),
     );
 
-    if (duplicates.length >= 2) {
+    if (duplicated.length > 0) {
       recordFinding({
         severity: "P2",
         route: "/",
-        title: "Navigation items duplicated in nav bar and user menu",
-        description: `Duplicated: ${duplicates.join(", ")}. Consider one canonical location per feature.`,
+        title: "Account pages duplicated in sidebar and avatar menu",
+        description: `Duplicated: ${duplicated.join(", ")}. Keep account destinations in the sidebar; avatar menu should be identity + logout only.`,
         heuristic: "Aesthetic and minimalist design",
         viewport: "desktop",
       });
