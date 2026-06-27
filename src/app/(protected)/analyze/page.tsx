@@ -36,6 +36,7 @@ import { ParsingProgress } from "@/components/analyze/parsing-progress";
 import { ProfileReview } from "@/components/analyze/profile-review";
 import { ResultsHeader } from "@/components/analyze/results-header";
 import type { FilterState, ReviewState } from "@/components/analyze/types";
+import { PageHeader } from "@/components/app/page-header";
 import JobCard from "@/components/JobCard";
 import { JobTitleAutocomplete } from "@/components/JobTitleAutocomplete";
 import LearningRoadmap from "@/components/LearningRoadmap";
@@ -47,7 +48,6 @@ import {
 } from "@/components/LocationCombobox";
 import LockedJobCard from "@/components/LockedJobCard";
 import { AnalyzeSkeleton } from "@/components/loading/PageLoaders";
-import Navbar from "@/components/Navbar";
 import SkillGapPanel from "@/components/SkillGapPanel";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -530,57 +530,23 @@ function AnalyzePageContent() {
   const isLoading = !isDone && !isError;
 
   return (
-    <div className="flex min-h-screen flex-col bg-background font-sans text-foreground selection:bg-foreground selection:text-background">
-      <Navbar
-        showBack
-        backHref="/"
-        backLabel="Back"
-        user={
-          user
-            ? { name: user.name, email: user.email, image: user.image }
-            : null
-        }
-        pageTitle={
-          <div className="flex min-w-0 items-center gap-3">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary">
-              <Zap className="h-4 w-4 text-primary-foreground" />
-            </div>
-            <span className="truncate font-extrabold text-foreground text-lg tracking-tight">
-              {resume?.basics.name
-                ? `${resume.basics.name}'s Setup`
-                : "Career Setup"}
-            </span>
-            {analysisId && (
-              <span className="fade-in zoom-in flex animate-in items-center gap-1.5 rounded-sm border border-border/50 bg-muted/50 px-2 py-0.5 font-bold text-muted-foreground text-xs uppercase duration-300">
-                <svg
-                  className="h-3 w-3 text-primary"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="3"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                Saved
-              </span>
-            )}
-          </div>
-        }
-        centreBadge={
-          isDone ? (
-            <span className="flex items-center gap-2 rounded-md border border-border bg-muted/50 px-3 py-1.5 font-bold text-[11px] text-foreground uppercase tracking-widest">
-              <div className="h-2 w-2 rounded-full bg-primary" />
-              Complete
-            </span>
-          ) : undefined
-        }
-      />
+    <div className="bg-background font-sans text-foreground selection:bg-foreground selection:text-background">
+      <div className="mx-auto w-full max-w-7xl flex-1 px-6 py-8">
+        {(step === "reviewing" || isDone || isError) && (
+          <PageHeader
+            title="Analyze"
+            description="Match your resume to jobs, identify skill gaps, and build a learning roadmap."
+            actions={
+              isDone ? (
+                <span className="flex items-center gap-2 rounded-md border border-border bg-muted/50 px-3 py-1.5 font-bold text-[11px] uppercase tracking-widest">
+                  <div className="h-2 w-2 rounded-full bg-primary" />
+                  Complete
+                </span>
+              ) : undefined
+            }
+          />
+        )}
 
-      <div className="mx-auto w-full max-w-7xl flex-1 px-6 py-10">
         {/* Review Stage */}
         {step === "reviewing" && resume && (
           <ProfileReview
@@ -814,8 +780,7 @@ export default function AnalyzePage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-background">
-          <Navbar sticky={true} user={null} sessionLoading={true} />
+        <div className="bg-background px-6 py-8">
           <AnalyzeSkeleton />
         </div>
       }

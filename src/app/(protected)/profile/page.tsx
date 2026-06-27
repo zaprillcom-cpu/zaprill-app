@@ -17,8 +17,8 @@ import { nanoid } from "nanoid";
 import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
+import { PageHeader } from "@/components/app/page-header";
 import { JobTitleAutocomplete } from "@/components/JobTitleAutocomplete";
-import Navbar from "@/components/Navbar";
 import ResumeUploader from "@/components/ResumeUploader";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -243,63 +243,34 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen flex-col bg-background">
-        <Navbar user={user} showBack backLabel="Dashboard" backHref="/" />
-        <div className="flex flex-1 items-center justify-center">
-          <Loader2 className="h-10 w-10 animate-spin text-primary" />
-        </div>
+      <div className="flex items-center justify-center py-24">
+        <Loader2 className="h-10 w-10 animate-spin text-primary" />
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-background font-sans text-foreground">
-      <Navbar
-        user={
-          user
-            ? { name: user.name, email: user.email, image: user.image }
-            : null
-        }
-        showBack
-        backLabel="Dashboard"
-        backHref="/"
-        pageTitle={
-          <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-foreground">
-              <User className="h-4 w-4 text-background" />
-            </div>
-            <span className="truncate font-extrabold text-foreground text-lg tracking-tight">
-              Edit Profile
-            </span>
-          </div>
-        }
-      />
-
-      <div className="mx-auto w-full max-w-5xl flex-1 px-6 py-10">
-        <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-center">
-          <div>
-            <h1 className="mb-2 font-black text-4xl tracking-tight">
-              My Profile
-            </h1>
-            <p className="font-semibold text-muted-foreground">
-              Manage your personal details and professional data for better job
-              matches.
-            </p>
-          </div>
-          <Button
-            onClick={handleSave}
-            disabled={saving}
-            size="lg"
-            className="h-14 px-8 font-black shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
-          >
-            {saving ? (
-              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-            ) : (
-              <Save className="mr-2 h-5 w-5" />
-            )}
-            Save Changes
-          </Button>
-        </div>
+    <>
+      <div className="mx-auto w-full max-w-5xl px-6 py-10">
+        <PageHeader
+          title="Profile"
+          description="Manage your account and professional data."
+          actions={
+            <Button
+              onClick={handleSave}
+              disabled={saving}
+              size="lg"
+              className="h-14 px-8 font-black shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
+            >
+              {saving ? (
+                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+              ) : (
+                <Save className="mr-2 h-5 w-5" />
+              )}
+              Save Changes
+            </Button>
+          }
+        />
 
         <Tabs defaultValue="personal" className="w-full">
           <TabsList className="mb-8 grid h-14 w-full grid-cols-3 rounded-xl border border-border/50 bg-muted/50 p-1">
@@ -1127,6 +1098,6 @@ export default function ProfilePage() {
           </p>
         </div>
       </footer>
-    </div>
+    </>
   );
 }

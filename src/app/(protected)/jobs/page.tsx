@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import Navbar from "@/components/Navbar";
+import { PageHeader } from "@/components/app/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -169,7 +169,7 @@ export default function MyJobsPage() {
 
   if (isPending || (session && loading)) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-background">
+      <div className="flex items-center justify-center py-24">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
@@ -180,28 +180,12 @@ export default function MyJobsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navbar
-        user={
-          session.user
-            ? {
-                name: session.user.name,
-                email: session.user.email,
-                image: session.user.image,
-              }
-            : null
-        }
-      />
-
-      <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mb-10">
-          <h1 className="mb-2 font-black text-4xl text-foreground tracking-tight">
-            My Jobs
-          </h1>
-          <p className="font-medium text-muted-foreground">
-            Track your application history and bookmarked opportunities.
-          </p>
-        </div>
+    <>
+      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <PageHeader
+          title="My Jobs"
+          description="Track your application history and bookmarked opportunities."
+        />
 
         <Tabs defaultValue="visited" className="space-y-8">
           <TabsList className="h-14 rounded-2xl border border-border/50 bg-muted p-1 shadow-sm">
@@ -297,7 +281,7 @@ export default function MyJobsPage() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 
