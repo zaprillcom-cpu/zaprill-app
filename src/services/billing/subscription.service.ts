@@ -2,7 +2,7 @@
  * SubscriptionService — Subscription lifecycle management.
  */
 
-import { and, eq, inArray } from "drizzle-orm";
+import { and, desc, eq, inArray } from "drizzle-orm";
 import db from "@/db";
 import { plan, subscription, user } from "@/db/schema";
 import {
@@ -52,7 +52,19 @@ export async function createSubscription(opts: {
   return created as Subscription;
 }
 
-/** Get a user's active or trialing subscription. */
+/** Whether a subscription currently grants premium feature access. */
+export function subscriptionGrantsAccess(
+  sub: Subscription,
+  now: Date = new Date(),
+): boolean {
+  const accessEnd = sub.endDate ?? sub.currentPeriodEnd;
+  if (now >= accessEnd) {
+    return false;
+  }
+  return ["active", "trialing", "past_due", "canceled"].includes(sub.status);
+}
+
+/** Get a user's billable subscription (active or trialing). */
 export async function getActiveSubscription(
   userId: string,
 ): Promise<Subscription | null> {
@@ -67,6 +79,24 @@ export async function getActiveSubscription(
     )
     .limit(1);
   return (row as Subscription) ?? null;
+}
+
+/** Get subscription that grants premium access, including canceled until period end. */
+export async function getSubscriptionWithAccess(
+  userId: string,
+): Promise<Subscription | null> {
+  const rows = await db
+    .select()
+    .from(subscription)
+    .where(eq(subscription.userId, userId))
+    .orderBy(desc(subscription.createdAt));
+
+  for (const row of rows) {
+    if (subscriptionGrantsAccess(row as Subscription)) {
+      return row as Subscription;
+    }
+  }
+  return null;
 }
 
 export async function getSubscriptionById(
@@ -88,13 +118,15 @@ export async function renewSubscription(
   if (!sub)
     throw new BillingError("Subscription not found", "SUB_NOT_FOUND", 404);
 
-  const newStart = sub.currentPeriodEnd;
+  const now = new Date();
+  const newStart = sub.currentPeriodEnd > now ? sub.currentPeriodEnd : now;
   const newEnd = calculatePeriodEnd(newStart, sub.billingCycle);
 
   const [updated] = await db
     .update(subscription)
     .set({
       status: "active",
+      endDate: null,
       currentPeriodStart: newStart,
       currentPeriodEnd: newEnd,
       updatedAt: new Date(),

@@ -13,19 +13,34 @@ import {
 import db from "@/db";
 import { invoice, plan, subscription } from "@/db/schema";
 import { auth } from "@/lib/auth";
-import { formatCurrency } from "@/lib/billing-utils";
+import {
+  formatCurrency,
+  getDaysUntil,
+  RENEWAL_REMINDER_DAYS,
+} from "@/lib/billing-utils";
+import { subscriptionGrantsAccess } from "@/services/billing/subscription.service";
+import type { Subscription } from "@/types/billing";
 import { BillingInvoiceTable } from "./_components/billing-invoice-table";
-import CancelSubscriptionButton from "./cancel-button";
+import { RenewalReminder } from "./_components/renewal-reminder";
 
 export const metadata = {
   title: "Billing | Zaprill",
 };
 
+function formatAccessEnd(sub: Subscription): Date {
+  return new Date(sub.endDate ?? sub.currentPeriodEnd);
+}
+
+function statusBadgeLabel(status: Subscription["status"]): string {
+  if (status === "past_due") return "PAST DUE";
+  if (status === "trialing") return "TRIAL";
+  return "ACTIVE";
+}
+
 export default async function BillingPage() {
   const session = await auth.api.getSession({ headers: await headers() });
-  if (!session?.user) return null; // handled by middleware
+  if (!session?.user) return null;
 
-  // Fetch latest subscription attempt/record
   const [sub] = await db
     .select()
     .from(subscription)
@@ -43,14 +58,12 @@ export default async function BillingPage() {
     activePlan = p;
   }
 
-  // Fetch plans for display
   const plans = await db
     .select()
     .from(plan)
     .where(eq(plan.isActive, true))
     .orderBy(plan.sortOrder);
 
-  // Fetch invoices
   const invoices = await db
     .select()
     .from(invoice)
@@ -58,102 +71,107 @@ export default async function BillingPage() {
     .orderBy(desc(invoice.createdAt))
     .limit(20);
 
-  // Functional "Active" check: trialing, active, or past_due
-  // 'canceled' is NOT in this list because even though it keeps access,
-  // we want to show the pricing plans for them to "renew" or "switch" easily
-  // or at least show them the options.
-  const isFunctionallyActive =
-    sub && ["active", "trialing", "past_due"].includes(sub.status);
+  const typedSub = sub as Subscription | undefined;
+  const hasAccess =
+    !!typedSub && !!activePlan && subscriptionGrantsAccess(typedSub);
+  const accessEndsAt = typedSub ? formatAccessEnd(typedSub) : null;
+  const daysUntilExpiry =
+    accessEndsAt !== null ? getDaysUntil(accessEndsAt) : null;
+  const isExpiringSoon =
+    hasAccess &&
+    daysUntilExpiry !== null &&
+    daysUntilExpiry <= RENEWAL_REMINDER_DAYS;
+  const isExpired =
+    !!typedSub && !!activePlan && !subscriptionGrantsAccess(typedSub);
+
+  const accessEndLabel = accessEndsAt?.toLocaleDateString(undefined, {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  let planDescription = "You are currently on the free plan.";
+  if (hasAccess && accessEndLabel) {
+    planDescription = `Your plan is prepaid. Access continues until ${accessEndLabel}. Renew manually before then to keep pro features — there is no automatic billing.`;
+  } else if (isExpired && accessEndLabel) {
+    planDescription = `Your prepaid plan ended on ${accessEndLabel}. Choose a plan below to restore pro access.`;
+  }
 
   return (
     <div className="container mx-auto max-w-4xl space-y-8 py-10">
       <PageHeader
         title="Billing"
-        description="Manage your plan, payment methods, and invoices."
+        description="Manage your plan and view invoices."
       />
 
-      {/* Subscription Status Card */}
-      <Card className={isFunctionallyActive ? "border-primary/50" : ""}>
+      <Card className={hasAccess ? "border-primary/50" : ""}>
         <CardHeader>
           <CardTitle>Current Plan</CardTitle>
-          <CardDescription>
-            {sub?.status === "active"
-              ? "Your subscription is active and will auto-renew."
-              : sub?.status === "canceled"
-                ? "Your subscription has been canceled but remains active until the end of the billing period."
-                : "You are currently on the free plan."}
-          </CardDescription>
+          <CardDescription>{planDescription}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          {isFunctionallyActive && activePlan ? (
-            <div className="flex flex-col justify-between gap-4 rounded-lg border bg-muted/20 p-4 md:flex-row md:items-center">
-              <div>
+          {hasAccess && activePlan && typedSub ? (
+            <div className="space-y-6">
+              <div className="rounded-lg border bg-muted/20 p-4">
                 <div className="flex items-center gap-2">
                   <span className="font-semibold text-lg">
                     {activePlan.name}
                   </span>
                   <Badge
-                    variant={sub.status === "active" ? "default" : "secondary"}
+                    variant={
+                      typedSub.status === "past_due" ? "secondary" : "default"
+                    }
                   >
-                    {sub.status.toUpperCase()}
+                    {statusBadgeLabel(typedSub.status)}
                   </Badge>
                 </div>
                 <p className="mt-1 text-muted-foreground text-sm">
-                  {formatCurrency(sub.priceAtPurchase)} / {sub.billingCycle}
+                  {formatCurrency(typedSub.priceAtPurchase)} /{" "}
+                  {typedSub.billingCycle}
                 </p>
                 <p className="mt-2 text-muted-foreground text-xs">
-                  Current period:{" "}
-                  {new Date(sub.currentPeriodStart).toLocaleDateString()} —{" "}
-                  {new Date(sub.currentPeriodEnd).toLocaleDateString()}
+                  Paid period:{" "}
+                  {new Date(typedSub.currentPeriodStart).toLocaleDateString()} —{" "}
+                  {new Date(typedSub.currentPeriodEnd).toLocaleDateString()}
                 </p>
               </div>
-              {sub.status === "active" && (
-                <CancelSubscriptionButton subscriptionId={sub.id} />
-              )}
-            </div>
-          ) : sub?.status === "canceled" && activePlan ? (
-            <div className="space-y-6">
-              <div className="flex flex-col justify-between gap-4 rounded-lg border border-yellow-500/20 bg-yellow-500/10 p-4 md:flex-row md:items-center">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-semibold text-lg">
-                      {activePlan.name}
-                    </span>
-                    <Badge
-                      variant="outline"
-                      className="border-yellow-600 text-yellow-600"
-                    >
-                      CANCELED
-                    </Badge>
+
+              {isExpiringSoon && accessEndsAt && daysUntilExpiry !== null ? (
+                <>
+                  <RenewalReminder
+                    expiresAt={accessEndsAt}
+                    daysLeft={daysUntilExpiry}
+                  />
+                  <div className="border-t pt-4">
+                    <p className="mb-4 font-medium text-sm">Renew your plan</p>
+                    <PricingPlans plans={plans} />
                   </div>
-                  <p className="mt-2 text-muted-foreground text-xs">
-                    Access ends on:{" "}
-                    {new Date(sub.currentPeriodEnd).toLocaleDateString()}
-                  </p>
-                </div>
-              </div>
-              <div className="border-t pt-4">
-                <p className="mb-4 font-medium text-sm">
-                  Want to restart your subscription?
-                </p>
-                <PricingPlans plans={plans} />
-              </div>
+                </>
+              ) : null}
             </div>
           ) : (
             <div className="space-y-8">
-              <div className="rounded-lg border bg-muted/10 p-8 text-center">
-                <p className="font-medium text-muted-foreground">
-                  You don&apos;t have an active premium subscription. Choose a
-                  plan below to get started.
-                </p>
-              </div>
+              {isExpired && activePlan ? (
+                <div className="rounded-lg border bg-muted/10 p-6 text-center">
+                  <p className="font-medium">{activePlan.name}</p>
+                  <p className="mt-1 text-muted-foreground text-sm">
+                    This plan is no longer active.
+                  </p>
+                </div>
+              ) : (
+                <div className="rounded-lg border bg-muted/10 p-8 text-center">
+                  <p className="font-medium text-muted-foreground">
+                    You don&apos;t have an active premium plan. Choose a plan
+                    below to get started.
+                  </p>
+                </div>
+              )}
               <PricingPlans plans={plans} />
             </div>
           )}
         </CardContent>
       </Card>
 
-      {/* Invoice History */}
       <Card>
         <CardHeader>
           <CardTitle>Invoice History</CardTitle>

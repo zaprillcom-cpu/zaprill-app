@@ -38,6 +38,17 @@ export function isActive(date: Date): boolean {
   return date.getTime() > Date.now();
 }
 
+/** Days until a date (0 = today, negative = past). */
+export function getDaysUntil(date: Date, now: Date = new Date()): number {
+  const end = new Date(date);
+  end.setHours(23, 59, 59, 999);
+  const start = new Date(now);
+  start.setHours(0, 0, 0, 0);
+  return Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+}
+
+export const RENEWAL_REMINDER_DAYS = 7;
+
 // ─────────────────────────────────────────────────
 // Amount Calculations
 // ─────────────────────────────────────────────────

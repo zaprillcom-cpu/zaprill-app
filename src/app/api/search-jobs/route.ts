@@ -73,13 +73,13 @@ export async function POST(request: Request) {
     }
 
     const userId = session.user.id;
-    const { getActiveSubscription } = await import(
+    const { getSubscriptionWithAccess } = await import(
       "@/services/billing/subscription.service"
     );
     const db = (await import("@/db")).default;
     const { user } = await import("@/db/schema");
 
-    const activeSub = await getActiveSubscription(userId);
+    const activeSub = await getSubscriptionWithAccess(userId);
     const isPro = !!activeSub;
 
     if (!isPro) {

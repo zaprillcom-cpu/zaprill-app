@@ -15,6 +15,8 @@ import {
   BillingError,
   calculateDiscount,
   generateId,
+  getDaysUntil,
+  RENEWAL_REMINDER_DAYS,
 } from "@/lib/billing-utils";
 import { createCashfreeOrder } from "@/lib/cashfree";
 import { sendInvoiceReceiptEmail } from "@/lib/emails/invoice-email";
@@ -33,7 +35,8 @@ import {
 import { createPayment } from "@/services/billing/payment.service";
 import {
   createSubscription,
-  getActiveSubscription,
+  getSubscriptionWithAccess,
+  renewSubscription,
 } from "@/services/billing/subscription.service";
 import type { CheckoutRequest } from "@/types/billing";
 
@@ -70,16 +73,23 @@ export async function POST(request: Request) {
       await voidInvoice(inv.id);
     }
 
-    // ── Guard: already subscribed? ──────────────────────────────────────
-    const existingSub = await getActiveSubscription(user.id);
-    if (existingSub) {
-      return NextResponse.json(
-        {
-          error: "You already have an active subscription",
-          code: "ALREADY_SUBSCRIBED",
-        },
-        { status: 409 },
+    // ── Guard: prepaid access still active? ─────────────────────────────
+    const existingAccess = await getSubscriptionWithAccess(user.id);
+    const isRenewal = !!existingAccess;
+    if (existingAccess) {
+      const accessEnd = new Date(
+        existingAccess.endDate ?? existingAccess.currentPeriodEnd,
       );
+      const daysLeft = getDaysUntil(accessEnd);
+      if (daysLeft > RENEWAL_REMINDER_DAYS) {
+        return NextResponse.json(
+          {
+            error: `You already have access until ${accessEnd.toLocaleDateString()}. You can renew within ${RENEWAL_REMINDER_DAYS} days of that date.`,
+            code: "ALREADY_SUBSCRIBED",
+          },
+          { status: 409 },
+        );
+      }
     }
 
     // ── Fetch plan ──────────────────────────────────────────────────────
@@ -118,12 +128,12 @@ export async function POST(request: Request) {
       userId: user.id,
       planAmount,
       discountAmount,
-      billingReason: "subscription_create",
+      billingReason: isRenewal ? "renewal" : "subscription_create",
+      subscriptionId: existingAccess?.id,
       couponId,
       gstPercentage: selectedPlan.isGstEnabled
         ? parseFloat(selectedPlan.gstPercentage ?? "18")
         : 0,
-      // Store planId + billingCycle in metadata for webhook handler
     });
 
     // Update invoice metadata with plan info for webhook + billing page display
@@ -181,16 +191,21 @@ export async function POST(request: Request) {
         await redeemCoupon(couponUsageId);
       }
 
-      // 4. Create subscription
-      const newSub = await createSubscription({
-        userId: user.id,
-        planId,
-        billingCycle: selectedPlan.billingCycle,
-        priceAtPurchase: 0,
-        couponId,
-        discountAmount,
-      });
-      await attachSubscriptionToInvoice(inv.id, newSub.id);
+      // 4. Extend or create subscription
+      if (isRenewal && existingAccess) {
+        await renewSubscription(existingAccess.id);
+        await attachSubscriptionToInvoice(inv.id, existingAccess.id);
+      } else {
+        const newSub = await createSubscription({
+          userId: user.id,
+          planId,
+          billingCycle: selectedPlan.billingCycle,
+          priceAtPurchase: 0,
+          couponId,
+          discountAmount,
+        });
+        await attachSubscriptionToInvoice(inv.id, newSub.id);
+      }
 
       // 5. Send receipt email (fire-and-forget)
       void (async () => {

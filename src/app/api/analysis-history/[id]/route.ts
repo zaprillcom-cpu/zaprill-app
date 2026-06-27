@@ -37,10 +37,10 @@ export async function GET(
 
     let isPro = false;
     try {
-      const { getActiveSubscription } = await import(
+      const { getSubscriptionWithAccess } = await import(
         "@/services/billing/subscription.service"
       );
-      const activeSub = await getActiveSubscription(session.user.id);
+      const activeSub = await getSubscriptionWithAccess(session.user.id);
       isPro = !!activeSub;
     } catch {
       // Default to free if subscription check fails
