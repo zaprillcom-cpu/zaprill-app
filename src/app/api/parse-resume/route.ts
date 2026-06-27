@@ -22,6 +22,9 @@ export const maxDuration = 60;
 /** Model identifier — single source of truth for this route. */
 const MODEL = "gpt-5-mini" as const;
 
+/** OpenAI structured output requires every object property in `required`; use "" / null / [] when absent. */
+const emptyIfMissing = "Use empty string if not found";
+
 const ResumeSchema = z.object({
   isResume: z
     .boolean()
@@ -30,45 +33,46 @@ const ResumeSchema = z.object({
     name: z.string(),
     label: z.string().describe('e.g. "Software Engineer"'),
     email: z.string(),
-    phone: z.string().optional(),
-    url: z.string().optional(),
+    phone: z.string().describe(emptyIfMissing),
+    url: z.string().describe(emptyIfMissing),
     location: z.object({
-      city: z.string().optional(),
-      region: z.string().optional(),
-      countryCode: z.string().optional(),
+      city: z.string().describe(emptyIfMissing),
+      region: z.string().describe(emptyIfMissing),
+      countryCode: z.string().describe(emptyIfMissing),
     }),
-    summary: z.string().optional(),
-    profiles: z
-      .array(
-        z.object({
-          network: z.string(),
-          url: z.string(),
-          username: z.string().optional(),
-        }),
-      )
-      .optional(),
+    summary: z.string().describe(emptyIfMissing),
+    profiles: z.array(
+      z.object({
+        network: z.string(),
+        url: z.string(),
+        username: z.string().describe(emptyIfMissing),
+      }),
+    ),
   }),
   work: z.array(
     z.object({
       company: z.string(),
       position: z.string(),
-      website: z.string().optional(),
+      website: z.string().describe(emptyIfMissing),
       startDate: z.string().describe('ISO format "YYYY-MM"'),
-      endDate: z.string().nullable().describe('ISO format "YYYY-MM" or null'),
-      summary: z.string().optional(),
+      endDate: z
+        .string()
+        .nullable()
+        .describe('ISO format "YYYY-MM" or null if current'),
+      summary: z.string().describe(emptyIfMissing),
       highlights: z.array(z.string()),
-      location: z.string().optional(),
+      location: z.string().describe(emptyIfMissing),
     }),
   ),
   education: z.array(
     z.object({
       institution: z.string(),
-      url: z.string().optional(),
+      url: z.string().describe(emptyIfMissing),
       area: z.string().describe('Field of study, e.g. "Computer Science"'),
       studyType: z.string().describe('e.g. "Bachelor"'),
       startDate: z.string(),
       endDate: z.string().nullable(),
-      score: z.string().optional(),
+      score: z.string().describe(emptyIfMissing),
       courses: z.array(z.string()),
     }),
   ),
@@ -76,7 +80,9 @@ const ResumeSchema = z.object({
     z.object({
       name: z.string().describe('Skill group name, e.g. "Frontend"'),
       keywords: z.array(z.string()),
-      category: z.string().optional(),
+      category: z
+        .string()
+        .describe('e.g. "technical"; use empty string if unclear'),
     }),
   ),
   projects: z.array(
@@ -84,17 +90,20 @@ const ResumeSchema = z.object({
       name: z.string(),
       description: z.string(),
       highlights: z.array(z.string()),
-      url: z.string().optional(),
-      startDate: z.string().optional(),
-      endDate: z.string().nullable().optional(),
+      url: z.string().describe(emptyIfMissing),
+      startDate: z.string().describe(emptyIfMissing),
+      endDate: z
+        .string()
+        .nullable()
+        .describe('ISO format "YYYY-MM" or null if ongoing/not specified'),
     }),
   ),
   certifications: z.array(
     z.object({
       name: z.string(),
       issuer: z.string(),
-      date: z.string().optional(),
-      url: z.string().optional(),
+      date: z.string().describe(emptyIfMissing),
+      url: z.string().describe(emptyIfMissing),
     }),
   ),
   languages: z.array(
@@ -205,7 +214,7 @@ For totalYearsOfExperience, sum up the candidate's professional career duration 
 
 For profiles, extract all professional links (LinkedIn, GitHub, Portfolio, Personal Site, Twitter, etc.) as a list of objects with "network" (the platform name) and "url". Look for these in the contact or about section.
 
-Be precise and thorough. Do not make up information that isn't in the resume.`,
+Be precise and thorough. Do not make up information that isn't in the resume. Use empty strings for fields not present in the resume, null for open-ended end dates, and empty arrays for missing lists.`,
     });
 
     const llmStart = Date.now();
