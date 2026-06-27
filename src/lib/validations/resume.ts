@@ -78,7 +78,7 @@ export const skillItemSchema = z.object({
   id: z.string(),
   name: z.string().min(1, "Skill group name is required").max(100),
   level: z.string().max(50).default(""),
-  keywords: z.array(z.string().max(50)).max(30).default([]),
+  keywords: z.array(z.string().max(50)).default([]),
   category: z.string().max(50).default("technical"),
 });
 
@@ -91,7 +91,7 @@ export const projectItemSchema = z.object({
   githubUrl: optionalUrl,
   startDate: optionalDate,
   endDate: z.string().nullable().default(null),
-  keywords: z.array(z.string().max(50)).max(20).default([]),
+  keywords: z.array(z.string().max(50)).default([]),
 });
 
 export const certificationItemSchema = z.object({
