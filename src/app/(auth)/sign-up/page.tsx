@@ -6,12 +6,8 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { checkUserExists } from "@/app/actions/auth";
-import {
-  GoogleInAppBlocker,
-  InAppBrowserWarning,
-} from "@/components/auth/InAppBrowserWarning";
-import GithubIcon from "@/components/icons/github-svg";
-import GoogleIcon from "@/components/icons/google-svg";
+import { GoogleSignInButton } from "@/components/auth/google-sign-in-button";
+import { InAppBrowserWarning } from "@/components/auth/InAppBrowserWarning";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -39,10 +35,9 @@ function SignUpForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [githubLoading, setGithubLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [emailSent, setEmailSent] = useState(false);
-  const [googleLoading, setGoogleLoading] = useState(false);
   const [referralCode, setReferralCode] = useState<string | null>(null);
   const [referralDiscount, setReferralDiscount] = useState<number | null>(null);
   const { isInApp, appName } = useInAppBrowser();
@@ -96,42 +91,28 @@ function SignUpForm() {
     }
   };
 
-  const handleOAuthLogin = async (provider: "google" | "github") => {
-    if (provider === "google" && isInApp) {
+  const handleGoogleLogin = async () => {
+    if (isInApp) {
       setGoogleInAppBlocked(true);
       return;
     }
     try {
-      if (provider === "google") {
-        setGoogleLoading(true);
-      } else if (provider === "github") {
-        setGithubLoading(true);
-      }
+      setGoogleLoading(true);
       setError(null);
 
-      const { data, error } = await signIn.social({
-        provider,
+      const { error } = await signIn.social({
+        provider: "google",
         callbackURL: callbackUrl,
       });
 
       if (error) {
-        setError(
-          error.message ||
-            "Failed to sign in with " +
-              provider.charAt(0).toUpperCase() +
-              provider.slice(1),
-        );
+        setError(error.message || "Failed to sign in with Google");
       }
     } catch (error) {
       console.log(error);
-      setError(
-        "Failed to sign in with " +
-          provider.charAt(0).toUpperCase() +
-          provider.slice(1),
-      );
+      setError("Failed to sign in with Google");
     } finally {
       setGoogleLoading(false);
-      setGithubLoading(false);
     }
   };
 
@@ -192,7 +173,10 @@ function SignUpForm() {
             </CardFooter>
           </Card>
         ) : (
-          <Card className="w-full border-border shadow-lg">
+          <Card
+            className="w-full border-border shadow-lg"
+            data-testid="auth-card"
+          >
             <CardHeader className="pb-6 text-center">
               <CardTitle className="font-black text-2xl tracking-tight">
                 Create an account
@@ -221,34 +205,14 @@ function SignUpForm() {
 
               <InAppBrowserWarning />
 
-              <Button
-                variant="outline"
-                className="h-11 w-full font-bold"
-                onClick={() => handleOAuthLogin("github")}
-                disabled={loading || githubLoading}
-              >
-                {githubLoading ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  <GithubIcon />
-                )}
-                Sign up with GitHub
-              </Button>
-
-              <Button
-                variant="outline"
-                className="h-11 w-full rounded-b-none font-bold"
-                onClick={() => handleOAuthLogin("google")}
-                disabled={loading || googleLoading}
-              >
-                {googleLoading ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  <GoogleIcon />
-                )}
-                Sign up with Google
-              </Button>
-              {googleInAppBlocked && <GoogleInAppBlocker appName={appName} />}
+              <GoogleSignInButton
+                onClick={handleGoogleLogin}
+                disabled={loading}
+                loading={googleLoading}
+                showInAppBlocker={googleInAppBlocked}
+                appName={appName}
+                label="Sign up with Google"
+              />
 
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
@@ -271,7 +235,7 @@ function SignUpForm() {
                     placeholder="John Doe"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    disabled={loading || githubLoading}
+                    disabled={loading || googleLoading}
                     required
                     className="h-11 bg-background font-medium"
                   />
@@ -285,7 +249,7 @@ function SignUpForm() {
                     placeholder="name@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    disabled={loading || githubLoading}
+                    disabled={loading || googleLoading}
                     required
                     className="h-11 bg-background font-medium"
                   />
@@ -297,7 +261,7 @@ function SignUpForm() {
                   <PasswordInput
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    disabled={loading || githubLoading}
+                    disabled={loading || googleLoading}
                     required
                     minLength={8}
                     className="h-11 bg-background font-medium"
@@ -306,7 +270,7 @@ function SignUpForm() {
                 <Button
                   type="submit"
                   className="h-11 w-full font-bold"
-                  disabled={loading || githubLoading}
+                  disabled={loading || googleLoading}
                 >
                   {loading ? (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
