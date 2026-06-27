@@ -1,6 +1,6 @@
 "use client";
 
-import { Gift, LogOut, User } from "lucide-react";
+import { LogOut, Settings } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import type { NavUser } from "@/components/Navbar";
@@ -70,7 +70,7 @@ export function AppHeader({ user }: { user: NavUser }) {
         <DropdownMenu>
           <DropdownMenuTrigger
             className="rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            aria-label="User menu"
+            aria-label="Account menu"
           >
             <Avatar size="default">
               {user.image && (
@@ -81,7 +81,7 @@ export function AppHeader({ user }: { user: NavUser }) {
               </AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48">
+          <DropdownMenuContent align="end" className="w-52">
             <div className="mb-1 border-border border-b px-3 py-2">
               {user.name && (
                 <p className="truncate font-bold text-sm">{user.name}</p>
@@ -92,25 +92,9 @@ export function AppHeader({ user }: { user: NavUser }) {
                 </p>
               )}
             </div>
-            <DropdownMenuItem
-              onClick={() => router.push("/profile")}
-              className="cursor-pointer font-semibold"
-            >
-              <User className="mr-2 h-4 w-4" />
-              Profile
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => router.push("/billing")}
-              className="cursor-pointer font-semibold"
-            >
-              Billing
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => router.push("/referrals")}
-              className="cursor-pointer font-semibold text-emerald-600 focus:text-emerald-600 dark:text-emerald-400"
-            >
-              <Gift className="mr-2 h-4 w-4" />
-              Refer &amp; Earn
+            <DropdownMenuItem render={<Link href="/profile" />}>
+              <Settings className="mr-2 h-4 w-4" />
+              Account settings
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
