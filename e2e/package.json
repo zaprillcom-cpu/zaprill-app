@@ -1,0 +1,13 @@
+{
+  "name": "ai-job-god-e2e",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "test:ux": "playwright test ux-audit",
+    "report": "tsx ux-audit/generate-report.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.51.1",
+    "tsx": "^4.21.0"
+  }
+}
