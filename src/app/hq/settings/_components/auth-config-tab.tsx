@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  GitBranch,
-  Globe,
-  Key,
-  Mail,
-  Phone,
-  ShieldCheck,
-  UserX,
-} from "lucide-react";
+import { Globe, Key, Mail, Phone, ShieldCheck, UserX } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -30,12 +22,6 @@ const AUTH_FEATURES = [
     icon: Globe,
     title: "Google OAuth",
     description: "Uses GOOGLE_OAUTH_CLIENT_ID + GOOGLE_OAUTH_CLIENT_SECRET.",
-    enabled: true,
-  },
-  {
-    icon: GitBranch,
-    title: "GitHub OAuth",
-    description: "Uses GITHUB_CLIENT_ID + GITHUB_CLIENT_SECRET.",
     enabled: true,
   },
   {

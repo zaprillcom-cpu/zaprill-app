@@ -119,9 +119,9 @@ export function trackSignUpStart(): void {
 
 /**
  * GA4 recommended event: sign_up
- * @param method  'email' | 'github' | 'google'
+ * @param method  'email' | 'google'
  */
-export function trackSignUp(method: "email" | "github" | "google"): void {
+export function trackSignUp(method: "email" | "google"): void {
   gtag("event", "sign_up", { method });
 }
 
@@ -131,15 +131,13 @@ export function trackLoginStart(): void {
 
 /**
  * GA4 recommended event: login
- * @param method  'email' | 'github' | 'google'
+ * @param method  'email' | 'google'
  */
-export function trackLogin(method: "email" | "github" | "google"): void {
+export function trackLogin(method: "email" | "google"): void {
   gtag("event", "login", { method });
 }
 
-export function trackOAuthProviderSelected(
-  provider: "github" | "google",
-): void {
+export function trackOAuthProviderSelected(provider: "google"): void {
   gtag("event", "select_content", {
     content_type: "oauth_provider",
     item_id: provider,

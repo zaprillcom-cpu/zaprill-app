@@ -66,11 +66,6 @@ export const auth = betterAuth({
 
   // ── Social Providers ──────────────────────────────────────────────
   socialProviders: {
-    github: {
-      prompt: "select_account consent",
-      clientId: process.env.GITHUB_CLIENT_ID!,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
-    },
     google: {
       prompt: "select_account consent",
       clientId: process.env.GOOGLE_OAUTH_CLIENT_ID!,
