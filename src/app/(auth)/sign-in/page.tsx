@@ -6,6 +6,10 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { useDispatch } from "react-redux";
+import {
+  GoogleInAppBlocker,
+  InAppBrowserWarning,
+} from "@/components/auth/InAppBrowserWarning";
 import GithubIcon from "@/components/icons/github-svg";
 import GoogleIcon from "@/components/icons/google-svg";
 import { Button } from "@/components/ui/button";
@@ -19,6 +23,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
+import { useInAppBrowser } from "@/hooks/useInAppBrowser";
 import { signIn } from "@/lib/auth-client";
 import { login } from "@/store/authSlice";
 
@@ -34,6 +39,8 @@ function SignInForm() {
   const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const dispatch = useDispatch();
+  const { isInApp, appName } = useInAppBrowser();
+  const [googleInAppBlocked, setGoogleInAppBlocked] = useState(false);
 
   const handleCredentialsSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,6 +64,10 @@ function SignInForm() {
   };
 
   const handleOAuthLogin = async (provider: "google" | "github") => {
+    if (provider === "google" && isInApp) {
+      setGoogleInAppBlocked(true);
+      return;
+    }
     try {
       if (provider === "google") {
         setGoogleLoading(true);
@@ -125,6 +136,8 @@ function SignInForm() {
               </div>
             )}
 
+            <InAppBrowserWarning />
+
             <Button
               variant="outline"
               className="h-11 w-full font-bold"
@@ -141,7 +154,7 @@ function SignInForm() {
 
             <Button
               variant="outline"
-              className="h-11 w-full font-bold"
+              className="h-11 w-full rounded-b-none font-bold"
               onClick={() => handleOAuthLogin("google")}
               disabled={loading || googleLoading}
             >
@@ -152,6 +165,7 @@ function SignInForm() {
               )}
               Sign in with Google
             </Button>
+            {googleInAppBlocked && <GoogleInAppBlocker appName={appName} />}
 
             <div className="relative">
               <div className="absolute inset-0 flex items-center">

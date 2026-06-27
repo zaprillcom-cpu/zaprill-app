@@ -6,6 +6,10 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { checkUserExists } from "@/app/actions/auth";
+import {
+  GoogleInAppBlocker,
+  InAppBrowserWarning,
+} from "@/components/auth/InAppBrowserWarning";
 import GithubIcon from "@/components/icons/github-svg";
 import GoogleIcon from "@/components/icons/google-svg";
 import { Button } from "@/components/ui/button";
@@ -19,6 +23,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
+import { useInAppBrowser } from "@/hooks/useInAppBrowser";
 import {
   captureReferralCode,
   getStoredReferralCode,
@@ -40,6 +45,8 @@ function SignUpForm() {
   const [googleLoading, setGoogleLoading] = useState(false);
   const [referralCode, setReferralCode] = useState<string | null>(null);
   const [referralDiscount, setReferralDiscount] = useState<number | null>(null);
+  const { isInApp, appName } = useInAppBrowser();
+  const [googleInAppBlocked, setGoogleInAppBlocked] = useState(false);
 
   // Capture ?ref= from URL into localStorage on mount
   useEffect(() => {
@@ -90,6 +97,10 @@ function SignUpForm() {
   };
 
   const handleOAuthLogin = async (provider: "google" | "github") => {
+    if (provider === "google" && isInApp) {
+      setGoogleInAppBlocked(true);
+      return;
+    }
     try {
       if (provider === "google") {
         setGoogleLoading(true);
@@ -208,6 +219,8 @@ function SignUpForm() {
                 </div>
               )}
 
+              <InAppBrowserWarning />
+
               <Button
                 variant="outline"
                 className="h-11 w-full font-bold"
@@ -224,7 +237,7 @@ function SignUpForm() {
 
               <Button
                 variant="outline"
-                className="h-11 w-full font-bold"
+                className="h-11 w-full rounded-b-none font-bold"
                 onClick={() => handleOAuthLogin("google")}
                 disabled={loading || googleLoading}
               >
@@ -235,6 +248,7 @@ function SignUpForm() {
                 )}
                 Sign up with Google
               </Button>
+              {googleInAppBlocked && <GoogleInAppBlocker appName={appName} />}
 
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
