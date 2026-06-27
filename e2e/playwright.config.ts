@@ -20,6 +20,12 @@ export default defineConfig({
     screenshot: "off",
     video: "off",
   },
+  expect: {
+    toHaveScreenshot: {
+      maxDiffPixelRatio: 0.02,
+      animations: "disabled",
+    },
+  },
   projects: [
     {
       name: "setup",
@@ -51,6 +57,14 @@ export default defineConfig({
       },
       dependencies: ["setup"],
       testMatch: /ux-audit\/03-mobile-navigation\.spec\.ts/,
+    },
+    {
+      name: "visual",
+      use: {
+        ...devices["Desktop Chrome"],
+        storageState: { cookies: [], origins: [] },
+      },
+      testMatch: /visual\/.*\.spec\.ts/,
     },
   ],
 });
