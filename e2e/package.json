@@ -4,6 +4,7 @@
   "scripts": {
     "test": "playwright test",
     "test:ux": "playwright test ux-audit",
+    "test:resume": "playwright test resume-builder",
     "test:visual": "playwright test visual",
     "test:visual:update": "playwright test visual --update-snapshots",
     "report": "tsx ux-audit/generate-report.ts"

@@ -66,5 +66,16 @@ export default defineConfig({
       },
       testMatch: /visual\/.*\.spec\.ts/,
     },
+    {
+      name: "resume-builder",
+      use: {
+        ...devices["Desktop Chrome"],
+        storageState: "ux-audit/.auth/user.json",
+        viewport: { width: 1280, height: 900 },
+      },
+      dependencies: ["setup"],
+      testMatch: /resume-builder\/.*\.spec\.ts/,
+      timeout: 60_000,
+    },
   ],
 });
