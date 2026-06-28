@@ -5,9 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type React from "react";
-import { useEffect, useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -15,21 +13,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { UserAvatar } from "@/components/user-avatar";
 import { signOut } from "@/lib/auth-client";
 
 // ── helpers ────────────────────────────────────────────────────────────────
-
-function getInitials(name?: string | null, email?: string | null): string {
-  if (name) {
-    const parts = name.trim().split(/\s+/);
-    if (parts.length === 1) return parts[0][0].toUpperCase();
-    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
-  }
-  if (email) return email[0].toUpperCase();
-  return "?";
-}
-
-// ── UserAvatar ─────────────────────────────────────────────────────────────
 
 export interface NavUser {
   name?: string | null;
@@ -37,44 +24,6 @@ export interface NavUser {
   image?: string | null;
   isPro?: boolean;
 }
-
-function UserAvatar({ user }: { user: NavUser }) {
-  const [isPro, setIsPro] = useState(user.isPro ?? false);
-
-  useEffect(() => {
-    if (user.isPro !== undefined) return;
-    fetch("/api/billing/subscription")
-      .then((res) => res.json())
-      .then((data) => {
-        setIsPro(!!data.subscription);
-      })
-      .catch(console.error);
-  }, [user.isPro]);
-
-  return (
-    <div className="relative">
-      <Avatar size="default" className="cursor-pointer">
-        {user.image && (
-          <AvatarImage src={user.image} alt={user.name ?? "User avatar"} />
-        )}
-        <AvatarFallback className="font-bold text-xs tracking-wide">
-          {getInitials(user.name, user.email)}
-        </AvatarFallback>
-      </Avatar>
-      <div
-        className={`-bottom-1 -right-1 absolute rounded-sm border px-1.5 py-0.5 font-bold text-[11px] uppercase shadow-sm ${
-          isPro
-            ? "border-primary bg-primary text-primary-foreground"
-            : "border-border bg-muted text-muted-foreground"
-        }`}
-      >
-        {isPro ? "PRO" : "FREE"}
-      </div>
-    </div>
-  );
-}
-
-// ── Navbar ─────────────────────────────────────────────────────────────────
 
 export interface NavbarProps {
   /** Page-specific left slot: icon + title, shown to the right of the back button */
@@ -202,7 +151,12 @@ export default function Navbar({
                   className="rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                   aria-label="User menu"
                 >
-                  <UserAvatar user={user} />
+                  <UserAvatar
+                    name={user.name}
+                    email={user.email}
+                    image={user.image}
+                    isPro={user.isPro}
+                  />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
                   <div className="mb-1 border-border border-b px-3 py-2">

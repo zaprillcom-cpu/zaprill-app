@@ -19,7 +19,7 @@ export async function GET() {
 
     const sub = await getSubscriptionWithAccess(session.user.id);
     if (!sub) {
-      return NextResponse.json({ subscription: null });
+      return NextResponse.json({ subscription: null, isPro: false });
     }
 
     const [planRow] = await db
@@ -28,7 +28,11 @@ export async function GET() {
       .where(eq(plan.id, sub.planId))
       .limit(1);
 
-    return NextResponse.json({ subscription: sub, plan: planRow ?? null });
+    return NextResponse.json({
+      subscription: sub,
+      plan: planRow ?? null,
+      isPro: true,
+    });
   } catch (err) {
     console.error("[subscription GET]", err);
     return NextResponse.json(

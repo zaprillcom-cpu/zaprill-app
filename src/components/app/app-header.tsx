@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import type { NavUser } from "@/components/Navbar";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -22,18 +21,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { UserAvatar } from "@/components/user-avatar";
 import { getNavTitle } from "@/lib/app-nav";
 import { signOut } from "@/lib/auth-client";
-
-function getInitials(name?: string | null, email?: string | null): string {
-  if (name) {
-    const parts = name.trim().split(/\s+/);
-    if (parts.length === 1) return parts[0][0].toUpperCase();
-    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
-  }
-  if (email) return email[0].toUpperCase();
-  return "?";
-}
 
 export function AppHeader({ user }: { user: NavUser }) {
   const router = useRouter();
@@ -72,14 +62,12 @@ export function AppHeader({ user }: { user: NavUser }) {
             className="rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             aria-label="Account menu"
           >
-            <Avatar size="default">
-              {user.image && (
-                <AvatarImage src={user.image} alt={user.name ?? "User"} />
-              )}
-              <AvatarFallback className="font-bold text-xs">
-                {getInitials(user.name, user.email)}
-              </AvatarFallback>
-            </Avatar>
+            <UserAvatar
+              name={user.name}
+              email={user.email}
+              image={user.image}
+              isPro={user.isPro}
+            />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-52">
             <div className="mb-1 border-border border-b px-3 py-2">

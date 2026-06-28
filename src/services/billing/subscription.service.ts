@@ -53,15 +53,52 @@ export async function createSubscription(opts: {
 }
 
 /** Whether a subscription currently grants premium feature access. */
+function toSubscriptionDate(
+  value: Date | string | null | undefined,
+): Date | null {
+  if (!value) return null;
+  const date = value instanceof Date ? value : new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function endOfAccessDay(date: Date): Date {
+  const end = new Date(date);
+  end.setHours(23, 59, 59, 999);
+  return end;
+}
+
+/** Last day/time through which premium access is granted. */
+export function getSubscriptionAccessEnd(sub: Subscription): Date | null {
+  if (sub.status === "canceled") {
+    return (
+      toSubscriptionDate(sub.endDate) ??
+      toSubscriptionDate(sub.currentPeriodEnd)
+    );
+  }
+  return toSubscriptionDate(sub.currentPeriodEnd);
+}
+
 export function subscriptionGrantsAccess(
   sub: Subscription,
   now: Date = new Date(),
 ): boolean {
-  const accessEnd = sub.endDate ?? sub.currentPeriodEnd;
-  if (now >= accessEnd) {
+  if (!["active", "trialing", "past_due", "canceled"].includes(sub.status)) {
     return false;
   }
-  return ["active", "trialing", "past_due", "canceled"].includes(sub.status);
+
+  // Paid subscriptions: status is authoritative until an expiry job exists.
+  if (sub.status === "active" || sub.status === "trialing") {
+    return true;
+  }
+
+  if (sub.status === "past_due") {
+    return true;
+  }
+
+  // Canceled: prepaid access continues through the paid period (end of day).
+  const accessEnd = getSubscriptionAccessEnd(sub);
+  if (!accessEnd) return false;
+  return now.getTime() <= endOfAccessDay(accessEnd).getTime();
 }
 
 /** Get a user's billable subscription (active or trialing). */
@@ -77,6 +114,7 @@ export async function getActiveSubscription(
         inArray(subscription.status, ["active", "trialing"]),
       ),
     )
+    .orderBy(desc(subscription.createdAt))
     .limit(1);
   return (row as Subscription) ?? null;
 }

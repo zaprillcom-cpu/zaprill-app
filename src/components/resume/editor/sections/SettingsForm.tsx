@@ -106,7 +106,7 @@ export default function SettingsForm({
     fetch("/api/billing/subscription")
       .then((r) => r.json())
       .then((data) => {
-        setIsPro(!!data.subscription);
+        setIsPro(!!(data.isPro ?? data.subscription));
       })
       .catch(() => setIsPro(false));
   }, []);

@@ -11,14 +11,18 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import db from "@/db";
-import { invoice, plan, subscription } from "@/db/schema";
+import { invoice, plan } from "@/db/schema";
 import { auth } from "@/lib/auth";
 import {
   formatCurrency,
   getDaysUntil,
   RENEWAL_REMINDER_DAYS,
 } from "@/lib/billing-utils";
-import { subscriptionGrantsAccess } from "@/services/billing/subscription.service";
+import {
+  getSubscriptionAccessEnd,
+  getSubscriptionWithAccess,
+  subscriptionGrantsAccess,
+} from "@/services/billing/subscription.service";
 import type { Subscription } from "@/types/billing";
 import { BillingInvoiceTable } from "./_components/billing-invoice-table";
 import { RenewalReminder } from "./_components/renewal-reminder";
@@ -27,13 +31,10 @@ export const metadata = {
   title: "Billing | Zaprill",
 };
 
-function formatAccessEnd(sub: Subscription): Date {
-  return new Date(sub.endDate ?? sub.currentPeriodEnd);
-}
-
 function statusBadgeLabel(status: Subscription["status"]): string {
   if (status === "past_due") return "PAST DUE";
   if (status === "trialing") return "TRIAL";
+  if (status === "canceled") return "CANCELED";
   return "ACTIVE";
 }
 
@@ -41,19 +42,14 @@ export default async function BillingPage() {
   const session = await auth.api.getSession({ headers: await headers() });
   if (!session?.user) return null;
 
-  const [sub] = await db
-    .select()
-    .from(subscription)
-    .where(eq(subscription.userId, session.user.id))
-    .orderBy(desc(subscription.createdAt))
-    .limit(1);
+  const typedSub = await getSubscriptionWithAccess(session.user.id);
 
   let activePlan = null;
-  if (sub) {
+  if (typedSub) {
     const [p] = await db
       .select()
       .from(plan)
-      .where(eq(plan.id, sub.planId))
+      .where(eq(plan.id, typedSub.planId))
       .limit(1);
     activePlan = p;
   }
@@ -71,18 +67,16 @@ export default async function BillingPage() {
     .orderBy(desc(invoice.createdAt))
     .limit(20);
 
-  const typedSub = sub as Subscription | undefined;
   const hasAccess =
     !!typedSub && !!activePlan && subscriptionGrantsAccess(typedSub);
-  const accessEndsAt = typedSub ? formatAccessEnd(typedSub) : null;
+  const accessEndsAt = typedSub ? getSubscriptionAccessEnd(typedSub) : null;
   const daysUntilExpiry =
     accessEndsAt !== null ? getDaysUntil(accessEndsAt) : null;
   const isExpiringSoon =
     hasAccess &&
     daysUntilExpiry !== null &&
     daysUntilExpiry <= RENEWAL_REMINDER_DAYS;
-  const isExpired =
-    !!typedSub && !!activePlan && !subscriptionGrantsAccess(typedSub);
+  const isExpired = !!typedSub && !!activePlan && !hasAccess;
 
   const accessEndLabel = accessEndsAt?.toLocaleDateString(undefined, {
     month: "long",
@@ -92,7 +86,10 @@ export default async function BillingPage() {
 
   let planDescription = "You are currently on the free plan.";
   if (hasAccess && accessEndLabel) {
-    planDescription = `Your plan is prepaid. Access continues until ${accessEndLabel}. Renew manually before then to keep pro features — there is no automatic billing.`;
+    planDescription =
+      typedSub?.status === "canceled"
+        ? `Your plan was canceled. Access continues until ${accessEndLabel}. Renew manually before then to keep pro features.`
+        : `Your plan is prepaid. Access continues until ${accessEndLabel}. Renew manually before then to keep pro features — there is no automatic billing.`;
   } else if (isExpired && accessEndLabel) {
     planDescription = `Your prepaid plan ended on ${accessEndLabel}. Choose a plan below to restore pro access.`;
   }
@@ -119,7 +116,10 @@ export default async function BillingPage() {
                   </span>
                   <Badge
                     variant={
-                      typedSub.status === "past_due" ? "secondary" : "default"
+                      typedSub.status === "past_due" ||
+                      typedSub.status === "canceled"
+                        ? "secondary"
+                        : "default"
                     }
                   >
                     {statusBadgeLabel(typedSub.status)}
