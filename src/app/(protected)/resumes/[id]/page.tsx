@@ -17,7 +17,6 @@ import {
   Loader2,
   Save,
   Search,
-  Shield,
   SlidersHorizontal,
   Trophy,
   User,
@@ -25,9 +24,14 @@ import {
   Wrench,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { use, useCallback, useEffect, useState } from "react";
+import { use, useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+import AtsIcon from "@/components/resume/editor/AtsIcon";
+import { AtsScoreStickyBar } from "@/components/resume/editor/AtsScoreCta";
 import PreviewPanel from "@/components/resume/editor/PreviewPanel";
+import { ResumeEditorErrorFallback } from "@/components/resume/editor/ResumeEditorErrorFallback";
 import RoastDialog from "@/components/resume/editor/RoastDialog";
 import AtsScorePanel from "@/components/resume/editor/sections/AtsScorePanel";
 import AwardsForm from "@/components/resume/editor/sections/AwardsForm";
@@ -64,6 +68,7 @@ import {
 } from "@/components/ui/sheet";
 import { useAutoSave } from "@/hooks/use-auto-save";
 import { normalizeResumeData, normalizeResumeMetadata } from "@/lib/resume";
+import { loadResumeDraft } from "@/lib/resume/draft-recovery";
 import { resumeActions } from "@/store/resumeSlice";
 import type { AppDispatch, RootState } from "@/store/store";
 import type { ResumeData, ResumeMetadata } from "@/types/resume";
@@ -111,6 +116,37 @@ export default function ResumeEditorPage({
   const [isExporting, setIsExporting] = useState(false);
   const [atsOpen, setAtsOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [draftRecoveryOffered, setDraftRecoveryOffered] = useState(false);
+  const formBoundaryRef = useRef<ErrorBoundary>(null);
+  const previewBoundaryRef = useRef<ErrorBoundary>(null);
+
+  const applyDraftRecovery = useCallback(() => {
+    const draft = loadResumeDraft(id);
+    if (!draft) return false;
+
+    try {
+      dispatch(
+        resumeActions.loadResume({
+          id,
+          data: normalizeResumeData(draft.data),
+          metadata: normalizeResumeMetadata(draft.metadata),
+          title: draft.title,
+          templateSlug: "minimalist",
+          industry: "technology",
+          targetRole: "",
+          status: "draft",
+          version: 1,
+        }),
+      );
+      setLoadError(null);
+      setDraftRecoveryOffered(false);
+      setIsLoadingResume(false);
+      return true;
+    } catch (err) {
+      console.error("Draft recovery failed:", err);
+      return false;
+    }
+  }, [id, dispatch]);
 
   // ─── Fetch resume on mount ──────────────────────
   useEffect(() => {
@@ -118,16 +154,35 @@ export default function ResumeEditorPage({
       try {
         const res = await fetch(`/api/resumes/${id}`);
         if (!res.ok) {
-          setLoadError("Resume not found");
+          const recovered = applyDraftRecovery();
+          setLoadError(
+            recovered
+              ? null
+              : res.status === 404
+                ? "Resume not found"
+                : "Failed to load resume",
+          );
+          if (!recovered && loadResumeDraft(id)) {
+            setDraftRecoveryOffered(true);
+          }
           return;
         }
         const { resume: fetchedResume } = await res.json();
 
-        // Normalize both data and metadata before loading into Redux
-        const normalizedData = normalizeResumeData(fetchedResume.data);
-        const normalizedMetadata = normalizeResumeMetadata(
-          fetchedResume.metadata,
-        );
+        let normalizedData;
+        let normalizedMetadata;
+        try {
+          normalizedData = normalizeResumeData(fetchedResume.data);
+          normalizedMetadata = normalizeResumeMetadata(fetchedResume.metadata);
+        } catch (normalizeErr) {
+          console.error("Resume normalization error:", normalizeErr);
+          const recovered = applyDraftRecovery();
+          if (recovered) return;
+
+          setLoadError("This resume has data we couldn't read");
+          if (loadResumeDraft(id)) setDraftRecoveryOffered(true);
+          return;
+        }
 
         dispatch(
           resumeActions.loadResume({
@@ -142,16 +197,22 @@ export default function ResumeEditorPage({
             version: fetchedResume.version,
           }),
         );
+        setLoadError(null);
+        setDraftRecoveryOffered(false);
       } catch (err) {
         console.error("Load resume error:", err);
-        setLoadError("Failed to load resume");
+        const recovered = applyDraftRecovery();
+        if (!recovered) {
+          setLoadError("Failed to load resume");
+          if (loadResumeDraft(id)) setDraftRecoveryOffered(true);
+        }
       } finally {
         setIsLoadingResume(false);
       }
     };
 
     fetchResume();
-  }, [id, dispatch]);
+  }, [id, dispatch, applyDraftRecovery]);
 
   // ─── Server save function ───────────────────────
   const handleServerSave = useCallback(async () => {
@@ -227,10 +288,21 @@ export default function ResumeEditorPage({
         setValidationErrors(errorsBySection);
         setShowErrorDialog(true);
         dispatch(resumeActions.markSaveFailed());
+      } else if (res.status === 409) {
+        toast.error(
+          "Someone else updated this resume. Refresh to get the latest version.",
+        );
+        dispatch(resumeActions.markSaveFailed());
       } else {
+        toast.error(
+          "Couldn't save your changes. They're backed up locally — try again shortly.",
+        );
         dispatch(resumeActions.markSaveFailed());
       }
     } catch {
+      toast.error(
+        "Couldn't reach the server. Your edits are saved locally on this device.",
+      );
       dispatch(resumeActions.markSaveFailed());
     }
   }, [
@@ -273,12 +345,22 @@ export default function ResumeEditorPage({
   if (loadError) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
-        <div className="flex flex-col items-center gap-4 text-center">
+        <div className="flex max-w-md flex-col items-center gap-4 px-6 text-center">
           <AlertCircle className="h-10 w-10 text-destructive" />
           <p className="font-bold text-lg">{loadError}</p>
-          <Button variant="outline" onClick={() => router.push("/resumes")}>
-            Back to Resumes
-          </Button>
+          {draftRecoveryOffered && (
+            <p className="text-muted-foreground text-sm">
+              We found a local copy of your recent edits on this device.
+            </p>
+          )}
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            {draftRecoveryOffered && (
+              <Button onClick={applyDraftRecovery}>Restore local draft</Button>
+            )}
+            <Button variant="outline" onClick={() => router.push("/resumes")}>
+              Back to Resumes
+            </Button>
+          </div>
         </div>
       </div>
     );
@@ -301,12 +383,15 @@ export default function ResumeEditorPage({
   ]);
 
   const renderSectionForm = () => {
+    const sectionVisibility =
+      metadata?.sectionVisibility ??
+      ({} as ResumeMetadata["sectionVisibility"]);
+
     // Check if this section has a visibility toggle and is hidden
     const isHidden =
       VISIBILITY_SECTIONS.has(activeSection) &&
-      !(metadata.sectionVisibility as unknown as Record<string, boolean>)[
-        activeSection
-      ];
+      sectionVisibility[activeSection as keyof typeof sectionVisibility] ===
+        false;
 
     const formContent = (() => {
       switch (activeSection) {
@@ -536,32 +621,43 @@ export default function ResumeEditorPage({
                 {SECTIONS.find((s) => s.key === activeSection)?.label ??
                   "Section"}
               </h2>
-              {renderSectionForm()}
+              <ErrorBoundary
+                key={activeSection}
+                ref={formBoundaryRef}
+                fallback={
+                  <ResumeEditorErrorFallback
+                    title="Couldn't load this section"
+                    message="Switch to another section to keep editing, or try reloading this one."
+                    onRetry={() => formBoundaryRef.current?.reset()}
+                    onBack={() => router.push("/resumes")}
+                    compact
+                  />
+                }
+              >
+                {renderSectionForm()}
+              </ErrorBoundary>
             </div>
           </div>
 
-          {/* Sticky ATS Score CTA — always visible at bottom of editor */}
-          <div className="shrink-0 border-border border-t bg-background/95 backdrop-blur-sm">
-            <div className="mx-auto flex max-w-2xl items-center justify-between gap-4 px-6 py-3">
-              <p className="hidden text-muted-foreground text-xs sm:block">
-                Score against a job description to spot gaps
-              </p>
-              <Button
-                onClick={() => setAtsOpen(true)}
-                size="sm"
-                className="w-full gap-2 sm:w-auto"
-              >
-                <Shield className="h-3.5 w-3.5" />
-                Improve ATS Score
-              </Button>
-            </div>
-          </div>
+          <AtsScoreStickyBar onOpen={() => setAtsOpen(true)} />
         </div>
 
         {/* Right: Live Preview */}
         {showPreview && (
           <div className="hidden flex-1 overflow-y-auto border-border border-l bg-muted/20 lg:flex">
-            <PreviewPanel data={data} metadata={metadata} />
+            <ErrorBoundary
+              ref={previewBoundaryRef}
+              fallback={
+                <ResumeEditorErrorFallback
+                  title="Preview unavailable"
+                  message="The live preview hit an error. You can keep editing — your form data is still here."
+                  onRetry={() => previewBoundaryRef.current?.reset()}
+                  compact
+                />
+              }
+            >
+              <PreviewPanel data={data} metadata={metadata} />
+            </ErrorBoundary>
           </div>
         )}
       </div>
@@ -619,7 +715,7 @@ export default function ResumeEditorPage({
           <SheetHeader className="border-border border-b pb-4">
             <div className="flex items-center gap-2.5">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
-                <Shield className="h-4 w-4 text-primary" />
+                <AtsIcon className="h-5 w-5" animated={false} />
               </div>
               <div>
                 <SheetTitle className="font-black text-base">
@@ -632,20 +728,33 @@ export default function ResumeEditorPage({
             </div>
           </SheetHeader>
           <div className="flex-1 overflow-y-auto p-6">
-            <AtsScorePanel />
+            <ErrorBoundary
+              fallback={
+                <ResumeEditorErrorFallback
+                  title="ATS score panel unavailable"
+                  message="Close this panel and try again, or keep editing your resume."
+                  compact
+                />
+              }
+            >
+              <AtsScorePanel />
+            </ErrorBoundary>
           </div>
         </SheetContent>
       </Sheet>
 
       {/* Settings Sheet — triggered from gear icon in top bar */}
       <Sheet open={settingsOpen} onOpenChange={setSettingsOpen}>
-        <SheetContent side="right" className="flex flex-col sm:max-w-lg">
+        <SheetContent
+          side="right"
+          className="flex w-full min-w-0 flex-col sm:max-w-lg"
+        >
           <SheetHeader className="border-border border-b pb-4">
             <div className="flex items-center gap-2.5">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted">
                 <SlidersHorizontal className="h-4 w-4 text-muted-foreground" />
               </div>
-              <div>
+              <div className="min-w-0">
                 <SheetTitle className="font-black text-base">
                   Resume Settings
                 </SheetTitle>
@@ -655,8 +764,18 @@ export default function ResumeEditorPage({
               </div>
             </div>
           </SheetHeader>
-          <div className="flex-1 overflow-y-auto p-6">
-            <SettingsForm serverErrors={validationErrors?.settings} />
+          <div className="min-w-0 flex-1 overflow-y-auto overflow-x-hidden p-6">
+            <ErrorBoundary
+              fallback={
+                <ResumeEditorErrorFallback
+                  title="Settings unavailable"
+                  message="Close settings and try again. Your resume content is unaffected."
+                  compact
+                />
+              }
+            >
+              <SettingsForm serverErrors={validationErrors?.settings} />
+            </ErrorBoundary>
           </div>
         </SheetContent>
       </Sheet>

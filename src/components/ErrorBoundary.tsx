@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 interface Props {
   children?: ReactNode;
   fallback?: ReactNode;
+  onReset?: () => void;
 }
 
 interface State {
@@ -30,7 +31,13 @@ export class ErrorBoundary extends Component<Props, State> {
 
   private handleReset = () => {
     this.setState({ hasError: false, error: undefined });
+    this.props.onReset?.();
   };
+
+  /** Allow parent components to clear the boundary after navigation changes. */
+  public reset() {
+    this.handleReset();
+  }
 
   public render() {
     if (this.state.hasError) {
