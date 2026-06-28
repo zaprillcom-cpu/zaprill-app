@@ -1,16 +1,16 @@
-# Graph Report - ai-job-god  (2026-06-14)
+# Graph Report - ai-job-god  (2026-06-28)
 
 ## Corpus Check
-- 287 files · ~152,346 words
+- 314 files · ~226,769 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1879 nodes · 4967 edges · 160 communities (92 shown, 68 thin omitted)
-- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 98 edges (avg confidence: 0.84)
+- 2074 nodes · 5393 edges · 148 communities (80 shown, 68 thin omitted)
+- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 105 edges (avg confidence: 0.84)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `9de2d1b9`
+- Built from commit: `25207ed2`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -113,9 +113,6 @@
 - [[_COMMUNITY_Community 95|Community 95]]
 - [[_COMMUNITY_Community 96|Community 96]]
 - [[_COMMUNITY_Community 97|Community 97]]
-- [[_COMMUNITY_Community 98|Community 98]]
-- [[_COMMUNITY_Community 99|Community 99]]
-- [[_COMMUNITY_Community 100|Community 100]]
 - [[_COMMUNITY_Community 101|Community 101]]
 - [[_COMMUNITY_Community 102|Community 102]]
 - [[_COMMUNITY_Community 103|Community 103]]
@@ -126,6 +123,8 @@
 - [[_COMMUNITY_Community 108|Community 108]]
 - [[_COMMUNITY_Community 109|Community 109]]
 - [[_COMMUNITY_Community 110|Community 110]]
+- [[_COMMUNITY_Community 111|Community 111]]
+- [[_COMMUNITY_Community 112|Community 112]]
 - [[_COMMUNITY_Community 113|Community 113]]
 - [[_COMMUNITY_Community 114|Community 114]]
 - [[_COMMUNITY_Community 115|Community 115]]
@@ -161,22 +160,10 @@
 - [[_COMMUNITY_Community 145|Community 145]]
 - [[_COMMUNITY_Community 146|Community 146]]
 - [[_COMMUNITY_Community 147|Community 147]]
-- [[_COMMUNITY_Community 148|Community 148]]
-- [[_COMMUNITY_Community 149|Community 149]]
-- [[_COMMUNITY_Community 150|Community 150]]
-- [[_COMMUNITY_Community 151|Community 151]]
-- [[_COMMUNITY_Community 152|Community 152]]
-- [[_COMMUNITY_Community 153|Community 153]]
-- [[_COMMUNITY_Community 154|Community 154]]
-- [[_COMMUNITY_Community 155|Community 155]]
-- [[_COMMUNITY_Community 156|Community 156]]
-- [[_COMMUNITY_Community 157|Community 157]]
-- [[_COMMUNITY_Community 158|Community 158]]
-- [[_COMMUNITY_Community 159|Community 159]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `cn()` - 200 edges
-2. `Button()` - 73 edges
+1. `cn()` - 210 edges
+2. `Button()` - 76 edges
 3. `Card()` - 59 edges
 4. `CardContent()` - 57 edges
 5. `auth` - 52 edges
@@ -219,387 +206,335 @@
 - **Resume Type System** — resume_types_ts, resume_data_default, resume_metadata_default, inferred_job_titles_field, resume_slice_ts, index_types_ts [INFERRED]
 - **Subscription Plan Tiers** — seed_plans_ts, subscription_plans, subscription_service_ts, billing_types_ts [INFERRED]
 
-## Communities (160 total, 68 thin omitted)
+## Communities (148 total, 68 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.08
-Nodes (39): SortableItemProps, useAutoSave(), ResumeEditorPage(), SECTIONS, awardsFormSchema, AwardsFormValues, BasicsFormValues, certificationsFormSchema (+31 more)
+Cohesion: 0.04
+Nodes (61): checkUserExists(), { GET, POST }, getSubscriptionWithAccess(), db, sql, ALLOWED_TABLES, account, aiActionEnum (+53 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.08
-Nodes (25): ParsingProgressProps, ResultsHeaderProps, StatCard(), metadata, ReferralData, AuditLog, AUTH_FEATURES, TRUSTED_ORIGINS (+17 more)
+Cohesion: 0.06
+Nodes (69): getCouponUsageByInvoice(), redeemCoupon(), releaseCoupon(), reserveCoupon(), validateCoupon(), attachSubscriptionToInvoice(), createInvoice(), CreateInvoiceParams (+61 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.08
-Nodes (46): TEMPLATE_COMPONENTS, TEMPLATE_COMPONENTS, normalizeResumeMetadata(), ensureHttps(), initialState, ResumeEditorState, resumeSlice, TailoredPayload (+38 more)
+Cohesion: 0.07
+Nodes (46): Props, State, AtsScoreCtaProps, AtsScoreStickyBar(), RichTextEditorProps, SortableItemProps, useAutoSave(), ResumeEditorPage() (+38 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.08
-Nodes (15): checkUserExists(), { GET, POST }, db, sql, ALLOWED_TABLES, auditLog, jobVisit, plan (+7 more)
+Cohesion: 0.06
+Nodes (58): TEMPLATE_COMPONENTS, TEMPLATE_COMPONENTS, PATCH(), calculateTotalExperience(), enrichResumeMetadata(), extractJobTitles(), normalizeResumeData(), normalizeResumeMetadata() (+50 more)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.07
-Nodes (45): cmdk, INDIA_CITIES, LocationComboboxProps, cn(), CardAction(), Command(), CommandDialog(), CommandEmpty() (+37 more)
+Nodes (34): OverviewChart(), OverviewChartProps, ParsingProgressProps, NotFound(), ReferralData, AnalyticsData, AuditLog, AUTH_FEATURES (+26 more)
 
 ### Community 5 - "Community 5"
-Cohesion: 0.14
-Nodes (28): EMPTY_FORM, Props, STATUS_VARIANT, EMPTY_FORM, Props, EMPTY_FORM, Props, EMPTY_FORM (+20 more)
+Cohesion: 0.09
+Nodes (45): BillingInvoiceTable(), EMPTY_FORM, Props, STATUS_VARIANT, EMPTY_FORM, Props, STATUS_VARIANT, EMPTY_FORM (+37 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.11
-Nodes (46): AI Resume Features, POST /api/resumes/{id}/ai/ats-score, POST /api/resumes/{id}/ai/enhance, POST /api/resumes/{id}/ai/roast, POST /api/resumes/{id}/ai/summary, POST /api/resumes/{id}/ai/tailor, GET /api/billing/subscription, AtsScorePanel (+38 more)
+Cohesion: 0.06
+Nodes (68): Project Architecture Rules (AGENTS.md), CLAUDE.md â†’ AGENTS.md Redirect, AI Usage Logging Service (@/services/ai/usage.service), app-settings, ATS Score AI API (POST /api/resumes/[id]/ai/ats-score), Auth Layout (Server-Side Session Guard), Auth Library (@/lib/auth), Better Auth (Authentication Library) (+60 more)
 
 ### Community 7 - "Community 7"
 Cohesion: 0.05
-Nodes (30): @tabler/icons-react, FileUpload, FEATURES, ResumeUploaderProps, UserDashboard(), AnalyzeSkeleton(), DashboardSkeleton(), motion/react (+22 more)
+Nodes (45): @base-ui/react, @tabler/icons-react, AlertDialog, Avatar, Badge, Breadcrumb, Button, Card (+37 more)
 
 ### Community 8 - "Community 8"
-Cohesion: 0.06
-Nodes (45): account, ai_usage_log, audit_log, coupon_usage, coupons, ai_action, billing_cycle, billing_reason (+37 more)
+Cohesion: 0.05
+Nodes (40): JOB_MEMES, JOB_MESSAGES, MemeLoader(), AnalyzePageContent(), ProgressTimeline(), ProgressTimelineProps, Step, STEP_ORDER (+32 more)
 
 ### Community 9 - "Community 9"
-Cohesion: 0.11
-Nodes (43): Admin Analytics (GA4) Endpoint, Admin Audit Log Endpoint, Admin Database Browser Endpoint, Admin Emails (Resend) Endpoint, Admin Referrals Management Endpoint, Admin Learning Resources CRUD Endpoint, Admin Settings (Plans & Coupons) Endpoint, Admin Stats (Revenue, AI, Growth) Endpoint (+35 more)
+Cohesion: 0.09
+Nodes (48): LearningRoadmapProps, PRIORITY_STYLES, RESOURCE_ICONS, clearUserId(), gtag(), GtagCommand, JobEventParams, ResumeFileParams (+40 more)
 
 ### Community 10 - "Community 10"
-Cohesion: 0.09
-Nodes (34): estimateCostUsd(), logAiUsage(), LogUsageParams, MODEL_RATES, ModelRate, AtsResultSchema, buildResumeText(), extractJSON() (+26 more)
+Cohesion: 0.07
+Nodes (48): deleteExtraResumes(), ensureResume(), getResume(), listResumes(), patchResume(), resetResumeToBaseline(), ResumeBasics, ResumeData (+40 more)
 
 ### Community 11 - "Community 11"
 Cohesion: 0.07
-Nodes (16): OverviewChart(), OverviewChartProps, BillingPage(), AnalyticsContent(), AnalyticsData, AuditList(), BillingContent(), CouponsContent() (+8 more)
+Nodes (47): cmdk, INDIA_CITIES, LocationComboboxProps, AtsIcon(), AtsIconProps, cn(), BreadcrumbEllipsis(), CardAction() (+39 more)
 
 ### Community 12 - "Community 12"
-Cohesion: 0.08
-Nodes (34): AdminHeader(), AdminSidebar(), items, useIsMobile(), Sidebar(), SidebarContent(), SidebarContext, SidebarContextProps (+26 more)
+Cohesion: 0.07
+Nodes (40): AdminReferralFilters, claimReferral(), ClaimReferralResult, codeAlphabet, convertReferral(), createInfluencerCode(), CreateInfluencerCodeParams, flagReferralAsFraudulent() (+32 more)
 
 ### Community 13 - "Community 13"
-Cohesion: 0.14
-Nodes (34): clearUserId(), gtag(), GtagCommand, JobEventParams, ResumeFileParams, ResumeParseSuccessParams, setUserId(), startHeartbeat() (+26 more)
+Cohesion: 0.09
+Nodes (37): JobCard(), timeAgo(), getInitials(), NavbarProps, UserAvatar(), ThemeToggle(), getInitials(), UserAvatar() (+29 more)
 
 ### Community 14 - "Community 14"
-Cohesion: 0.05
-Nodes (37): API Routes, Architecture Overview, code:block1 (┌───────────────────────────────────────────────────────────), code:block2 (src/), Commit History, Creative Portfolio Template ✅, Dashboard Page (`/resumes`), Database Schema (+29 more)
+Cohesion: 0.06
+Nodes (40): assertPageLoaded(), captureScreen(), countVisibleCTAs(), ensureReportDir(), FINDINGS_FILE, FindingSeverity, getPrimaryHeadings(), getVisibleNavLinks() (+32 more)
 
 ### Community 15 - "Community 15"
-Cohesion: 0.09
-Nodes (26): JobCard(), timeAgo(), getInitials(), NavbarProps, NavUser, UserAvatar(), ThemeToggle(), TEMPLATE_COMPONENTS (+18 more)
+Cohesion: 0.11
+Nodes (46): AI Resume Features, POST /api/resumes/{id}/ai/ats-score, POST /api/resumes/{id}/ai/enhance, POST /api/resumes/{id}/ai/roast, POST /api/resumes/{id}/ai/summary, POST /api/resumes/{id}/ai/tailor, GET /api/billing/subscription, AtsScorePanel (+38 more)
 
 ### Community 16 - "Community 16"
-Cohesion: 0.12
-Nodes (29): AdminReferralFilters, claimReferral(), ClaimReferralResult, codeAlphabet, convertReferral(), createInfluencerCode(), CreateInfluencerCodeParams, flagReferralAsFraudulent() (+21 more)
+Cohesion: 0.08
+Nodes (26): AnalysisError(), AnalysisErrorProps, JobFilters(), JobFiltersProps, TabId, TABS, ParsingProgress(), ProfileReview() (+18 more)
 
 ### Community 17 - "Community 17"
-Cohesion: 0.11
-Nodes (15): ProfileReviewProps, NotFound(), JobTitleAutocomplete(), JobTitleAutocompleteProps, LockedJobCardProps, UserDashboardProps, RichTextEditorProps, CareerInsightsData (+7 more)
+Cohesion: 0.06
+Nodes (45): account, ai_usage_log, audit_log, coupon_usage, coupons, ai_action, billing_cycle, billing_reason (+37 more)
 
 ### Community 18 - "Community 18"
-Cohesion: 0.12
-Nodes (24): exportToCSV(), DataTable(), DataTableColumnHeaderProps, DataTableProps, getPageRange(), DatabasePage(), Pagination(), PaginationContent() (+16 more)
+Cohesion: 0.11
+Nodes (43): Admin Analytics (GA4) Endpoint, Admin Audit Log Endpoint, Admin Database Browser Endpoint, Admin Emails (Resend) Endpoint, Admin Referrals Management Endpoint, Admin Learning Resources CRUD Endpoint, Admin Settings (Plans & Coupons) Endpoint, Admin Stats (Revenue, AI, Growth) Endpoint (+35 more)
 
 ### Community 19 - "Community 19"
 Cohesion: 0.09
-Nodes (30): @base-ui/react, AlertDialog, Avatar, Badge, Breadcrumb, Button, Card, Chart (+22 more)
+Nodes (34): AdminHeader(), AdminSidebar(), items, useIsMobile(), Separator(), Sidebar(), SidebarContent(), SidebarContext (+26 more)
 
 ### Community 20 - "Community 20"
-Cohesion: 0.09
-Nodes (34): Project Architecture Rules (AGENTS.md), CLAUDE.md â†’ AGENTS.md Redirect, app-settings, Auth Layout (Server-Side Session Guard), Better Auth (Authentication Library), Billing Retry API (POST /api/billing/retry), Billing Subscription API (GET/DELETE /api/billing/subscription), BillingTypes (+26 more)
+Cohesion: 0.08
+Nodes (16): FEATURES, AnalyticsContent(), AuditList(), BillingContent(), CouponsContent(), EmailsContent(), PlansContent(), EMPTY_FORM (+8 more)
 
 ### Community 21 - "Community 21"
-Cohesion: 0.15
-Nodes (34): AI Usage Logging Service (@/services/ai/usage.service), ATS Score AI API (POST /api/resumes/[id]/ai/ats-score), Auth Library (@/lib/auth), Career Insights API (GET /api/career-insights), Job Visit DB Table (jobVisit), Learning Resources DB Table (learningResources), Resource Clicks DB Table (resourceClicks), resume (+26 more)
+Cohesion: 0.09
+Nodes (35): getInvoiceById(), CheckoutForm(), billingReasonLabel(), formatInvoiceNumber(), InvoiceModal(), appSettings, payment, billingReasonLabel() (+27 more)
 
 ### Community 22 - "Community 22"
-Cohesion: 0.07
-Nodes (25): account, aiActionEnum, billingCycleEnum, billingReasonEnum, couponStatusEnum, couponTypeEnum, influencerCommissionTypeEnum, invoiceStatusEnum (+17 more)
+Cohesion: 0.09
+Nodes (34): estimateCostUsd(), logAiUsage(), LogUsageParams, MODEL_RATES, ModelRate, AtsResultSchema, buildResumeText(), extractJSON() (+26 more)
 
 ### Community 23 - "Community 23"
-Cohesion: 0.13
-Nodes (21): AuthConfigTab(), CompanyTab(), CompanyTabProps, EMPTY, CouponsTab(), EMPTY_FORM, Props, STATUS_VARIANT (+13 more)
+Cohesion: 0.05
+Nodes (37): API Routes, Architecture Overview, code:block1 (┌───────────────────────────────────────────────────────────), code:block2 (src/), Commit History, Creative Portfolio Template ✅, Dashboard Page (`/resumes`), Database Schema (+29 more)
 
 ### Community 24 - "Community 24"
 Cohesion: 0.11
-Nodes (24): AnalysisError(), AnalysisErrorProps, JobFilters(), JobFiltersProps, AnalyzePageContent(), TabId, TABS, ParsingProgress() (+16 more)
+Nodes (25): exportToCSV(), DataTable(), DataTableColumnHeader(), DataTableColumnHeaderProps, DataTableProps, getPageRange(), DatabasePage(), Pagination() (+17 more)
 
 ### Community 25 - "Community 25"
-Cohesion: 0.07
-Nodes (28): awardItemSchema, basicsSchema, certificationItemSchema, CreateResumeInput, createResumeSchema, createVersionSchema, customSectionItemSchema, customSectionSchema (+20 more)
+Cohesion: 0.12
+Nodes (18): PageHeader(), PageHeaderProps, AuthConfigTab(), CouponsTab(), PlansTab(), ResourcesTab(), Coupon, LearningResource (+10 more)
 
 ### Community 26 - "Community 26"
+Cohesion: 0.07
+Nodes (29): awardItemSchema, basicsSchema, certificationItemSchema, CreateResumeInput, createResumeSchema, createVersionSchema, customSectionItemSchema, customSectionSchema (+21 more)
+
+### Community 27 - "Community 27"
+Cohesion: 0.12
+Nodes (20): BillingPage(), metadata, statusBadgeLabel(), cancelSubscription(), endOfAccessDay(), getSubscriptionAccessEnd(), getSubscriptionById(), renewSubscription() (+12 more)
+
+### Community 28 - "Community 28"
+Cohesion: 0.07
+Nodes (26): Analyze is not in the main navigation, Console errors on Analyze, Console errors on Billing, Console errors on Dashboard, Console errors on History, Console errors on Jobs, Console errors on Profile, Console errors on Referrals (+18 more)
+
+### Community 29 - "Community 29"
 Cohesion: 0.11
 Nodes (21): AnalyticsProvider(), inter, metadata, RootLayout(), satoshi, authSlice, AuthState, ThemeProvider() (+13 more)
 
-### Community 27 - "Community 27"
-Cohesion: 0.11
-Nodes (16): SkillGapPanelProps, categorizeSkill(), CONTEXT_PATTERNS, extractSkillsFromText(), normalizeSkill(), normalizeSkillList(), SKILL_ALIASES, SKILLS_TAXONOMY (+8 more)
-
-### Community 28 - "Community 28"
-Cohesion: 0.2
-Nodes (21): getCouponUsageByInvoice(), redeemCoupon(), releaseCoupon(), attachSubscriptionToInvoice(), CreateInvoiceParams, expireStaleInvoices(), getInvoiceByCashfreeOrderId(), getInvoicesByUser() (+13 more)
-
-### Community 29 - "Community 29"
-Cohesion: 0.13
-Nodes (18): DataTableColumnHeader(), buildColumns(), MutatePayload, User, UsersTable(), Avatar(), AvatarBadge(), AvatarFallback() (+10 more)
-
 ### Community 30 - "Community 30"
 Cohesion: 0.18
-Nodes (20): reserveCoupon(), validateCoupon(), createInvoice(), getInvoiceById(), setInvoiceCashfreeOrderId(), createPayment(), POST(), buildDirectUrl() (+12 more)
+Nodes (10): GoogleSignInButton(), GoogleSignInButtonProps, GoogleInAppBlocker(), InAppBrowserWarning(), openInSystemBrowser(), PATTERNS, Platform, useInAppBrowser() (+2 more)
 
 ### Community 31 - "Community 31"
-Cohesion: 0.11
-Nodes (17): getInitiatedPaymentForInvoice(), getInvoicePaymentStatus(), getPaymentsByInvoice(), payment, BillingReason, CheckoutRequest, CheckoutResponse, CouponStatus (+9 more)
-
-### Community 32 - "Community 32"
-Cohesion: 0.16
-Nodes (13): coupons, sendOTPMail(), sendRefereeWelcomeEmail(), sendReferrerRewardEmail(), resend, sendMail(), sendSubscriptionCanceledMail(), sendSubscriptionCreatedMail() (+5 more)
-
-### Community 33 - "Community 33"
-Cohesion: 0.17
-Nodes (18): CheckoutForm(), billingReasonLabel(), formatDate(), formatInvoiceNumber(), InvoiceEmailParams, methodLabel(), sendInvoiceReceiptEmail(), formatCurrency() (+10 more)
-
-### Community 34 - "Community 34"
-Cohesion: 0.16
-Nodes (12): userProfile, GET(), PATCH(), RouteParams, calculateTotalExperience(), enrichResumeMetadata(), extractJobTitles(), normalizeResumeData() (+4 more)
-
-### Community 35 - "Community 35"
-Cohesion: 0.15
-Nodes (12): useAuth(), captureReferralCode(), claimStoredReferral(), getStoredReferralCode(), useReferralClaim(), ProfilePage(), AuthInitializer(), serializeUser() (+4 more)
-
-### Community 36 - "Community 36"
 Cohesion: 0.15
 Nodes (18): ResumeThumbnail (Template Preview), Analyze Page (Job Analysis Workflow), GET+PATCH+DELETE /api/resumes/[id], POST /api/resumes/[id]/duplicate, POST /api/resumes/[id]/export, resumeSlice (Redux Resume Editor State), Redux Store, Resume Editor Section Forms (Basics, Work, Education, Skills, Projects, etc.) (+10 more)
 
+### Community 32 - "Community 32"
+Cohesion: 0.17
+Nodes (14): AppHeader(), AppShell(), AppShellProps, MobileBottomNav(), UserSidebar(), NavUser, ALL_APP_NAV, APP_NAV_PRIMARY (+6 more)
+
+### Community 33 - "Community 33"
+Cohesion: 0.19
+Nodes (14): AlertDialog(), AlertDialogAction(), AlertDialogCancel(), AlertDialogContent(), AlertDialogDescription(), AlertDialogFooter(), AlertDialogHeader(), AlertDialogOverlay() (+6 more)
+
+### Community 34 - "Community 34"
+Cohesion: 0.17
+Nodes (12): AnalysisResponseSchema, extractJSON(), MODEL, POST(), RoadmapItemSchema, learningResources, aggregateSkillGaps(), matchJobsToResume() (+4 more)
+
+### Community 35 - "Community 35"
+Cohesion: 0.15
+Nodes (8): jobTitleAliases, jobTitles, normalizeJobTitle(), seed(), coupons, db, plans, sql
+
+### Community 36 - "Community 36"
+Cohesion: 0.13
+Nodes (14): 11.1 Export Formats, 11.2 Public Sharing, 14.1 Performance Optimizations, 14.2 Deployment Checklist, 4.1 Architecture, 4.2 Preview Communication, 4.3 Real-Time Sync, code:block17 (src/) (+6 more)
+
 ### Community 37 - "Community 37"
-Cohesion: 0.19
-Nodes (12): BillingInvoiceTable(), billingReasonLabel(), formatInvoiceNumber(), InvoiceModal(), Table(), TableBody(), TableCaption(), TableCell() (+4 more)
-
-### Community 38 - "Community 38"
-Cohesion: 0.19
-Nodes (7): jobTitleAliases, jobTitles, normalizeJobTitle(), seed(), AdzunaResult, POST(), JobListing
-
-### Community 39 - "Community 39"
-Cohesion: 0.25
-Nodes (9): cancelSubscription(), getActiveSubscription(), getSubscriptionById(), renewSubscription(), BillingError, calculatePeriodEnd(), DELETE(), GET() (+1 more)
-
-### Community 40 - "Community 40"
-Cohesion: 0.24
-Nodes (11): AlertDialog(), AlertDialogAction(), AlertDialogCancel(), AlertDialogContent(), AlertDialogDescription(), AlertDialogFooter(), AlertDialogHeader(), AlertDialogOverlay() (+3 more)
-
-### Community 41 - "Community 41"
-Cohesion: 0.2
-Nodes (12): appSettings, APP_SETTING_KEYS, AppSettingKey, CompanySettings, getCompanySettings(), ReferralSettings, saveCompanySettings(), setSettingValue() (+4 more)
-
-### Community 42 - "Community 42"
-Cohesion: 0.14
-Nodes (13): 11.1 Export Formats, 11.2 Public Sharing, 12.1 User Dashboard, 12.2 Duplicate Resume, 14.1 Performance Optimizations, 14.2 Deployment Checklist, code:block17 (src/), FINAL NOTES FOR CLAUDE OPUS 4.7 (+5 more)
-
-### Community 43 - "Community 43"
 Cohesion: 0.16
 Nodes (14): DELETE /api/billing/subscription, POST /api/parse-resume, GET+PATCH /api/profile, POST /api/resumes/[id]/ai/ats-score, GET+POST /api/resumes, CancelSubscriptionButton, JobTitleAutocomplete Component, OnboardingPage (Multi-Step Wizard) (+6 more)
 
-### Community 44 - "Community 44"
+### Community 38 - "Community 38"
+Cohesion: 0.18
+Nodes (10): ChartConfig, ChartContainer(), ChartContext, ChartContextProps, ChartLegendContent(), ChartTooltipContent(), INITIAL_DIMENSION, THEMES (+2 more)
+
+### Community 39 - "Community 39"
 Cohesion: 0.15
 Nodes (13): 9.10 Mobile/Tablet Responsiveness, 9.11 Skill Database / Autocomplete, 9.12 Import Existing Resume, 9.1 Content Overflow / Multi-Page, 9.2 Data Loss Prevention, 9.3 Rich Text HTML Injection (XSS), 9.4 Large File / Image Handling, 9.5 PDF Generation Timeouts (Serverless) (+5 more)
 
-### Community 45 - "Community 45"
+### Community 40 - "Community 40"
 Cohesion: 0.21
 Nodes (13): JobListItem (Tracked Job Card), GET /api/career-insights, GET+POST /api/referrals, POST+DELETE /api/save-job, GET /api/user-jobs, auth-client (Better-Auth Client), BillingClientShell (Client Navbar Wrapper), CareerInsightsPage (+5 more)
 
-### Community 46 - "Community 46"
-Cohesion: 0.18
-Nodes (10): JOB_MEMES, JOB_MESSAGES, MemeLoader(), ProgressTimeline(), ProgressTimelineProps, Step, STEP_ORDER, stepIndex() (+2 more)
-
-### Community 47 - "Community 47"
+### Community 41 - "Community 41"
 Cohesion: 0.17
 Nodes (12): AnalyzePageContent (Main Analysis Engine), analytics (Event Tracking), GET /api/analysis-history/[id], POST /api/analyze-gaps, POST /api/save-analysis, POST /api/search-jobs, JobCard (Job Match Card), LocationCombobox Component (+4 more)
 
-### Community 48 - "Community 48"
+### Community 42 - "Community 42"
 Cohesion: 0.21
 Nodes (12): AnalyticsProvider â€” App-level GA4 page-view, user-id sync, heartbeat, and error capture, AnalyzeTypes â€” ReviewState and FilterState type definitions for the analyze workflow, JobFilters â€” Advanced job filter panel (title, city, work type, emp type, match score, salary), MemeLoader â€” Playful loading screen with animated GIFs during job search/analysis, ParsingProgress â€” Resume parsing progress panel with ProgressTimeline and skill preview, ProfileReview â€” Post-parse profile editor for skills, job titles, and experience before analysis, ProgressTimeline â€” Visual timeline of analysis steps (parsingâ†’reviewingâ†’searchingâ†’analyzingâ†’done), ResultsHeader â€” Analysis results header with user profile card and summary stat cards (+4 more)
 
-### Community 49 - "Community 49"
-Cohesion: 0.25
-Nodes (8): AnalysisResponseSchema, extractJSON(), MODEL, POST(), RoadmapItemSchema, aggregateSkillGaps(), matchJobsToResume(), enhanceRoadmapResource()
-
-### Community 50 - "Community 50"
-Cohesion: 0.24
-Nodes (9): CashfreeOrder, CashfreePaymentDetail, CashfreeRefundResult, createCashfreeRefund(), CreateOrderParams, getCashfreeClient(), verifyWebhookSignature(), CashfreeWebhookEvent (+1 more)
-
-### Community 51 - "Community 51"
+### Community 43 - "Community 43"
 Cohesion: 0.18
 Nodes (11): PHASE 13: STEP-BY-STEP IMPLEMENTATION ORDER, Week 10: Testing & QA, Week 1: Foundation, Week 2: Editor Shell, Week 3: All Form Sections, Week 4: Templates, Week 5: PDF Generation, Week 6: ATS Engine (+3 more)
 
-### Community 52 - "Community 52"
+### Community 44 - "Community 44"
 Cohesion: 0.25
 Nodes (11): InvoiceModal (Invoice Detail Dialog), POST /api/billing/checkout, POST /api/billing/coupons/validate, GET /api/billing/invoices/[id]/pdf, GET /api/billing/payment-status, POST /api/billing/retry, BillingInvoiceTable, billing-utils (formatCurrency) (+3 more)
 
-### Community 53 - "Community 53"
+### Community 45 - "Community 45"
 Cohesion: 0.18
 Nodes (11): BillingError, Invoice Generation, InvoicePdf, Resend, billing-utils.ts, invoice-email.ts, otp-email.ts, referral-emails.ts (+3 more)
 
-### Community 54 - "Community 54"
-Cohesion: 0.2
-Nodes (5): JobCardProps, MatchRingProps, SkillBadgeProps, trackJobApplied(), trackJobCardImpression()
-
-### Community 55 - "Community 55"
-Cohesion: 0.2
-Nodes (10): POST(), generateIdempotencyKey(), nanoid, GET(), POST(), POST(), POST(), POST() (+2 more)
-
-### Community 56 - "Community 56"
-Cohesion: 0.28
-Nodes (8): MODEL_RATES, nanoid, GET(), POST(), requireAdmin(), seed-job-titles, title-normalizer, AiUsageService
-
-### Community 57 - "Community 57"
-Cohesion: 0.22
-Nodes (6): LearningRoadmapProps, PRIORITY_STYLES, RESOURCE_ICONS, trackResourceLinkClicked(), trackRoadmapItemExpanded(), RoadmapItem
-
-### Community 58 - "Community 58"
+### Community 46 - "Community 46"
 Cohesion: 0.22
 Nodes (9): 7.1 AI Bullet Point Writer, 7.2 AI Summary Generator, 7.3 AI Tailoring (Resume ↔ Job Description), 7.4 AI Resume Roast / Feedback, code:typescript (// Prompt template:), code:typescript (// Prompt template:), code:typescript (// Steps:), code:typescript (// Prompt: "You are a brutally honest career coach. Analyze ) (+1 more)
 
-### Community 59 - "Community 59"
+### Community 47 - "Community 47"
 Cohesion: 0.28
 Nodes (9): Global CSS Migration to shadcn Theme, Global Error Boundary, Home Page (Landing), Global Loading Component, Next.js Configuration, 404 Not Found Page, Root Layout, shadcn/ui Design System (+1 more)
 
-### Community 60 - "Community 60"
+### Community 48 - "Community 48"
 Cohesion: 0.28
 Nodes (9): Resume Builder Actual Implementation Plan, AI-Powered Resume Features, ATS (Applicant Tracking System) Scoring Engine, Deepseek Resume Builder Comprehensive Plan, Dual-Engine PDF Export, Resume Builder Architecture (3-Panel Editor), Resume Builder Database Schema, ResumeData JSONB Schema (JSON Resume Extended) (+1 more)
 
-### Community 61 - "Community 61"
+### Community 49 - "Community 49"
 Cohesion: 0.39
 Nodes (9): auth (Better-Auth Server), Billing Page (Server Component), Checkout Page (Server Component), ClientProvider (Session-User Bridge), db (Drizzle ORM Database), db/schema (Drizzle Tables - plan, subscription, invoice, coupons, userProfile, resume), PricingPlans Component, AuthLayout (Protected Layout Guard) (+1 more)
 
-### Community 62 - "Community 62"
+### Community 50 - "Community 50"
 Cohesion: 0.25
 Nodes (4): AdminSummary, ReferralRow, ReferralSettings, ReferralsPage()
 
-### Community 63 - "Community 63"
+### Community 51 - "Community 51"
 Cohesion: 0.68
 Nodes (6): logAuditAction(), banUserAction(), deleteUserAction(), ensureAdmin(), setRoleAction(), unbanUserAction()
 
-### Community 64 - "Community 64"
-Cohesion: 0.25
-Nodes (4): AdminSummary, ReferralRow, ReferralSettings, ReferralsTab()
-
-### Community 65 - "Community 65"
+### Community 52 - "Community 52"
 Cohesion: 0.25
 Nodes (8): 3.1 Editor Layout (Three-Panel Design), 3.2 Section Components (shadcn/ui based), 3.3 Form State Management, 3.4 Validation Rules (Zod Schemas), code:block5 (+------------------+---------------------------+------------), code:typescript (// src/stores/resume-store.ts), code:typescript (// src/lib/validations/resume.ts), PHASE 3: RESUME EDITOR & FORM BUILDER
 
-### Community 66 - "Community 66"
+### Community 53 - "Community 53"
+Cohesion: 0.25
+Nodes (4): AdminSummary, ReferralRow, ReferralSettings, ReferralsTab()
+
+### Community 54 - "Community 54"
 Cohesion: 0.29
 Nodes (8): SignInForm (Client Component), SignUpForm (Client Component), GET /api/referrals/validate, checkUserExists (Server Action), authSlice (Redux Auth State), Sign-In Page, Sign-Up Page, useReferralClaim (Referral Code Capture)
 
-### Community 67 - "Community 67"
-Cohesion: 0.29
-Nodes (3): resumeVersion, RouteParams, RouteParams
-
-### Community 68 - "Community 68"
-Cohesion: 0.29
-Nodes (3): ErrorBoundary, Props, State
-
-### Community 69 - "Community 69"
+### Community 55 - "Community 55"
 Cohesion: 0.71
 Nodes (5): getCoreMetrics(), getEventMetrics(), getGA4Client(), getRealtimeUsers(), GET()
 
-### Community 70 - "Community 70"
+### Community 56 - "Community 56"
 Cohesion: 0.29
 Nodes (7): better-auth/client/plugins, Google Analytics 4, setUserId, trackPageView, analytics, auth-client, useAnalytics
 
-### Community 71 - "Community 71"
+### Community 57 - "Community 57"
 Cohesion: 0.33
-Nodes (4): coupons, db, plans, sql
+Nodes (4): FINDINGS_FILE, OUTPUT, REPORT_DIR, UxFinding
 
-### Community 72 - "Community 72"
+### Community 58 - "Community 58"
+Cohesion: 0.47
+Nodes (4): stabilizePageForScreenshot(), VISUAL_SCREENSHOT_OPTS, card, googleBtn
+
+### Community 59 - "Community 59"
 Cohesion: 0.33
 Nodes (6): 5.1 Strategy Overview, 5.2 HTML-to-PDF Pipeline (Puppeteer), 5.3 LaTeX Pipeline (Optional Premium Feature), code:typescript (// src/lib/pdf/generate-pdf.ts), code:typescript (// src/lib/pdf/generate-latex.ts), PHASE 5: PDF GENERATION STRATEGY (DUAL-ENGINE)
 
-### Community 73 - "Community 73"
+### Community 60 - "Community 60"
 Cohesion: 0.33
 Nodes (6): 2.1 Template Categories by Industry, 2.2 Template Component Interface, 2.3 Template Rendering Pipeline, 2.4 Metadata-Driven Customization, code:typescript (// src/components/resume/templates/types.ts), PHASE 2: TEMPLATE SYSTEM ARCHITECTURE
 
-### Community 74 - "Community 74"
+### Community 61 - "Community 61"
 Cohesion: 0.4
 Nodes (4): graphify, Knowledge Graph, Project Architecture Rules, This is NOT the Next.js you know
 
-### Community 75 - "Community 75"
-Cohesion: 0.4
-Nodes (5): 1.1 Core Tables, 1.2 JSONB Data Shape (the `data` column), code:typescript (// src/db/schema/resume.ts), code:typescript (// TypeScript type for resumes.data (not stored as a table, ), PHASE 1: DATABASE SCHEMA DESIGN (Drizzle ORM)
-
-### Community 76 - "Community 76"
+### Community 62 - "Community 62"
 Cohesion: 0.4
 Nodes (5): 6.1 ATS Scoring Algorithm, 6.2 Keyword Scanner, 6.3 ATS Checker UI, code:typescript (// src/lib/ats/keyword-scanner.ts), PHASE 6: ATS OPTIMIZATION ENGINE
 
-### Community 77 - "Community 77"
+### Community 63 - "Community 63"
+Cohesion: 0.4
+Nodes (5): 1.1 Core Tables, 1.2 JSONB Data Shape (the `data` column), code:typescript (// src/db/schema/resume.ts), code:typescript (// TypeScript type for resumes.data (not stored as a table, ), PHASE 1: DATABASE SCHEMA DESIGN (Drizzle ORM)
+
+### Community 64 - "Community 64"
 Cohesion: 0.4
 Nodes (5): 10.1 Tooltip System, 10.2 Onboarding Flow, 10.3 Progress Tracker, code:block16 (Step 1: Welcome → "Let's build your professional resume in 5), PHASE 10: USER EXPERIENCE & TOOLTIPS
 
-### Community 78 - "Community 78"
+### Community 65 - "Community 65"
 Cohesion: 0.4
 Nodes (4): code:bash (npm run dev), Deploy on Vercel, Getting Started, Learn More
 
-### Community 79 - "Community 79"
+### Community 66 - "Community 66"
 Cohesion: 0.4
 Nodes (5): next/navigation, react-redux, useAuth, useAutoSave, /sign-in
 
-### Community 80 - "Community 80"
+### Community 67 - "Community 67"
 Cohesion: 0.4
 Nodes (5): CONTEXT_PATTERNS, SKILLS_TAXONOMY, SKILL_ALIASES, match-engine.ts, skill-extractor.ts
 
-### Community 84 - "Community 84"
+### Community 71 - "Community 71"
 Cohesion: 0.5
 Nodes (4): 0.1 Tech Stack Inventory (Already in Place), 0.2 New Dependencies to Install, code:bash (# Drag and Drop), PHASE 0: PRE-IMPLEMENTATION PREPARATION
 
-### Community 85 - "Community 85"
+### Community 72 - "Community 72"
 Cohesion: 0.5
 Nodes (4): 8.1 Industry Profiles, 8.2 Section Reordering Per Industry, code:typescript (const industrySectionOrder: Record<string, string[]> = {), PHASE 8: INDUSTRY-SPECIFIC SMART DEFAULTS
 
-### Community 86 - "Community 86"
-Cohesion: 0.5
-Nodes (4): 4.1 Architecture, 4.2 Preview Communication, 4.3 Real-Time Sync, PHASE 4: REAL-TIME PREVIEW SYSTEM
-
-### Community 87 - "Community 87"
+### Community 73 - "Community 73"
 Cohesion: 0.5
 Nodes (4): AdminHeader â€” HQ top bar with breadcrumb nav, search, notifications, user menu, AdminSidebar â€” HQ sidebar with navigation links (Overview, Users, Database, Analytics, etc.), ThemeProvider â€” Wrapper around next-themes NextThemesProvider, ThemeToggle â€” Light/dark/system toggle using next-themes useTheme
 
-### Community 89 - "Community 89"
+### Community 75 - "Community 75"
+Cohesion: 0.67
+Nodes (3): 12.1 User Dashboard, 12.2 Duplicate Resume, PHASE 12: DASHBOARD & RESUME MANAGEMENT
+
+### Community 76 - "Community 76"
 Cohesion: 1.0
 Nodes (3): Job Title Aliases DB Table (jobTitleAliases), Job Titles DB Table (jobTitles), Job Titles Autocomplete API (GET /api/job-titles)
 
-### Community 90 - "Community 90"
+### Community 77 - "Community 77"
 Cohesion: 0.67
 Nodes (3): AnalysisError â€” Error screen for rate-limit / analysis failure with upgrade CTA, PricingPlans â€” Displays pricing cards for free/pro/max tiers with billing cycle badges, ReferralPanel â€” Referral system UI (generate code, copy link, share, view conversion stats)
 
-### Community 91 - "Community 91"
+### Community 78 - "Community 78"
 Cohesion: 0.67
 Nodes (3): job_title_aliases, job_title_index, job_titles
 
-### Community 92 - "Community 92"
+### Community 79 - "Community 79"
 Cohesion: 0.67
 Nodes (3): app_settings, drizzle-orm, app-settings
 
-### Community 93 - "Community 93"
+### Community 80 - "Community 80"
 Cohesion: 0.67
 Nodes (3): ClientProvider.tsx, authSlice, useReferralClaim
 
 ## Knowledge Gaps
-- **455 isolated node(s):** `directUrl`, `nextConfig`, `config`, `cleanUrl`, `PROTECTED_ROUTES` (+450 more)
+- **544 isolated node(s):** `directUrl`, `nextConfig`, `config`, `editBtn`, `sections` (+539 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **68 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `resume (normalizeResumeData / normalizeResumeMetadata)` connect `Community 21` to `Community 43`, `Community 36`, `Community 47`?**
-  _High betweenness centrality (0.077) - this node is a cross-community bridge._
-- **Why does `resume` connect `Community 21` to `Community 34`, `Community 67`, `Community 3`, `Community 10`, `Community 22`?**
-  _High betweenness centrality (0.071) - this node is a cross-community bridge._
-- **Why does `cn()` connect `Community 4` to `Community 0`, `Community 1`, `Community 2`, `Community 5`, `Community 37`, `Community 7`, `Community 40`, `Community 11`, `Community 12`, `Community 15`, `Community 17`, `Community 18`, `Community 19`, `Community 23`, `Community 24`, `Community 26`, `Community 29`?**
-  _High betweenness centrality (0.068) - this node is a cross-community bridge._
+- **Why does `cn()` connect `Community 11` to `Community 32`, `Community 33`, `Community 2`, `Community 3`, `Community 4`, `Community 5`, `Community 38`, `Community 7`, `Community 13`, `Community 16`, `Community 19`, `Community 20`, `Community 24`, `Community 25`, `Community 29`, `Community 30`?**
+  _High betweenness centrality (0.090) - this node is a cross-community bridge._
+- **Why does `resume (normalizeResumeData / normalizeResumeMetadata)` connect `Community 6` to `Community 41`, `Community 37`, `Community 31`?**
+  _High betweenness centrality (0.045) - this node is a cross-community bridge._
+- **Why does `resume` connect `Community 6` to `Community 0`, `Community 3`, `Community 22`?**
+  _High betweenness centrality (0.039) - this node is a cross-community bridge._
 - **What connects `directUrl`, `nextConfig`, `config` to the rest of the system?**
-  _455 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _544 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.08 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.04 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.08 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.08 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07 - nodes in this community are weakly interconnected._

@@ -257,13 +257,13 @@ export default function SettingsForm({
   }, [theme.primary, theme.accent, theme.text, theme.background]);
 
   return (
-    <div className="space-y-8">
+    <div className="min-w-0 space-y-8">
       {/* Template Selection */}
       <section>
         <h3 className="mb-4 font-black text-muted-foreground text-sm uppercase tracking-widest">
           Template
         </h3>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3">
           {TEMPLATE_REGISTRY.map((tmpl) => {
             const locked = tmpl.isPremium && !isPro;
             return (
@@ -271,7 +271,7 @@ export default function SettingsForm({
                 type="button"
                 key={tmpl.slug}
                 onClick={() => !locked && setTemplate(tmpl.slug)}
-                className={`relative rounded-xl border-2 p-4 text-left transition-all duration-200 ${
+                className={`relative w-full min-w-0 overflow-hidden rounded-xl border-2 p-4 text-left transition-all duration-200 ${
                   templateSlug === tmpl.slug
                     ? "border-primary bg-primary/5"
                     : locked
@@ -289,11 +289,11 @@ export default function SettingsForm({
                     <Lock className="h-4 w-4 text-muted-foreground" />
                   </div>
                 )}
-                <h4 className="font-bold text-sm">{tmpl.name}</h4>
+                <h4 className="pr-8 font-bold text-sm">{tmpl.name}</h4>
                 <p className="mt-1 line-clamp-2 text-muted-foreground text-xs">
                   {tmpl.description}
                 </p>
-                <div className="mt-2 flex items-center gap-2">
+                <div className="mt-2 flex flex-wrap items-center gap-1.5">
                   <Badge
                     variant="outline"
                     className="font-bold text-[10px] uppercase"
@@ -339,12 +339,12 @@ export default function SettingsForm({
               <Label className="font-bold text-muted-foreground text-xs uppercase tracking-wider">
                 {label}
               </Label>
-              <div className="flex items-center gap-2">
+              <div className="flex min-w-0 items-center gap-2">
                 <input
                   type="color"
                   value={theme[key] ?? "#000000"}
                   onChange={(e) => setThemeColor(key, e.target.value)}
-                  className="h-10 w-10 cursor-pointer rounded-lg border border-border"
+                  className="h-10 w-10 shrink-0 cursor-pointer rounded-lg border border-border"
                 />
                 <Input
                   value={themeInputs[key]}
@@ -362,7 +362,7 @@ export default function SettingsForm({
                       [key]: theme[key] ?? "",
                     }));
                   }}
-                  className="h-10 font-mono text-xs"
+                  className="h-10 min-w-0 flex-1 font-mono text-xs"
                   maxLength={7}
                 />
               </div>

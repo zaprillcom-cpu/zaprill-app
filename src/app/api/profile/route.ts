@@ -70,7 +70,13 @@ export async function PATCH(req: Request) {
     }
 
     const body = await req.json();
-    const { name, onboardingStatus, primaryResumeId, resumeRaw } = body;
+    const {
+      name,
+      onboardingStatus,
+      primaryResumeId,
+      resumeRaw,
+      currentSalary,
+    } = body;
 
     // 1. Update User Table (Name)
     if (name) {
@@ -81,7 +87,18 @@ export async function PATCH(req: Request) {
     }
 
     // 2. Update User Profile Table
-    if (onboardingStatus || primaryResumeId) {
+    const profileUpdates: Record<string, any> = { updatedAt: new Date() };
+    if (onboardingStatus) profileUpdates.onboardingStatus = onboardingStatus;
+    if (primaryResumeId) profileUpdates.primaryResumeId = primaryResumeId;
+    // Allow null to clear salary, but skip if key is not present in body
+    if ("currentSalary" in body) {
+      profileUpdates.currentSalary =
+        currentSalary != null
+          ? parseInt(String(currentSalary), 10) || null
+          : null;
+    }
+
+    if (Object.keys(profileUpdates).length > 1) {
       await db
         .insert(userProfile)
         .values({
@@ -89,15 +106,15 @@ export async function PATCH(req: Request) {
           userId: session.user.id,
           onboardingStatus: onboardingStatus || "not_started",
           primaryResumeId: primaryResumeId || null,
+          currentSalary:
+            "currentSalary" in body
+              ? parseInt(String(currentSalary), 10) || null
+              : null,
           updatedAt: new Date(),
         })
         .onConflictDoUpdate({
           target: userProfile.userId,
-          set: {
-            ...(onboardingStatus && { onboardingStatus }),
-            ...(primaryResumeId && { primaryResumeId }),
-            updatedAt: new Date(),
-          },
+          set: profileUpdates,
         });
     }
 

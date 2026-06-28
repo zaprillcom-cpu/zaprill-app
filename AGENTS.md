@@ -14,6 +14,11 @@ Follow the guidelines in [.agents/ARCHITECTURE.md](.agents/ARCHITECTURE.md).
 - Prefer API routes over Server Actions for data mutations and heavy fetching.
 - Treat this as an application, not a marketing site.
 
+# UI & Design Rules
+
+- **No emojis** in any UI component, page, or text content. This is a professional product. Use Lucide icons instead.
+- Do not use emoji literals (`🎉`), HTML entities (`&#x1F4CA;`), or Unicode escapes (`\u{1F4CA}`) in JSX or rendered strings.
+
 # Knowledge Graph
 
 A pre-built knowledge graph of this codebase lives at `graphify-out/graph.json` — 1695 nodes (every function, component, API route, DB table, type) and 4575 edges mapping their relationships.

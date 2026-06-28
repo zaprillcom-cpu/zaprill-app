@@ -92,6 +92,13 @@
       "when": 1778352822390,
       "tag": "0012_outstanding_red_wolf",
       "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1782736080000,
+      "tag": "0013_salary_intelligence",
+      "breakpoints": true
     }
   ]
 }

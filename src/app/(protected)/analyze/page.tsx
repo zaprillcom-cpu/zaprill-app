@@ -141,6 +141,7 @@ function AnalyzePageContent() {
     editingTitleIndex: null,
     editingTitleValue: "",
     experienceYears: 0,
+    currentSalary: null,
   });
 
   const { user } = useAuth();
@@ -403,8 +404,20 @@ function AnalyzePageContent() {
         reviewTitles: rd.inferredJobTitles || [],
         selectedTitles: rd.inferredJobTitles?.slice(0, 3) || [],
         experienceYears: rd.totalYearsOfExperience || 0,
+        currentSalary: null,
       }));
       setStep("reviewing");
+
+      // Pre-fill current salary from profile (non-blocking)
+      fetch("/api/profile")
+        .then((r) => r.json())
+        .then((data) => {
+          const salary = data?.profile?.currentSalary;
+          if (salary) {
+            setReviewState((prev) => ({ ...prev, currentSalary: salary }));
+          }
+        })
+        .catch(() => {});
     }
   }, [router, runAnalysis, idFromUrl, isFetchingHistory, resume]);
 

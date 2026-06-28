@@ -111,7 +111,7 @@ export function UserSidebar() {
 
       <SidebarFooter>
         <p className="px-2 text-muted-foreground text-xs">
-          Analyze → Jobs → History
+          Analyze → Jobs → Career Insights
         </p>
       </SidebarFooter>
       <SidebarRail />

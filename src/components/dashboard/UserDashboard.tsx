@@ -4,22 +4,32 @@ import {
   ArrowRight,
   Briefcase,
   ChevronRight,
+  IndianRupee,
   Loader2,
-  MapPin,
   Shield,
   Star,
   Target,
+  TrendingUp,
   Zap,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import type { SalaryIntelligence } from "@/components/career/SalaryIntelligenceCard";
 import JobCard from "@/components/JobCard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import type { JobMatch, ResumeData } from "@/types";
+
+function formatInr(amount: number): string {
+  if (amount >= 100_000) {
+    const lakh = amount / 100_000;
+    return `${lakh % 1 === 0 ? lakh.toFixed(0) : lakh.toFixed(1)}L`;
+  }
+  return amount.toLocaleString("en-IN");
+}
 
 interface UserDashboardProps {
   profile: any;
@@ -33,6 +43,8 @@ export default function UserDashboard({
   const router = useRouter();
   const [latestAnalysis, setLatestAnalysis] = useState<any>(null);
   const [isLoadingAnalysis, setIsLoadingAnalysis] = useState(true);
+  const [salaryIntelligence, setSalaryIntelligence] =
+    useState<SalaryIntelligence | null>(null);
 
   const handleStartNewAnalysis = useCallback(() => {
     if (profile?.resumeRaw) {
@@ -54,6 +66,15 @@ export default function UserDashboard({
       })
       .catch((err) => console.error("Failed to load history", err))
       .finally(() => setIsLoadingAnalysis(false));
+
+    fetch("/api/career-insights")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.salaryIntelligence) {
+          setSalaryIntelligence(data.salaryIntelligence);
+        }
+      })
+      .catch(() => {});
   }, []);
 
   const resumeData = profile?.resumeData || profile?.resumeRaw;
@@ -86,7 +107,7 @@ export default function UserDashboard({
           onClick={handleStartNewAnalysis}
           className="group h-12 rounded-xl px-8 font-bold text-base shadow-primary/20 shadow-xl"
         >
-          Start New Analysis
+          Analytical Search
           <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
         </Button>
       </header>
@@ -219,42 +240,92 @@ export default function UserDashboard({
           </CardContent>
         </Card>
 
-        {/* Market Insights Card */}
+        {/* Salary Intelligence Card */}
         <Card className="flex flex-col justify-between overflow-hidden rounded-2xl border-border/50 shadow-sm">
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center gap-2 font-bold text-muted-foreground text-xs uppercase tracking-widest">
-              <Briefcase className="h-3.5 w-3.5" />
-              Market Standing
+              <TrendingUp className="h-3.5 w-3.5" />
+              Salary Intelligence
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4 pt-2">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="rounded-xl border border-accent/20 bg-accent/10 p-3">
-                <div className="font-black text-xl">
-                  {latestAnalysis?.jobs?.length || 0}
+            {salaryIntelligence ? (
+              <>
+                <div className="space-y-2.5">
+                  {salaryIntelligence.currentSalary && (
+                    <div className="flex items-center justify-between">
+                      <span className="font-medium text-muted-foreground text-xs">
+                        Current
+                      </span>
+                      <span className="font-bold text-sm">
+                        {formatInr(salaryIntelligence.currentSalary)} / yr
+                      </span>
+                    </div>
+                  )}
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium text-muted-foreground text-xs">
+                      Market avg
+                    </span>
+                    <span className="font-bold text-sm">
+                      {formatInr(salaryIntelligence.marketAverage)} / yr
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between border-border/40 border-t pt-2">
+                    <span className="font-medium text-muted-foreground text-xs">
+                      Your potential
+                    </span>
+                    <span className="font-black text-sm">
+                      {formatInr(salaryIntelligence.potential)} / yr
+                    </span>
+                  </div>
+                  {salaryIntelligence.gap != null &&
+                    salaryIntelligence.gap > 0 && (
+                      <div className="rounded-lg bg-violet-50 px-3 py-2 dark:bg-violet-900/20">
+                        <p className="font-black text-violet-700 text-xs dark:text-violet-400">
+                          +{formatInr(salaryIntelligence.gap)} gap identified
+                        </p>
+                      </div>
+                    )}
                 </div>
-                <div className="font-bold text-[11px] text-muted-foreground uppercase tracking-widest">
-                  Jobs matched
+                <Link href="/history" className="block">
+                  <Button
+                    variant="outline"
+                    className="h-9 w-full rounded-lg font-bold text-xs uppercase tracking-widest"
+                  >
+                    Full Breakdown
+                  </Button>
+                </Link>
+              </>
+            ) : (
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="rounded-xl border border-accent/20 bg-accent/10 p-3">
+                    <div className="font-black text-xl">
+                      {latestAnalysis?.jobs?.length || 0}
+                    </div>
+                    <div className="font-bold text-[11px] text-muted-foreground uppercase tracking-widest">
+                      Jobs matched
+                    </div>
+                  </div>
+                  <div className="rounded-xl border border-score-high/10 bg-score-high/50 p-3">
+                    <div className="font-black text-score-high-fg text-xl">
+                      {latestAnalysis?.skillGaps?.length || 0}
+                    </div>
+                    <div className="font-bold text-[11px] text-muted-foreground uppercase tracking-widest">
+                      Skill Gaps
+                    </div>
+                  </div>
                 </div>
+                <Link href="/history" className="block">
+                  <Button
+                    variant="outline"
+                    className="h-9 w-full rounded-lg font-bold text-xs uppercase tracking-widest"
+                  >
+                    <IndianRupee className="mr-1.5 h-3.5 w-3.5" />
+                    Set Salary for Insights
+                  </Button>
+                </Link>
               </div>
-              <div className="rounded-xl border border-score-high/10 bg-score-high/50 p-3">
-                <div className="font-black text-score-high-fg text-xl">
-                  {latestAnalysis?.skillGaps?.length || 0}
-                </div>
-                <div className="font-bold text-[11px] text-muted-foreground uppercase tracking-widest">
-                  Skill Gaps
-                </div>
-              </div>
-            </div>
-            {latestAnalysis && (
-              <Link href={`/analyze?id=${latestAnalysis.id}`} className="block">
-                <Button
-                  variant="outline"
-                  className="h-9 w-full rounded-lg font-bold text-xs uppercase tracking-widest"
-                >
-                  View Gap Analysis
-                </Button>
-              </Link>
             )}
           </CardContent>
         </Card>

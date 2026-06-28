@@ -150,6 +150,7 @@ export const userProfile = pgTable("user_profile", {
     onDelete: "set null",
   }),
   resumeRaw: jsonb("resume_raw"),
+  currentSalary: integer("current_salary"),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 

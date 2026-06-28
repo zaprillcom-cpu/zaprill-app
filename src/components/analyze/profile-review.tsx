@@ -1,13 +1,17 @@
 import {
   Briefcase,
   Check,
+  ChevronDown,
+  IndianRupee,
   Info,
+  Lock,
   Plus,
   Trash2,
   TrendingUp,
   Zap,
 } from "lucide-react";
 import type { Dispatch, SetStateAction } from "react";
+import { useState } from "react";
 import { JobTitleAutocomplete } from "@/components/JobTitleAutocomplete";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -39,7 +43,29 @@ export function ProfileReview({
     editingTitleIndex,
     editingTitleValue,
     experienceYears,
+    currentSalary,
   } = reviewState;
+
+  const [salaryExpanded, setSalaryExpanded] = useState(
+    currentSalary != null && currentSalary > 0,
+  );
+  const [salaryInput, setSalaryInput] = useState(
+    currentSalary ? String(currentSalary) : "",
+  );
+
+  const handleSubmit = () => {
+    const parsed = parseInt(salaryInput.replace(/[^0-9]/g, ""), 10) || null;
+    // Persist salary fire-and-forget so it's available on Career Insights
+    if (parsed && parsed !== currentSalary) {
+      fetch("/api/profile", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ currentSalary: parsed }),
+      }).catch(() => {});
+    }
+    setReviewState((prev) => ({ ...prev, currentSalary: parsed }));
+    runAnalysis(resume);
+  };
 
   const addSkill = () => {
     if (newSkill.trim() && !reviewSkills.includes(newSkill.trim())) {
@@ -384,9 +410,57 @@ export function ProfileReview({
           </CardContent>
         </Card>
 
+        {/* Current Salary — Optional */}
+        <Card className="overflow-hidden border-border shadow-sm">
+          <button
+            type="button"
+            onClick={() => setSalaryExpanded((v) => !v)}
+            className="flex w-full items-center justify-between border-border/50 border-b bg-muted/30 px-6 py-4 text-left transition-colors hover:bg-muted/50"
+          >
+            <CardTitle className="flex items-center gap-2 font-black text-xl">
+              <IndianRupee className="h-5 w-5" />
+              Current Annual Salary
+              <Badge
+                variant="outline"
+                className="ml-1 border-muted-foreground/30 font-bold text-[10px] text-muted-foreground uppercase tracking-wider"
+              >
+                Optional
+              </Badge>
+            </CardTitle>
+            <ChevronDown
+              className={`h-4 w-4 text-muted-foreground transition-transform ${salaryExpanded ? "rotate-180" : ""}`}
+            />
+          </button>
+
+          {salaryExpanded && (
+            <CardContent className="space-y-4 p-6">
+              <div className="relative">
+                <IndianRupee className="-translate-y-1/2 absolute top-1/2 left-3.5 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="text"
+                  inputMode="numeric"
+                  placeholder="e.g. 1200000"
+                  value={salaryInput}
+                  onChange={(e) =>
+                    setSalaryInput(e.target.value.replace(/[^0-9]/g, ""))
+                  }
+                  className="h-12 pl-9 font-bold text-base"
+                  autoFocus
+                />
+              </div>
+              <p className="flex items-start gap-2 font-medium text-muted-foreground text-xs leading-relaxed">
+                <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                Stays on your account only. Used to compute your market salary
+                gap on Career Insights — never shared with employers or job
+                listings.
+              </p>
+            </CardContent>
+          )}
+        </Card>
+
         <div className="pt-4">
           <Button
-            onClick={() => runAnalysis(resume)}
+            onClick={handleSubmit}
             disabled={selectedTitles.length === 0}
             className="group h-16 w-full font-black text-xl tracking-tight shadow-xl"
           >

@@ -2,7 +2,6 @@
 
 import {
   ChevronRight,
-  ExternalLink,
   Loader2,
   MousePointer2,
   Sparkles,
@@ -13,10 +12,13 @@ import {
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PageHeader } from "@/components/app/page-header";
+import SalaryIntelligenceCard, {
+  type SalaryIntelligence,
+} from "@/components/career/SalaryIntelligenceCard";
 import LearningRoadmap from "@/components/LearningRoadmap";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { useSession } from "@/lib/auth-client";
 import type { RoadmapItem } from "@/types";
 
@@ -40,6 +42,7 @@ interface CareerInsightsData {
     matchPercentage: number | null;
     createdAt: string;
   }[];
+  salaryIntelligence: SalaryIntelligence | null;
 }
 
 export default function CareerInsightsPage() {
@@ -75,16 +78,17 @@ export default function CareerInsightsPage() {
     );
   }
 
-  const { lastAnalysis, recentVisits } = data || {
+  const { lastAnalysis, recentVisits, salaryIntelligence } = data || {
     lastAnalysis: null,
     recentVisits: [],
+    salaryIntelligence: null,
   };
 
   return (
     <main className="mx-auto w-full max-w-7xl px-6 py-10">
       <PageHeader
-        title="History"
-        description="Your analysis history, skill gaps, and job tracking."
+        title="Career Insights"
+        description="Your salary position, skill gaps, and growth roadmap."
       />
 
       {!lastAnalysis && recentVisits.length === 0 ? (
@@ -130,8 +134,72 @@ export default function CareerInsightsPage() {
             )}
           </div>
 
-          {/* ── Right Column: Skill Gaps & Activity ── */}
+          {/* ── Right Column: Salary Intelligence, Skill Gaps & Activity ── */}
           <div className="space-y-8 lg:col-span-4">
+            {/* Salary Intelligence Card */}
+            {salaryIntelligence && lastAnalysis && (
+              <div className="space-y-3">
+                <h3 className="flex items-center gap-2 font-black text-2xl tracking-tight">
+                  <Zap className="h-6 w-6 text-violet-500" />
+                  Salary Intelligence
+                </h3>
+                <SalaryIntelligenceCard
+                  data={salaryIntelligence}
+                  onSalaryUpdate={(newSalary) => {
+                    setData((prev) =>
+                      prev?.salaryIntelligence
+                        ? {
+                            ...prev,
+                            salaryIntelligence: {
+                              ...prev.salaryIntelligence,
+                              currentSalary: newSalary,
+                              gap:
+                                newSalary != null
+                                  ? prev.salaryIntelligence.marketAverage -
+                                    newSalary
+                                  : null,
+                              potentialGap:
+                                newSalary != null
+                                  ? prev.salaryIntelligence.potential -
+                                    newSalary
+                                  : null,
+                            },
+                          }
+                        : prev,
+                    );
+                  }}
+                />
+              </div>
+            )}
+
+            {/* No salary data nudge */}
+            {!salaryIntelligence && lastAnalysis && (
+              <div className="space-y-3">
+                <h3 className="flex items-center gap-2 font-black text-2xl tracking-tight">
+                  <Zap className="h-6 w-6 text-violet-500" />
+                  Salary Intelligence
+                </h3>
+                <div className="rounded-2xl border border-border/60 border-dashed bg-muted/30 px-5 py-8 text-center">
+                  <p className="mb-1 font-black text-sm">
+                    Not enough salary data
+                  </p>
+                  <p className="font-medium text-muted-foreground text-xs leading-relaxed">
+                    Run a new analysis targeting roles with published salaries
+                    to unlock market insights.
+                  </p>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="mt-4 font-bold text-xs"
+                    onClick={() => router.push("/")}
+                  >
+                    New Analysis
+                    <ChevronRight className="ml-1 h-3 w-3" />
+                  </Button>
+                </div>
+              </div>
+            )}
+
             {/* Critical Skill Gaps */}
             {lastAnalysis && (
               <div className="space-y-6">

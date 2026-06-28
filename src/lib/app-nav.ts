@@ -4,9 +4,9 @@ import {
   CreditCard,
   FileText,
   Gift,
-  History,
   Home,
   Target,
+  TrendingUp,
   User,
 } from "lucide-react";
 
@@ -23,7 +23,12 @@ export const APP_NAV_PRIMARY: AppNavItem[] = [
   { title: "Analyze", url: "/analyze", icon: Target, mobilePrimary: true },
   { title: "My Jobs", url: "/jobs", icon: Briefcase, mobilePrimary: true },
   { title: "Resumes", url: "/resumes", icon: FileText, mobilePrimary: true },
-  { title: "History", url: "/history", icon: History, mobilePrimary: true },
+  {
+    title: "Career Insights",
+    url: "/history",
+    icon: TrendingUp,
+    mobilePrimary: true,
+  },
 ];
 
 export const APP_NAV_SECONDARY: AppNavItem[] = [

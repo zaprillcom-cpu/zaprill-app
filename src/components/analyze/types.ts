@@ -7,6 +7,8 @@ export interface ReviewState {
   editingTitleIndex: number | null;
   editingTitleValue: string;
   experienceYears: number;
+  /** Annual salary in INR. Optional — user may skip. */
+  currentSalary: number | null;
 }
 
 export interface FilterState {
