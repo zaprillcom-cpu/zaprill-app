@@ -8,7 +8,7 @@ import {
 } from "@tabler/icons-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import ResumeScannerLoader from "@/components/resume/scanner/ResumeScannerLoader";
 import ResumeScanResults from "@/components/resume/scanner/ResumeScanResults";
@@ -47,7 +47,21 @@ export default function OnboardingPage() {
   const [resumeId, setResumeId] = useState<string | null>(null);
   const [resumeData, setResumeData] = useState<unknown>(null);
   const [scannedFile, setScannedFile] = useState<File | null>(null);
+  const [isCheckingStatus, setIsCheckingStatus] = useState(true);
   const router = useRouter();
+
+  useEffect(() => {
+    fetch("/api/profile")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.profile?.onboardingStatus === "completed") {
+          router.replace("/");
+        } else {
+          setIsCheckingStatus(false);
+        }
+      })
+      .catch(() => setIsCheckingStatus(false));
+  }, [router]);
 
   const handleFileUpload = async (files: File[]) => {
     if (files.length === 0) return;
@@ -141,6 +155,14 @@ export default function OnboardingPage() {
       setIsUpdatingStatus(false);
     }
   };
+
+  if (isCheckingStatus) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <IconLoader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
 
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-background p-4">
