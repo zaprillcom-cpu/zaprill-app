@@ -81,7 +81,9 @@ export default function HomePage() {
   }
 
   // 2. Fetching Profile for Logged In User - Show Skeleton
-  if (session && isFetchingProfile && !profile) {
+  // Note: isFetchingProfile starts false and is set true in a useEffect (after render),
+  // so we must also guard on !profile to avoid flashing the onboarding CTA for completed users.
+  if (session && (!profile || isFetchingProfile)) {
     return (
       <AppShell user={shellUser!}>
         <DashboardSkeleton />
